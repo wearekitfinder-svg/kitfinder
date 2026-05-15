@@ -1,0 +1,14 @@
+# Kit Finder — URL routing (todas las rutas → index.html)
+/results            /index.html  200
+/favourites         /index.html  200
+/world-cup-kits     /index.html  200
+/match-worn         /index.html  200
+/why                /index.html  200
+/about              /index.html  200
+/privacy            /index.html  200
+/terms              /index.html  200
+/affiliate          /index.html  200
+/league/*           /index.html  200
+/country/*          /index.html  200
+/profile            /index.html  200
+/settings           /index.html  200
