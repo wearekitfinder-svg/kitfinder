@@ -1,42 +1,52 @@
-/* Netlify Function: search — reads pre-built gzip JSON catalogs
-   Usage: /.netlify/functions/search?q=arsenal&store=all|cfs|shopify|woo
-   Returns matching products from static JSON files */
+/* Netlify Function: unified search — fetches gz catalogs from site public URLs */
 
-const fs = require('fs');
-const path = require('path');
-const zlib = require('zlib');
+const zlib  = require('zlib');
+const https = require('https');
 
-const DATA_DIR = path.join(__dirname, '../../data');
-const BASE_CFS = 'https://www.classicfootballshirts.co.uk/';
-const IMG_BASE = 'https://www.classicfootballshirts.co.uk/cdn-cgi/image/w=360,h=360,q=100,f=webp/pub/media/catalog/product/';
+const SITE = 'https://wearekitfinder.com';
+const URLS = {
+  cfs:     SITE + '/data/cfs.json.gz',
+  shopify: SITE + '/data/shopify.json.gz',
+  woo:     SITE + '/data/woo.json.gz',
+};
+const BASE_CFS   = 'https://www.classicfootballshirts.co.uk/';
+const IMG_BASE   = 'https://www.classicfootballshirts.co.uk/cdn-cgi/image/w=360,h=360,q=100,f=webp/pub/media/catalog/product/';
 const AFF_SUFFIX = '?ref=mjk5njr&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate';
+const CACHE_TTL  = 30 * 60 * 1000;
 
-// In-memory cache per catalog
 const _cache = {};
+const _cacheTime = {};
 
-function loadGz(filename) {
-  if (_cache[filename]) return _cache[filename];
-  const filePath = path.join(DATA_DIR, filename);
-  const compressed = fs.readFileSync(filePath);
-  const raw = zlib.gunzipSync(compressed).toString('utf8');
-  _cache[filename] = JSON.parse(raw);
-  return _cache[filename];
+function fetchGz(url) {
+  return new Promise(function(resolve, reject) {
+    https.get(url, function(res) {
+      const chunks = [];
+      res.on('data', function(c) { chunks.push(c); });
+      res.on('end', function() {
+        zlib.gunzip(Buffer.concat(chunks), function(err, raw) {
+          if (err) return reject(err);
+          try { resolve(JSON.parse(raw.toString('utf8'))); }
+          catch(e) { reject(e); }
+        });
+      });
+    }).on('error', reject);
+  });
 }
 
-function loadJson(filename) {
-  if (_cache[filename]) return _cache[filename];
-  const filePath = path.join(DATA_DIR, filename);
-  _cache[filename] = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-  return _cache[filename];
+async function load(key) {
+  const now = Date.now();
+  if (_cache[key] && (now - _cacheTime[key]) < CACHE_TTL) return _cache[key];
+  _cache[key] = await fetchGz(URLS[key]);
+  _cacheTime[key] = now;
+  return _cache[key];
 }
 
 function matches(name, terms) {
   const h = name.toLowerCase();
-  return terms.every(t => h.includes(t));
+  return terms.every(function(t) { return h.includes(t); });
 }
 
-function searchCFS(terms, limit) {
-  const data = loadJson('cfs.json');
+function searchCFS(data, terms, limit) {
   const results = [];
   const seen = new Set();
   for (const p of data.p) {
@@ -50,16 +60,14 @@ function searchCFS(terms, limit) {
       price: p[5], currency: 'GBP', storeCurrency: 'GBP',
       sizes: p[6], image, images: image ? [image] : [],
       url: BASE_CFS + p[8] + AFF_SUFFIX,
-      store: 'Classic Football Shirts',
-      source: 'cfs', isShopify: false
+      store: 'Classic Football Shirts', source: 'cfs', isShopify: false
     });
     if (results.length >= limit) break;
   }
   return results;
 }
 
-function searchShopify(terms, limit) {
-  const data = loadGz('shopify.json.gz');
+function searchShopify(data, terms, limit) {
   const results = [];
   const seen = new Set();
   for (const p of data.p) {
@@ -70,16 +78,14 @@ function searchShopify(terms, limit) {
       id: p[0], name: p[1], club: p[1],
       price: p[2], currency: p[3], storeCurrency: p[3],
       sizes: ['One size'], image: p[4], images: p[4] ? [p[4]] : [],
-      url: p[5], store: p[6],
-      source: 'shopify', isShopify: true
+      url: p[5], store: p[6], source: 'shopify', isShopify: true
     });
     if (results.length >= limit) break;
   }
   return results;
 }
 
-function searchWoo(terms, limit) {
-  const data = loadGz('woo.json.gz');
+function searchWoo(data, terms, limit) {
   const results = [];
   const seen = new Set();
   for (const p of data.p) {
@@ -90,8 +96,7 @@ function searchWoo(terms, limit) {
       id: p[0], name: p[1], club: p[1],
       price: p[2], currency: p[3], storeCurrency: p[3],
       sizes: ['One size'], image: p[4], images: p[4] ? [p[4]] : [],
-      url: p[5], store: p[6],
-      source: 'woo', isShopify: false
+      url: p[5], store: p[6], source: 'woo', isShopify: false
     });
     if (results.length >= limit) break;
   }
@@ -109,32 +114,38 @@ exports.handler = async function(event) {
     return { statusCode: 200, headers, body: '' };
   }
 
-  const q = (event.queryStringParameters.q || '').trim().toLowerCase();
+  const q     = (event.queryStringParameters.q || '').trim().toLowerCase();
   const store = event.queryStringParameters.store || 'all';
 
   if (!q || q === 'warmup') {
     return { statusCode: 200, headers, body: JSON.stringify({ products: [], total: 0 }) };
   }
 
-  const terms = q.split(/\s+/).filter(t => t.length >= 2);
+  const terms = q.split(/\s+/).filter(function(t) { return t.length >= 2; });
   if (!terms.length) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Query too short' }) };
   }
 
   try {
     let products = [];
+
     if (store === 'cfs') {
-      products = searchCFS(terms, 400);
+      const data = await load('cfs');
+      products = searchCFS(data, terms, 400);
     } else if (store === 'shopify') {
-      products = searchShopify(terms, 400);
+      const data = await load('shopify');
+      products = searchShopify(data, terms, 400);
     } else if (store === 'woo') {
-      products = searchWoo(terms, 400);
+      const data = await load('woo');
+      products = searchWoo(data, terms, 400);
     } else {
-      // all: merge results
+      const [cfsData, shopData, wooData] = await Promise.all([
+        load('cfs'), load('shopify'), load('woo')
+      ]);
       products = [
-        ...searchCFS(terms, 200),
-        ...searchShopify(terms, 200),
-        ...searchWoo(terms, 100),
+        ...searchCFS(cfsData, terms, 200),
+        ...searchShopify(shopData, terms, 200),
+        ...searchWoo(wooData, terms, 100),
       ];
     }
 
@@ -143,6 +154,7 @@ exports.handler = async function(event) {
       headers,
       body: JSON.stringify({ products, total: products.length, query: q })
     };
+
   } catch (err) {
     return {
       statusCode: 500,
