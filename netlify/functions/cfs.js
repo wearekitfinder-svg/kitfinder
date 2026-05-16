@@ -80,13 +80,15 @@ function rowToProduct(row, feedType) {
 
 const id = 'cfs_' + feedType + '_' + Buffer.from(url).toString('base64').replace(/[^a-zA-Z0-9]/g, '').slice(-32);
 
+  // CFS URLs use -1_ (front) and -2_ (back). Only generate both when URL matches numeric pattern
   function buildImages(imgUrl) {
     if (!imgUrl) return [];
-    const front = imgUrl.replace(/-\d+_([a-z0-9]+\.jpg)/i, '-1_$1');
-    const back  = imgUrl.replace(/-\d+_([a-z0-9]+\.jpg)/i, '-2_$1');
-    return front === back ? [front] : [front, back];
+    const numPat = /-\d+_([a-z0-9]+\.jpg)$/i;
+    if (!numPat.test(imgUrl)) return [imgUrl];
+    const front = imgUrl.replace(numPat, '-1_$1');
+    const back  = imgUrl.replace(numPat, '-2_$1');
+    return [front, back];
   }
-
   const images = buildImages(image);
   const firstImage = images[0] || image;
 
