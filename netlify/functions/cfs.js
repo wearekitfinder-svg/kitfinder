@@ -1,28 +1,27 @@
-/* Netlify Function: Classic Football Shirts — static JSON reader
-   Reads pre-built data/cfs.json instead of downloading CSVs on every request
-   Usage: /.netlify/functions/cfs?q=arsenal
-   Format: each product is an array [id, name, brand, season, condition, price, sizes, img, slug, type] */
+/* Netlify Function: Classic Football Shirts — reads cfs.json.gz */
 
-const BASE_URL = 'https://www.classicfootballshirts.co.uk/';
-const IMG_BASE = 'https://www.classicfootballshirts.co.uk/cdn-cgi/image/w=360,h=360,q=100,f=webp/pub/media/catalog/product/';
-const AFFILIATE_SUFFIX = '?ref=mjk5njr&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate';
+const fs   = require('fs');
+const path = require('path');
+const zlib = require('zlib');
 
-// In-memory cache so we only read the JSON file once per function instance
+const BASE_CFS  = 'https://www.classicfootballshirts.co.uk/';
+const IMG_BASE  = 'https://www.classicfootballshirts.co.uk/cdn-cgi/image/w=360,h=360,q=100,f=webp/pub/media/catalog/product/';
+const AFF_SUFFIX = '?ref=mjk5njr&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate';
+
 let _cache = null;
 
 function loadData() {
   if (_cache) return _cache;
-  const fs = require('fs');
-  const path = require('path');
-  const filePath = path.join(__dirname, '../../data/cfs.json');
-  const raw = fs.readFileSync(filePath, 'utf8');
+  const filePath = path.join(__dirname, 'data/cfs.json.gz');
+  const compressed = fs.readFileSync(filePath);
+  const raw = zlib.gunzipSync(compressed).toString('utf8');
   _cache = JSON.parse(raw);
   return _cache;
 }
 
-function matchesQuery(name, terms) {
-  const hay = name.toLowerCase();
-  return terms.every(function(t) { return hay.includes(t); });
+function matches(name, terms) {
+  const h = name.toLowerCase();
+  return terms.every(function(t) { return h.includes(t); });
 }
 
 exports.handler = async function(event) {
@@ -43,7 +42,6 @@ exports.handler = async function(event) {
   }
 
   const terms = q.split(/\s+/).filter(function(t) { return t.length >= 2; });
-
   if (!terms.length) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Query too short' }) };
   }
@@ -54,40 +52,26 @@ exports.handler = async function(event) {
     const seen = new Set();
 
     for (const p of data.p) {
-      // p = [id, name, brand, season, condition, price, sizes, img, slug, type]
-      const name = p[1];
-      if (!matchesQuery(name, terms)) continue;
-      const slug = p[8];
-      if (seen.has(slug)) continue;
-      seen.add(slug);
-
+      if (!matches(p[1], terms)) continue;
+      if (seen.has(p[8])) continue;
+      seen.add(p[8]);
       const image = p[7] ? IMG_BASE + p[7] : null;
-      const url = BASE_URL + slug + AFFILIATE_SUFFIX;
-
       products.push({
-        id: p[0],
-        name: name,
-        club: name,
-        brand: p[2],
-        season: p[3],
-        condition: p[4],
-        price: p[5],
-        currency: 'GBP',
-        sizes: p[6],
-        image: image,
-        images: image ? [image] : [],
-        url: url,
+        id: p[0], name: p[1], club: p[1],
+        brand: p[2], season: p[3], condition: p[4],
+        price: p[5], currency: 'GBP', storeCurrency: 'GBP',
+        sizes: p[6], image, images: image ? [image] : [],
+        url: BASE_CFS + p[8] + AFF_SUFFIX,
         store: 'Classic Football Shirts',
-        feedType: p[9] === 'c' ? 'classic' : 'new'
+        source: 'cfs', isShopify: false
       });
-
       if (products.length >= 400) break;
     }
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ products: products, total: products.length, query: q })
+      body: JSON.stringify({ products, total: products.length, query: q })
     };
 
   } catch (err) {
