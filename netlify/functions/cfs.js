@@ -78,8 +78,8 @@ function rowToProduct(row, feedType) {
   const normSize = sizeMap[size.toUpperCase()] || (size ? size : '');
   const sizes = normSize ? [normSize] : ['One size'];
 
-  const id = 'cfs_' + feedType + '_' + Buffer.from(url).toString('base64').slice(0, 20).replace(/[^a-zA-Z0-9]/g, '');
-
+const id = 'cfs_' + feedType + '_' + Buffer.from(url).toString('base64').replace(/[^a-zA-Z0-9]/g, '').slice(-32);
+   
   return {
     id:        id,
     name:      name,
