@@ -102,12 +102,22 @@ const images = image ? [image] : [];
   };
 }
 
+// In-memory cache: stores the CSV so we don't re-download on every search
+const feedCache = {};
+const CACHE_TTL = 20 * 60 * 1000; // 20 minutes
+
 async function fetchFeed(feedUrl) {
+  const now = Date.now();
+  if (feedCache[feedUrl] && (now - feedCache[feedUrl].time) < CACHE_TTL) {
+    return feedCache[feedUrl].text;
+  }
   const res = await fetch(feedUrl, {
     headers: { 'User-Agent': 'KitFinder/1.0' }
   });
   if (!res.ok) throw new Error('Feed error: ' + res.status);
-  return await res.text();
+  const text = await res.text();
+  feedCache[feedUrl] = { text, time: now };
+  return text;
 }
 
 function matchesQuery(row, terms) {
