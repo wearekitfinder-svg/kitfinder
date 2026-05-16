@@ -79,7 +79,17 @@ function rowToProduct(row, feedType) {
   const sizes = normSize ? [normSize] : ['One size'];
 
 const id = 'cfs_' + feedType + '_' + Buffer.from(url).toString('base64').replace(/[^a-zA-Z0-9]/g, '').slice(-32);
-   
+
+  function buildImages(imgUrl) {
+    if (!imgUrl) return [];
+    const front = imgUrl.replace(/-\d+_([a-z0-9]+\.jpg)/i, '-1_$1');
+    const back  = imgUrl.replace(/-\d+_([a-z0-9]+\.jpg)/i, '-2_$1');
+    return front === back ? [front] : [front, back];
+  }
+
+  const images = buildImages(image);
+  const firstImage = images[0] || image;
+
   return {
     id:        id,
     name:      name,
@@ -91,8 +101,8 @@ const id = 'cfs_' + feedType + '_' + Buffer.from(url).toString('base64').replace
     price:     price,
     currency:  'GBP',
     sizes:     sizes,
-    image:     image,
-    images:    image ? [image] : [],
+    image:     firstImage,
+    images:    images.length ? images : (image ? [image] : []),
     url:       addAffiliate(url),
     store:     'Classic Football Shirts',
     feedType:  feedType  // 'classic' or 'new'
