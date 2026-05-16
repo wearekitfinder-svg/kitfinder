@@ -1,20 +1,39 @@
-/* Netlify Function: Classic Football Shirts — reads cfs.json.gz */
+/* Netlify Function: Classic Football Shirts — fetches cfs.json.gz from site */
 
-const fs   = require('fs');
-const path = require('path');
 const zlib = require('zlib');
+const https = require('https');
 
-const BASE_CFS  = 'https://www.classicfootballshirts.co.uk/';
-const IMG_BASE  = 'https://www.classicfootballshirts.co.uk/cdn-cgi/image/w=360,h=360,q=100,f=webp/pub/media/catalog/product/';
+const DATA_URL   = 'https://wearekitfinder.com/data/cfs.json.gz';
+const BASE_CFS   = 'https://www.classicfootballshirts.co.uk/';
+const IMG_BASE   = 'https://www.classicfootballshirts.co.uk/cdn-cgi/image/w=360,h=360,q=100,f=webp/pub/media/catalog/product/';
 const AFF_SUFFIX = '?ref=mjk5njr&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate';
+const CACHE_TTL  = 30 * 60 * 1000; // 30 minutes
 
 let _cache = null;
+let _cacheTime = 0;
 
-function loadData() {
-  if (_cache) return _cache;
-const filePath = path.join(__dirname, 'data/cfs.json.gz');
-const filePath = path.join(__dirname, 'data/cfs.json.gz');  const raw = zlib.gunzipSync(compressed).toString('utf8');
-  _cache = JSON.parse(raw);
+function fetchGz(url) {
+  return new Promise(function(resolve, reject) {
+    https.get(url, function(res) {
+      const chunks = [];
+      res.on('data', function(c) { chunks.push(c); });
+      res.on('end', function() {
+        const buf = Buffer.concat(chunks);
+        zlib.gunzip(buf, function(err, raw) {
+          if (err) return reject(err);
+          try { resolve(JSON.parse(raw.toString('utf8'))); }
+          catch(e) { reject(e); }
+        });
+      });
+    }).on('error', reject);
+  });
+}
+
+async function loadData() {
+  const now = Date.now();
+  if (_cache && (now - _cacheTime) < CACHE_TTL) return _cache;
+  _cache = await fetchGz(DATA_URL);
+  _cacheTime = now;
   return _cache;
 }
 
@@ -46,7 +65,7 @@ exports.handler = async function(event) {
   }
 
   try {
-    const data = loadData();
+    const data = await loadData();
     const products = [];
     const seen = new Set();
 
