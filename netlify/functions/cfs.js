@@ -12,8 +12,8 @@ let _cache = null;
 
 function loadData() {
   if (_cache) return _cache;
-  const filePath = path.join(__dirname, 'data/cfs.json.gz');
-  const compressed = fs.readFileSync(filePath);
+const filePath = path.join(__dirname, 'data/cfs.json.gz');
+const fs2 = require('fs'); const files = fs2.readdirSync(path.join(__dirname, 'data')).join(','); throw new Error('FILES: ' + files);  const compressed = fs.readFileSync(filePath);
   const raw = zlib.gunzipSync(compressed).toString('utf8');
   _cache = JSON.parse(raw);
   return _cache;
