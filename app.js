@@ -54,39 +54,20 @@ if(!window.FEED)window.FEED=[];var FEED=window.FEED;var _firstSearchDone=!1;func
   if(!a||a.length<2)return void(shopifyResults=[]);
   shopifyLoading=!0;lastQuery=a;shopifyResults=[];
   const seen=new Set();
-  let page=0;
-  async function fetchPage(){
-    try{
-      const url='/.netlify/functions/search?q='+encodeURIComponent(a)+'&store=shopify&page='+page+'&limit=100';
-      const timeout=new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),15000));
-      const res=await Promise.race([fetch(url),timeout]);
-      if(!res.ok)return;
-      const data=await res.json();
-      const items=data.products||[];
-      items.forEach(function(p){
-        const id=p.id||p.url+'||'+p.name;
-        if(!seen.has(id)){seen.add(id);shopifyResults.push(p);}
-      });
-      mergeAndRender(a);
-      if(items.length>=100&&lastQuery===a){page++;fetchPage();}
-    }catch(e){console.log('[KF SEARCH ERR]',e.message);}
-  }
-  // Also fetch woo via search.js
-  async function fetchWooPage(){
-    try{
-      const url='/.netlify/functions/search?q='+encodeURIComponent(a)+'&store=woo&page=0&limit=100';
-      const timeout=new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),15000));
-      const res=await Promise.race([fetch(url),timeout]);
-      if(!res.ok)return;
-      const data=await res.json();
-      (data.products||[]).forEach(function(p){
-        const id=p.id||p.url+'||'+p.name;
-        if(!seen.has(id)){seen.add(id);shopifyResults.push(p);}
-      });
-      mergeAndRender(a);
-    }catch(e){console.log('[KF WOO SEARCH ERR]',e.message);}
-  }
-  await Promise.all([fetchPage(),fetchWooPage()]);
+  try{
+    const [shopRes,wooRes]=await Promise.all([
+      Promise.race([
+        fetch('/.netlify/functions/search?q='+encodeURIComponent(a)+'&store=shopify&page=0&limit=100'),
+        new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),20000))
+      ]),
+      Promise.race([
+        fetch('/.netlify/functions/search?q='+encodeURIComponent(a)+'&store=woo&page=0&limit=100'),
+        new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),20000))
+      ])
+    ]);
+    if(shopRes.ok){const d=await shopRes.json();(d.products||[]).forEach(function(p){const id=p.id||p.url+'||'+p.name;if(!seen.has(id)){seen.add(id);shopifyResults.push(p);}});}
+    if(wooRes.ok){const d=await wooRes.json();(d.products||[]).forEach(function(p){const id=p.id||p.url+'||'+p.name;if(!seen.has(id)){seen.add(id);shopifyResults.push(p);}});}
+  }catch(e){console.log('[KF SEARCH ERR]',e.message);}
   shopifyLoading=!1;
 }
 function mergeAndRender(a){applyFilters()}function showShopifyStatus(a){}function showShopifyStatusTimed(a,e){}function triggerSearch(){isFavView=!1,"function"==typeof _hideWcHeader&&_hideWcHeader();const a="flex"===document.getElementById("results").style.display?document.getElementById("resultsSearch").value.trim():document.getElementById("landingSearch").value.trim();document.getElementById("resultsSearch").value=a,showLoading(),window.scrollTo(0,0),document.getElementById("landing").style.display="none",document.getElementById("results").style.display="flex";var e=document.getElementById("holyGrails");e&&(e.style.display="none");var n=document.getElementById("footballGiants");n&&(n.style.display="none");var r=document.getElementById("worldCup2026");r&&(r.style.display="none");var t=document.getElementById("landingFooter");t&&(t.style.display="none");if(typeof _kfShowBlogBanner==="function")_kfShowBlogBanner();setTimeout(function(){var _afb=document.getElementById("activeFilterBadges");if(_afb){_afb.innerHTML="";_afb.style.display="none";}if(shopifyResults=[],renderCards([]),a.length>=2){showShopifyStatus("🔍 Searching specialist stores…"),ebayResults=[],csResults=[];var e=Date.now();const _csQuery=expandQuery(a)[0]||a,n=fetchEbayShirts(a),r=fetchClassicShirts(_csQuery),_cfsP=fetchCFSShirts(_csQuery);searchShopifyStores(a).then(function(){return Promise.all([n,r,_cfsP])}).then(function(){const a=new Set(shopifyResults.map(a=>a.id));
