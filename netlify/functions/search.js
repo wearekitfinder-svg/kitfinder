@@ -46,13 +46,15 @@ function matches(name, terms) {
   return terms.every(function(t) { return h.includes(t); });
 }
 
-function searchCFS(data, terms, limit) {
+function searchCFS(data, terms, limit, page) {
   const results = [];
   const seen = new Set();
+  let skip = page * limit;
   for (const p of data.p) {
     if (!matches(p[1], terms)) continue;
     if (seen.has(p[8])) continue;
     seen.add(p[8]);
+    if (skip-- > 0) continue;
     const image = p[7] ? IMG_BASE + p[7] : null;
     results.push({
       id: p[0], name: p[1], club: p[1],
@@ -67,13 +69,15 @@ function searchCFS(data, terms, limit) {
   return results;
 }
 
-function searchShopify(data, terms, limit) {
+function searchShopify(data, terms, limit, page) {
   const results = [];
   const seen = new Set();
+  let skip = page * limit;
   for (const p of data.p) {
     if (!matches(p[1], terms)) continue;
     if (seen.has(p[5])) continue;
     seen.add(p[5]);
+    if (skip-- > 0) continue;
     results.push({
       id: p[0], name: p[1], club: p[1],
       price: p[2], currency: p[3], storeCurrency: p[3],
@@ -85,13 +89,15 @@ function searchShopify(data, terms, limit) {
   return results;
 }
 
-function searchWoo(data, terms, limit) {
+function searchWoo(data, terms, limit, page) {
   const results = [];
   const seen = new Set();
+  let skip = page * limit;
   for (const p of data.p) {
     if (!matches(p[1], terms)) continue;
     if (seen.has(p[5])) continue;
     seen.add(p[5]);
+    if (skip-- > 0) continue;
     results.push({
       id: p[0], name: p[1], club: p[1],
       price: p[2], currency: p[3], storeCurrency: p[3],
@@ -116,6 +122,8 @@ exports.handler = async function(event) {
 
   const q     = (event.queryStringParameters.q || '').trim().toLowerCase();
   const store = event.queryStringParameters.store || 'all';
+  const page  = parseInt(event.queryStringParameters.page || '0', 10);
+  const limit = Math.min(parseInt(event.queryStringParameters.limit || '100', 10), 200);
 
   if (!q || q === 'warmup') {
     return { statusCode: 200, headers, body: JSON.stringify({ products: [], total: 0 }) };
@@ -131,13 +139,13 @@ exports.handler = async function(event) {
 
     if (store === 'cfs') {
       const data = await load('cfs');
-      products = searchCFS(data, terms, 400);
+      products = searchCFS(data, terms, limit, page);
     } else if (store === 'shopify') {
       const data = await load('shopify');
-      products = searchShopify(data, terms, 400);
+      products = searchShopify(data, terms, limit, page);
     } else if (store === 'woo') {
       const data = await load('woo');
-      products = searchWoo(data, terms, 400);
+      products = searchWoo(data, terms, limit, page);
     } else {
       const [cfsData, shopData, wooData] = await Promise.all([
         load('cfs'), load('shopify'), load('woo')
