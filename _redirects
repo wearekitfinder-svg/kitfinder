@@ -1,4 +1,4 @@
-# Kit Finder — URL routing (todas las rutas → index.html)
+/functions/*        /functions/:splat  200
 /results            /index.html  200
 /favourites         /index.html  200
 /world-cup-kits     /index.html  200
