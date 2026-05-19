@@ -16,6 +16,7 @@ const ALLOWED_STORES = [
   'https://www.kitroomfootball.com',
   'https://thefootballtimecapsule.com',
   'https://goalmarkt.com',
+  'https://oh20footballshirts.com',
 ];
 
 const corsHeaders = {
