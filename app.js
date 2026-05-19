@@ -867,6 +867,6 @@ async function kfSearchByImage(input){
   }catch(err){
     _kfHideAnalyzing();
     console.error("[KF Camera]",err);
-    alert("Image search failed. Make sure ANTHROPIC_API_KEY is set in Netlify environment variables.");
+    alert("set in Cloudflare environment variables");
   }
 }
