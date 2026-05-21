@@ -481,12 +481,13 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
 .search-camera-btn:hover{color:var(--green)}
 
 /* ── Menú móvil — sistema de paneles deslizantes ──────────────────────── */
-.mob-drawer{overflow:hidden!important}
+.mob-drawer{overflow:hidden!important;display:flex;flex-direction:column;height:100%}
 .mob-drawer-inner{
   display:flex;
   flex-direction:row;
   width:300%;
-  min-height:100vh;
+  height:100%;
+  flex:1;
   transform:translateX(0);
   transition:transform .28s cubic-bezier(.4,0,.2,1);
 }
@@ -495,7 +496,7 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
 .mob-panel{
   width:calc(100%/3);
   flex-shrink:0;
-  min-height:100vh;
+  height:100%;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
   background:#0d1117;
@@ -519,7 +520,7 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
 .mob-direct-link{color:#fff!important}
 .mob-section-btn{color:#fff!important}
 .mob-continent-btn{color:#fff!important}
-.mob-direct-link:active,.mob-direct-link:hover{color:#3fcf8e!important}
+.mob-direct-link:hover{color:#3fcf8e!important}
 .mob-section-btn:active,.mob-section-btn:hover{color:#3fcf8e!important}
 .mob-continent-btn:active,.mob-continent-btn:hover{color:#3fcf8e!important}
 
