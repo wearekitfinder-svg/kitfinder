@@ -312,8 +312,9 @@ document.addEventListener('touchstart', function(e){
   if(carousel){
     // Si ya está touched, no hacer nada (las flechas ya visibles)
     if(carousel.classList.contains('touched')) return;
-    // Primer toque: mostrar flechas, no navegar
-    e.preventDefault();
+    // Primer toque: mostrar flechas, no navegar (sin bloquear scroll del menu)
+    var inDrawer=e.target.closest('.mob-drawer');
+    if(!inDrawer)e.preventDefault();
     carousel.classList.add('touched');
     // Quitar touched de otros carousels
     document.querySelectorAll('.card-carousel.touched').forEach(function(c){
