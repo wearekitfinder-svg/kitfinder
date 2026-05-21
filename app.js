@@ -242,11 +242,19 @@ function mobShowItems(contIdx){
     a.className='mob-direct-link';
     a.href='#';
     a.textContent=item.label;
-    var _touchStartY=0;
-    a.addEventListener('touchstart',function(e){_touchStartY=e.touches[0].clientY;},{passive:true});
+    var _tsy=0,_tsx=0,_scrolled=false;
+    a.addEventListener('touchstart',function(e){
+      _tsy=e.touches[0].clientY;
+      _tsx=e.touches[0].clientX;
+      _scrolled=false;
+    },{passive:true});
+    a.addEventListener('touchmove',function(e){
+      var dy=Math.abs(e.touches[0].clientY-_tsy);
+      var dx=Math.abs(e.touches[0].clientX-_tsx);
+      if(dy>5||dx>5)_scrolled=true;
+    },{passive:true});
     a.addEventListener('touchend',function(e){
-      var dy=Math.abs(e.changedTouches[0].clientY-_touchStartY);
-      if(dy>8)return;
+      if(_scrolled)return;
       e.preventDefault();
       eval(item.fn);toggleMobileNav();
     },{passive:false});
