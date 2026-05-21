@@ -407,8 +407,8 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
   .footer-socials{justify-content:center}
 }
 
-.mob-direct-link{display:block;padding:16px 20px;color:rgba(255,255,255,.8);font-family:'Outfit',sans-serif;font-size:15px;font-weight:500;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06);transition:color .15s,background .15s}
-.mob-direct-link:active,.mob-direct-link:hover{color:var(--green);background:rgba(255,255,255,.04)}
+.mob-direct-link{display:block;padding:16px 20px;color:rgba(255,255,255,.8);font-family:'Outfit',sans-serif;font-size:15px;font-weight:500;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.06);transition:color .15s,background .15s;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+.mob-direct-link:hover{color:var(--green);background:rgba(255,255,255,.04)}
 
 /* ── Football Giants: tarjetas con foto ─────────────────── */
 .fg-card-photo{
@@ -481,13 +481,12 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
 .search-camera-btn:hover{color:var(--green)}
 
 /* ── Menú móvil — sistema de paneles deslizantes ──────────────────────── */
-.mob-drawer{overflow:hidden!important;display:flex;flex-direction:column}
+.mob-drawer{overflow:hidden!important}
 .mob-drawer-inner{
   display:flex;
   flex-direction:row;
   width:300%;
-  height:100%;
-  flex:1;
+  min-height:100vh;
   transform:translateX(0);
   transition:transform .28s cubic-bezier(.4,0,.2,1);
 }
@@ -496,7 +495,7 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
 .mob-panel{
   width:calc(100%/3);
   flex-shrink:0;
-  height:100%;
+  min-height:100vh;
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
   background:#0d1117;
