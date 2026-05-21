@@ -242,7 +242,15 @@ function mobShowItems(contIdx){
     a.className='mob-direct-link';
     a.href='#';
     a.textContent=item.label;
-    a.setAttribute('onclick',item.fn+';toggleMobileNav();return false;');
+    var _touchStartY=0;
+    a.addEventListener('touchstart',function(e){_touchStartY=e.touches[0].clientY;},{passive:true});
+    a.addEventListener('touchend',function(e){
+      var dy=Math.abs(e.changedTouches[0].clientY-_touchStartY);
+      if(dy>8)return;
+      e.preventDefault();
+      eval(item.fn);toggleMobileNav();
+    },{passive:false});
+    a.addEventListener('click',function(e){e.preventDefault();});
     list.appendChild(a);
   });
   document.getElementById('mobDrawerInner').classList.add('show-items');
