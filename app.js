@@ -783,6 +783,7 @@ async function kfSearchByImage(input){
 
     _kfUpdateAnalyzing("Match found!","Searching across 80+ stores");
 
+    // Construir query principal
     var parts=[];
     if(parsed.team)parts.push(parsed.team);
     if(parsed.version&&parsed.version!=="home")parts.push(parsed.version);
@@ -799,13 +800,44 @@ async function kfSearchByImage(input){
       return;
     }
 
+    // Generar variantes de año y temporada
+    var searchTerms=[query];
+    if(parsed.team&&parsed.year){
+      var team=parsed.team;
+      var yrStr=String(parsed.year);
+      // Extraer años del string (ej: "1998-1999", "1998/99", "1998")
+      var y1=null,y2=null;
+      var mFull=yrStr.match(/(\d{4})[\-\/](\d{4})/);
+      var mShort=yrStr.match(/(\d{4})[\-\/](\d{2})/);
+      var mSingle=yrStr.match(/^(\d{4})$/);
+      if(mFull){y1=parseInt(mFull[1]);y2=parseInt(mFull[2]);}
+      else if(mShort){y1=parseInt(mShort[1]);y2=y1+1;}
+      else if(mSingle){y1=parseInt(mSingle[1]);y2=y1+1;}
+
+      if(y1&&y2){
+        var y2s=String(y2).slice(-2);
+        // Variantes: "Stuttgart 1998", "Stuttgart 1999", "Stuttgart 98/99", "Stuttgart 1998/99", "Stuttgart 1998-99", "Stuttgart 1998/1999", "Stuttgart 1998-1999"
+        [
+          team+" "+y1,
+          team+" "+y2,
+          team+" "+y2s+"/"+String(y2+1).slice(-2),
+          team+" "+y1+"/"+y2s,
+          team+" "+y1+"-"+y2s,
+          team+" "+y1+"/"+y2,
+          team+" "+y1+"-"+y2
+        ].forEach(function(v){if(searchTerms.indexOf(v)<0)searchTerms.push(v);});
+      }
+    }
+
     setTimeout(function(){
       _kfHideAnalyzing();
+      // Limpiar los buscadores - no mostrar texto
       var ls=document.getElementById("landingSearch");
       var rs=document.getElementById("resultsSearch");
-      if(ls)ls.value=query;
-      if(rs)rs.value=query;
-      triggerSearch(query);
+      if(ls)ls.value="";
+      if(rs)rs.value="";
+      // Buscar con todas las variantes
+      triggerSearch(searchTerms.join(" "));
     },800);
 
   }catch(err){
