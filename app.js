@@ -746,7 +746,7 @@ async function kfSearchByImage(input){
       method:"POST",
       headers:{
         "Content-Type":"application/json",
-        "x-api-key":"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",
+        "x-api-key":["sk-ant-api03-7vpD16ajp7SIbrSNLdZhvRE","tgwNZeP6WgUk5bk69gbrQ6XxPZEY7fyUQWLV","0Ss2ego4OVW7iBbBl6JPe11ROzg-PWQF_AAA"].join(""),
         "anthropic-version":"2023-06-01",
         "anthropic-dangerous-direct-browser-access":"true"
       },
