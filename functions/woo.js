@@ -7,8 +7,6 @@ const ALLOWED_STORES = [
   'https://footballlegendskits.com',
   'https://footballthrift.shop',
   'https://kickback.pl',
-  'https://thethirdkit.co.uk',
-  'https://historicfootballshirts.co.uk',
   'https://footballsecondhand.com',
   'https://valdevintage.com',
   'https://nr10.store',
