@@ -75,12 +75,12 @@ async function fetchWorkerResults(query){
   _workerCache[cacheKey]=true;
   try{
     var page=1;
-    while(true){
-      var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page='+page;
+    {
+      var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page=1&limit=100';
       var r=await fetch(url);
-      if(!r.ok)break;
+      if(!r.ok)return;
       var data=await r.json();
-      if(!data.products||!data.products.length)break;
+      if(!data.products||!data.products.length)return;
       var changed=false;
       data.products.forEach(function(p){
         var id=p.id||p.url;
@@ -110,10 +110,7 @@ async function fetchWorkerResults(query){
         changed=true;
       });
       if(changed)applyFilters();
-      if(page>=data.total/data.limit)break;
-      page++;
-      if(page>10)break;
-    }
+          }
     console.log('[KF WORKER] fetched page',page-1,'for',query);
   }catch(e){console.log('[KF WORKER] err',e.message);}
 }
