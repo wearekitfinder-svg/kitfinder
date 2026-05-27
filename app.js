@@ -74,41 +74,37 @@ async function fetchWorkerResults(query){
   if(_workerCache[cacheKey])return;
   _workerCache[cacheKey]=true;
   try{
-    var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page=1&limit=100';
-    var r=await fetch(url);
-    if(!r.ok){console.log('[KF WORKER] err status',r.status);return;}
-    var data=await r.json();
-    if(!data.products||!data.products.length){console.log('[KF WORKER] 0 results for',query);return;}
-    var added=0;
-    data.products.forEach(function(p){
-      var id=p.id||p.url;
-      if(shopifyResults.find(function(r){return r.id===id;}))return;
-      shopifyResults.push({
-        id:p.id,
-        name:p.name,
-        club:p.name,
-        league:extractLeagueFromTitle(p.name),
-        season:p.season||extractSeasonFromTitle(p.name),
-        version:extractVersionFromTitle(p.name),
-        brand:p.brand||extractBrandFromTitle(p.name),
-        price:p.price,
-        currency:p.currency||'GBP',
-        storeCurrency:p.currency||'GBP',
-        image:p.image||null,
-        images:p.image?[p.image]:[],
-        url:p.url,
-        store:p.store,
-        sizes:[],
-        isShopify:false,
-        condition:p.condition||'Used',
-        main:guessColor(p.name),
-        accent:'#1e2530',
-        colors:[]
+    var page=1;var totalPages=1;var totalAdded=0;
+    while(page<=totalPages&&page<=20){
+      var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page='+page+'&limit=100';
+      var r=await fetch(url);
+      if(!r.ok)break;
+      var data=await r.json();
+      if(!data.products||!data.products.length)break;
+      totalPages=Math.ceil((data.total||0)/100);
+      var added=0;
+      data.products.forEach(function(p){
+        var id=p.id||p.url;
+        if(shopifyResults.find(function(r){return r.id===id;}))return;
+        shopifyResults.push({
+          id:p.id,name:p.name,club:p.name,
+          league:extractLeagueFromTitle(p.name),
+          season:p.season||extractSeasonFromTitle(p.name),
+          version:extractVersionFromTitle(p.name),
+          brand:p.brand||extractBrandFromTitle(p.name),
+          price:p.price,currency:p.currency||'GBP',storeCurrency:p.currency||'GBP',
+          image:p.image||null,images:p.image?[p.image]:[],
+          url:p.url,store:p.store,sizes:[],isShopify:false,
+          condition:p.condition||'Used',main:guessColor(p.name),accent:'#1e2530',colors:[]
+        });
+        added++;
       });
-      added++;
-    });
-    console.log('[KF WORKER]',added,'results for',query);
-    if(added>0){applyFilters();if(typeof hideLoadingWithDelay==='function')hideLoadingWithDelay();}
+      totalAdded+=added;
+      if(added>0){applyFilters();if(page===1&&typeof hideLoadingWithDelay==='function')hideLoadingWithDelay();}
+      page++;
+      if(_csQuery!==query)break;
+    }
+    console.log('[KF WORKER]',totalAdded,'total results for',query);
   }catch(e){console.log('[KF WORKER] err',e.message);}
 }
 var _lineupData=null,_lineupFetching=null;async function _loadLineupData(){if(_lineupData)return _lineupData;if(_lineupFetching)return _lineupFetching;_lineupFetching=(async function(){try{const a=await fetch("/data/lineup_feed.json.gz");if(!a.ok)return null;const b=await a.arrayBuffer();const ds=new DecompressionStream("gzip");const writer=ds.writable.getWriter();writer.write(new Uint8Array(b));writer.close();const reader=ds.readable.getReader();const chunks=[];let done,value;while({done,value}=await reader.read(),!done)chunks.push(value);const text=new TextDecoder().decode(chunks.reduce((a,b)=>{const c=new Uint8Array(a.length+b.length);c.set(a);c.set(b,a.length);return c;},new Uint8Array(0)));return _lineupData=JSON.parse(text);}catch(e){console.log("[KF LINEUP] load err",e.message);return null;}})();return _lineupFetching;}async function fetchLineupShirts(a){if(!a||a.length<2)return;try{const data=await _loadLineupData();if(!data||!Array.isArray(data))return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id="lineup-"+p.url.split("/").pop();if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"EUR",storeCurrency:p.currency||"EUR",image:p.image||null,images:p.image?[p.image]:[],url:p.url,store:"Lineup Vintage Shop",sizes:["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF LINEUP]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF LINEUP] err",e.message);}}
