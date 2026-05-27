@@ -102,7 +102,6 @@ async function fetchWorkerResults(query){
       totalAdded+=added;
       if(added>0){applyFilters();if(page===1&&typeof hideLoadingWithDelay==='function')hideLoadingWithDelay();}
       page++;
-      if(_csQuery!==query)break;
     }
     console.log('[KF WORKER]',totalAdded,'total results for',query);
   }catch(e){console.log('[KF WORKER] err',e.message);}
