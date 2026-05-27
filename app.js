@@ -100,10 +100,10 @@ async function fetchWorkerResults(query){
         added++;
       });
       totalAdded+=added;
-      if(added>0){applyFilters();if(page===1&&typeof hideLoadingWithDelay==='function')hideLoadingWithDelay();}
       page++;
     }
     console.log('[KF WORKER]',totalAdded,'total results for',query);
+    if(totalAdded>0){applyFilters();if(typeof hideLoadingWithDelay==='function')hideLoadingWithDelay();}
   }catch(e){console.log('[KF WORKER] err',e.message);}
 }
 var _lineupData=null,_lineupFetching=null;async function _loadLineupData(){if(_lineupData)return _lineupData;if(_lineupFetching)return _lineupFetching;_lineupFetching=(async function(){try{const a=await fetch("/data/lineup_feed.json.gz");if(!a.ok)return null;const b=await a.arrayBuffer();const ds=new DecompressionStream("gzip");const writer=ds.writable.getWriter();writer.write(new Uint8Array(b));writer.close();const reader=ds.readable.getReader();const chunks=[];let done,value;while({done,value}=await reader.read(),!done)chunks.push(value);const text=new TextDecoder().decode(chunks.reduce((a,b)=>{const c=new Uint8Array(a.length+b.length);c.set(a);c.set(b,a.length);return c;},new Uint8Array(0)));return _lineupData=JSON.parse(text);}catch(e){console.log("[KF LINEUP] load err",e.message);return null;}})();return _lineupFetching;}async function fetchLineupShirts(a){if(!a||a.length<2)return;try{const data=await _loadLineupData();if(!data||!Array.isArray(data))return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id="lineup-"+p.url.split("/").pop();if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"EUR",storeCurrency:p.currency||"EUR",image:p.image||null,images:p.image?[p.image]:[],url:p.url,store:"Lineup Vintage Shop",sizes:["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF LINEUP]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF LINEUP] err",e.message);}}
