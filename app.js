@@ -75,7 +75,7 @@ async function fetchWorkerResults(query){
   _workerCache[cacheKey]=true;
   try{
     var page=1;var totalPages=1;var totalAdded=0;
-    while(page<=totalPages&&page<=20){
+    while(page<=totalPages&&page<=50){
       var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page='+page+'&limit=100';
       var r=await fetch(url);
       if(!r.ok)break;
