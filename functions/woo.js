@@ -15,6 +15,7 @@ const ALLOWED_STORES = [
   'https://goalmarkt.com',
   'https://oh20footballshirts.com',
   'https://backtothefootball.com',
+  'http://footballandvintageamsterdam.com',
   'https://www.magliecalciovintage.it',
   'https://footballworldgs.it',
   'https://www.arsijstore.com',
