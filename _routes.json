@@ -1,5 +1,28 @@
 {
   "version": 1,
-  "include": ["/functions/*"],
-  "exclude": []
+  "include": [
+    "/*"
+  ],
+  "exclude": [
+    "/images/*",
+    "/data/*",
+    "/blog/*",
+    "/clubs/*",
+    "/leagues/*",
+    "/national/*",
+    "/scripts/*",
+    "/*.js",
+    "/*.css",
+    "/*.html",
+    "/*.json",
+    "/*.txt",
+    "/*.xml",
+    "/*.gz",
+    "/*.png",
+    "/*.jpg",
+    "/*.svg",
+    "/*.ico",
+    "/*.woff",
+    "/*.woff2"
+  ]
 }
