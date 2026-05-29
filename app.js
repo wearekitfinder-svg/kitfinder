@@ -68,36 +68,47 @@ var _retData=null,_retFetching=null;async function _loadRetroshirtsData(){if(_re
 var _le7Data=null,_le7Fetching=null;async function _loadLe7Data(){if(_le7Data)return _le7Data;if(_le7Fetching)return _le7Fetching;null;return _le7Fetching;}async function fetchLe7Shirts(a){if(!a||a.length<2)return;try{const data=await _loadLe7Data();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id||"le7-"+p.url;if(shopifyResults.find(r=>r.id===id))continue;const img=p.image||null;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"EUR",storeCurrency:p.currency||"EUR",image:img,images:img?[img]:[],url:p.url,store:"Le 7 Sorelle",sizes:p.sizes||[],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF LE7]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF LE7] err",e.message);}}
 
 var _workerCache={};
+function _workerProductToCard(p){
+  var sizes=[];
+  try{sizes=Array.isArray(p.sizes)?p.sizes:(typeof p.sizes==='string'?JSON.parse(p.sizes):[]);}catch(e){}
+  if(!sizes||!sizes.length)sizes=['One size'];
+  return{
+    id:p.id,name:p.name,club:p.name,
+    league:extractLeagueFromTitle(p.name),
+    season:p.season||extractSeasonFromTitle(p.name),
+    version:extractVersionFromTitle(p.name),
+    brand:p.brand||extractBrandFromTitle(p.name),
+    price:p.price,currency:p.currency||'GBP',storeCurrency:p.currency||'GBP',
+    image:p.image||null,images:p.image?[p.image]:[],
+    url:p.url,store:p.store,sizes:sizes,isShopify:false,
+    condition:p.condition||'Used',main:guessColor(p.name),accent:'#1e2530',colors:[]
+  };
+}
 async function fetchWorkerResults(query){
   if(!query||query.length<2)return;
   var cacheKey=query.toLowerCase().trim();
   if(_workerCache[cacheKey])return;
   _workerCache[cacheKey]=true;
+  var LIMIT=1000,page=1,total=0,fetched=0;
   try{
-    var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page=1&limit=5000';
-    var r=await fetch(url);
-    if(!r.ok)return;
-    var data=await r.json();
-    if(!data.products||!data.products.length)return;
-    var added=0;
-    data.products.forEach(function(p){
-      var id=p.id||p.url;
-      if(shopifyResults.find(function(r){return r.id===id;}))return;
-      shopifyResults.push({
-        id:p.id,name:p.name,club:p.name,
-        league:extractLeagueFromTitle(p.name),
-        season:p.season||extractSeasonFromTitle(p.name),
-        version:extractVersionFromTitle(p.name),
-        brand:p.brand||extractBrandFromTitle(p.name),
-        price:p.price,currency:p.currency||'GBP',storeCurrency:p.currency||'GBP',
-        image:p.image||null,images:p.image?[p.image]:[],
-        url:p.url,store:p.store,sizes:[],isShopify:false,
-        condition:p.condition||'Used',main:guessColor(p.name),accent:'#1e2530',colors:[]
+    while(true){
+      var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page='+page+'&limit='+LIMIT;
+      var r=await fetch(url);
+      if(!r.ok)break;
+      var data=await r.json();
+      if(!data.products||!data.products.length)break;
+      if(page===1)total=data.total||0;
+      var seen=new Set(shopifyResults.map(function(x){return x.id;}));
+      data.products.forEach(function(p){
+        if(!seen.has(p.id)){shopifyResults.push(_workerProductToCard(p));}
       });
-      added++;
-    });
-    console.log('[KF WORKER]',added,'results for',query);
-    if(added>0){applyFilters();if(typeof hideLoadingWithDelay==='function')hideLoadingWithDelay();}
+      fetched+=data.products.length;
+      if(fetched>=total||data.products.length<LIMIT)break;
+      page++;
+      applyFilters();
+    }
+    console.log('[KF WORKER]',fetched,'of',total,'results for',query);
+    if(fetched>0)applyFilters();
   }catch(e){console.log('[KF WORKER] err',e.message);}
 }
 var _lineupData=null,_lineupFetching=null;async function _loadLineupData(){if(_lineupData)return _lineupData;if(_lineupFetching)return _lineupFetching;null;return _lineupFetching;}async function fetchLineupShirts(a){if(!a||a.length<2)return;try{const data=await _loadLineupData();if(!data||!Array.isArray(data))return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id="lineup-"+p.url.split("/").pop();if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"EUR",storeCurrency:p.currency||"EUR",image:p.image||null,images:p.image?[p.image]:[],url:p.url,store:"Lineup Vintage Shop",sizes:["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF LINEUP]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF LINEUP] err",e.message);}}
