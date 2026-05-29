@@ -90,7 +90,7 @@ async function fetchWorkerResults(query){
   if(_workerCache[cacheKey])return;
   _workerCache[cacheKey]=true;
   try{
-    var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page=1&limit=1000';
+    var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page=1&limit=10000';
     var r=await fetch(url);
     if(!r.ok)return;
     var data=await r.json();
