@@ -519,7 +519,7 @@
     <h1 class="landing-title"><span data-i18n="landing_title_1">Find any</span> <span class="kf-green" data-i18n="landing_title_2">football shirt</span><br><span data-i18n="landing_title_3">in one search</span></h1>
     <p class="landing-subtitle" data-i18n="landing_subtitle" style="color:rgba(255,255,255,0.55);font-size:15px;margin:-8px 0 18px;font-weight:400;text-align:center;">Search over 200,000 vintage, retro &amp; classic football shirts across 100+ specialist stores</p>
     <div class="search-box">
-      <input class="search-input" id="landingSearch" type="text" placeholder="Search football shirts (team, player, brand…)" autocomplete="off"/>
+      <input class="search-input" id="landingSearch" type="text" placeholder="Search football shirts (team, player, brand…)" autocomplete="off" onkeydown="if(event.key==='Enter')triggerSearch()"/>
       <input type="file" id="kfImgInput" accept="image/*" style="display:none" onchange="kfSearchByImage(this)"/>
       <button class="search-camera-btn" onclick="document.getElementById('kfImgInput').click()" title="Search by photo">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
