@@ -150,6 +150,133 @@ triggerSearch=function(){
 };
 var _origOpenFavs=openFavs;
 openFavs=function(){_origOpenFavs.apply(this,arguments);_setUrl('/favourites','Favourites — Kit Finder');};
+function goHome(a){a.preventDefault(),isFavView=!1,"function"==typeof _hideWcHeader&&_hideWcHeader(),document.getElementById("landing").style.display="flex",document.getElementById("results").style.display="none";var e=document.getElementById("holyGrails");e&&(e.style.display="block");var n=document.getElementById("footballGiants");n&&(n.style.display="block");var r=document.getElementById("worldCup2026");r&&(r.style.display="block");var t=document.getElementById("landingFooter");t&&(t.style.display="block"),setTimeout(function(){hgInit(),updateHGPrices()},50),document.getElementById("landingSearch").value="",document.getElementById("resultsSearch").value="",shopifyResults=[],ebayResults=[],csResults=[],cfsResults=[],resetPriceRange(),currentData=[],_leagueSearchActive=!1;const o=document.getElementById("cardsGrid");o&&(o.innerHTML="");const i=document.getElementById("shopifyStatus");i&&(i.style.display="none",i.innerHTML="");const s=document.getElementById("activeFilterBadges");s&&(s.style.display="none",s.innerHTML=""),clearFP(),document.querySelectorAll("#fpPanel .fp-section-header.open, #fpPanel .fp-sub-header.open").forEach(function(a){a.classList.remove("open"),a.nextElementSibling&&a.nextElementSibling.classList.remove("open")}),clearFilters();var _fab=document.getElementById("kfFavAlertsBanner");if(_fab)_fab.style.display="none";window.scrollTo(0,0)}function toggleMobileNav(){var d=document.getElementById("mobDrawer"),o=document.getElementById("mobOverlay");d&&d.classList.toggle("open"),o&&o.classList.toggle("open");var isOpen=d&&d.classList.contains("open");if(isOpen){var sy=window.scrollY||window.pageYOffset||0;document.body.dataset.kfScrollY=String(sy);document.documentElement.style.setProperty('--kf-scroll-top',(-sy)+'px');document.body.classList.add("kf-drawer-open");document.documentElement.classList.add("kf-drawer-open");}else{document.body.classList.remove("kf-drawer-open");document.documentElement.classList.remove("kf-drawer-open");var sy2=parseInt(document.body.dataset.kfScrollY||"0",10);document.documentElement.style.removeProperty('--kf-scroll-top');if(sy2)window.scrollTo(0,sy2);delete document.body.dataset.kfScrollY;}if(!isOpen){setTimeout(function(){var inner=document.getElementById("mobDrawerInner");if(inner){inner.classList.remove("show-continents","show-items")}},300)}}
+
+// --- NEW SLIDE MENU SYSTEM ---
+var _mobMenuMode='';
+var _mobLeagueData={
+  'league': {
+    title:'Shop by League',
+    continents:[
+      {name:'Europe', items:[
+        {label:'Austrian clubs',fn:"navPickLeague('Austrian Bundesliga',event)"},{label:'Belgian clubs',fn:"navPickLeague('Belgian Pro League',event)"},{label:'Croatian clubs',fn:"navPickLeague('HNL Croatia',event)"},{label:'Czech clubs',fn:"navPickLeague('Czech First League',event)"},{label:'Danish clubs',fn:"navPickLeague('Superliga Denmark',event)"},{label:'Dutch clubs',fn:"navPickLeague('Eredivisie',event)"},{label:'English clubs',fn:"navPickLeague('Premier League',event)"},{label:'Finnish clubs',fn:"navPickLeague('Veikkausliiga',event)"},{label:'French clubs',fn:"navPickLeague('Ligue 1',event)"},{label:'German clubs',fn:"navPickLeague('Bundesliga',event)"},{label:'Greek clubs',fn:"navPickLeague('Super League Greece',event)"},{label:'Hungarian clubs',fn:"navPickLeague('Nemzeti Bajnokság',event)"},{label:'Irish clubs',fn:"navPickLeague('League of Ireland',event)"},{label:'Italian clubs',fn:"navPickLeague('Serie A',event)"},{label:'N. Irish clubs',fn:"navPickLeague('NIFL Premiership',event)"},{label:'Norwegian clubs',fn:"navPickLeague('Eliteserien',event)"},{label:'Polish clubs',fn:"navPickLeague('Ekstraklasa',event)"},{label:'Portuguese clubs',fn:"navPickLeague('Primeira Liga',event)"},{label:'Russian clubs',fn:"navPickLeague('Russian Premier League',event)"},{label:'Scottish clubs',fn:"navPickLeague('Scottish Premiership',event)"},{label:'Serbian clubs',fn:"navPickLeague('Serbian SuperLiga',event)"},{label:'Spanish clubs',fn:"navPickLeague('La Liga',event)"},{label:'Swedish clubs',fn:"navPickLeague('Allsvenskan',event)"},{label:'Swiss clubs',fn:"navPickLeague('Swiss Super League',event)"},{label:'Turkish clubs',fn:"navPickLeague('Super Lig',event)"},{label:'Ukrainian clubs',fn:"navPickLeague('Premier League Ukraine',event)"}
+      ]},
+      {name:'America', items:[
+        {label:'Argentine clubs',fn:"navPickLeague('Liga Profesional Argentina',event)"},{label:'Brazilian clubs',fn:"navPickLeague('Brasileirão',event)"},{label:'Chilean clubs',fn:"navPickLeague('Primera División Chile',event)"},{label:'Colombian clubs',fn:"navPickLeague('Liga Colombiana',event)"},{label:'Ecuadorian clubs',fn:"navPickLeague('Liga Ecuatoriana',event)"},{label:'Mexican clubs',fn:"navPickLeague('Liga MX',event)"},{label:'Peruvian clubs',fn:"navPickLeague('Liga 1 Perú',event)"},{label:'US & Canadian clubs',fn:"navPickLeague('MLS',event)"},{label:'Uruguayan clubs',fn:"navPickLeague('Primera División Uruguay',event)"},{label:'Venezuelan clubs',fn:"navPickLeague('Primera División Venezuela',event)"}
+      ]},
+      {name:'Asia & Oceania', items:[
+        {label:'Australian clubs',fn:"navPickLeague('A-League',event)"},{label:'Chinese clubs',fn:"navPickLeague('Chinese Super League',event)"},{label:'Japanese clubs',fn:"navPickLeague('J1 League',event)"},{label:'Korean clubs',fn:"navPickLeague('K League 1',event)"},{label:'Saudi clubs',fn:"navPickLeague('Saudi Pro League',event)"}
+      ]},
+      {name:'Africa', items:[
+        {label:'Algerian clubs',fn:"navPickCountry('Algeria',event)"},{label:'Egyptian clubs',fn:"navPickCountry('Egypt',event)"},{label:'Moroccan clubs',fn:"navPickCountry('Morocco',event)"},{label:'South African clubs',fn:"navPickCountry('South Africa',event)"},{label:'Tunisian clubs',fn:"navPickCountry('Tunisia',event)"}
+      ]}
+    ]
+  },
+  'country': {
+    title:'Shop by Country',
+    continents:[
+      {name:'Europe', items:[
+        {label:'Austria',fn:"navPickCountry('Austria',event)"},{label:'Belgium',fn:"navPickCountry('Belgium',event)"},{label:'Croatia',fn:"navPickCountry('Croatia',event)"},{label:'Czech Republic',fn:"navPickCountry('Czech Republic',event)"},{label:'Denmark',fn:"navPickCountry('Denmark',event)"},{label:'England',fn:"navPickCountry('England',event)"},{label:'Finland',fn:"navPickCountry('Finland',event)"},{label:'France',fn:"navPickCountry('France',event)"},{label:'Germany',fn:"navPickCountry('Germany',event)"},{label:'Greece',fn:"navPickCountry('Greece',event)"},{label:'Hungary',fn:"navPickCountry('Hungary',event)"},{label:'Ireland',fn:"navPickCountry('Ireland',event)"},{label:'Italy',fn:"navPickCountry('Italy',event)"},{label:'Netherlands',fn:"navPickCountry('Netherlands',event)"},{label:'Norway',fn:"navPickCountry('Norway',event)"},{label:'Poland',fn:"navPickCountry('Poland',event)"},{label:'Portugal',fn:"navPickCountry('Portugal',event)"},{label:'Russia',fn:"navPickCountry('Russia',event)"},{label:'Scotland',fn:"navPickCountry('Scotland',event)"},{label:'Serbia',fn:"navPickCountry('Serbia',event)"},{label:'Spain',fn:"navPickCountry('Spain',event)"},{label:'Sweden',fn:"navPickCountry('Sweden',event)"},{label:'Switzerland',fn:"navPickCountry('Switzerland',event)"},{label:'Turkey',fn:"navPickCountry('Turkey',event)"},{label:'Ukraine',fn:"navPickCountry('Ukraine',event)"},{label:'Wales',fn:"navPickCountry('Wales',event)"}
+      ]},
+      {name:'America', items:[
+        {label:'Argentina',fn:"navPickCountry('Argentina',event)"},{label:'Brazil',fn:"navPickCountry('Brazil',event)"},{label:'Canada',fn:"navPickCountry('Canada',event)"},{label:'Chile',fn:"navPickCountry('Chile',event)"},{label:'Colombia',fn:"navPickCountry('Colombia',event)"},{label:'Costa Rica',fn:"navPickCountry('Costa Rica',event)"},{label:'Ecuador',fn:"navPickCountry('Ecuador',event)"},{label:'Mexico',fn:"navPickCountry('Mexico',event)"},{label:'Paraguay',fn:"navPickCountry('Paraguay',event)"},{label:'Peru',fn:"navPickCountry('Peru',event)"},{label:'Uruguay',fn:"navPickCountry('Uruguay',event)"},{label:'USA',fn:"navPickCountry('USA',event)"}
+      ]},
+      {name:'Africa', items:[
+        {label:'Algeria',fn:"navPickCountry('Algeria',event)"},{label:'Cameroon',fn:"navPickCountry('Cameroon',event)"},{label:'Egypt',fn:"navPickCountry('Egypt',event)"},{label:'Ghana',fn:"navPickCountry('Ghana',event)"},{label:'Ivory Coast',fn:"navPickCountry('Ivory Coast',event)"},{label:'Mali',fn:"navPickCountry('Mali',event)"},{label:'Morocco',fn:"navPickCountry('Morocco',event)"},{label:'Nigeria',fn:"navPickCountry('Nigeria',event)"},{label:'Senegal',fn:"navPickCountry('Senegal',event)"},{label:'South Africa',fn:"navPickCountry('South Africa',event)"},{label:'Tunisia',fn:"navPickCountry('Tunisia',event)"}
+      ]},
+      {name:'Asia & Oceania', items:[
+        {label:'Australia',fn:"navPickCountry('Australia',event)"},{label:'China',fn:"navPickCountry('China',event)"},{label:'India',fn:"navPickCountry('India',event)"},{label:'Iran',fn:"navPickCountry('Iran',event)"},{label:'Japan',fn:"navPickCountry('Japan',event)"},{label:'Qatar',fn:"navPickCountry('Qatar',event)"},{label:'Saudi Arabia',fn:"navPickCountry('Saudi Arabia',event)"},{label:'South Korea',fn:"navPickCountry('South Korea',event)"}
+      ]}
+    ]
+  }
+};
+
+function mobShowContinents(mode){
+  _mobMenuMode=mode;
+  var data=_mobLeagueData[mode];
+  // Actualizar título y label del back
+  document.getElementById('mobPanel2Title').textContent=data.title;
+  var bl1=document.getElementById('mobBackLabel1');
+  if(bl1)bl1.textContent='Menu';
+  // Construir lista de continentes
+  var list=document.getElementById('mobContinentsList');
+  list.innerHTML='';
+  data.continents.forEach(function(cont,i){
+    var btn=document.createElement('button');
+    btn.className='mob-section-btn';
+    btn.style.paddingLeft='20px';
+    btn.innerHTML=cont.name+' <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg>';
+    btn.onclick=function(){mobShowItems(i);};
+    var div=document.createElement('div');
+    div.className='mob-section';
+    div.appendChild(btn);
+    list.appendChild(div);
+  });
+  var inner=document.getElementById('mobDrawerInner');
+  inner.classList.remove('show-items');
+  inner.classList.add('show-continents');
+}
+
+function mobShowItems(contIdx){
+  var data=_mobLeagueData[_mobMenuMode];
+  var cont=data.continents[contIdx];
+  document.getElementById('mobPanel3Title').textContent=cont.name;
+  // Actualizar label del back con el nombre del panel 2
+  var bl2=document.getElementById('mobBackLabel2');
+  if(bl2)bl2.textContent=document.getElementById('mobPanel2Title').textContent;
+  var list=document.getElementById('mobItemsList');
+  list.innerHTML='';
+  cont.items.forEach(function(item){
+    var a=document.createElement('a');
+    a.className='mob-direct-link';
+    a.href='#';
+    a.textContent=item.label;
+    var _tsy=0,_tsx=0,_scrolled=false;
+    a.addEventListener('touchstart',function(e){
+      _tsy=e.touches[0].clientY;
+      _tsx=e.touches[0].clientX;
+      _scrolled=false;
+    },{passive:true});
+    a.addEventListener('touchmove',function(e){
+      var dy=Math.abs(e.touches[0].clientY-_tsy);
+      var dx=Math.abs(e.touches[0].clientX-_tsx);
+      if(dy>5||dx>5)_scrolled=true;
+    },{passive:true});
+    a.addEventListener('touchend',function(e){
+      if(_scrolled)return;
+      e.preventDefault();
+      eval(item.fn);toggleMobileNav();
+    },{passive:false});
+    a.addEventListener('click',function(e){e.preventDefault();});
+    list.appendChild(a);
+  });
+  document.getElementById('mobDrawerInner').classList.add('show-items');
+}
+
+function mobGoBack(toPanel){
+  var inner=document.getElementById('mobDrawerInner');
+  if(toPanel===1){inner.classList.remove('show-continents','show-items');}
+  else if(toPanel===2){inner.classList.remove('show-items');}
+}
+
+function mobToggle(btn){
+  if(!wasOpen){body.classList.add("open");btn.classList.add("open");}
+  else{body.classList.remove("open");btn.classList.remove("open");}
+}function toggleNavDd(a){
+  var e=a.nextElementSibling,n=e.classList.contains("open");
+  document.querySelectorAll(".nav-dd-menu.open").forEach(function(m){m.classList.remove("open");});
+  if(!n){
+    if(e.classList.contains("nav-dd-wide")){
+      // Posicionar con top correcto ANTES de hacerlo visible
+      // left y transform ya están en CSS (fixed, centrado en viewport)
+      var r=a.getBoundingClientRect();
+      e.style.top=(r.bottom+6)+"px";
+      // Forzar reflow para que el top se aplique antes del display:block+opacity
+      e.getBoundingClientRect();
+    }
+    e.classList.add("open");
+  }
+}function navPickLeague(a,e){e.preventDefault(),document.querySelectorAll(".nav-dd-menu.open").forEach(function(a){a.classList.remove("open")});var n=document.getElementById("navLinks");n&&n.classList.remove("open");var r=document.getElementById("navMobileToggle");r&&r.classList.remove("open"),fpLeagueVal=a,searchFromFP()}function navPickCountry(a,e){e.preventDefault(),document.querySelectorAll(".nav-dd-menu.open").forEach(function(a){a.classList.remove("open")});var n=document.getElementById("navLinks");n&&n.classList.remove("open");var r=document.getElementById("navMobileToggle");r&&r.classList.remove("open"),triggerCountrySearch(a)}function triggerCountrySearch(a){isFavView=!1,"function"==typeof _hideWcHeader&&_hideWcHeader();const e=a;showLoading(),window.scrollTo(0,0),document.getElementById("landing").style.display="none",document.getElementById("results").style.display="flex";var n=document.getElementById("holyGrails");n&&(n.style.display="none");var r=document.getElementById("footballGiants");r&&(r.style.display="none");var t=document.getElementById("worldCup2026");t&&(t.style.display="none");var o=document.getElementById("landingFooter");o&&(o.style.display="none"),document.getElementById("resultsSearch").value="",document.getElementById("landingSearch").value="",setTimeout(function(){shopifyResults=[],renderCards([]),showShopifyStatus("🔍 Searching specialist stores…"),ebayResults=[],csResults=[];var a=Date.now();const n=fetchEbayShirts(e),r=fetchClassicShirts(e),_cfsC=fetchCFSShirts(e);var t=new Set;searchAllStoresForCountry(e,function(a){a.forEach(function(a){var e=a.id||a.url+"||"+a.name;t.has(e)||(t.add(e),shopifyResults.push(a))}),applyFilters()}).then(function(){return Promise.all([n,r,_cfsC])}).then(function(){var e=new Set(shopifyResults.map(function(a){return a.id}));ebayResults.forEach(function(a){e.has(a.id)||(e.add(a.id),shopifyResults.push(a))}),csResults.forEach(function(a){e.has(a.id)||(e.add(a.id),shopifyResults.push(a))}),cfsResults.forEach(function(a){e.has(a.id)||(e.add(a.id),shopifyResults.push(a))}),applyFilters(),showShopifyStatusTimed("✅ <strong>"+shopifyResults.length+"</strong> shirts found");var n=Date.now()-a,r=Math.max(0,2e3-n);setTimeout(function(){hideLoading(),_firstSearchDone=!0},r)})},50)}function navBlog(a){a.preventDefault();var e=document.getElementById("navLinks");e&&e.classList.remove("open");var n=document.getElementById("navMobileToggle");n&&n.classList.remove("open");window.location.href="/blog";}
 var _origGoHome=goHome;
 goHome=function(e){_origGoHome.apply(this,[e]);_setUrl('/','Kit Finder — Find Vintage & Retro Football Shirts');};
 var _origSearchWorldCup=searchWorldCup;
