@@ -398,7 +398,7 @@ triggerCountrySearch=function(country){_origTriggerCountrySearch.apply(this,[cou
   window.addEventListener('popstate',function(){
     var p=window.location.pathname,s=window.location.search;
     if(p==='/'||p==='/index.html'){var fe={preventDefault:function(){}};_origGoHome(fe);}
-    else if(p==='/results'){var q2=new URLSearchParams(s).get('q')||'';if(q2){document.getElementById('landingSearch').value=q2;_origTriggerSearch();}}
+    else if(p==='/results'){var fe2={preventDefault:function(){}};_origGoHome(fe2);window.history.replaceState({},'Kit Finder','/');document.title='Kit Finder — Find Vintage & Retro Football Shirts';}
     else if(p==='/match-worn'){_origSearchMatchWorn();}
     else if(p==='/why'){showInfo('why',{preventDefault:function(){}});}
     else if(p==='/world-cup-kits'){_origSearchWorldCup();}
