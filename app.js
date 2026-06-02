@@ -651,24 +651,27 @@ function fgSearch(a){
     hideLoading();_firstSearchDone=true;
   },15000);
   var mainTerm=multi[0]||a;
-  var searchPromise=searchShopifyStores(mainTerm).catch(function(e){console.log("[KF FG] searchShopify err",e&&e.message);});
-  var aliasPromises=multi.slice(1).map(function(term){
-    return searchAllStoresForQuery(term,addResults).catch(function(){});
-  });
-  var ebayPromise=fetchEbayShirts(mainTerm).catch(function(){});
-  var csPromise=fetchClassicShirts(mainTerm).catch(function(){});var cfsPromise=fetchCFSShirts(mainTerm).catch(function(){});
-  multi.forEach(function(term){fetchWorkerResults(term).catch(function(){});});
-  Promise.all([searchPromise].concat(aliasPromises).concat([ebayPromise,csPromise])).then(function(){
+  // Buscar en D1 Worker todos los aliases en paralelo
+  Promise.all(multi.map(function(term){
+    return fetchWorkerResults(term).catch(function(){});
+  })).then(function(){
     clearTimeout(safetyTimeout);
-    var allIds=new Set(shopifyResults.map(function(r){return r.id;}));
-    ebayResults.forEach(function(r){if(!allIds.has(r.id)){allIds.add(r.id);shopifyResults.push(r);}});
-    csResults.forEach(function(r){if(!allIds.has(r.id)){allIds.add(r.id);shopifyResults.push(r);}});cfsResults.forEach(function(r){if(!allIds.has(r.id)){allIds.add(r.id);shopifyResults.push(r);}});
+    // Añadir Vintsoccer (FEED)
+    try{
+      var _seen2=new Set(shopifyResults.map(function(x){return x.id;}));
+      FEED.forEach(function(p){
+        if(_seen2.has(p.id))return;
+        var _n=normalize(p.name||'');
+        if(!multi.some(function(term){return _n.includes(normalize(term));}))return;
+        shopifyResults.push(p);
+      });
+    }catch(e2){}
     applyFilters();
     console.log("[KF FG] done —",shopifyResults.length,"results in",(Date.now()-startTime)+"ms");
-    setTimeout(function(){hideLoading();_firstSearchDone=true;},Math.max(0,1200-(Date.now()-startTime)));
+    hideLoading();_firstSearchDone=true;
   }).catch(function(e){
     clearTimeout(safetyTimeout);
-    console.log("[KF FG] promise.all err",e&&e.message);
+    console.log("[KF FG] err",e&&e.message);
     hideLoading();_firstSearchDone=true;
   });
 }
