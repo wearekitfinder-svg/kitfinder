@@ -123,7 +123,7 @@ let shopifyResults=[],ebayResults=[],csResults=[],cfsResults=[],shopifyLoading=!
       showShopifyStatusTimed("✅ <strong>"+shopifyResults.length+"</strong> shirts found");
     _workerPending=false;
     }catch(e){console.log('[KF THEN ERR]',e.message);_workerPending=false;}
-    hideLoading();_firstSearchDone=!0;
+    setTimeout(function(){hideLoading();_firstSearchDone=!0;},3000);
   })}},80)}let favourites=JSON.parse(localStorage.getItem("kf_favs")||"[]");function saveFavs(){localStorage.setItem("kf_favs",JSON.stringify(favourites))}updateFavBadge();var _imgCache={};function cardImgNav(a,e,n){a.preventDefault(),a.stopPropagation();var r=e.parentElement;if(r){var t;try{t=JSON.parse(r.getAttribute("data-imgs"))}catch(a){return}if(t&&!(t.length<2)){var o=parseInt(r.getAttribute("data-img-idx")||"0");var maxTries=t.length;var tried=0;function tryNext(){o=((o+n)%t.length+t.length)%t.length;tried++;if(tried>maxTries)return;r.setAttribute("data-img-idx",o);var i=r.querySelector(".card-carousel-img");if(i){var testImg=new Image();testImg.onload=function(){i.src=t[o];};testImg.onerror=function(){if(tried<maxTries)tryNext();};testImg.src=t[o];};}tryNext();}}}
 
 // Mostrar flechas al primer toque en móvil
