@@ -555,10 +555,7 @@
           <div class="hg-card-body"><div class="hg-card-info"><span class="hg-card-club">Real Madrid</span><span class="hg-card-season">1995-96 Away</span><span class="hg-card-size">XL</span></div><span class="hg-card-price"></span></div>
         </a>
 
-        <a class="hg-card" href="https://classic-shirts.com/product-eng-375406-1992-93-SHIMIZU-S-PULSE-SHIRT-S.html" target="_blank" rel="noopener noreferrer" data-hg="cs1" data-hg-price="249.99" data-hg-currency="GBP">
-          <div class="hg-card-img"><img src="https://classic-shirts.com/hpeciai/d3df1177a980a6a0e4a31801371fc1fa/eng_pl_1992-93-SHIMIZU-S-PULSE-SHIRT-S-375406_1.jpg" alt="Shimizu S-Pulse 1992-93" loading="lazy"/><span class="hg-card-store-badge">Classic-Shirts</span></div>
-          <div class="hg-card-body"><div class="hg-card-info"><span class="hg-card-club">Shimizu S-Pulse</span><span class="hg-card-season">1992-93 Home</span><span class="hg-card-size">S</span></div><span class="hg-card-price"></span></div>
-        </a>
+
         <a class="hg-card" href="https://casualfootballshirts.co.uk/products/1995-96-flamengo-away-football-shirt-xl-umbro" target="_blank" rel="noopener noreferrer" data-hg="7" data-hg-price="125.00" data-hg-currency="GBP">
           <div class="hg-card-img"><img src="images/hg-flamengo.jpg" alt="Flamengo 1995-96" loading="lazy"/><span class="hg-card-store-badge">Casual Football Shirts</span></div>
           <div class="hg-card-body"><div class="hg-card-info"><span class="hg-card-club">Flamengo</span><span class="hg-card-season">1995-96 Away</span><span class="hg-card-size">XL</span></div><span class="hg-card-price"></span></div>
@@ -1324,8 +1321,8 @@
               available = data.variants.some(function(v){ return v.available; });
             }
             if(!available){
-              card.style.display = 'none';
-              console.log('[HG] Oculto (sold out):', u.pathname);
+              card.remove();
+              console.log('[HG] Eliminado (sold out):', u.pathname);
             }
           })
           .catch(function(){ /* CORS bloqueado o no es Shopify, ignorar */ });
