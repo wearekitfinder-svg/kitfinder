@@ -351,6 +351,120 @@ function toggleSec(a){a.classList.toggle("open"),a.nextElementSibling.classList.
 function toggleSub(a){a.classList.toggle("open"),a.nextElementSibling.classList.toggle("open")}document.getElementById("landingSearch").addEventListener("keydown",function(a){"Enter"===a.key&&triggerSearch()}),document.getElementById("resultsSearch").addEventListener("keydown",function(a){"Enter"===a.key&&triggerSearch()}),document.addEventListener("click",function(a){a.target.closest(".nav-dropdown")||document.querySelectorAll(".nav-dd-menu.open").forEach(function(a){a.classList.remove("open")})});let fpLeagueVal="",fpVersionVal="",_leagueSearchActive=!1;function checkLandingFilters(){const a=document.getElementById("fpSearchBtn");if(!a)return;const e=!!fpLeagueVal,n=!!fpVersionVal,r=fpBrands.size>0,t=null!==document.querySelector("#fpPanel .fp-size-btn[data-size].active"),o=null!==document.querySelector("#fpPanel .fp-size-btn[data-decade].active"),i=!!document.getElementById("fpMin").value,s=!!document.getElementById("fpMax").value,l=e||n||r||t||o||i||s;a.disabled=!l}
 function pickLeague(a){document.querySelectorAll('.fp-chip[onclick*="pickLeague"]').forEach(a=>a.classList.remove("active")),a.classList.toggle("active"),fpLeagueVal=a.classList.contains("active")?a.dataset.value:"",checkLandingFilters()}
 function pickVersion(a){document.querySelectorAll('.fp-chip[onclick*="pickVersion"]').forEach(a=>a.classList.remove("active")),a.classList.toggle("active"),fpVersionVal=a.classList.contains("active")?a.dataset.value:"",checkLandingFilters()}let fpBrands=new Set;function filterFpBrands(a){const e=document.getElementById("fpBrandDd");if(!e)return;const n=(a||"").trim().toLowerCase(),r=""===n?FEATURED_BRANDS.slice(0,6):ALL_BRANDS.filter(a=>a.toLowerCase().includes(n)).slice(0,8);if(e.innerHTML="",r.forEach(function(a){const n=document.createElement("div");n.className="fp-brand-opt"+(fpBrands.has(a)?" selected":""),n.textContent=a,n.addEventListener("mousedown",function(e){e.preventDefault(),toggleFpBrand(a)}),e.appendChild(n)}),0===r.length){const a=document.createElement("div");a.className="fp-brand-opt",a.style.color="var(--gray-400)",a.style.fontStyle="italic",a.textContent="No brands found",e.appendChild(a)}e.classList.add("open")}
+function kfLgInit() {
+  // Si ya está suscrito o ya lo ha descartado, mostrar solo la tarjeta LG
+  if (localStorage.getItem('kf_blog_subscribed')) return;
+  if (localStorage.getItem('kf_lg_dismissed')) {
+    var card = document.getElementById('kfLgCard');
+    if (card) card.style.display = 'flex';
+    return;
+  }
+  // Primera visita: mostrar el modal tras 1.2 s
+  setTimeout(function() {
+    var overlay = document.getElementById('kfLgOverlay');
+    var modal = document.getElementById('kfLgModal');
+    if (!overlay || !modal) return;
+    overlay.style.display = 'block';
+    modal.style.display = 'block';
+  }, 1200);
+}
+function kfLgDismiss() {
+  // Cerrar el modal, guardar el dismiss y mostrar la tarjeta
+  var overlay = document.getElementById('kfLgOverlay');
+  var modal = document.getElementById('kfLgModal');
+  var card = document.getElementById('kfLgCard');
+  if (overlay) overlay.style.display = 'none';
+  if (modal) modal.style.display = 'none';
+  if (card) card.style.display = 'flex';
+  localStorage.setItem('kf_lg_dismissed', '1');
+}
+function kfLgOpenFromCard() {
+  // Volver a abrir el modal desde la tarjeta LG
+  var overlay = document.getElementById('kfLgOverlay');
+  var modal = document.getElementById('kfLgModal');
+  var card = document.getElementById('kfLgCard');
+  if (overlay) overlay.style.display = 'block';
+  if (modal) modal.style.display = 'block';
+  if (card) card.style.display = 'none';
+}
+function kfLgSubscribe() {
+  var email = (document.getElementById('kfLgEmail') || {}).value;
+  if (!email || !email.includes('@')) {
+    var msg = document.getElementById('kfLgMsg');
+    if (msg) { msg.textContent = 'Please enter a valid email.'; msg.style.color = '#e63946'; msg.style.display = 'block'; }
+    return;
+  }
+  _kfSaveBlogSubscriber(email.trim(), 'kfLgMsg', 'kfLgForm');
+}
+function kfSubscribeBlog() {
+  kfLgSubscribe();
+}
+function kfSubscribeBlogPage() {
+  var email = (document.getElementById('kfBlogEmailBlog') || {}).value;
+  if (!email || !email.includes('@')) {
+    var msg = document.getElementById('kfBlogMsgBlog');
+    if (msg) { msg.textContent = 'Please enter a valid email.'; msg.style.display = 'block'; }
+    return;
+  }
+  _kfSaveBlogSubscriber(email.trim(), 'kfBlogMsgBlog', null);
+}
+function kfSubscribeBlogPage() {
+  var email = (document.getElementById('kfBlogEmailBlog') || {}).value;
+  if (!email || !email.includes('@')) {
+    var msg = document.getElementById('kfBlogMsgBlog');
+    if (msg) { msg.textContent = 'Please enter a valid email.'; msg.style.display = 'block'; }
+    return;
+  }
+  _kfSaveBlogSubscriber(email.trim(), 'kfBlogMsgBlog', null);
+}
+function _kfSaveBlogSubscriber(email, msgId, formId) {
+  var msg = document.getElementById(msgId);
+  if (msg) { msg.textContent = 'Subscribing…'; msg.style.display = 'block'; }
+  // Save to Firestore blogSubscribers collection
+  function _doSave(db) {
+    var docId = email.replace(/[^a-zA-Z0-9]/g, '_');
+    db.collection('blogSubscribers').doc(docId).set({
+      email: email,
+      subscribedAt: Date.now(),
+      source: 'laGrada'
+    }, { merge: true }).then(function() {
+      localStorage.setItem('kf_blog_subscribed', '1');
+      if (msg) { msg.textContent = '✅ Subscribed! We\'ll email you when new articles go live.'; msg.style.color = '#1FAF6D'; msg.style.display = 'block'; }
+      if (formId) { var f = document.getElementById(formId); if (f) f.style.display = 'none'; }
+      // Cerrar el modal y ocultar la tarjeta
+      var overlay = document.getElementById('kfLgOverlay');
+      var modal = document.getElementById('kfLgModal');
+      var card = document.getElementById('kfLgCard');
+      if (overlay) overlay.style.display = 'none';
+      if (modal) setTimeout(function(){ modal.style.display = 'none'; }, 2500);
+      if (card) card.style.display = 'none';
+    }).catch(function(err) {
+      if (msg) { msg.textContent = 'Something went wrong. Try again.'; msg.style.display = 'block'; }
+    });
+  }
+  // Try to get db from firebase (loaded by auth.js)
+  if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length) {
+    _doSave(firebase.firestore());
+  } else {
+    // Fallback: wait for firebase to load
+    var tries = 0;
+    var iv = setInterval(function() {
+      tries++;
+      if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length) {
+        clearInterval(iv);
+        _doSave(firebase.firestore());
+      } else if (tries > 20) {
+        clearInterval(iv);
+        if (msg) { msg.textContent = 'Something went wrong. Try again.'; msg.style.display = 'block'; }
+      }
+    }, 300);
+  }
+}
+function hideFpBrands(){const a=document.getElementById("fpBrandDd");a&&a.classList.remove("open")}
+function openFP(){document.getElementById("fpPanel").classList.add("open"),document.getElementById("fpOverlay").classList.add("open")}
+function navNewIn(a){a.preventDefault();var e=document.getElementById("navLinks");e&&e.classList.remove("open");var n=document.getElementById("navMobileToggle");n&&n.classList.remove("open"),document.getElementById("landingSearch").value="football shirt",document.getElementById("sortSelect").value="newest",triggerSearch()}
+function renderFpBrandTags(){const a=document.getElementById("fpBrandTags");a&&(a.innerHTML="",fpBrands.forEach(function(e){const n=document.createElement("span");n.className="fp-brand-tag";const r=document.createElement("span");r.textContent=e;const t=document.createElement("span");t.className="fp-brand-tag-x",t.textContent="×",t.addEventListener("mousedown",function(a){a.preventDefault(),toggleFpBrand(e)}),n.appendChild(r),n.appendChild(t),a.appendChild(n)}))}
+function toggleFpBrand(a){fpBrands.has(a)?fpBrands.delete(a):fpBrands.add(a),renderFpBrandTags(),filterFpBrands(document.getElementById("fpBrandInput").value),checkLandingFilters()}
 var _origGoHome=goHome;
 goHome=function(e){_origGoHome.apply(this,[e]);try{window.history.replaceState({},'Kit Finder — Find Vintage & Retro Football Shirts','/');}catch(ex){}document.title='Kit Finder — Find Vintage & Retro Football Shirts';};
 var _origSearchWorldCup=searchWorldCup;
