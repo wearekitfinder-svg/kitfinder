@@ -838,7 +838,18 @@ async function kfSearchByImage(input){
   try{
     var base64=await new Promise(function(resolve,reject){
       var reader=new FileReader();
-      reader.onload=function(e){resolve(e.target.result.split(",")[1]);};
+      reader.onload=function(e){
+        var img=new Image();
+        img.onload=function(){
+          var maxDim=1024,w=img.width,h=img.height;
+          if(w>maxDim||h>maxDim){if(w>h){h=Math.round(h*maxDim/w);w=maxDim;}else{w=Math.round(w*maxDim/h);h=maxDim;}}
+          var canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;
+          canvas.getContext("2d").drawImage(img,0,0,w,h);
+          resolve(canvas.toDataURL("image/jpeg",0.85).split(",")[1]);
+        };
+        img.onerror=reject;
+        img.src=e.target.result;
+      };
       reader.onerror=reject;
       reader.readAsDataURL(file);
     });
@@ -848,7 +859,7 @@ async function kfSearchByImage(input){
     var response=await fetch("/vision",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({imageData:base64,mediaType:file.type||"image/jpeg"})
+      body:JSON.stringify({imageData:base64,mediaType:"image/jpeg"})
     });
 
     var data=await response.json();
@@ -905,13 +916,12 @@ async function kfSearchByImage(input){
 
     setTimeout(function(){
       _kfHideAnalyzing();
-      // Limpiar los buscadores - no mostrar texto
+      // Poner la query en el buscador y lanzar la busqueda
       var ls=document.getElementById("landingSearch");
       var rs=document.getElementById("resultsSearch");
-      if(ls)ls.value="";
-      if(rs)rs.value="";
-      // Buscar con todas las variantes
-      triggerSearch(searchTerms.join(" "));
+      if(ls)ls.value=query;
+      if(rs)rs.value=query;
+      triggerSearch();
     },800);
 
   }catch(err){
