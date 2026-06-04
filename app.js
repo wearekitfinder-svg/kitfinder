@@ -845,44 +845,15 @@ async function kfSearchByImage(input){
 
     _kfUpdateAnalyzing("Identifying shirt...","Analysing team, season & version");
 
-    var response=await fetch("https://api.anthropic.com/v1/messages",{
+    var response=await fetch("/vision",{
       method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "x-api-key":["sk-ant-api03-7vpD16ajp7SIbrSNLdZhvRE","tgwNZeP6WgUk5bk69gbrQ6XxPZEY7fyUQWLV","0Ss2ego4OVW7iBbBl6JPe11ROzg-PWQF_AAA"].join(""),
-        "anthropic-version":"2023-06-01",
-        "anthropic-dangerous-direct-browser-access":"true"
-      },
-      body:JSON.stringify({
-        model:"claude-haiku-4-5-20251001",
-        max_tokens:300,
-        messages:[{
-          role:"user",
-          content:[
-            {
-              type:"image",
-              source:{type:"base64",media_type:file.type||"image/jpeg",data:base64}
-            },
-            {
-              type:"text",
-              text:"You are an expert in football/soccer shirts from all eras and countries. Analyze this image. Use every clue: badge, sponsor text (Sharp, Opel, JVC, Carlsberg, Parmalat, SEAT, Teka...), manufacturer (Adidas, Nike, Umbro, Kappa, Hummel...), colors, patterns, collar, player name or number. Always give your best guess for the team. Reply ONLY with a valid JSON object, no markdown: {\"team\":\"team name\",\"version\":\"home or away or third or empty\",\"year\":\"year or season or empty\",\"brand\":\"manufacturer or empty\",\"player\":\"player name or empty\",\"number\":\"number or empty\",\"query\":\"3-5 word search query\"}"
-            }
-          ]
-        }]
-      })
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({imageData:base64,mediaType:file.type||"image/jpeg"})
     });
 
     var data=await response.json();
-    if(!response.ok||data.error){throw new Error((data.error&&data.error.message)||"Vision error");}
-
-    var text=(data.content&&data.content[0]&&data.content[0].text)||"";
-    var parsed;
-    try{
-      var match=text.match(/\{[\s\S]*\}/);
-      parsed=match?JSON.parse(match[0]):{query:text.trim().slice(0,60)};
-    }catch(e){
-      parsed={query:text.trim().slice(0,60)};
-    }
+    if(!response.ok||data.error){throw new Error(data.error||"Vision error");}
+    var parsed=data;
 
     _kfUpdateAnalyzing("Match found!","Searching across 80+ stores");
 
