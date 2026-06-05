@@ -49,6 +49,8 @@ Use every clue available:
 
 Always give your best guess for the team — it is better to guess than leave blank.
 
+To decide the VERSION: compare the shirt's main colors to the team's traditional home colors. If the colors clearly differ from the usual home kit (for example a Barcelona shirt that is NOT blue and red, or an Argentina shirt that is NOT light blue and white), it is almost certainly an AWAY or THIRD kit. Only answer "home" when the colors clearly match the classic home kit.
+
 Reply ONLY with a valid JSON object, no markdown, no explanation:
 {
   "team": "team name (e.g. Arsenal, Real Madrid, Brazil)",
