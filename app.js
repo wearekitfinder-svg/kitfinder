@@ -799,7 +799,7 @@ function _kfShowAnalyzing(imgUrl){
     el.innerHTML='<div style="position:relative;width:min(78vw,300px);height:min(78vw,300px);border-radius:18px;overflow:hidden;box-shadow:0 12px 50px rgba(0,0,0,.5);background:#0d1117;">'
       +'<img id="kfAnalyzingImg" src="" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""/>'
       +'<div style="position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.22));"></div>'
-      +'<img id="kfScanLens" src="images/logo_lupa_new.png" style="position:absolute;top:6%;left:6%;width:82px;height:82px;object-fit:contain;z-index:2;transition:top .65s ease-in-out,left .65s ease-in-out;filter:drop-shadow(0 3px 8px rgba(0,0,0,.45));" alt=""/>'
+      +'<img id="kfScanLens" src="images/logo_lupa_new.png" style="position:absolute;top:4%;left:4%;width:140px;height:140px;object-fit:contain;z-index:2;transition:top .65s ease-in-out,left .65s ease-in-out;filter:drop-shadow(0 4px 12px rgba(0,0,0,.6));" alt=""/>'
     +'</div>'
     +'<p id="kfAnalyzingMsg" style="font-size:16px;font-weight:800;color:#fff;margin:1.3rem 0 .25rem;text-align:center;">Analysing your shirt</p>'
     +'<p id="kfAnalyzingDetail" style="font-size:13px;color:#2ecc71;font-weight:700;text-align:center;min-height:18px;letter-spacing:.2px;">Detecting team</p>';
@@ -811,7 +811,7 @@ function _kfShowAnalyzing(imgUrl){
   var lens=document.getElementById("kfScanLens");
   if(_kfScanTimer)clearInterval(_kfScanTimer);
   if(lens){
-    var mv=function(){if(!document.getElementById("kfAnalyzingOverlay"))return;var t=Math.random()*58+6,l=Math.random()*58+6;lens.style.top=t+"%";lens.style.left=l+"%";};
+    var mv=function(){if(!document.getElementById("kfAnalyzingOverlay"))return;var t=Math.random()*48+4,l=Math.random()*48+4;lens.style.top=t+"%";lens.style.left=l+"%";};
     mv();
     _kfScanTimer=setInterval(mv,780);
   }
