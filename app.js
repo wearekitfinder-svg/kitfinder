@@ -832,7 +832,7 @@ async function kfPhotoSearch(searchTerms){
   if(typeof _hideWcHeader==="function")_hideWcHeader();
   var lp=document.getElementById("landing");if(lp)lp.style.display="none";
   var rp=document.getElementById("results");if(rp)rp.style.display="flex";
-  ["holyGrails","footballGiants","worldCup2026"].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display="none";});
+  ["holyGrails","footballGiants","worldCup2026","landingFooter"].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display="none";});
   window.scrollTo(0,0);
   showLoading();
   var rs=document.getElementById("resultsSearch");if(rs)rs.value="";
@@ -914,7 +914,7 @@ async function kfSearchByImage(input){
     // Generar variantes de año y temporada
     var searchTerms=[query];
     if(parsed.team&&parsed.year){
-      var team=parsed.team;
+      var team=parsed.team+((parsed.version&&parsed.version!=="home")?" "+parsed.version:"");
       var yrStr=String(parsed.year);
       // Extraer años del string (ej: "1998-1999", "1998/99", "1998")
       var y1=null,y2=null;
