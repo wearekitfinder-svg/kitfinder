@@ -789,40 +789,58 @@ function searchMatchWorn(){
 // ── Búsqueda por imagen (Google Lens style) ──────────────────────────────────
 
 // Crear overlay de animación de análisis
-function _kfShowAnalyzing(){
+var _kfAnalyzeTextTimer=null;
+function _kfShowAnalyzing(imgUrl){
   var el=document.getElementById("kfAnalyzingOverlay");
-  if(el){el.style.display="flex";return;}
-  el=document.createElement("div");
-  el.id="kfAnalyzingOverlay";
-  el.innerHTML=`
-    <div style="background:#fff;border-radius:20px;padding:2rem 2.5rem;text-align:center;box-shadow:0 8px 40px rgba(0,0,0,.28);max-width:300px;width:90%;">
-      <div style="width:140px;height:140px;margin:0 auto 1.2rem;position:relative;">
-        <!-- Lupa de Kit Finder estática -->
-        <img src="images/logo_lupa_new.png" style="position:absolute;inset:0;width:140px;height:140px;object-fit:contain;z-index:2;" alt=""/>
-        <!-- Balón girando clippeado al cristal circular de la lupa -->
-        <div style="position:absolute;top:18px;left:48px;width:44px;height:44px;border-radius:50%;overflow:hidden;z-index:1;">
-          <img src="images/ball-spin.png" style="width:44px;height:44px;animation:kfBallSpin 0.9s linear infinite;" alt=""/>
-        </div>
-      </div>
-      <p id="kfAnalyzingMsg" style="font-size:15px;font-weight:700;color:#1e2530;margin-bottom:5px;">Analysing your shirt…</p>
-      <p id="kfAnalyzingDetail" style="font-size:13px;color:#9aa3ad;">Identifying team, season &amp; version</p>
-    </div>`;
-  el.style.cssText="display:flex;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99999;align-items:center;justify-content:center;";
-  if(!document.getElementById("kfSpinStyle")){
-    var s=document.createElement("style");
-    s.id="kfSpinStyle";
-    s.textContent="@keyframes kfBallSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}";
-    document.head.appendChild(s);
+  if(!el){
+    el=document.createElement("div");
+    el.id="kfAnalyzingOverlay";
+    el.style.cssText="display:flex;position:fixed;inset:0;background:rgba(10,14,20,.85);z-index:99999;align-items:center;justify-content:center;flex-direction:column;padding:1rem;";
+    el.innerHTML='<div style="position:relative;width:min(78vw,300px);height:min(78vw,300px);border-radius:18px;overflow:hidden;box-shadow:0 12px 50px rgba(0,0,0,.5);background:#0d1117;">'
+      +'<img id="kfAnalyzingImg" src="" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""/>'
+      +'<div style="position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.22));"></div>'
+      +'<div id="kfScanLens" style="position:absolute;top:6%;left:6%;width:84px;height:84px;animation:kfScanMove 3.4s ease-in-out infinite;will-change:top,left;">'
+        +'<img src="images/logo_lupa_new.png" style="position:absolute;inset:0;width:84px;height:84px;object-fit:contain;z-index:2;" alt=""/>'
+        +'<div style="position:absolute;top:10px;left:28px;width:27px;height:27px;border-radius:50%;overflow:hidden;z-index:1;">'
+          +'<img src="images/ball-spin.png" style="width:27px;height:27px;animation:kfBallSpin .9s linear infinite;" alt=""/>'
+        +'</div>'
+      +'</div>'
+    +'</div>'
+    +'<p id="kfAnalyzingMsg" style="font-size:16px;font-weight:800;color:#fff;margin:1.3rem 0 .25rem;text-align:center;">Analysing your shirt</p>'
+    +'<p id="kfAnalyzingDetail" style="font-size:13px;color:#2ecc71;font-weight:700;text-align:center;min-height:18px;letter-spacing:.2px;">Detecting team</p>';
+    if(!document.getElementById("kfSpinStyle")){
+      var s=document.createElement("style");
+      s.id="kfSpinStyle";
+      s.textContent="@keyframes kfBallSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes kfScanMove{0%{top:6%;left:6%}25%{top:8%;left:56%}50%{top:54%;left:58%}75%{top:56%;left:7%}100%{top:6%;left:6%}}";
+      document.head.appendChild(s);
+    }
+    document.body.appendChild(el);
   }
-  document.body.appendChild(el);
+  el.style.display="flex";
+  var im=document.getElementById("kfAnalyzingImg");
+  if(im&&imgUrl)im.src=imgUrl;
+  var phrases=["Detecting team","Reading badge and sponsor","Identifying the season","Home or away kit?","Almost there"];
+  var idx=0;
+  var d=document.getElementById("kfAnalyzingDetail");
+  if(d)d.textContent=phrases[0];
+  if(_kfAnalyzeTextTimer)clearInterval(_kfAnalyzeTextTimer);
+  _kfAnalyzeTextTimer=setInterval(function(){
+    idx=(idx+1)%phrases.length;
+    var dd=document.getElementById("kfAnalyzingDetail");
+    if(dd)dd.textContent=phrases[idx];
+  },1100);
 }
 function _kfUpdateAnalyzing(msg,detail){
   var m=document.getElementById("kfAnalyzingMsg");
-  var d=document.getElementById("kfAnalyzingDetail");
   if(m)m.textContent=msg;
-  if(d&&detail)d.textContent=detail;
+  if(detail){
+    if(_kfAnalyzeTextTimer){clearInterval(_kfAnalyzeTextTimer);_kfAnalyzeTextTimer=null;}
+    var d=document.getElementById("kfAnalyzingDetail");
+    if(d)d.textContent=detail;
+  }
 }
 function _kfHideAnalyzing(){
+  if(_kfAnalyzeTextTimer){clearInterval(_kfAnalyzeTextTimer);_kfAnalyzeTextTimer=null;}
   var el=document.getElementById("kfAnalyzingOverlay");
   if(el)el.style.display="none";
 }
@@ -858,8 +876,9 @@ async function kfSearchByImage(input){
   if(!file)return;
   input.value="";
 
-  _kfShowAnalyzing();
-  _kfUpdateAnalyzing("Reading image...","Preparing photo for analysis");
+  var _kfImgUrl=URL.createObjectURL(file);
+  _kfShowAnalyzing(_kfImgUrl);
+  _kfUpdateAnalyzing("Analysing your shirt");
 
   try{
     var base64=await new Promise(function(resolve,reject){
