@@ -827,6 +827,32 @@ function _kfHideAnalyzing(){
   if(el)el.style.display="none";
 }
 
+async function kfPhotoSearch(searchTerms){
+  isFavView=false;
+  if(typeof _hideWcHeader==="function")_hideWcHeader();
+  var lp=document.getElementById("landing");if(lp)lp.style.display="none";
+  var rp=document.getElementById("results");if(rp)rp.style.display="flex";
+  ["holyGrails","footballGiants","worldCup2026"].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display="none";});
+  window.scrollTo(0,0);
+  showLoading();
+  var rs=document.getElementById("resultsSearch");if(rs)rs.value="";
+  var ls=document.getElementById("landingSearch");if(ls)ls.value="";
+  shopifyResults=[];ebayResults=[];csResults=[];
+  var seen=new Set();
+  await Promise.all(searchTerms.map(async function(q){
+    if(!q||q.length<2)return;
+    try{
+      var url="https://kitfinder-search.wearekitfinder.workers.dev/search?q="+encodeURIComponent(q)+"&page=1&limit=10000";
+      var r=await fetch(url);
+      if(!r.ok)return;
+      var data=await r.json();
+      if(!data.products)return;
+      data.products.forEach(function(p){if(!seen.has(p.id)){seen.add(p.id);shopifyResults.push(_workerProductToCard(p));}});
+    }catch(e){}
+  }));
+  applyFilters();
+  setTimeout(function(){hideLoading();_firstSearchDone=!0;},600);
+}
 async function kfSearchByImage(input){
   var file=input.files[0];
   if(!file)return;
@@ -900,14 +926,14 @@ async function kfSearchByImage(input){
       else if(mSingle){y1=parseInt(mSingle[1]);y2=y1+1;}
 
       if(y1&&y2){
-        var y2s=String(y2).slice(-2);
-        // Variantes: "Stuttgart 1998", "Stuttgart 1999", "Stuttgart 98/99", "Stuttgart 1998/99", "Stuttgart 1998-99", "Stuttgart 1998/1999", "Stuttgart 1998-1999"
+        var y1s=String(y1).slice(-2),y2s=String(y2).slice(-2);
         [
           team+" "+y1,
           team+" "+y2,
-          team+" "+y2s+"/"+String(y2+1).slice(-2),
           team+" "+y1+"/"+y2s,
           team+" "+y1+"-"+y2s,
+          team+" "+y1s+"/"+y2s,
+          team+" "+y1s+"-"+y2s,
           team+" "+y1+"/"+y2,
           team+" "+y1+"-"+y2
         ].forEach(function(v){if(searchTerms.indexOf(v)<0)searchTerms.push(v);});
@@ -916,12 +942,8 @@ async function kfSearchByImage(input){
 
     setTimeout(function(){
       _kfHideAnalyzing();
-      // Poner la query en el buscador y lanzar la busqueda
-      var ls=document.getElementById("landingSearch");
-      var rs=document.getElementById("resultsSearch");
-      if(ls)ls.value=query;
-      if(rs)rs.value=query;
-      triggerSearch();
+      // Buscar todas las variantes sin mostrar texto en el buscador
+      kfPhotoSearch(searchTerms);
     },800);
 
   }catch(err){
