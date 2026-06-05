@@ -360,14 +360,9 @@ function kfLgInit() {
     if (card) card.style.display = 'flex';
     return;
   }
-  // Primera visita: mostrar el modal tras 1.2 s
-  setTimeout(function() {
-    var overlay = document.getElementById('kfLgOverlay');
-    var modal = document.getElementById('kfLgModal');
-    if (!overlay || !modal) return;
-    overlay.style.display = 'block';
-    modal.style.display = 'block';
-  }, 1200);
+  // No saltar el modal automaticamente: mostrar solo la tarjeta LG
+  var card = document.getElementById('kfLgCard');
+  if (card) card.style.display = 'flex';
 }
 function kfLgDismiss() {
   // Cerrar el modal, guardar el dismiss y mostrar la tarjeta
