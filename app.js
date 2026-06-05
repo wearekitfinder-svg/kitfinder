@@ -799,7 +799,7 @@ function _kfShowAnalyzing(imgUrl){
     el.innerHTML='<div style="position:relative;width:min(78vw,300px);height:min(78vw,300px);border-radius:18px;overflow:hidden;box-shadow:0 12px 50px rgba(0,0,0,.5);background:#0d1117;">'
       +'<img id="kfAnalyzingImg" src="" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""/>'
       +'<div style="position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.22));"></div>'
-      +'<img id="kfScanLens" src="images/lupa-scan.png" style="position:absolute;top:4%;left:4%;width:140px;height:140px;object-fit:contain;z-index:2;transition:top .65s ease-in-out,left .65s ease-in-out;filter:drop-shadow(0 4px 12px rgba(0,0,0,.6));" alt=""/>'
+      +'<img id="kfScanLens" src="images/lupa-scan.png" style="position:absolute;top:4%;left:4%;width:100px;height:100px;object-fit:contain;z-index:2;transition:top .42s ease-in-out,left .42s ease-in-out;filter:drop-shadow(0 4px 12px rgba(0,0,0,.6));" alt=""/>'
     +'</div>'
     +'<p id="kfAnalyzingMsg" style="font-size:16px;font-weight:800;color:#fff;margin:1.3rem 0 .25rem;text-align:center;">Analysing your shirt</p>'
     +'<p id="kfAnalyzingDetail" style="font-size:13px;color:#2ecc71;font-weight:700;text-align:center;min-height:18px;letter-spacing:.2px;">Detecting team</p>';
@@ -811,9 +811,9 @@ function _kfShowAnalyzing(imgUrl){
   var lens=document.getElementById("kfScanLens");
   if(_kfScanTimer)clearInterval(_kfScanTimer);
   if(lens){
-    var mv=function(){if(!document.getElementById("kfAnalyzingOverlay"))return;var t=Math.random()*48+4,l=Math.random()*48+4;lens.style.top=t+"%";lens.style.left=l+"%";};
+    var mv=function(){if(!document.getElementById("kfAnalyzingOverlay"))return;var t=Math.random()*70+3,l=Math.random()*70+3;lens.style.top=t+"%";lens.style.left=l+"%";};
     mv();
-    _kfScanTimer=setInterval(mv,780);
+    _kfScanTimer=setInterval(mv,520);
   }
   var phrases=["Detecting team","Reading badge and sponsor","Identifying the season","Home or away kit?","Almost there"];
   var idx=0;
