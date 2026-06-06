@@ -1,1347 +1,960 @@
-<!DOCTYPE html>
-<!-- KF v2.9 -->
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
-<!-- Preconnect a fuentes y APIs críticas -->
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preconnect" href="https://api.frankfurter.app"/>
-<!-- DNS prefetch para tiendas externas -->
-<link rel="dns-prefetch" href="https://www.vintagefootballshirts.com"/>
-<link rel="dns-prefetch" href="https://www.cultkits.com"/>
-<link rel="dns-prefetch" href="https://awaydayskits.com"/>
-
-<!-- Preload imagen hero (crítica para LCP) -->
-<link rel="preload" as="image" href="images/collage.jpg"/>
-
-<!-- SEO: Google Search Console verification -->
-<!-- Analytics y cookies Kit Finder -->
-<script src="analytics.js?v=1" defer></script>
-<meta name="google-site-verification" content="TWLxa3Dc-LkukNe80w2cXzzEyEtC-pD1pnFCAinWERs"/>
-
-<!-- SEO: Title & Description -->
-<title>Kit Finder — Search Vintage & Retro Football Shirts Across 100+ Stores</title>
-<meta name="description" content="Find any football shirt in one search. Compare prices on vintage, retro and classic kits from 100+ specialist stores. Every club, every era, every size."/>
-
-<!-- SEO: Canonical URL -->
-<link rel="canonical" href="https://wearekitfinder.com/"/>
-
-<!-- SEO: Open Graph (Facebook, LinkedIn, WhatsApp) -->
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="Kit Finder"/>
-  <meta property="og:title" content="Kit Finder — Find Any Football Shirt in One Search"/>
-<meta property="og:description" content="Search over 200,000 vintage, retro and classic football shirts across 100+ specialist stores. Compare prices, filter by club, decade, size and more."/>
-<meta property="og:url" content="https://wearekitfinder.com/"/>
-<meta property="og:site_name" content="Kit Finder"/>
-<meta property="og:image" content="https://wearekitfinder.com/images/og-image.jpg"/>
-<meta property="og:image:width" content="1366"/>
-<meta property="og:image:height" content="768"/>
-<meta property="og:locale" content="en_GB"/>
-
-<!-- SEO: Twitter Card -->
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:site" content="@wearekitfinder"/>
-<meta name="twitter:title" content="Kit Finder — Find Any Football Shirt in One Search"/>
-<meta name="twitter:description" content="Search vintage, retro and classic football shirts across 100+ specialist stores."/>
-<meta name="twitter:image" content="https://wearekitfinder.com/images/og-image.jpg"/>
-
-<!-- SEO: Additional meta -->
-<meta name="robots" content="index, follow"/>
-<meta name="author" content="Kit Finder"/>
-<meta name="theme-color" content="#1a1a2e"/>
-<meta name="keywords" content="vintage football shirts, retro football shirts, classic football kits, football shirt search, buy vintage jerseys, football shirt finder, compare football shirts, football shirt price comparison, old football shirts, retro soccer jerseys, classic football jersey, football kit finder, where to buy vintage football shirts, football shirt search engine"/>
-
-<!-- SEO: JSON-LD Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Kit Finder",
-  "alternateName": ["KitFinder", "wearekitfinder", "Football Shirt Finder"],
-  "url": "https://wearekitfinder.com",
-  "description": "The world's first football shirt search engine. Find 100% original vintage, retro and classic football shirts across 100+ specialist stores worldwide. Compare prices, search by photo.",
-  "inLanguage": "en",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "https://wearekitfinder.com/results?q={search_term_string}"
-    },
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Kit Finder",
-  "url": "https://wearekitfinder.com",
-  "logo": {
-    "@type": "ImageObject",
-    "url": "https://wearekitfinder.com/images/logo_kitfinder.png",
-    "width": 200, "height": 200
-  },
-  "sameAs": [
-    "https://www.instagram.com/wearekitfinder/",
-    "https://x.com/wearekitfinder"
-  ],
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "email": "wearekitfinder@gmail.com",
-    "contactType": "customer service"
-  },
-  "description": "Kit Finder is the world's first search engine dedicated exclusively to football shirts. We aggregate over 200,000 vintage, retro and classic football shirts from 100+ specialist stores worldwide."
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ItemList",
-  "name": "Top Football Club Shirt Collections",
-  "description": "Browse vintage and retro football shirt collections for the world's greatest clubs",
-  "url": "https://wearekitfinder.com",
-  "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"Barcelona Football Shirts","url":"https://wearekitfinder.com/clubs/barcelona"},
-    {"@type":"ListItem","position":2,"name":"Real Madrid Football Shirts","url":"https://wearekitfinder.com/clubs/real-madrid"},
-    {"@type":"ListItem","position":3,"name":"Manchester United Football Shirts","url":"https://wearekitfinder.com/clubs/manchester-united"},
-    {"@type":"ListItem","position":4,"name":"Liverpool Football Shirts","url":"https://wearekitfinder.com/clubs/liverpool"},
-    {"@type":"ListItem","position":5,"name":"Bayern Munich Football Shirts","url":"https://wearekitfinder.com/clubs/bayern-munich"},
-    {"@type":"ListItem","position":6,"name":"Juventus Football Shirts","url":"https://wearekitfinder.com/clubs/juventus"},
-    {"@type":"ListItem","position":7,"name":"Paris Saint-Germain Football Shirts","url":"https://wearekitfinder.com/clubs/psg"},
-    {"@type":"ListItem","position":8,"name":"Ajax Football Shirts","url":"https://wearekitfinder.com/clubs/ajax"},
-    {"@type":"ListItem","position":9,"name":"Arsenal Football Shirts","url":"https://wearekitfinder.com/clubs/arsenal"},
-    {"@type":"ListItem","position":10,"name":"AC Milan Football Shirts","url":"https://wearekitfinder.com/clubs/ac-milan"},
-    {"@type":"ListItem","position":11,"name":"Brazil Football Shirts","url":"https://wearekitfinder.com/national/brazil"},
-    {"@type":"ListItem","position":12,"name":"Argentina Football Shirts","url":"https://wearekitfinder.com/national/argentina"},
-    {"@type":"ListItem","position":13,"name":"Nigeria Football Shirts","url":"https://wearekitfinder.com/national/nigeria"},
-    {"@type":"ListItem","position":14,"name":"Senegal Football Shirts","url":"https://wearekitfinder.com/national/senegal"},
-    {"@type":"ListItem","position":15,"name":"Morocco Football Shirts","url":"https://wearekitfinder.com/national/morocco"}
-  ]
-}
-</script>
-
-<!-- Favicons -->
-<link rel="icon" type="image/x-icon" href="images/favicon.ico">
-<link rel="icon" type="image/png" href="images/favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="styles.css?v=181">
-<link rel="stylesheet" href="auth.css?v=181">
-</head>
-<body>
-
-<!-- ── Fallback de auth modal — DISPONIBLE INMEDIATAMENTE ──
-     Definimos las funciones de abrir/cerrar al principio para que estén
-     disponibles aunque Firebase tarde en cargar o falle (por dominios no
-     autorizados, bloqueos de red, errores de CDN, etc).
-     auth.js sobreescribirá window.kfOpenAuthModal con la versión completa
-     cuando Firebase esté listo, pero como fallback siempre abrimos el modal. -->
-<script>
-(function(){
-  function _kfOpenAuthModalFallback(tab){
+if(typeof showInfo==='undefined'){window.showInfo=function(s,e){if(e&&e.preventDefault)e.preventDefault();setTimeout(function(){if(typeof showInfo==='function'&&showInfo!==window.showInfo)showInfo(s,{preventDefault:function(){}});},200);};}
+if(!window.FEED)window.FEED=[];var FEED=window.FEED;var _firstSearchDone=!1;function showLoading(){var a=document.getElementById("loadingScreen");a&&a.classList.add("active"),document.body.style.overflow="hidden",document.documentElement.style.overflow="hidden"}function hideLoading(){var a=document.getElementById("loadingScreen");a&&a.classList.remove("active"),document.body.style.overflow="",document.documentElement.style.overflow=""}function hideLoadingWithDelay(){_firstSearchDone?setTimeout(hideLoading,2e3):(_firstSearchDone=!0,hideLoading())}const FEATURED_BRANDS=["Nike","Adidas","Puma","Kappa","Umbro","New Balance"],_JUNK_TITLE_RE=/\b(A[0-5]|coasters?|mugs?|cromos?|chromos?)\b/i,_NT_EBAY_QUERIES={"nt-america":["argentina national shirt","brazil national shirt","mexico national shirt","colombia national shirt","chile national shirt","uruguay national shirt","usa national shirt","jamaica football shirt","peru national shirt","ecuador national shirt","paraguay national shirt","puerto rico football shirt"],"nt-europe":["england shirt national","germany shirt national","france shirt national","spain shirt national","italy shirt national","netherlands shirt national"],"nt-africa":["nigeria shirt national","senegal shirt national","cameroon shirt national","ghana shirt national","morocco shirt national"],"nt-asia":["japan shirt national","south korea shirt national","australia shirt national"],"nt-oceania":["australia shirt national","new zealand shirt national"]},_NT_SEARCH_TERMS={"nt-america":["argentina","bolivia","brazil","canada","chile","colombia","costa rica","cuba","ecuador","el salvador","usa","guatemala","guyana","haiti","honduras","jamaica","mexico","nicaragua","panama","paraguay","peru","puerto rico","dominican republic","suriname","trinidad","uruguay","venezuela"],"nt-europe":["spain","england","france","germany","italy","portugal","netherlands","belgium","croatia","serbia","ukraine","poland","switzerland","scotland","denmark","austria","sweden","norway","czech","turkey","greece","romania","hungary","slovakia","slovenia","albania","finland","northern ireland","wales","ireland","russia","iceland","montenegro","bosnia","north macedonia","moldova","georgia","belarus","estonia","latvia","lithuania","cyprus","israel","kosovo"],"nt-africa":["senegal","nigeria","ghana","cameroon","ivory coast","morocco","egypt","mali","guinea","tanzania","zambia","zimbabwe","south africa","ethiopia","kenya","uganda","mozambique","angola","sierra leone","gambia","cape verde","equatorial guinea","congo","burkina faso","gabon","benin","rwanda","somalia","liberia","algeria","tunisia","libya","togo","madagascar","namibia","botswana"],"nt-asia":["japan","south korea","china","iran","saudi arabia","qatar","iraq","uae","uzbekistan","thailand","vietnam","indonesia","philippines","india","bahrain","jordan","oman","kuwait","syria","malaysia","singapore","north korea","palestine","lebanon","australia"],"nt-oceania":["australia","new zealand","fiji","papua new guinea","samoa","tahiti","tonga","vanuatu","new caledonia","solomon islands"]},ALL_BRANDS=["Adidas","Nike","Puma","Umbro","Kappa","New Balance","Hummel","Macron","Le Coq Sportif","Castore","Joma","Kelme","Uhlsport","Jako","Acerbis","Zeus","Patrick","Sondico","Reusch","Lotto","Erreà","Pony","Bukta","Admiral","Lacoste","Fila","Ellesse","Asics","Diadora","Mizuno","Reebok","Austral","Joluvi","Front Runner","Spall","Meyba","Vandanel","Numero 1","Athletica","Matchwinner","KSS","Luanvi","Penalty","Topper","Givova","Legea","Errea","Toffs","Score Draw","Cotton Traders","Sergio Tacchini","Lotto","Pirma","Grafis","Mills","Stanno","Burrda","Warrior","Tekela","Athletica","Pirma","Calvo","Omero","Sportika","Spalding","Mikasa","Uhlsport","Reusch","Hummel","Macron","Castore","Jako","Acerbis","Lotto","Patrick","Puma","Umbro","Kappa","Signia","Nanque","Olan","Olympikus","Rhumell","Athix","Dribbling","Envion","Balonpie","Marathon","Walon","Mitre"].filter((a,e,n)=>n.indexOf(a)===e).sort((a,e)=>a.localeCompare(e));let selectedBrands=new Set,brandDropdownOpen=!1;function highlightMatch(a,e){if(!e)return a;const n=normalize(a),r=normalize(e),t=n.indexOf(r);return-1===t?a:a.slice(0,t)+"<mark>"+a.slice(t,t+r.length)+"</mark>"+a.slice(t+r.length)}function renderBrandDropdown(a){const e=document.getElementById("brandDropdown"),n=(a||"").trim().toLowerCase();let r;r=""===n?FEATURED_BRANDS.slice(0,6):ALL_BRANDS.filter(a=>a.toLowerCase().includes(n)).slice(0,8),0!==r.length?(e.innerHTML="",r.forEach(function(a){const n=selectedBrands.has(a),r=document.createElement("div");r.className="brand-option"+(n?" selected":""),r.textContent=a,r.addEventListener("mousedown",function(e){e.preventDefault(),selectBrand(a)}),e.appendChild(r)})):e.innerHTML='<div class="brand-no-results">No brands found</div>'}function selectBrand(a){selectedBrands.has(a)?selectedBrands.delete(a):selectedBrands.add(a),renderBrandTags();const e=document.getElementById("brandSearch").value;renderBrandDropdown(e),applyFilters()}function renderBrandTags(){const a=document.getElementById("brandTags");a.innerHTML="",selectedBrands.forEach(function(e){const n=document.createElement("span");n.className="brand-tag";const r=document.createElement("span");r.textContent=e;const t=document.createElement("span");t.className="brand-tag-x",t.textContent="×",t.addEventListener("mousedown",function(a){a.preventDefault(),selectBrand(e)}),n.appendChild(r),n.appendChild(t),a.appendChild(n)})}function onBrandInput(a){renderBrandDropdown(a),openDropdown()}function onBrandFocus(){renderBrandDropdown(document.getElementById("brandSearch").value),openDropdown()}function onBrandBlur(){setTimeout(closeDropdown,200)}function openDropdown(){document.getElementById("brandDropdown").classList.add("open"),document.getElementById("brandSearch").classList.add("open"),brandDropdownOpen=!0}function closeDropdown(){document.getElementById("brandDropdown").classList.remove("open"),document.getElementById("brandSearch").classList.remove("open"),brandDropdownOpen=!1}function getActiveBrands(){return[...selectedBrands]}const CURRENCY_CODES={Albania:"ALL",Algeria:"DZD",Germany:"EUR","Saudi Arabia":"SAR",Argentina:"ARS",Armenia:"AMD",Australia:"AUD",Austria:"EUR",Belgium:"EUR",Bolivia:"BOB","Bosnia & Herzegovina":"BAM",Brazil:"BRL",Bulgaria:"BGN",Canada:"CAD",Chile:"CLP",China:"CNY",Colombia:"COP",Romania:"RON",Croatia:"EUR",Denmark:"DKK",Ecuador:"USD","El Salvador":"USD",UAE:"AED",Slovakia:"EUR",Slovenia:"EUR",Spain:"EUR","United States":"USD",Finland:"EUR",France:"EUR",Greece:"EUR",Guatemala:"GTQ",Netherlands:"EUR",Hungary:"HUF",India:"INR",Indonesia:"IDR",Ireland:"EUR",Iceland:"ISK",Italy:"EUR",Japan:"JPY",Kosovo:"EUR",Latvia:"EUR",Lithuania:"EUR",Luxembourg:"EUR","North Macedonia":"MKD",Mexico:"MXN",Moldova:"MDL",Montenegro:"EUR",Nicaragua:"NIO",Norway:"NOK","New Zealand":"NZD",Panama:"USD",Paraguay:"PYG",Peru:"PEN",Poland:"PLN",Portugal:"EUR","United Kingdom":"GBP","Czech Republic":"CZK",Serbia:"RSD",Sweden:"SEK",Switzerland:"CHF",Turkey:"TRY",Ukraine:"UAH",Uruguay:"UYU",Venezuela:"VES","South Korea":"KRW",Russia:"RUB"};let DISPLAY_RATES={EUR:1,USD:1.1726,GBP:0.8641,AUD:1.6315,CAD:1.5941,CHF:0.9174,JPY:184.29,CNY:8.027,KRW:1729.2,MXN:20.49,BRL:5.823,PLN:4.252,SEK:10.83,NOK:10.90,DKK:7.461,CZK:24.38,HUF:364.9,RON:5.190,BGN:1.956,TRY:52.94,INR:111.2,IDR:20332,THB:38.11,ZAR:19.55,NZD:1.989,SGD:1.493,HKD:9.191,RUB:88.02,UAH:51.51,ARS:1619,CLP:1060,COP:4239,PEN:4.123,ALL:95.88,DZD:155.3,SAR:4.397,AMD:434.5,BOB:8.111,BAM:1.956,GTQ:8.949,ISK:143.9,MKD:61.69,MDL:20.20,NIO:43.08,PYG:7280,RSD:117.5,UYU:46.72,VES:574,AED:4.306};const COUNTRIES=[{flag:"🇦🇱",name:"Albania",symbol:"L",currency:"ALL"},{flag:"🇩🇿",name:"Algeria",symbol:"DZD",currency:"DZD"},{flag:"🇩🇪",name:"Germany",symbol:"€",currency:"EUR"},{flag:"🇸🇦",name:"Saudi Arabia",symbol:"SAR",currency:"SAR"},{flag:"🇦🇷",name:"Argentina",symbol:"ARS",currency:"ARS"},{flag:"🇦🇲",name:"Armenia",symbol:"AMD",currency:"AMD"},{flag:"🇦🇺",name:"Australia",symbol:"A$",currency:"AUD"},{flag:"🇦🇹",name:"Austria",symbol:"€",currency:"EUR"},{flag:"🇧🇪",name:"Belgium",symbol:"€",currency:"EUR"},{flag:"🇧🇴",name:"Bolivia",symbol:"BOB",currency:"BOB"},{flag:"🇧🇦",name:"Bosnia & Herzegovina",symbol:"BAM",currency:"BAM"},{flag:"🇧🇷",name:"Brazil",symbol:"R$",currency:"BRL"},{flag:"🇧🇬",name:"Bulgaria",symbol:"BGN",currency:"BGN"},{flag:"🇨🇦",name:"Canada",symbol:"CA$",currency:"CAD"},{flag:"🇨🇱",name:"Chile",symbol:"CLP",currency:"CLP"},{flag:"🇨🇳",name:"China",symbol:"¥",currency:"CNY"},{flag:"🇨🇴",name:"Colombia",symbol:"COP",currency:"COP"},{flag:"🇷🇴",name:"Romania",symbol:"RON",currency:"RON"},{flag:"🇭🇷",name:"Croatia",symbol:"€",currency:"EUR"},{flag:"🇩🇰",name:"Denmark",symbol:"kr",currency:"DKK"},{flag:"🇪🇨",name:"Ecuador",symbol:"$",currency:"USD"},{flag:"🇸🇻",name:"El Salvador",symbol:"$",currency:"USD"},{flag:"🇦🇪",name:"UAE",symbol:"AED",currency:"AED"},{flag:"🇸🇰",name:"Slovakia",symbol:"€",currency:"EUR"},{flag:"🇸🇮",name:"Slovenia",symbol:"€",currency:"EUR"},{flag:"🇪🇸",name:"Spain",symbol:"€",currency:"EUR"},{flag:"🇺🇸",name:"United States",symbol:"$",currency:"USD"},{flag:"🇫🇮",name:"Finland",symbol:"€",currency:"EUR"},{flag:"🇫🇷",name:"France",symbol:"€",currency:"EUR"},{flag:"🇬🇷",name:"Greece",symbol:"€",currency:"EUR"},{flag:"🇬🇹",name:"Guatemala",symbol:"GTQ",currency:"GTQ"},{flag:"🇳🇱",name:"Netherlands",symbol:"€",currency:"EUR"},{flag:"🇭🇺",name:"Hungary",symbol:"Ft",currency:"HUF"},{flag:"🇮🇳",name:"India",symbol:"₹",currency:"INR"},{flag:"🇮🇩",name:"Indonesia",symbol:"Rp",currency:"IDR"},{flag:"🇮🇪",name:"Ireland",symbol:"€",currency:"EUR"},{flag:"🇮🇸",name:"Iceland",symbol:"kr",currency:"ISK"},{flag:"🇮🇹",name:"Italy",symbol:"€",currency:"EUR"},{flag:"🇯🇵",name:"Japan",symbol:"¥",currency:"JPY"},{flag:"🇽🇰",name:"Kosovo",symbol:"€",currency:"EUR"},{flag:"🇱🇻",name:"Latvia",symbol:"€",currency:"EUR"},{flag:"🇱🇹",name:"Lithuania",symbol:"€",currency:"EUR"},{flag:"🇱🇺",name:"Luxembourg",symbol:"€",currency:"EUR"},{flag:"🇲🇰",name:"North Macedonia",symbol:"MKD",currency:"MKD"},{flag:"🇲🇽",name:"Mexico",symbol:"MX$",currency:"MXN"},{flag:"🇲🇩",name:"Moldova",symbol:"MDL",currency:"MDL"},{flag:"🇲🇪",name:"Montenegro",symbol:"€",currency:"EUR"},{flag:"🇳🇮",name:"Nicaragua",symbol:"NIO",currency:"NIO"},{flag:"🇳🇴",name:"Norway",symbol:"kr",currency:"NOK"},{flag:"🇳🇿",name:"New Zealand",symbol:"NZ$",currency:"NZD"},{flag:"🇵🇦",name:"Panama",symbol:"$",currency:"USD"},{flag:"🇵🇾",name:"Paraguay",symbol:"PYG",currency:"PYG"},{flag:"🇵🇪",name:"Peru",symbol:"PEN",currency:"PEN"},{flag:"🇵🇱",name:"Poland",symbol:"zł",currency:"PLN"},{flag:"🇵🇹",name:"Portugal",symbol:"€",currency:"EUR"},{flag:"🇬🇧",name:"United Kingdom",symbol:"£",currency:"GBP"},{flag:"🇨🇿",name:"Czech Republic",symbol:"Kč",currency:"CZK"},{flag:"🇷🇸",name:"Serbia",symbol:"RSD",currency:"RSD"},{flag:"🇸🇪",name:"Sweden",symbol:"kr",currency:"SEK"},{flag:"🇨🇭",name:"Switzerland",symbol:"CHF",currency:"CHF"},{flag:"🇹🇷",name:"Turkey",symbol:"₺",currency:"TRY"},{flag:"🇺🇦",name:"Ukraine",symbol:"₴",currency:"UAH"},{flag:"🇺🇾",name:"Uruguay",symbol:"UYU",currency:"UYU"},{flag:"🇻🇪",name:"Venezuela",symbol:"VES",currency:"VES"},{flag:"🇰🇷",name:"South Korea",symbol:"₩",currency:"KRW"},{flag:"🇷🇺",name:"Russia",symbol:"₽",currency:"RUB"}].sort(function(a,e){return a.name.localeCompare(e.name)});let currentCountry=JSON.parse(localStorage.getItem("kf_country")||"null")||COUNTRIES.find(function(a){return"Spain"===a.name})||COUNTRIES[0];function getDisplayRate(a){return DISPLAY_RATES[a]||1}function fmtPrice(a,e){const n=a*(RATES_TO_EUR[e||"EUR"]||1)*getDisplayRate(currentCountry.currency);return currentCountry.symbol+(n>=1e3?Math.round(n).toLocaleString():n.toFixed(2))}function shirtSVG(a,e){const n="g"+(a+e).replace(/#/g,"");return'<svg viewBox="0 0 56 52" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="'+n+'" x1="0%" y1="0%" x2="60%" y2="100%"><stop offset="0%" stop-color="'+a+'"/><stop offset="100%" stop-color="'+e+'"/></linearGradient></defs><path d="M18,4 C18,4 15,7 12,9 L1,14 L6,26 L14,22 L14,50 L42,50 L42,22 L50,26 L55,14 L44,9 C41,7 38,4 38,4 Q29,10 18,4 Z" fill="url(#'+n+')" stroke="'+e+'" stroke-width="1" stroke-linejoin="round"/><path d="M20,5.5 Q28,12 36,5.5" fill="none" stroke="'+e+'" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/></svg>'}const decades=["2020s","2010s","2000s","1990s","1980s","1970s","1960s"];function buildSidebarBrandChips(){const a=document.getElementById("sidebarBrandChips");a&&(a.innerHTML="",FEATURED_BRANDS.forEach(function(e){const n=document.createElement("button");n.className="fp-chip"+(selectedBrands.has(e)?" active":""),n.textContent=e,n.addEventListener("click",function(){selectBrand(e),n.classList.toggle("active",selectedBrands.has(e))}),a.appendChild(n)}))}function buildDecades(){const a=document.getElementById("decadeList");a&&(a.innerHTML="",decades.forEach(function(e){const n=document.createElement("button");n.className="fp-size-btn",n.dataset.decade=e.replace("s",""),n.textContent=e,n.onclick=function(){n.classList.toggle("active"),applyFilters()},a.appendChild(n)}))}function getSelectedDecades(){return[...document.querySelectorAll("#decadeList .fp-size-btn.active, #sidebar .fp-size-btn[data-decade].active")].map(a=>a.dataset.decade)}function getSelectedYears(){return[]}function renderBrandDropdown(a){const e=document.getElementById("brandDropdown");if(!e)return;const n=(a||"").trim().toLowerCase(),r=""===n?FEATURED_BRANDS.slice(0,6):ALL_BRANDS.filter(a=>a.toLowerCase().includes(n)).slice(0,8);if(e.innerHTML="",r.forEach(function(a){const n=document.createElement("div");n.className="brand-option"+(selectedBrands.has(a)?" selected":""),n.textContent=a,n.addEventListener("mousedown",function(e){e.preventDefault(),selectBrand(a)}),e.appendChild(n)}),0===r.length){const a=document.createElement("div");a.className="brand-no-results",a.textContent="No brands found",e.appendChild(a)}e.classList.add("open")}function selectBrand(a){selectedBrands.has(a)?selectedBrands.delete(a):selectedBrands.add(a),renderBrandTags(),renderBrandDropdown(document.getElementById("brandSearch").value),buildSidebarBrandChips(),applyFilters()}function renderBrandTags(){const a=document.getElementById("brandTags");a&&(a.innerHTML="",selectedBrands.forEach(function(e){const n=document.createElement("span");n.className="brand-tag";const r=document.createElement("span");r.textContent=e;const t=document.createElement("span");t.className="brand-tag-x",t.textContent="×",t.addEventListener("mousedown",function(a){a.preventDefault(),selectBrand(e)}),n.appendChild(r),n.appendChild(t),a.appendChild(n)}))}function onBrandInput(a){renderBrandDropdown(a)}function onBrandFocus(){renderBrandDropdown(document.getElementById("brandSearch").value)}function onBrandBlur(){setTimeout(function(){const a=document.getElementById("brandDropdown");a&&a.classList.remove("open")},200)}function getActiveBrands(){return[...selectedBrands]}function updateRangeFromInputs(){applyFilters()}function clampAndApply(){const a=document.getElementById("priceMaxInput");if(!a)return;const e=parseInt(a.dataset.hardMax)||999999;let n=parseInt(a.value)||0;n>e&&(a.value=String(a.value).slice(0,-1),n=parseInt(a.value)||e),applyFilters()}var priceRangeInitialized=!1,_detectedMaxPrice=0;function updatePriceRange(a,e){const n=document.getElementById("priceMinInput"),r=document.getElementById("priceMaxInput");if(n&&r)if(_detectedMaxPrice=e,r.dataset.hardMax=e,r.setAttribute("max",e),priceRangeInitialized){(parseInt(r.value)||e)>e&&(r.value=e),r.dataset.hardMax=e,r.setAttribute("max",e)}else n.value="",r.value="",priceRangeInitialized=!0}function resetPriceRange(){priceRangeInitialized=!1,_detectedMaxPrice=0;const a=document.getElementById("priceMaxInput");a&&(a.value="",a.removeAttribute("max"),delete a.dataset.hardMax);const e=document.getElementById("priceMinInput");e&&(e.value="")}let visibleCount=24,currentData=[],_renderedCount=0;function starsHTML(a){return"★".repeat(Math.floor(a))+(a%1>=.5?"½":"")}function escHtml(a){return String(a).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}function affiliateUrl(a){if(!a)return a;try{var e=new URL(a);if(e.hostname.includes("tspncalcio.com"))return e.searchParams.has("ref")||e.searchParams.set("ref","kitfinder"),e.toString();if(e.hostname.includes("classicfootballshirts.com")||e.hostname.includes("classic-shirts.com"))return e.searchParams.set("ref","mjk5njr"),e.searchParams.set("utm_source","Affiliates"),e.searchParams.set("utm_medium","referral"),e.searchParams.set("utm_campaign","Tapfiliate"),e.toString();}catch(a){}return a}function buildCard(a){const e=document.createElement("div");e.className="card";const n=a.deal?'<span class="badge-deal">'+escHtml(a.deal)+"</span>":"",r=["Kids","XS","S","M","L","XL","XXL"],t=extractSizeFromText(a.name||a.club||"",null);let o=a.sizes.filter(function(a){return r.includes(a)});1===o.length&&"Kids"===o[0]&&t&&"Kids"!==t&&r.includes(t)&&(o=[t]),0===o.length&&t&&r.includes(t)&&(o=[t]);const i=o.join(" · "),s=a.images&&a.images.length>0?a.images:a.image?[a.image]:[],l=s.length>1;let c;if(s.length>0){const e=optimizeImageUrl(s[0]);c='<div class="card-carousel"'+(l?" data-imgs='"+escHtml(JSON.stringify(s.map(optimizeImageUrl)))+'\' data-img-idx="0"':"")+'><img src="'+escHtml(e)+'" alt="'+escHtml(a.name)+"\" class=\"card-carousel-img\" style=\"width:100%;height:100%;object-fit:contain;border-radius:var(--radius-sm);\" loading=\"lazy\" onerror=\"this.onerror=null;this.src='images/placeholder.png';this.style.objectFit='contain';this.style.width='60%';this.style.height='60%';this.style.margin='auto';\">"+(l?'<button class="card-arr card-arr-l" onclick="cardImgNav(event,this,-1)">‹</button><button class="card-arr card-arr-r" onclick="cardImgNav(event,this,1)">›</button>':"")+"</div>"}else c='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f2f4f6;border-radius:var(--radius-sm);"><img src="images/placeholder.png" alt="No image" style="width:60%;height:60%;object-fit:contain;"></div>';const u='<span class="badge-store" style="background:var(--green);color:#fff;">'+escHtml(a.store)+"</span>";a.rating&&(starsHTML(a.rating),a.reviews),a.season&&(escHtml(a.season),a.version&&escHtml(a.version));return e.innerHTML='<div class="card-img-wrap" style="background:'+a.main+'18;position:relative;">'+c+n+u+'<button class="card-fav-btn" onclick="toggleFav(event,\''+escHtml(a.id)+'\',this)" aria-label="Save to favourites"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></div><div class="card-body"><div class="card-meta-row"><span class="card-price">'+fmtPrice(a.price,a.currency)+"</span>"+(a.oldPrice?'<span class="card-price-old">'+fmtPrice(a.oldPrice,a.currency)+"</span>":"")+'<span class="card-size" style="margin-left:auto">'+escHtml(i)+'</span></div><a class="card-btn" data-store="'+escHtml(a.store)+'" href="'+escHtml(affiliateUrl(a.url))+'" target="_blank" rel="noopener noreferrer"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store</a></div>',favourites.find(function(e){return e.id===a.id})&&e.querySelector(".card-fav-btn").classList.add("active"),e}function renderCards(a){currentData=a,_renderedCount=0;const e=document.getElementById("cardsGrid");if(e.innerHTML="",0===a.length)return e.innerHTML='<div style="display:flex;justify-content:center;align-items:center;min-height:50vh;width:100%;grid-column:1/-1;"><div style="text-align:center;color:#9aa3ad;"><div style="font-size:48px;margin-bottom:1rem;">👕</div><h3>No shirts found</h3><p>Try adjusting your filters or search term</p></div></div>',document.getElementById("loadMoreWrap").style.display="none",void(document.getElementById("resultsCount").innerHTML="<strong>0</strong> shirts found");appendCards(a,0,20),document.getElementById("resultsCount").innerHTML="<strong>"+a.length+"</strong> shirt"+(1!==a.length?"s":"")+" found"}function appendCards(a,e,n){const r=document.getElementById("cardsGrid"),t=Math.min(e+n,a.length);for(let n=e;n<t;n++)r.appendChild(buildCard(a[n]));_renderedCount=t,document.getElementById("loadMoreWrap").style.display=_renderedCount<a.length?"block":"none"}function loadMore(){_renderedCount>=currentData.length||appendCards(currentData,_renderedCount,20)}function sidebarBrandInput(a){renderSidebarBrandDd(a)}function sidebarBrandFocus(){renderSidebarBrandDd(document.getElementById("brandSearch").value)}function sidebarBrandBlur(){const a=document.getElementById("sidebarBrandDd");a&&a.classList.remove("open")}function renderSidebarBrandDd(a){const e=document.getElementById("sidebarBrandDd");if(!e)return;const n=(a||"").trim().toLowerCase(),r=""===n?FEATURED_BRANDS.slice(0,6):ALL_BRANDS.filter(a=>a.toLowerCase().includes(n)).slice(0,8);if(e.innerHTML="",r.forEach(function(a){const n=document.createElement("div");n.className="fp-brand-opt"+(selectedBrands.has(a)?" selected":""),n.textContent=a,n.addEventListener("mousedown",function(e){e.preventDefault(),selectedBrands.has(a)?selectedBrands.delete(a):selectedBrands.add(a),renderBrandTags(),renderSidebarBrandDd(document.getElementById("brandSearch").value),applyFilters()}),e.appendChild(n)}),0===r.length){const a=document.createElement("div");a.className="fp-brand-opt",a.style.color="var(--gray-400)",a.style.fontStyle="italic",a.textContent="No brands found",e.appendChild(a)}e.classList.add("open")}function pickSidebarLeague(a){const e=a.classList.contains("active");document.querySelectorAll(".sidebar .fp-chip[data-league]").forEach(a=>a.classList.remove("active")),e||a.classList.add("active"),applyFilters()}function pickSidebarVersion(a){const e=a.classList.contains("active");document.querySelectorAll(".sidebar .fp-chip[data-version]").forEach(a=>a.classList.remove("active")),e||a.classList.add("active"),applyFilters()}function pickSidebarSize(a){a.classList.toggle("active"),applyFilters()}function getActiveSizes(){return[...document.querySelectorAll(".sidebar .fp-size-btn[data-size].active")].map(a=>a.dataset.size)}function interleaveByStore(arr){var cfs=[],rest=[],k;for(k=0;k<arr.length;k++){if((arr[k].store||'').toLowerCase().indexOf('classic football')!==-1){cfs.push(arr[k]);}else{rest.push(arr[k]);}}var groups={},order=[],i,st;for(i=0;i<rest.length;i++){st=rest[i].store||'';if(!groups[st]){groups[st]=[];order.push(st);}groups[st].push(rest[i]);}var out=[],idx={},remaining=rest.length;for(i=0;i<order.length;i++){idx[order[i]]=0;}while(remaining>0){for(i=0;i<order.length;i++){var g=groups[order[i]];if(idx[order[i]]<g.length){out.push(g[idx[order[i]]]);idx[order[i]]++;remaining--;}}}return out.concat(cfs);}function applyFilters(){const a=(document.getElementById("resultsSearch")||{value:""}).value.trim(),e=normalize(a),n=expandQuery(a),r=document.querySelector(".sidebar .fp-chip[data-league].active"),t=r?r.dataset.league:"",o=document.querySelector(".sidebar .fp-chip[data-version].active"),i=o?o.dataset.version:"",s=getActiveSizes(),l=getActiveBrands(),c=getSelectedYears(),u=document.getElementById("sortSelect").value,d=[];function m(a){const e=normalize(a);return n.some(a=>e.includes(a))}function g(a){if(e){return m(a.club||"")||m(a.name||"")||m(a.brand||"")||m(a.store||"")||m(a.season||"")||m(a.league||"")?1:-1}if(a.store==="Vintsoccer")return -1;return 1}const h=(isFavView?shopifyResults:shopifyResults).map(function(a){return{s:a,score:g(a)}}).filter(function(a){return a.score>=0&&function(a){if(t){const e=a.league||extractLeagueFromTitle(a.name||a.club||"");if(t.startsWith("nt-")){if(!matchesNationalContinent(a,t))return!1}else if(e!==t)return!1}if(i){const e=[a.name,a.club,a.description,a.tags].filter(Boolean).join(" "),n=a.version||extractVersionFromTitle(e);if("Other"===i){if(n&&"Other"!==n)return!1}else if(n!==i)return!1}if(s.length&&!s.some(e=>a.sizes.includes(e)))return!1;if(l.length&&!l.includes(a.brand))return!1;var e=getSelectedDecades();if(e.length){const _src=(a.season||extractSeasonFromTitle(a.name||a.club||"")+" "+(a.name||a.club||"")).replace(/[^0-9\/\-]/g," ");const _yrs=[];const _m4=_src.match(/\b(19\d{2}|20\d{2})\b/g);if(_m4)_m4.forEach(function(y){_yrs.push(parseInt(y));});const _m2=_src.match(/\b([6-9]\d|0\d|1\d|2\d)\b/g);if(_m2)_m2.forEach(function(y){var n=parseInt(y);var full=n>=60?1900+n:2000+n;if(full>=1960&&full<=2030)_yrs.push(full);});if(_yrs.length===0){const _raw=(a.season||extractSeasonFromTitle(a.name||a.club||"")+"").replace(/[^0-9\/\-]/g,"").split(/[\/\-]/)[0];let _r=parseInt(_raw)||0;if(_r>0&&_r<100)_r+=_r>=60?1900:2e3;if(_r>0)_yrs.push(_r);}if(!_yrs.length||!e.some(function(dec){const _d=parseInt(dec);return _yrs.some(function(y){return y>=_d&&y<_d+10});}))return!1;}return!!(!d.length||a.colors&&d.some(e=>a.colors.includes(e)))}(a.s)});if(h.length>0){const a=h.map(function(a){return a.s.price*(RATES_TO_EUR[a.s.currency||"EUR"]||1)});var p=Math.ceil(Math.max.apply(null,a));updatePriceRange(0,p)}const b=parseInt(document.getElementById("priceMinInput").value)||0,f=parseInt(document.getElementById("priceMaxInput").value)||999999;let y=h.filter(function(a){const e=a.s.price*(RATES_TO_EUR[a.s.currency||"EUR"]||1);return e>=b&&e<=f});"price_asc"===u?y.sort(function(a,e){return a.s.price*(RATES_TO_EUR[a.s.currency||"EUR"]||1)-e.s.price*(RATES_TO_EUR[e.s.currency||"EUR"]||1)}):"price_desc"===u?y.sort(function(a,e){return e.s.price*(RATES_TO_EUR[e.s.currency||"EUR"]||1)-a.s.price*(RATES_TO_EUR[a.s.currency||"EUR"]||1)}):"rating"===u?y.sort(function(a,e){return(e.s.rating||0)-(a.s.rating||0)}):"newest"===u?y.sort(function(a,e){var n=parseInt((a.s.season||"").replace(/[^0-9]/g,"").slice(0,4))||0,r=parseInt((e.s.season||"").replace(/[^0-9]/g,"").slice(0,4))||0;return n>0&&n<100&&(n+=n>=60?1900:2e3),r>0&&r<100&&(r+=r>=60?1900:2e3),r-n}):"oldest"===u?y.sort(function(a,e){var n=parseInt((a.s.season||"").replace(/[^0-9]/g,"").slice(0,4))||9999,r=parseInt((e.s.season||"").replace(/[^0-9]/g,"").slice(0,4))||9999;return n>0&&n<100&&(n+=n>=60?1900:2e3),r>0&&r<100&&(r+=r>=60?1900:2e3),n-r}):y.sort(function(a,e){return e.score-a.score});let v=y.map(function(a){return a.s});if(!u){v=interleaveByStore(v);}renderActiveFilterBadges({q:e,league:t,version:i,sizes:s,brands:l,years:c,activeColors:d}),visibleCount=12,renderCards(v)}function renderActiveFilterBadges(a){let e=document.getElementById("activeFilterBadges");if(!e)return;const n=[];a.q&&n.push({label:'🔍 "'+a.q+'"',clear:function(){const a=document.getElementById("resultsSearch");a&&(a.value=""),applyFilters()}});if(a.league&&n.push({label:"League: "+({"nt-europe":"Europe","nt-america":"America","nt-africa":"Africa","nt-asia":"Asia","nt-oceania":"Oceania"}[a.league]||a.league),clear:function(){document.querySelectorAll(".sidebar .fp-chip[data-league]").forEach(a=>a.classList.remove("active")),applyFilters()}}),a.version&&n.push({label:"Version: "+a.version,clear:function(){document.querySelectorAll(".sidebar .fp-chip[data-version]").forEach(a=>a.classList.remove("active")),applyFilters()}}),(a.sizes||[]).forEach(function(a){n.push({label:"Size: "+a,clear:function(){document.querySelectorAll('.sidebar .fp-size-btn[data-size="'+a+'"]').forEach(a=>a.classList.remove("active")),applyFilters()}})}),a.brands.forEach(function(a){n.push({label:"Brand: "+a,clear:function(){"function"==typeof selectBrand?selectBrand(a):(selectedBrands.delete(a),"function"==typeof renderBrandTags&&renderBrandTags(),"function"==typeof buildSidebarBrandChips&&buildSidebarBrandChips(),applyFilters())}})}),getSelectedDecades().forEach(function(a){n.push({label:"Decade: "+a+"s",clear:function(){document.querySelectorAll('.fp-size-btn[data-decade="'+a+'"]').forEach(function(a){a.classList.remove("active")}),applyFilters()}})}),e.innerHTML="",0===n.length)return void(e.style.display="none");e.style.display="flex",n.forEach(function(a){const n=document.createElement("span");n.className="active-filter-badge",n.innerHTML=escHtml(a.label)+'<button class="badge-remove-btn" title="Remove filter">×</button>',n.querySelector(".badge-remove-btn").addEventListener("click",a.clear),e.appendChild(n)});const r=document.createElement("button");r.className="clear-all-btn",r.textContent="Clear all",r.addEventListener("click",function(){clearFilters()}),e.appendChild(r)}const SHOPIFY_STORES=[{name:"Away Days Kits",url:"https://awaydayskits.com"},{name:"Modeziege",url:"https://modeziege.net",currency:"EUR"},{name:"El Diez Football",url:"https://eldiezfootball.com"},{name:"Cami Clasica",url:"https://camiclasica.com"},{name:"Tspn Calcio",url:"https://tspncalcio.com"},{name:"Cult Football",url:"https://www.cultfootball.co.uk",currency:"GBP"},{name:"Football Finery",url:"https://www.footballfinery.co.uk",currency:"GBP"},{name:"Football Trikotsberlin",url:"https://footballtrikotsberlin.com"},{name:"Futmaniacos",url:"https://futmaniacos.com"},{name:"Stunner",url:"https://stunner.store"},{name:"The Soccer Archive",url:"https://thesoccerarchive.com",currency:"USD"},{name:"Retroriginal Football",url:"https://retroriginalfootball.com",excludeCollections:["retroriginalfootball-gallery","afc-ajax-gallery","feyenoord-rotterdam-gallery","italian-clubs-gallery","real-madrid-cf-gallery","national-teams-gallery","french-clubs-gallery","english-clubs-gallery","spanish-clubs-gallery","rest-of-the-world-gallery"]},{name:"The Football Room",url:"https://thefootballroom-mty.com",currency:"MXN"},{name:"Grannys Football Store",url:"https://grannysfootballstore.com"},{name:"Kit Launch FC",url:"https://kitlaunchfc.com"},{name:"First Street",url:"https://firststreet.store"},{name:"Infinity Football Shirts",url:"https://infinityfootballshirts.com"},{name:"Elite Kits",url:"https://elitekits.ch",currency:"CHF"},{name:"JS Football Shirts",url:"https://jsfootballshirts.com",currency:"USD"},{name:"Jappy Football",url:"https://www.jappyfootballclothing.com"},{name:"Football Shirt Union",url:"https://footballshirtunion.com"},{name:"Kick Off Vintage",url:"https://kickoffvintage.com",currency:"USD"},{name:"Squadra Football",url:"https://squadrafootball.com",currency:"USD"},{name:"Iconic Jersey",url:"https://iconicjersey.com",currency:"USD"},{name:"Shearers Cupboard",url:"https://shearerscupboard.com.au",currency:"AUD"},{name:"Vintage Sports Clothing",url:"https://vintagesportsclothing.com",currency:"USD"},{name:"The Kit Dealer",url:"https://www.thekitdealer.com"},{name:"Niclasico",url:"https://niclasico.co.uk",currency:"GBP"},{name:"Sense of Goal",url:"https://www.senseofgoal.com"},{name:"Jersely",url:"https://jersely.com"},{name:"Yaelitomix",url:"https://yaelitomix.com",currency:"MXN"},{name:"1892 Football Shirts",url:"https://1892footballshirts.co.uk",currency:"GBP"},{name:"Es De Epoca",url:"https://esdeepoca.com",currency:"MXN"},{name:"Sistine Shirts",url:"https://sistineshirts.com",currency:"GBP"},{name:"Real Vintage Football",url:"https://realvintagefootball.com"},{name:"44 Trikots",url:"https://44trikots.com"},{name:"Nostalgic Football Shirts",url:"https://nostalgicfootballshirts.com",currency:"GBP"},{name:"1 Klopp Shop",url:"https://1kloppshop.com",currency:"EUR"},{name:"Soyvillamelon",url:"https://soyvillamelon.es"},{name:"Football Shirt Collective",url:"https://footballshirtcollective.com",currency:"GBP"},{name:"Cult Fave Football Shirts",url:"https://cultfavefootballshirts.com",currency:"SGD"},{name:"First11 Shirts",url:"https://first11shirts.com",currency:"EUR"},{name:"Retro Football Shirts",url:"https://www.retrofootballshirts.com",currency:"GBP"},{name:"Mystery Jersey King",url:"https://mysteryjerseyking.com",currency:"GBP",onlyCollection:"retrofootballshirts"},{name:"Retro Screamers",url:"https://retroscreamers.com",currency:"USD"},{name:"The Football Idiots",url:"https://www.thefootballidiots.com",currency:"NOK"},{name:"Tiffozi Futbol",url:"https://tiffozifutbol.com",currency:"USD"},{name:"Brecho do Futebol",url:"https://brechodofutebol.com",currency:"BRL"},{name:"Vintage Football Jerseys",url:"https://www.vintage-football-jerseys.co.uk",currency:"GBP"},{name:"Football Curated",url:"https://football-curated.com",currency:"DKK"},{name:"Forever Soccer Jerseys",url:"https://www.foreversoccerjerseys.com",currency:"USD"},{name:"Football Shirt Kingdom",url:"https://footballshirtkingdom.com",currency:"GBP"},{name:"Calcio Vintage",url:"https://calciovintage.com",currency:"GBP"},{name:"FShoppen",url:"https://fshoppen.dk",currency:"DKK"},{name:"Football Shirts IE",url:"https://www.footballshirts.ie",currency:"EUR"},{name:"One More Time Shop",url:"https://onemoretimeshop.it",currency:"EUR"},{name:"De Voetbaltempel",url:"https://www.devoetbaltempel.nl",currency:"EUR"},{name:"Sta Jerseys",url:"https://stajerseys.com",currency:"USD"},{name:"Trikotparadies",url:"https://trikotparadies.shop",currency:"EUR"},{name:"Full Time Fits",url:"https://fulltimefits.com",currency:"USD"},{name:"Oh Calcio",url:"https://ohcalcio.com",currency:"EUR"},{name:"Green Sport Vintage",url:"https://greensportvintage.com",currency:"EUR"},{name:"Crooklyn Vintage",url:"https://crooklynvintage.com",currency:"USD",onlyCollection:"footy-wear"},{name:"Kit Plug",url:"https://kitplug.co"},{name:"Second Football Shirts",url:"https://www.secondfootballshirts.dk",currency:"DKK"},{name:"Buy Sell Football Shirts",url:"https://buysellfootballshirts.co.uk",currency:"GBP"},{name:"Retro Is Cooler",url:"https://retroiscooler.com",onlyCollection:"vintage-football",currency:"USD"},{name:"Legacy Football Shirts",url:"https://www.legacyfootballshirts.com"},{name:"Golaco Kits",url:"https://www.golacokits.com",currency:"GBP",excludeCollections:["match-worn","match-issued","match-worn-shirts","player-issued","player-worn"]},{name:"Offside Boys",url:"https://www.offsideboys.com",currency:"GBP"},{name:"PFC Vintage",url:"https://pfcvintage.com",currency:"GBP"},{name:"Eternal Pitch",url:"https://eternalpitch.com",currency:"GBP"},{name:"Football And Shirts",url:"https://www.footballandshirts.com",currency:"GBP"},{name:"Philly Soccer Jerseys",url:"https://phillysoccerjerseys.com",currency:"USD"},{name:"The Shirt Collectors",url:"https://www.theshirtcollectors.co.uk",currency:"GBP"},{name:"Pardon My Kicks",url:"https://pardonmykicks.se",currency:"SEK"},{name:"Authentic Football Club",url:"https://authenticfootballclub.com",currency:"EUR"},{name:"Football Finds",url:"https://footballfinds.co.uk",currency:"GBP"},{name:"FTBL HVN",url:"https://ftblhvn.com",currency:"GBP"},{name:"La Surface",url:"https://lasurface.shop",currency:"EUR"},{name:"Original Football Shop",url:"https://originalfootball.shop",currency:"GBP"},{name:"Sunday Football Shirts",url:"https://sundayfootballshirts.com",currency:"MYR"},{name:"That Vintage Football Shirt",url:"https://thatvintagefootballshirt.com",currency:"GBP"},{name:"The 12th Man Retro",url:"https://the12thmanretro.com",currency:"GBP"},{name:"The Football Market",url:"https://thefootballmarket.com",currency:"GBP"},{name:"The Kitman 97",url:"https://thekitman97.com",currency:"GBP"}];function optimizeImageUrl(a){if(!a)return a;if(a.startsWith("data:")||a.includes("cloudinary.com")||a.includes("yupopstorecdn.com"))return a;if(a.includes("cdn.shopify.com")){try{var _u=new URL(a);if(_u.hostname.includes("cultkits.com"))return a;}catch(e){}return a.replace(/\?.*$/,"")+"?width=600&format=webp";}return a;}function guessColor(a){const e=a.toLowerCase();return e.includes("red")||e.includes("rojo")?"#dc2626":e.includes("blue")||e.includes("azul")?"#1d4ed8":e.includes("green")||e.includes("verde")?"#16a34a":e.includes("yellow")||e.includes("amarillo")?"#ca8a04":e.includes("black")||e.includes("negro")?"#1e2530":e.includes("white")||e.includes("blanco")?"#d1d5db":e.includes("purple")||e.includes("morado")?"#7c3aed":e.includes("orange")||e.includes("naranja")?"#ea580c":"#1FAF6D"}function extractBrandFromTitle(a){const e=a.toLowerCase(),n=new Set,r=["new balance","le coq sportif","under armour","score draw","sergio tacchini","cotton traders","front runner","luanvi","topper","givova","legea","penalty","calvo","omero","sportika","austral","grafis","mills","stanno","burrda","toffs","pirma","tekela","matchwinner","athletica","joluvi","spall","kss","sport supply","vandanel","numero 1","meyba","pony","bukta","signia","nanque","olan","olympikus","rhumell","athix","dribbling","envion","balonpie","marathon","walon","mitre","adidas","nike","puma","umbro","kappa","hummel","macron","castore","errea","erreà","diadora","lotto","mizuno","joma","kelme","warrior","uhlsport","reebok","fila","asics","champion","ellesse","admiral","reusch","sondico","acerbis","patrick","zeus","lacoste","jako","score draw","cotton traders","reebok","asics","mizuno","diadora","new balance","le coq sportif","spalding","molten","select","wilson","mikasa","uhlsport","givova","legea","sportika","omero","calvo","topper","grafis","tekela","pirma"].filter(a=>!n.has(a)&&(n.add(a),!0));for(const a of r){const n=a.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");if(new RegExp("(?<![a-z])"+n+"(?![a-z])").test(e))return a.split(" ").map(a=>a.charAt(0).toUpperCase()+a.slice(1)).join(" ")}return""}function extractVersionFromTitle(a){const e=normalize(a||"");return/goalkeeper|goalkeeping|\bgk\b|portero|portiere|gardien|torwart|\bkeeper\b|goleiro|arquero|guarda.?redes|bramkarz/.test(e)?"Goalkeeper":/\bfourth\b|\b4th\b|cuarta|cuarto|quarta|quarto|quatrieme|quatrième|\bvierte[sr]?\b|vierde|czwarta|4a\s*equip|equip\w*\s*4|\b4\s*equip|\bkit\s*4\b|\b4\s*kit\b|\b4\s*shirt\b|\bshirt\s*4\b|\bmaillot\s*4\b|\b4\s*maillot\b|\btrikot\s*4\b|\b4\s*trikot\b|\bmaglia\s*4\b|\b4\s*maglia\b|\bcamiseta\s*4\b|\b4\s*camiseta\b|\bjersey\s*4\b|\b4\s*jersey\b/.test(e)?"Fourth":/\bthird\b|\b3rd\b|tercera|tercero|\bterceira\b|terza|terzo|troisieme|troisième|trzecia|\bdritte[sr]?\b|\bderde\b|alternate|alternativa|\b3a\s*equip|equip\w*\s*3|\b3\s*equip|\bkit\s*3\b|\b3\s*kit\b|\b3\s*shirt\b|\bshirt\s*3\b|\bmaillot\s*3\b|\b3\s*maillot\b|\btrikot\s*3\b|\b3\s*trikot\b|\bmaglia\s*3\b|\b3\s*maglia\b|\bcamiseta\s*3\b|\b3\s*camiseta\b|\bjersey\s*3\b|\b3\s*jersey\b/.test(e)?"Third":/\baway\b|visitante|trasferta|auswart|exterieur|extérieur|externo|\buit\b|borte|borta|deplacement|fuera|\bfora\b|visitor|\broad\b|wyjazdowa|segunda\s*equip|equip\w*\s*2|\b2a\s*equip|\b2nd\s*kit|\bkit\s*2\b|\b2\s*kit\b|\b2\s*shirt\b|\bshirt\s*2\b|\bmaillot\s*2\b|\b2\s*maillot\b|\btrikot\s*2\b|\b2\s*trikot\b|\bmaglia\s*2\b|\b2\s*maglia\b|\bcamiseta\s*2\b|\b2\s*camiseta\b|\bjersey\s*2\b|\b2\s*jersey\b|no\.?\s*2\b/.test(e)?"Away":/\bhome\b|\blocal\b|\bheim\b|domicile|\bcasa\b|thuis|\bhjem\b|hemma|maison|domowa|primera\s*equip|equip\w*\s*1|\b1a\s*equip|\b1st\s*kit|\bkit\s*1\b|\b1\s*kit\b|\b1\s*shirt\b|\bshirt\s*1\b|\bmaillot\s*1\b|\b1\s*maillot\b|\btrikot\s*1\b|\b1\s*trikot\b|\bmaglia\s*1\b|\b1\s*maglia\b|\bcamiseta\s*1\b|\b1\s*camiseta\b|\bjersey\s*1\b|\b1\s*jersey\b|no\.?\s*1\b|principal\b/.test(e)?"Home":/\bjacket\b|\btracksuit\b|\btraining\b|\bpre.?match\b|\bwarm.?up\b|\bwindbreaker\b|\bhoodie\b|\bsweatshirt\b|\bshorts\b|\bpants\b|\bpolo\b|\banthem\b|\bpresentation\b|\btravel\s*kit\b|\bwoven\b|\bpadded\b|\brain.?jacket\b|\bdrill.?top\b|\bhalf.?zip\b|\bgilet\b|\bvest\b|\bcoat\b|\bjogger\b/.test(e)||/\bchaqueta\b|\bchandal\b|\bchandal\b|\bentrenamiento\b|\bcalentamiento\b|\bchubasquero\b|\bsudadera\b|\bpantalon\b|\bpresentacion\b|\bviaje\b|\babrigo\b|\bcortavientos\b|\bpre.?partido\b/.test(e)||/\bgiacca\b|\btuta\b|\ballenamento\b|\briscaldamento\b|\bfelpa\b|\bpantaloncini\b|\bpantaloni\b|\bpre.?partita\b|\bgiubbotto\b/.test(e)||/\bveste\b|\bsurvetement\b|\bentrainement\b|\bechauffement\b|\bimpermeab/.test(e)||/\bjacke\b|\btrainingsanzug\b|\baufwarm\b|\bwindjacke\b|\bregenjacke\b/.test(e)||/\bcasaco\b|\bagasalho\b|\btreino\b|\baquecimento\b|\bmoletom\b|\bcalcoes\b/.test(e)||/\btrainingspak\b|\bopwarming\b/.test(e)||/\bkurtka\b|\bdres\b|\btrening\b|\brozgrzewka\b|\bbluza\b|\bspodenki\b|\bspodnie\b/.test(e)?"Other":""}function extractColorsFromTitle(a){const e=a.toLowerCase(),n=[{keys:["white","blanc","blanco","weiß","bianco","wit"],label:"white"},{keys:["black","noir","negro","schwarz","nero","zwart"],label:"black"},{keys:["red","rouge","rojo","rot","rosso","rood","scarlet","crimson","maroon","bordeaux","burgund"],label:"red"},{keys:["blue","bleu","azul","blau","blu","blauw","navy","royal","celeste","azzurro","cobalt","indigo"],label:"blue"},{keys:["green","vert","verde","grün","groen","emerald","bottle","lime","mint","olive"],label:"green"},{keys:["yellow","jaune","amarillo","gelb","giallo","geel","gold","amber","lemon"],label:"yellow"},{keys:["purple","violet","morado","lila","viola","paars","mauve","plum"],label:"purple"},{keys:["orange","naranja","oranje","tangerine"],label:"orange"},{keys:["pink","rose","rosa","roze","magenta","fuchsia","salmon"],label:"pink"},{keys:["grey","gray","gris","grau","grigio","grijs","silver","slate"],label:"grey"}],r=[];for(const{keys:a,label:t}of n)a.some(a=>e.includes(a))&&r.push(t);return r}function extractSizeFromText(a,e){const n=a||"",r=e||"",t=[/\b(youth|junior|kids?|child|children|boys?|girls?|infant|toddler|baby)\b/i,/\bY(XS|S|M|L|XL)\b/i,/\bXYL\b|\bYL\b/i,/\b(age|aged?)\s*\d+/i,/\b\d+[-\/]\d+\s*(years?|yrs?|yr)\b/i,/\b(1[46][0-9]|1[78][0-9]|1[23][0-9])\s*cm\b/i,/\b(Y|youth)[-]?(S|M|L|XL|XS)\b/i,/\b(1[0-9]{2})\b(?=.*kit|.*shirt|.*jersey)/i];for(const a of t)if(n.match(a)||r.match(a))return"Kids";const o=[{pattern:/\bXXXL\s*=\s*EXTRA\s*EXTRA\s*EXTRA\s*LARGE\b/i,size:"XXXL"},{pattern:/\bXXL\s*=\s*EXTRA\s*EXTRA\s*LARGE\b/i,size:"XXL"},{pattern:/\bXL\s*=\s*EXTRA\s*LARGE\b/i,size:"XL"},{pattern:/\bL\s*=\s*LARGE\b/i,size:"L"},{pattern:/\bM\s*=\s*MEDIUM\b/i,size:"M"},{pattern:/\bS\s*=\s*SMALL\b/i,size:"S"},{pattern:/\bXS\s*=\s*EXTRA\s*SMALL\b/i,size:"XS"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(XXXL|3XL)\b/i,size:"XXXL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(XXL|2XL)\b/i,size:"XXL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*XL\b/i,size:"XL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*XS\b/i,size:"XS"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*L\b/i,size:"L"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*M\b/i,size:"M"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*S\b/i,size:"S"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:extra\s*extra\s*large|xxxl|3xl)\b/i,size:"XXXL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:extra\s*large|x-large|xxl|2xl)\b/i,size:"XXL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:x-large|extra\s*large|xl)\b/i,size:"XL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:large|\bl\b)(?!\w)/i,size:"L"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:medium|\bm\b)(?!\w)/i,size:"M"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:small|\bs\b)(?!\w)/i,size:"S"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:extra\s*small|x-small|xs)\b/i,size:"XS"},{pattern:/[-|•·]\s*(XXXL|3XL)\s*[-|•·\n]/i,size:"XXXL"},{pattern:/[-|•·]\s*(XXL|2XL)\s*[-|•·\n]/i,size:"XXL"},{pattern:/[-|•·]\s*XL\s*[-|•·\n]/i,size:"XL"},{pattern:/[-|•·]\s*XS\s*[-|•·\n]/i,size:"XS"},{pattern:/[-|•·]\s*(?<![A-Z])L(?![A-Z])\s*[-|•·\n]/i,size:"L"},{pattern:/[-|•·]\s*(?<![A-Z])M(?![A-Z])\s*[-|•·\n]/i,size:"M"},{pattern:/[-|•·]\s*(?<![A-Z])S(?![A-Z])\s*[-|•·\n]/i,size:"S"}];for(const{pattern:a,size:e}of o)if(r.match(a))return e;const i=[{pattern:/\bTAM\s+(XXXL|3XL|EEG)\b/i,size:"XXXL"},{pattern:/\bTAM\s+(XXL|2XL|EG|GGG)\b/i,size:"XXL"},{pattern:/\bTAM\s+(XL|GG)\b/i,size:"XL"},{pattern:/\bTAM\s+(L|G)(?=\b|\s|$)/i,size:"L"},{pattern:/\bTAM\s+(M)(?=\b|\s|$)/i,size:"M"},{pattern:/\bTAM\s+(S|P)(?=\b|\s|$)/i,size:"S"},{pattern:/\bTAM\s+(XS)(?=\b|\s|$)/i,size:"XS"},{pattern:/\(XXXL\)|\(3XL\)|\[XXXL\]|\[3XL\]/i,size:"XXXL"},{pattern:/\(XXL\)|\(2XL\)|\[XXL\]|\[2XL\]/i,size:"XXL"},{pattern:/\(XL\)|\[XL\]/i,size:"XL"},{pattern:/\(XS\)|\[XS\]/i,size:"XS"},{pattern:/\(XXS\)|\[XXS\]/i,size:"XXS"},{pattern:/\(L\)|\[L\]/,size:"L"},{pattern:/\(M\)|\[M\]/,size:"M"},{pattern:/\(S\)|\[S\]/,size:"S"},{pattern:/\bXXXL\b|\b3XL\b/i,size:"XXXL"},{pattern:/\bXXL\b|\b2XL\b/i,size:"XXL"},{pattern:/\bX-?Large\b|\bExtra\s*Large\b/i,size:"XL"},{pattern:/\bXL\b/,size:"XL"},{pattern:/\bLarge\b/i,size:"L"},{pattern:/\bMedium\b/i,size:"M"},{pattern:/\bSmall\b/i,size:"S"},{pattern:/\bX-?Small\b|\bExtra\s*Small\b/i,size:"XS"},{pattern:/\bXXS\b/i,size:"XXS"},{pattern:/[-\s](XXXL)\b/i,size:"XXXL"},{pattern:/[-\s](XXL)\b/,size:"XXL"},{pattern:/[-\s](XL)\b/,size:"XL"},{pattern:/[-\s](XS)\b/,size:"XS"},{pattern:/[-\s#]([SMLX])\b(?!\w)/,size:null,group:1}],s={s:"S",m:"M",l:"L",x:"XL"};for(const{pattern:a,size:e,group:r}of i){const t=n.match(a);if(t){if(e)return e;if(r)return s[t[r].toLowerCase()]||t[r].toUpperCase()}}return null}let RATES_TO_EUR={EUR:1,GBP:1.1572,USD:0.8528,AUD:0.6129,CHF:1.0900,MXN:0.0488,CAD:0.6273,SEK:0.0923,DKK:0.1340,NOK:0.0918,PLN:0.2352,BRL:0.1717,IDR:4.9e-5,JPY:0.00543,CNY:0.1246,KRW:5.78e-4,TRY:0.01889,INR:0.00899,RUB:0.01136,ZAR:0.05115,NZD:0.5028,SGD:0.6696,HKD:0.1088,CZK:0.04102,HUF:0.002741,RON:0.1927,BGN:0.5113,THB:0.02624,ARS:6.18e-4,CLP:9.43e-4,COP:2.36e-4,PEN:0.2426,UAH:0.01942};async function loadExchangeRates(){
+  const KEY_RATES="kf_exchange_rates",KEY_DISP="kf_display_rates",KEY_TIME="kf_exchange_rates_time";
+  // Limpiar cache antigua corrupta
+  const cachedR=localStorage.getItem(KEY_RATES),cachedD=localStorage.getItem(KEY_DISP),cachedT=localStorage.getItem(KEY_TIME);
+  if(cachedR&&cachedD&&cachedT&&Date.now()-parseInt(cachedT)<36e5){
     try{
-      var m=document.getElementById("kfAuthModal");
-      if(m){
-        m.classList.add("open");
-        if(tab&&typeof window.kfSwitchTab==="function")window.kfSwitchTab(tab);
-        else if(tab){
-          // mini implementación para que abrir en el tab correcto funcione siempre
-          var tabs=document.querySelectorAll(".kf-auth-tab");
-          tabs.forEach(function(t){t.classList.toggle("active",t.dataset.tab===tab);});
-          var panels=document.querySelectorAll(".kf-auth-panel");
-          panels.forEach(function(p){p.style.display=p.dataset.panel===tab?"flex":"none";});
-        }
-      }
-    }catch(e){console.error("[KF Auth open]",e);}
-  }
-  function _kfCloseAuthModalFallback(){
-    try{
-      var m=document.getElementById("kfAuthModal");
-      if(m)m.classList.remove("open");
-    }catch(e){console.error("[KF Auth close]",e);}
-  }
-  // Solo definir si no existen ya (auth.js los sobreescribirá cuando esté listo)
-  if(typeof window.kfOpenAuthModal!=="function")window.kfOpenAuthModal=_kfOpenAuthModalFallback;
-  if(typeof window.kfCloseAuthModal!=="function")window.kfCloseAuthModal=_kfCloseAuthModalFallback;
-  // Fallback para kfSetError (mostrar errores si Firebase falla)
-  if(typeof window.kfSetError!=="function"){
-    window.kfSetError=function(msg){
-      var el=document.getElementById("kfAuthError");
-      if(el){el.textContent=msg||"";el.style.display=msg?"block":"none";}
-    };
-  }
-  // Fallback de kfSwitchTab para cambiar entre Sign In y Create Account
-  if(typeof window.kfSwitchTab!=="function"){
-    window.kfSwitchTab=function(tab){
-      try{
-        document.querySelectorAll(".kf-auth-tab").forEach(function(t){t.classList.toggle("active",t.dataset.tab===tab);});
-        document.querySelectorAll(".kf-auth-panel").forEach(function(p){p.style.display=p.dataset.panel===tab?"flex":"none";});
-        var btn=document.getElementById("kfAuthSubmitBtn");
-        if(btn)btn.textContent=tab==="signup"?"Create Account":"Sign In";
-      }catch(e){console.error("[KF Auth switch]",e);}
-    };
-  }
-  // Fallback de kfHandleSubmit — si Firebase aún no ha cargado, mostrar mensaje claro
-  if(typeof window.kfHandleSubmit!=="function"){
-    window.kfHandleSubmit=function(){
-      window.kfSetError("Connecting to authentication service... Please wait a moment and try again. If this persists, refresh the page.");
-    };
-  }
-  if(typeof window.kfGoogleSignIn!=="function"){
-    window.kfGoogleSignIn=function(){
-      window.kfSetError("Connecting to authentication service... Please wait a moment and try again.");
-    };
-  }
-  if(typeof window.kfResetPassword!=="function"){
-    window.kfResetPassword=function(){
-      window.kfSetError("Authentication service still loading. Please wait and try again.");
-    };
-  }
-})();
-</script>
-
-<!-- LANDING -->
-<div id="landing">
-  <!-- MARQUEE BAR -->
-  <div class="marquee-bar">
-    <div class="marquee-socials">
-      <a href="https://www.instagram.com/wearekitfinder/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <a href="https://x.com/wearekitfinder" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-      <a href="mailto:wearekitfinder@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg>
-      </a>
-    </div>
-    <div class="marquee-track">
-      <div class="marquee-content">
-        <span>THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 100+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
-        <span>THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 100+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
-      </div>
-    </div>
-  </div>
-  <nav class="main-nav" id="mainNav">
-    <button class="nav-mobile-toggle nav-mobile-left" id="navMobileToggle" onclick="toggleMobileNav()" aria-label="Open menu">
-      <span></span><span></span><span></span>
-    </button>
-    <a class="nav-logo" href="#" onclick="goHome(event)">
-      <img src="images/logo_kitfinder.png" alt="Kit Finder" class="nav-logo-img" fetchpriority="high"/>
-    </a>
-    <div class="nav-links" id="navLinks">
-      <div class="nav-dropdown">
-        <button class="nav-link" onclick="toggleNavDd(this)"><span data-i18n="nav_shop_league">Shop by League</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="nav-dd-menu nav-dd-wide" id="navLeagueDd">
-          <div class="nav-dd-cols">
-            <div class="nav-dd-col nav-dd-col-double">
-              <span class="nav-dd-heading nav-dd-heading-center">Europe</span>
-              <div class="nav-dd-two-cols">
-                <div class="nav-dd-subcol">
-                  <a href="#" onclick="navPickLeague('Austrian Bundesliga',event)">Austrian clubs</a>
-                  <a href="#" onclick="navPickLeague('Belgian Pro League',event)">Belgian clubs</a>
-                  <a href="#" onclick="navPickLeague('HNL Croatia',event)">Croatian clubs</a>
-                  <a href="#" onclick="navPickLeague('Czech First League',event)">Czech clubs</a>
-                  <a href="#" onclick="navPickLeague('Superliga Denmark',event)">Danish clubs</a>
-                  <a href="#" onclick="navPickLeague('Eredivisie',event)">Dutch clubs</a>
-                  <a href="#" onclick="navPickLeague('Premier League',event)">English clubs</a>
-                  <a href="#" onclick="navPickLeague('Veikkausliiga',event)">Finnish clubs</a>
-                  <a href="#" onclick="navPickLeague('Ligue 1',event)">French clubs</a>
-                  <a href="#" onclick="navPickLeague('Bundesliga',event)">German clubs</a>
-                  <a href="#" onclick="navPickLeague('Super League Greece',event)">Greek clubs</a>
-                  <a href="#" onclick="navPickLeague('Nemzeti Bajnokság',event)">Hungarian clubs</a>
-                  <a href="#" onclick="navPickLeague('League of Ireland',event)">Irish clubs</a>
-                </div>
-                <div class="nav-dd-subcol">
-                  <a href="#" onclick="navPickLeague('Serie A',event)">Italian clubs</a>
-                  <a href="#" onclick="navPickLeague('NIFL Premiership',event)">N. Irish clubs</a>
-                  <a href="#" onclick="navPickLeague('Eliteserien',event)">Norwegian clubs</a>
-                  <a href="#" onclick="navPickLeague('Ekstraklasa',event)">Polish clubs</a>
-                  <a href="#" onclick="navPickLeague('Primeira Liga',event)">Portuguese clubs</a>
-                  <a href="#" onclick="navPickLeague('Russian Premier League',event)">Russian clubs</a>
-                  <a href="#" onclick="navPickLeague('Scottish Premiership',event)">Scottish clubs</a>
-                  <a href="#" onclick="navPickLeague('Serbian SuperLiga',event)">Serbian clubs</a>
-                  <a href="#" onclick="navPickLeague('La Liga',event)">Spanish clubs</a>
-                  <a href="#" onclick="navPickLeague('Allsvenskan',event)">Swedish clubs</a>
-                  <a href="#" onclick="navPickLeague('Swiss Super League',event)">Swiss clubs</a>
-                  <a href="#" onclick="navPickLeague('Super Lig',event)">Turkish clubs</a>
-                  <a href="#" onclick="navPickLeague('Premier League Ukraine',event)">Ukrainian clubs</a>
-                </div>
-              </div>
-            </div>
-            <div class="nav-dd-col">
-              <span class="nav-dd-heading">America</span>
-              <a href="#" onclick="navPickLeague('Liga Profesional Argentina',event)">Argentine clubs</a>
-              <a href="#" onclick="navPickLeague('Brasileirão',event)">Brazilian clubs</a>
-              <a href="#" onclick="navPickLeague('Primera División Chile',event)">Chilean clubs</a>
-              <a href="#" onclick="navPickLeague('Liga Colombiana',event)">Colombian clubs</a>
-              <a href="#" onclick="navPickLeague('Liga Ecuatoriana',event)">Ecuadorian clubs</a>
-              <a href="#" onclick="navPickLeague('Liga MX',event)">Mexican clubs</a>
-              <a href="#" onclick="navPickLeague('Liga 1 Perú',event)">Peruvian clubs</a>
-              <a href="#" onclick="navPickLeague('MLS',event)">US &amp; Canadian clubs</a>
-              <a href="#" onclick="navPickLeague('Primera División Uruguay',event)">Uruguayan clubs</a>
-              <a href="#" onclick="navPickLeague('Primera División Venezuela',event)">Venezuelan clubs</a>
-            </div>
-            <div class="nav-dd-col">
-              <span class="nav-dd-heading">Asia &amp; Oceania</span>
-              <a href="#" onclick="navPickLeague('A-League',event)">Australian clubs</a>
-              <a href="#" onclick="navPickLeague('Chinese Super League',event)">Chinese clubs</a>
-              <a href="#" onclick="navPickLeague('J1 League',event)">Japanese clubs</a>
-              <a href="#" onclick="navPickLeague('K League 1',event)">Korean clubs</a>
-              <a href="#" onclick="navPickLeague('Saudi Pro League',event)">Saudi clubs</a>
-            </div>
-            <div class="nav-dd-col">
-              <span class="nav-dd-heading">Africa</span>
-              <a href="#" onclick="navPickCountry('Algeria',event)">Algerian clubs</a>
-              <a href="#" onclick="navPickCountry('Egypt',event)">Egyptian clubs</a>
-              <a href="#" onclick="navPickCountry('Morocco',event)">Moroccan clubs</a>
-              <a href="#" onclick="navPickCountry('South Africa',event)">South African clubs</a>
-              <a href="#" onclick="navPickCountry('Tunisia',event)">Tunisian clubs</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="nav-dropdown">
-        <button class="nav-link" onclick="toggleNavDd(this)"><span data-i18n="nav_shop_country">Shop by Country</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg></button>
-        <div class="nav-dd-menu nav-dd-wide" id="navCountryDd">
-          <div class="nav-dd-cols">
-            <div class="nav-dd-col nav-dd-col-double">
-              <span class="nav-dd-heading nav-dd-heading-center">Europe</span>
-              <div class="nav-dd-two-cols">
-                <div class="nav-dd-subcol">
-                  <a href="#" onclick="navPickCountry('Austria',event)">Austria</a>
-                  <a href="#" onclick="navPickCountry('Belgium',event)">Belgium</a>
-                  <a href="#" onclick="navPickCountry('Croatia',event)">Croatia</a>
-                  <a href="#" onclick="navPickCountry('Czech Republic',event)">Czech Republic</a>
-                  <a href="#" onclick="navPickCountry('Denmark',event)">Denmark</a>
-                  <a href="#" onclick="navPickCountry('England',event)">England</a>
-                  <a href="#" onclick="navPickCountry('Finland',event)">Finland</a>
-                  <a href="#" onclick="navPickCountry('France',event)">France</a>
-                  <a href="#" onclick="navPickCountry('Germany',event)">Germany</a>
-                  <a href="#" onclick="navPickCountry('Greece',event)">Greece</a>
-                  <a href="#" onclick="navPickCountry('Hungary',event)">Hungary</a>
-                  <a href="#" onclick="navPickCountry('Ireland',event)">Ireland</a>
-                  <a href="#" onclick="navPickCountry('Italy',event)">Italy</a>
-                </div>
-                <div class="nav-dd-subcol">
-                  <a href="#" onclick="navPickCountry('Netherlands',event)">Netherlands</a>
-                  <a href="#" onclick="navPickCountry('Norway',event)">Norway</a>
-                  <a href="#" onclick="navPickCountry('Poland',event)">Poland</a>
-                  <a href="#" onclick="navPickCountry('Portugal',event)">Portugal</a>
-                  <a href="#" onclick="navPickCountry('Russia',event)">Russia</a>
-                  <a href="#" onclick="navPickCountry('Scotland',event)">Scotland</a>
-                  <a href="#" onclick="navPickCountry('Serbia',event)">Serbia</a>
-                  <a href="#" onclick="navPickCountry('Spain',event)">Spain</a>
-                  <a href="#" onclick="navPickCountry('Sweden',event)">Sweden</a>
-                  <a href="#" onclick="navPickCountry('Switzerland',event)">Switzerland</a>
-                  <a href="#" onclick="navPickCountry('Turkey',event)">Turkey</a>
-                  <a href="#" onclick="navPickCountry('Ukraine',event)">Ukraine</a>
-                  <a href="#" onclick="navPickCountry('Wales',event)">Wales</a>
-                </div>
-              </div>
-            </div>
-            <div class="nav-dd-col">
-              <span class="nav-dd-heading">America</span>
-              <a href="#" onclick="navPickCountry('Argentina',event)">Argentina</a>
-              <a href="#" onclick="navPickCountry('Brazil',event)">Brazil</a>
-              <a href="#" onclick="navPickCountry('Canada',event)">Canada</a>
-              <a href="#" onclick="navPickCountry('Chile',event)">Chile</a>
-              <a href="#" onclick="navPickCountry('Colombia',event)">Colombia</a>
-              <a href="#" onclick="navPickCountry('Costa Rica',event)">Costa Rica</a>
-              <a href="#" onclick="navPickCountry('Ecuador',event)">Ecuador</a>
-              <a href="#" onclick="navPickCountry('Mexico',event)">Mexico</a>
-              <a href="#" onclick="navPickCountry('Paraguay',event)">Paraguay</a>
-              <a href="#" onclick="navPickCountry('Peru',event)">Peru</a>
-              <a href="#" onclick="navPickCountry('Uruguay',event)">Uruguay</a>
-              <a href="#" onclick="navPickCountry('USA',event)">USA</a>
-              <a href="#" onclick="navPickCountry('Venezuela',event)">Venezuela</a>
-            </div>
-            <div class="nav-dd-col">
-              <span class="nav-dd-heading">Africa</span>
-              <a href="#" onclick="navPickCountry('Algeria',event)">Algeria</a>
-              <a href="#" onclick="navPickCountry('Cameroon',event)">Cameroon</a>
-              <a href="#" onclick="navPickCountry('Egypt',event)">Egypt</a>
-              <a href="#" onclick="navPickCountry('Ghana',event)">Ghana</a>
-              <a href="#" onclick="navPickCountry('Guinea',event)">Guinea</a>
-              <a href="#" onclick="navPickCountry('Ivory Coast',event)">Ivory Coast</a>
-              <a href="#" onclick="navPickCountry('Mali',event)">Mali</a>
-              <a href="#" onclick="navPickCountry('Morocco',event)">Morocco</a>
-              <a href="#" onclick="navPickCountry('Nigeria',event)">Nigeria</a>
-              <a href="#" onclick="navPickCountry('Senegal',event)">Senegal</a>
-              <a href="#" onclick="navPickCountry('Somalia',event)">Somalia</a>
-              <a href="#" onclick="navPickCountry('South Africa',event)">South Africa</a>
-              <a href="#" onclick="navPickCountry('Tunisia',event)">Tunisia</a>
-            </div>
-            <div class="nav-dd-col">
-              <span class="nav-dd-heading">Asia &amp; Oceania</span>
-              <a href="#" onclick="navPickCountry('Australia',event)">Australia</a>
-              <a href="#" onclick="navPickCountry('China',event)">China</a>
-              <a href="#" onclick="navPickCountry('India',event)">India</a>
-              <a href="#" onclick="navPickCountry('Indonesia',event)">Indonesia</a>
-              <a href="#" onclick="navPickCountry('Iran',event)">Iran</a>
-              <a href="#" onclick="navPickCountry('Iraq',event)">Iraq</a>
-              <a href="#" onclick="navPickCountry('Japan',event)">Japan</a>
-              <a href="#" onclick="navPickCountry('New Zealand',event)">New Zealand</a>
-              <a href="#" onclick="navPickCountry('Qatar',event)">Qatar</a>
-              <a href="#" onclick="navPickCountry('Saudi Arabia',event)">Saudi Arabia</a>
-              <a href="#" onclick="navPickCountry('South Korea',event)">South Korea</a>
-              <a href="#" onclick="navPickCountry('Thailand',event)">Thailand</a>
-              <a href="#" onclick="navPickCountry('Vietnam',event)">Vietnam</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="nav-link" href="#" onclick="searchMatchWorn();event.preventDefault();var l=document.getElementById('navLinks');if(l)l.classList.remove('open');var b=document.getElementById('navMobileToggle');if(b)b.classList.remove('open');" data-i18n="nav_match_worn">Match Worn/Issued</a>
-      <a class="nav-link" href="#" onclick="searchWorldCup();event.preventDefault();var l=document.getElementById('navLinks');if(l)l.classList.remove('open');var b=document.getElementById('navMobileToggle');if(b)b.classList.remove('open');" data-i18n="nav_world_cup">World Cup Kits</a>
-      <a class="nav-link" href="#" onclick="showInfo('why',event);var l=document.getElementById('navLinks');if(l)l.classList.remove('open');var b=document.getElementById('navMobileToggle');if(b)b.classList.remove('open');" data-i18n="nav_why_kf">Why Kit Finder?</a>
-      <a class="nav-link" href="#" onclick="navBlog(event)" data-i18n="nav_blog">La Grada</a>
-    </div>
-    <div class="nav-right">
-      <div style="position:relative;display:none;">
-        <button class="country-btn" id="countryBtn" onclick="toggleCountry()"><span id="countryFlag">🌍</span></button>
-        <div class="country-dropdown" id="countryDd"></div>
-      </div>
-      <button class="kf-auth-topbtn" id="kfAuthBtn" onclick="kfOpenAuthModal('signin')" title="Sign in">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      </button>
-      <div class="kf-user-avatar" id="kfUserAvatar" style="display:none" onclick="kfToggleProfileMenu()">
-        <img id="kfAvatarImg" src="" alt="Avatar" class="kf-avatar-img"/>
-        <div class="kf-profile-menu" id="kfProfileMenu">
-          <div class="kf-profile-header">
-            <img id="kfMenuAvatarImg" src="" alt="" class="kf-menu-avatar"/>
-            <div>
-              <div id="kfMenuName" class="kf-menu-name">Kit Finder User</div>
-              <div id="kfMenuEmail" class="kf-menu-email"></div>
-            </div>
-          </div>
-          <hr class="kf-menu-divider"/>
-          <button class="kf-menu-item" onclick="kfOpenProfile();kfToggleProfileMenu()"><span data-i18n="menu_profile">Profile</span></button>
-          <button class="kf-menu-item" onclick="kfOpenSettings();kfToggleProfileMenu()"><span data-i18n="menu_settings">Settings</span></button>
-          <button class="kf-menu-item" onclick="openFavs();kfToggleProfileMenu()"><span data-i18n="menu_favs">My favourites</span> <span id="kfMenuFavBadge" class="kf-menu-badge"></span></button>
-          <hr class="kf-menu-divider"/>
-          <button class="kf-menu-item kf-menu-signout" onclick="kfSignOut()"><span data-i18n="menu_signout">Sign out</span></button>
-        </div>
-      </div>
-      <!-- inputs ocultos para profile (usados por las páginas info-profile/info-settings) -->
-      <input type="file" id="kfAvatarUpload" accept="image/*" style="display:none" onchange="kfPreviewAvatar(this)"/>
-    </div>
-  </nav>
-
-  <!-- KIT FINDER AUTH MODAL -->
-  <div class="kf-auth-modal" id="kfAuthModal" onclick="if(event.target===this)kfCloseAuthModal()">
-    <div class="kf-auth-box">
-      <button class="kf-auth-close" onclick="kfCloseAuthModal()">&#x2715;</button>
-      <div class="kf-auth-logo"><img src="images/logo_kitfinder.png" alt="Kit Finder" height="80"></div>
-      <button class="kf-google-btn" onclick="kfSignInGoogle()">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Continue with Google
-      </button>
-      <div class="kf-auth-divider"><span>or</span></div>
-      <div class="kf-auth-tabs">
-        <button class="kf-auth-tab active" data-tab="signin" onclick="kfSwitchTab('signin')">Sign In</button>
-        <button class="kf-auth-tab" data-tab="signup" onclick="kfSwitchTab('signup')">Create Account</button>
-      </div>
-      <div class="kf-auth-panel" data-panel="signin">
-        <input class="kf-auth-input" id="kfEmailInput" type="email" placeholder="Email address" autocomplete="email">
-        <input class="kf-auth-input" id="kfPasswordInput" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')kfHandleSubmit()">
-        <div class="kf-forgot-wrap"><a href="#" class="kf-forgot-link" style="color:#1FAF6D" onclick="kfResetPassword(document.getElementById('kfEmailInput').value);event.preventDefault()">Forgot password?</a></div>
-      </div>
-      <div class="kf-auth-panel" data-panel="signup" style="display:none">
-        <input class="kf-auth-input" id="kfNameInput" type="text" placeholder="Your name (optional)" autocomplete="name">
-        <input class="kf-auth-input" id="kfEmailInputSU" type="email" placeholder="Email address" autocomplete="email" oninput="document.getElementById('kfEmailInput').value=this.value">
-        <input class="kf-auth-input" id="kfPasswordInputSU" type="password" placeholder="Password (min. 6 characters)" autocomplete="new-password" onkeydown="if(event.key==='Enter')kfHandleSubmit()" oninput="document.getElementById('kfPasswordInput').value=this.value">
-      </div>
-      <div id="kfAuthError" style="display:none;font-size:13px;margin:6px 0 2px;text-align:center;"></div>
-      <button class="kf-auth-submit" id="kfAuthSubmitBtn" data-label="Sign In" onclick="kfHandleSubmit()">Sign In</button>
-      <p class="kf-auth-legal">By signing in you accept our <a href="#" onclick="showInfo('terms',event)" style="color:#1FAF6D">Terms of Use</a> and <a href="#" onclick="showInfo('privacy',event)" style="color:#1FAF6D">Privacy Policy</a>.</p>
-    </div>
-  </div>
-
-  <!-- MOBILE DRAWER MENU -->
-  <div class="mob-overlay" id="mobOverlay" onclick="toggleMobileNav()"></div>
-  <div class="mob-drawer" id="mobDrawer">
-    <div class="mob-drawer-inner" id="mobDrawerInner">
-
-      <!-- PANEL 1: Menú principal -->
-      <div class="mob-panel" id="mobPanel1">
-        <div class="mob-drawer-header">
-          <button class="mob-close" onclick="toggleMobileNav()">✕</button>
-          <span class="mob-drawer-title">Menu</span>
-        </div>
-        <div class="mob-section">
-          <button class="mob-section-btn" onclick="mobShowContinents('league')">
-            <span data-i18n="nav_shop_league">Shop by League</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg>
-          </button>
-        </div>
-        <div class="mob-section">
-          <button class="mob-section-btn" onclick="mobShowContinents('country')">
-            <span data-i18n="nav_shop_country">Shop by Country</span> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg>
-          </button>
-        </div>
-        <div class="mob-section">
-          <a class="mob-direct-link" href="#" onclick="searchMatchWorn();toggleMobileNav()" data-i18n="menu_match_worn">Match Worn/Issued</a>
-        </div>
-        <div class="mob-section">
-          <a class="mob-direct-link" href="#" onclick="searchWorldCup();toggleMobileNav()" data-i18n="menu_world_cup">World Cup Kits</a>
-        </div>
-        <div class="mob-section">
-          <a class="mob-direct-link" href="#" onclick="showInfo('why',event);toggleMobileNav()" data-i18n="menu_why_kf">Why Kit Finder?</a>
-        </div>
-        <div class="mob-section">
-          <a class="mob-direct-link" href="#" onclick="navBlog(event);toggleMobileNav()" data-i18n="menu_blog">La Grada</a>
-        </div>
-      </div>
-
-      <!-- PANEL 2: Continentes -->
-      <div class="mob-panel" id="mobPanel2">
-        <button class="mob-back-btn" onclick="mobGoBack(1)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-          <span id="mobBackLabel1">Menu</span>
-        </button>
-        <div class="mob-panel-title" id="mobPanel2Title">Shop by League</div>
-        <div id="mobContinentsList"></div>
-      </div>
-
-      <!-- PANEL 3: Items (ligas o países) -->
-      <div class="mob-panel" id="mobPanel3">
-        <button class="mob-back-btn" onclick="mobGoBack(2)">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-          <span id="mobBackLabel2">Continents</span>
-        </button>
-        <div class="mob-panel-title" id="mobPanel3Title">Europe</div>
-        <div id="mobItemsList"></div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="landing-center">
-    <h1 class="landing-title"><span data-i18n="landing_title_1">Find any</span> <span class="kf-green" data-i18n="landing_title_2">football shirt</span><br><span data-i18n="landing_title_3">in one search</span></h1>
-    <p class="landing-subtitle" data-i18n="landing_subtitle" style="color:rgba(255,255,255,0.55);font-size:15px;margin:-8px 0 18px;font-weight:400;text-align:center;">Search over 200,000 vintage, retro &amp; classic football shirts across 100+ specialist stores</p>
-    <div class="search-box">
-      <input class="search-input" id="landingSearch" type="text" placeholder="Search football shirts (team, player, brand…)" autocomplete="off" onkeydown="if(event.key==='Enter')triggerSearch()"/>
-      <input type="file" id="kfImgInput" accept="image/*" style="display:none" onchange="kfSearchByImage(this)"/>
-      <button class="search-camera-btn" onclick="document.getElementById('kfImgInput').click()" title="Search by photo">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      </button>
-      <button class="search-btn" onclick="triggerSearch()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <span data-i18n="search_btn">Search</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- HOLY GRAILS SECTION -->
-<div id="holyGrails" class="holy-grails-section">
-  <div class="hg-inner">
-    <h2 class="hg-title" data-i18n="hg_title">Holy Grails</h2>
-    <div class="hg-carousel-wrap">
-      <button class="hg-arrow hg-arrow-left" onclick="hgNav(-1)" aria-label="Previous">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <div class="hg-stage" id="hgStage">
-            </div>
-      <button class="hg-arrow hg-arrow-right" onclick="hgNav(1)" aria-label="Next">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- FOOTBALL GIANTS SECTION -->
-<div id="footballGiants" class="fg-section">
-  <div class="fg-inner">
-    <h2 class="fg-title" data-i18n="fg_title">Football Giants</h2>
-    <p class="fg-subtitle" data-i18n="fg_subtitle">Browse vintage &amp; retro football shirts from the world's greatest clubs — Barcelona, Real Madrid, Bayern Munich, Liverpool, Man United and more</p>
-    <div class="fg-grid">
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Barcelona')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-barcelona.jpg" alt="Barcelona" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Barcelona</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Real Madrid')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-realmadrid.jpg" alt="Real Madrid" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Real Madrid</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Manchester United')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-manutd.jpg" alt="Manchester United" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Man United</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Liverpool')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-liverpool.jpg" alt="Liverpool" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Liverpool</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Bayern Munich')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-bayern.jpg" alt="Bayern Munich" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Bayern Munich</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Juventus')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-juventus.jpg" alt="Juventus" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Juventus</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Paris Saint-Germain')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-psg.jpg" alt="PSG" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">PSG</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Ajax')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-ajax.jpg" alt="Ajax" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Ajax</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Boca Juniors')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-boca.jpg" alt="Boca Juniors" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Boca Juniors</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Flamengo')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-flamengo.jpg" alt="Flamengo" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Flamengo</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('AC Milan')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-milan.jpg" alt="AC Milan" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">AC Milan</div>
-        </div>
-      </button>
-
-      <button class="fg-card fg-card-photo" onclick="kfFgClick('Arsenal')">
-        <div class="fg-photo-wrap">
-          <img src="images/fg-arsenal.jpg" alt="Arsenal" class="fg-photo" loading="lazy">
-          <div class="fg-photo-label">Arsenal</div>
-        </div>
-      </button>
-
-    </div>
-  </div>
-</div>
-
-<!-- WORLD CUP 2026 SECTION -->
-<div id="worldCup2026" class="wc-section">
-  <div class="wc-hero" style="cursor:default;">
-    <div class="wc-hero-overlay" style="pointer-events:none;"></div>
-    <div class="wc-hero-content" style="pointer-events:none;">
-      <h2 class="wc-hero-title" data-i18n="wc_hero_title">World Cup Football Shirts</h2>
-      <p class="wc-hero-sub" data-i18n="wc_hero_sub">Browse every qualified nation's kit — from iconic vintage World Cup jerseys to the latest 2026 shirts</p>
-      <button class="wc-hero-cta" onclick="searchWorldCup()" style="pointer-events:auto;cursor:pointer;border:none;font-family:inherit;">
-        <span data-i18n="wc_hero_cta">Explore all 48 nations</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- LANDING FOOTER -->
-<div id="landingFooter" class="landing-footer">
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-center">
-        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;line-height:1.6;">Kit Finder is a football shirt search engine. We aggregate listings from specialist vintage, retro and classic football shirt stores so you can find any kit in one search. From Premier League to Serie A, from 1960s classics to the latest releases.</p>
-        <div class="footer-links"><a href="#" onclick="showInfo('about',event)" data-i18n="footer_about">About</a><a href="#" onclick="showInfo('privacy',event)" data-i18n="footer_privacy">Privacy policy</a><a href="#" onclick="showInfo('terms',event)" data-i18n="footer_terms">Terms of use</a><a href="#" onclick="showInfo('affiliate',event)" data-i18n="footer_affiliate">Affiliate disclosure</a></div>
-        <p>© 2026 Kit Finder. We earn commissions from affiliate partner stores. All trademarks belong to their respective owners.</p>
-      </div>
-      <div class="footer-socials">
-        <a href="https://www.instagram.com/wearekitfinder/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="https://x.com/wearekitfinder" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="mailto:wearekitfinder@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg>
-        </a>
-      </div>
-    </div>
-  </footer>
-</div>
-<div class="filter-overlay" id="fpOverlay" onclick="closeFP()"></div>
-<div class="filter-panel" id="fpPanel">
-  <div class="fp-close-row"><button class="fp-close" onclick="closeFP()">×</button></div>
-
-  <!-- League -->
-  <div class="fp-section">
-    <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_league">League</span><span class="fp-chevron">▼</span></button>
-    <div class="fp-section-body">
-      <div class="fp-white-body">
-        <div class="fp-sub-section"><button class="fp-sub-header" onclick="toggleSub(this)"><span>Europe</span><span class="fp-chevron">▼</span></button>
-          <div class="fp-sub-body"><div class="fp-chip-list">
-            <button class="fp-chip" data-value="Austrian Bundesliga" onclick="pickLeague(this)">Austrian clubs</button>
-            <button class="fp-chip" data-value="Belgian Pro League" onclick="pickLeague(this)">Belgian clubs</button>
-            <button class="fp-chip" data-value="HNL Croatia" onclick="pickLeague(this)">Croatian clubs</button>
-            <button class="fp-chip" data-value="Czech First League" onclick="pickLeague(this)">Czech clubs</button>
-            <button class="fp-chip" data-value="Superliga Denmark" onclick="pickLeague(this)">Danish clubs</button>
-            <button class="fp-chip" data-value="Eredivisie" onclick="pickLeague(this)">Dutch clubs</button>
-            <button class="fp-chip" data-value="Premier League" onclick="pickLeague(this)">English clubs</button>
-            <button class="fp-chip" data-value="Veikkausliiga" onclick="pickLeague(this)">Finnish clubs</button>
-            <button class="fp-chip" data-value="Ligue 1" onclick="pickLeague(this)">French clubs</button>
-            <button class="fp-chip" data-value="Bundesliga" onclick="pickLeague(this)">German clubs</button>
-            <button class="fp-chip" data-value="Super League Greece" onclick="pickLeague(this)">Greek clubs</button>
-            <button class="fp-chip" data-value="Nemzeti Bajnokság" onclick="pickLeague(this)">Hungarian clubs</button>
-            <button class="fp-chip" data-value="League of Ireland" onclick="pickLeague(this)">Irish clubs</button>
-            <button class="fp-chip" data-value="Serie A" onclick="pickLeague(this)">Italian clubs</button>
-            <button class="fp-chip" data-value="NIFL Premiership" onclick="pickLeague(this)">N. Irish clubs</button>
-            <button class="fp-chip" data-value="Eliteserien" onclick="pickLeague(this)">Norwegian clubs</button>
-            <button class="fp-chip" data-value="Ekstraklasa" onclick="pickLeague(this)">Polish clubs</button>
-            <button class="fp-chip" data-value="Primeira Liga" onclick="pickLeague(this)">Portuguese clubs</button>
-            <button class="fp-chip" data-value="Russian Premier League" onclick="pickLeague(this)">Russian clubs</button>
-            <button class="fp-chip" data-value="Scottish Premiership" onclick="pickLeague(this)">Scottish clubs</button>
-            <button class="fp-chip" data-value="Serbian SuperLiga" onclick="pickLeague(this)">Serbian clubs</button>
-            <button class="fp-chip" data-value="La Liga" onclick="pickLeague(this)">Spanish clubs</button>
-            <button class="fp-chip" data-value="Allsvenskan" onclick="pickLeague(this)">Swedish clubs</button>
-            <button class="fp-chip" data-value="Swiss Super League" onclick="pickLeague(this)">Swiss clubs</button>
-            <button class="fp-chip" data-value="Super Lig" onclick="pickLeague(this)">Turkish clubs</button>
-            <button class="fp-chip" data-value="Premier League Ukraine" onclick="pickLeague(this)">Ukrainian clubs</button>
-          </div></div>
-        </div>
-        <div class="fp-sub-section"><button class="fp-sub-header" onclick="toggleSub(this)"><span>America</span><span class="fp-chevron">▼</span></button>
-          <div class="fp-sub-body"><div class="fp-chip-list">
-            <button class="fp-chip" data-value="Liga Profesional Argentina" onclick="pickLeague(this)">Argentine clubs</button>
-            <button class="fp-chip" data-value="Brasileirão" onclick="pickLeague(this)">Brazilian clubs</button>
-            <button class="fp-chip" data-value="Primera División Chile" onclick="pickLeague(this)">Chilean clubs</button>
-            <button class="fp-chip" data-value="Liga Colombiana" onclick="pickLeague(this)">Colombian clubs</button>
-            <button class="fp-chip" data-value="Liga Ecuatoriana" onclick="pickLeague(this)">Ecuadorian clubs</button>
-            <button class="fp-chip" data-value="Liga MX" onclick="pickLeague(this)">Mexican clubs</button>
-            <button class="fp-chip" data-value="Liga 1 Perú" onclick="pickLeague(this)">Peruvian clubs</button>
-            <button class="fp-chip" data-value="MLS" onclick="pickLeague(this)">US &amp; Canadian clubs</button>
-            <button class="fp-chip" data-value="Primera División Uruguay" onclick="pickLeague(this)">Uruguayan clubs</button>
-            <button class="fp-chip" data-value="Primera División Venezuela" onclick="pickLeague(this)">Venezuelan clubs</button>
-          </div></div>
-        </div>
-        <div class="fp-sub-section"><button class="fp-sub-header" onclick="toggleSub(this)"><span>Asia &amp; Oceania</span><span class="fp-chevron">▼</span></button>
-          <div class="fp-sub-body"><div class="fp-chip-list">
-            <button class="fp-chip" data-value="A-League" onclick="pickLeague(this)">Australian clubs</button>
-            <button class="fp-chip" data-value="Chinese Super League" onclick="pickLeague(this)">Chinese clubs</button>
-            <button class="fp-chip" data-value="J1 League" onclick="pickLeague(this)">Japanese clubs</button>
-            <button class="fp-chip" data-value="K League 1" onclick="pickLeague(this)">Korean clubs</button>
-
-            <button class="fp-chip" data-value="Saudi Pro League" onclick="pickLeague(this)">Saudi clubs</button>
-          </div></div>
-        </div>
-        <div class="fp-sub-section"><button class="fp-sub-header" onclick="toggleSub(this)"><span data-i18n="filter_national_teams">National teams</span><span class="fp-chevron">▼</span></button>
-          <div class="fp-sub-body"><div class="fp-chip-list">
-            <button class="fp-chip" data-value="nt-africa" onclick="pickLeague(this)">Africa</button>
-            <button class="fp-chip" data-value="nt-america" onclick="pickLeague(this)">America</button>
-            <button class="fp-chip" data-value="nt-asia" onclick="pickLeague(this)">Asia</button>
-            <button class="fp-chip" data-value="nt-europe" onclick="pickLeague(this)">Europe</button>
-            <button class="fp-chip" data-value="nt-oceania" onclick="pickLeague(this)">Oceania</button>
-          </div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Version -->
-  <div class="fp-section">
-    <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_version">Version</span><span class="fp-chevron">▼</span></button>
-    <div class="fp-section-body"><div class="fp-white-body"><div class="fp-chip-list">
-      <button class="fp-chip" data-value="Home" onclick="pickVersion(this)">Home</button>
-      <button class="fp-chip" data-value="Away" onclick="pickVersion(this)">Away</button>
-      <button class="fp-chip" data-value="Third" onclick="pickVersion(this)">Third</button>
-      <button class="fp-chip" data-value="Fourth" onclick="pickVersion(this)">Fourth</button>
-      <button class="fp-chip" data-value="Goalkeeper" onclick="pickVersion(this)">Goalkeeper</button>
-      <button class="fp-chip" data-value="Other" onclick="pickVersion(this)">Other</button>
-    </div></div></div>
-  </div>
-
-  <!-- Size -->
-  <div class="fp-section">
-    <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_size">Size</span><span class="fp-chevron">▼</span></button>
-    <div class="fp-section-body"><div class="fp-white-body"><div class="fp-size-grid">
-      <button class="fp-size-btn" data-size="Kids" onclick="this.classList.toggle('active');checkLandingFilters()">Kids</button>
-      <button class="fp-size-btn" data-size="XS" onclick="this.classList.toggle('active');checkLandingFilters()">XS</button>
-      <button class="fp-size-btn" data-size="S" onclick="this.classList.toggle('active');checkLandingFilters()">S</button>
-      <button class="fp-size-btn" data-size="M" onclick="this.classList.toggle('active');checkLandingFilters()">M</button>
-      <button class="fp-size-btn" data-size="L" onclick="this.classList.toggle('active');checkLandingFilters()">L</button>
-      <button class="fp-size-btn" data-size="XL" onclick="this.classList.toggle('active');checkLandingFilters()">XL</button>
-      <button class="fp-size-btn" data-size="XXL" onclick="this.classList.toggle('active');checkLandingFilters()">XXL</button>
-    </div></div></div>
-  </div>
-
-  <!-- Decade -->
-  <div class="fp-section">
-    <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_decade">Decade</span><span class="fp-chevron">▼</span></button>
-    <div class="fp-section-body"><div class="fp-white-body"><div class="fp-size-grid" id="fpDecadeGrid">
-      <button class="fp-size-btn" data-decade="2020" onclick="this.classList.toggle('active');checkLandingFilters()">2020s</button>
-      <button class="fp-size-btn" data-decade="2010" onclick="this.classList.toggle('active');checkLandingFilters()">2010s</button>
-      <button class="fp-size-btn" data-decade="2000" onclick="this.classList.toggle('active');checkLandingFilters()">2000s</button>
-      <button class="fp-size-btn" data-decade="1990" onclick="this.classList.toggle('active');checkLandingFilters()">1990s</button>
-      <button class="fp-size-btn" data-decade="1980" onclick="this.classList.toggle('active');checkLandingFilters()">1980s</button>
-      <button class="fp-size-btn" data-decade="1970" onclick="this.classList.toggle('active');checkLandingFilters()">1970s</button>
-      <button class="fp-size-btn" data-decade="1960" onclick="this.classList.toggle('active');checkLandingFilters()">1960s</button>
-    </div></div></div>
-  </div>
-
-  <!-- Brand -->
-  <div class="fp-section">
-    <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_brand">Brand</span><span class="fp-chevron">▼</span></button>
-    <div class="fp-section-body"><div class="fp-white-body" style="padding:10px 12px;">
-      <input class="fp-brand-input" id="fpBrandInput" type="text" placeholder="Search brand…" autocomplete="off"
-        oninput="filterFpBrands(this.value)" onfocus="filterFpBrands(this.value)" onblur="setTimeout(hideFpBrands,200)"/>
-      <div class="fp-brand-dd" id="fpBrandDd"></div>
-      <div class="fp-brand-tags" id="fpBrandTags"></div>
-    </div></div>
-  </div>
-
-  <!-- Price -->
-  <div class="fp-section">
-    <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_price">Price range</span><span class="fp-chevron">▼</span></button>
-    <div class="fp-section-body"><div class="fp-white-body"><div class="fp-price-row">
-      <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="fpMin" type="number" min="1" placeholder="Min" oninput="checkLandingFilters()"/></div>
-      <span class="fp-price-sep">—</span>
-      <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="fpMax" type="number" min="1" placeholder="Max" oninput="checkLandingFilters()"/></div>
-    </div></div></div>
-  </div>
-
-  <div class="fp-actions">
-    <button class="fp-clear" onclick="clearFP()" data-i18n="clear_all_filters">Clear all filters</button>
-    <button class="fp-search" id="fpSearchBtn" onclick="searchFromFP()" disabled>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <span data-i18n="search_shirts">Search shirts</span>
-    </button>
-  </div>
-</div>
-
-<!-- RESULTS -->
-<div id="results">
-  <!-- MARQUEE BAR (results) -->
-  <div class="marquee-bar marquee-bar-results">
-    <div class="marquee-socials">
-      <a href="https://www.instagram.com/wearekitfinder/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-      </a>
-      <a href="https://x.com/wearekitfinder" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-      </a>
-      <a href="mailto:wearekitfinder@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg>
-      </a>
-    </div>
-    <div class="marquee-track">
-      <div class="marquee-content">
-        <span>THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 100+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
-        <span>THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 100+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
-      </div>
-    </div>
-  </div>
-  <div id="normalSearchBar" class="results-search-bar">
-    <a class="results-logo" href="#" onclick="goHome(event)">
-      <img src="images/logo_kitfinder.png" alt="Kit Finder" class="results-logo-img"/>
-    </a>
-    <div class="results-search-box">
-      <input class="results-search-input" id="resultsSearch" type="text" placeholder="Search shirts…" autocomplete="off"/>
-      <button class="results-search-btn" onclick="triggerSearch()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      </button>
-    </div>
-  </div>
-  <!-- World Cup Results Header -->
-  <div id="wcResultsHeader" class="wc-results-header" style="display:none;">
-    <div class="wc-results-hero">
-      <div class="wc-results-overlay"></div>
-      <div class="wc-results-inner">
-        <a href="#" onclick="goHome(event)" class="wc-results-logo-link">
-          <img src="images/logo_kitfinder.png" alt="Kit Finder" class="wc-results-logo-img"/>
-        </a>
-        <div class="wc-results-text">
-          <h1 class="wc-results-title">World Cup Football Shirts Collection</h1>
-          <p class="wc-results-desc">The FIFA World Cup is the biggest stage in football — and the shirts worn by players have become icons of the sport. From Brazil's legendary yellow jersey to Argentina's classic stripes, from England's 1966 red shirt to Italy's timeless azzurri blue, World Cup kits carry the passion of entire nations. Browse vintage shirts from past tournaments alongside the latest 2026 kits for all 48 qualified nations. Whether you're hunting for a retro gem or the newest release, find it here.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="results-main">
-    <div class="results-toolbar" style="display:flex;align-items:center;justify-content:space-between;width:100%;">
-      <button class="filter-toggle-btn" id="filterToggleBtn" onclick="toggleResultsFilter()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="9" y1="18" x2="15" y2="18"/></svg>
-        <span>Filters</span>
-        <svg class="filter-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg>
-      </button>
-      <select class="sort-select" id="sortSelect" onchange="applyFilters()" style="margin-left:auto;">
-        <option value="relevant">Most relevant</option>
-        <option value="price_asc">Price: low to high</option>
-        <option value="price_desc">Price: high to low</option>
-        <option value="newest">Newest first</option>
-        <option value="oldest">Oldest first</option>
-      </select>
-    </div>
-    <p class="results-count" id="resultsCount"><strong>—</strong> shirts found</p>
-    <div id="shopifyStatus" style="display:none;background:var(--green-light);color:var(--green);border:1px solid var(--green);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;font-weight:500;margin-bottom:1rem;"></div>
-    <div id="activeFilterBadges" style="display:none;flex-wrap:wrap;gap:8px;margin-bottom:1rem;align-items:center;"></div>
-    <!-- Fav alerts banner — only shown in fav view -->
-    <div id="kfFavAlertsBanner" style="display:none;background:var(--green-light,#e8f8f0);border:1.5px solid var(--green,#1FAF6D);border-radius:12px;padding:14px 18px;margin-bottom:1.1rem;font-size:.9rem;color:var(--text,#1e2530);">
-      <strong style="color:var(--green,#1FAF6D);">🔔 Price &amp; restock alerts</strong><br>
-      Sign in and we&#39;ll email you when a shirt in your favourites drops in price or shows up in another store. Alerts are free and you can cancel any time.
-    </div>
-
-    <div class="results-content">
-      <div class="results-filter-panel" id="resultsFilterPanel">
-        <aside class="sidebar" id="sidebar">
-          <div class="filter-close-btn"><button onclick="toggleResultsFilter()" style="background:rgba(255,255,255,.15);border:0;color:#fff;font-size:13px;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Outfit',sans-serif;">✕ Close filters</button></div>
-          <!-- Decade -->
-          <div class="fp-section">
-            <button class="fp-section-header" onclick="toggleSec(this)"><span>Decade</span><span class="fp-chevron">▼</span></button>
-            <div class="fp-section-body">
-              <div class="fp-white-body"><div class="fp-size-grid" id="decadeList"></div></div>
-            </div>
-          </div>
-          <!-- Version -->
-          <div class="fp-section">
-            <button class="fp-section-header" onclick="toggleSec(this)"><span>Version</span><span class="fp-chevron">▼</span></button>
-            <div class="fp-section-body"><div class="fp-white-body"><div class="fp-chip-list">
-              <button class="fp-chip" data-version="Home" onclick="pickSidebarVersion(this)">Home</button>
-              <button class="fp-chip" data-version="Away" onclick="pickSidebarVersion(this)">Away</button>
-              <button class="fp-chip" data-version="Third" onclick="pickSidebarVersion(this)">Third</button>
-              <button class="fp-chip" data-version="Fourth" onclick="pickSidebarVersion(this)">Fourth</button>
-              <button class="fp-chip" data-version="Goalkeeper" onclick="pickSidebarVersion(this)">Goalkeeper</button>
-              <button class="fp-chip" data-version="Other" onclick="pickSidebarVersion(this)">Other</button>
-            </div></div></div>
-          </div>
-          <!-- Size -->
-          <div class="fp-section">
-            <button class="fp-section-header" onclick="toggleSec(this)"><span>Size</span><span class="fp-chevron">▼</span></button>
-            <div class="fp-section-body"><div class="fp-white-body"><div class="fp-size-grid">
-              <button class="fp-size-btn" data-size="Kids" onclick="pickSidebarSize(this)">Kids</button>
-              <button class="fp-size-btn" data-size="XS" onclick="pickSidebarSize(this)">XS</button>
-              <button class="fp-size-btn" data-size="S" onclick="pickSidebarSize(this)">S</button>
-              <button class="fp-size-btn" data-size="M" onclick="pickSidebarSize(this)">M</button>
-              <button class="fp-size-btn" data-size="L" onclick="pickSidebarSize(this)">L</button>
-              <button class="fp-size-btn" data-size="XL" onclick="pickSidebarSize(this)">XL</button>
-              <button class="fp-size-btn" data-size="XXL" onclick="pickSidebarSize(this)">XXL</button>
-            </div></div></div>
-          </div>
-          <!-- Brand -->
-          <div class="fp-section" id="sidebarBrandSection">
-            <button class="fp-section-header" onclick="toggleSec(this)"><span>Brand</span><span class="fp-chevron">▼</span></button>
-            <div class="fp-section-body"><div class="fp-white-body" style="padding:10px 12px;position:relative;">
-              <input class="fp-brand-input" id="brandSearch" type="text" placeholder="Search brand…" autocomplete="off"
-                oninput="sidebarBrandInput(this.value)" onfocus="sidebarBrandFocus()" onblur="setTimeout(sidebarBrandBlur,200)"/>
-              <div class="fp-brand-dd" id="sidebarBrandDd"></div>
-              <div class="fp-brand-tags" id="brandTags"></div>
-            </div></div>
-          </div>
-          <!-- Price -->
-          <div class="fp-section">
-            <button class="fp-section-header" onclick="toggleSec(this)"><span>Price range</span><span class="fp-chevron">▼</span></button>
-            <div class="fp-section-body"><div class="fp-white-body"><div class="fp-price-row">
-              <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="priceMinInput" type="number" min="0" placeholder="0" oninput="updateRangeFromInputs()"/></div>
-              <span class="fp-price-sep">—</span>
-              <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="priceMaxInput" type="number" min="0" placeholder="Max" oninput="clampAndApply()"/></div>
-            </div></div></div>
-          </div>
-          <!-- Clear -->
-          <div class="fp-actions" style="padding-top:.5rem;">
-            <button class="fp-clear" onclick="clearFilters()" data-i18n="clear_all_filters">Clear all filters</button>
-          </div>
-        </aside>
-      </div>
-      <div class="results-cards-area">
-        <div class="cards-grid" id="cardsGrid"></div>
-        <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
-          <button class="load-more-btn" onclick="loadMore()" data-i18n="load_more_shirts">Load more shirts</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-center">
-        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;line-height:1.6;">Kit Finder is a football shirt search engine. We aggregate listings from specialist vintage, retro and classic football shirt stores so you can find any kit in one search. From Premier League to Serie A, from 1960s classics to the latest releases.</p>
-        <div class="footer-links"><a href="#" onclick="showInfo('about',event)">About</a><a href="#" onclick="showInfo('privacy',event)">Privacy policy</a><a href="#" onclick="showInfo('terms',event)">Terms of use</a><a href="#" onclick="showInfo('affiliate',event)">Affiliate disclosure</a></div>
-        <p>© 2026 Kit Finder. We earn commissions from affiliate partner stores. All trademarks belong to their respective owners.</p>
-      </div>
-      <div class="footer-socials">
-        <a href="https://www.instagram.com/wearekitfinder/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
-        </a>
-        <a href="https://x.com/wearekitfinder" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-        <a href="mailto:wearekitfinder@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,6 12,13 2,6"/></svg>
-        </a>
-      </div>
-    </div>
-  </footer>
-</div>
-
-<!-- FAV PANEL -->
-<div class="fav-overlay" id="favOverlay" onclick="closeFavs()"></div>
-<div class="fav-panel" id="favPanel">
-  <div class="fav-panel-header">
-    <span class="fav-panel-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="#e63946" stroke="#e63946" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Favourites</span>
-    <button class="fav-panel-close" onclick="closeFavs()">×</button>
-  </div>
-  <div class="fav-panel-body" id="favBody"></div>
-  <button class="fav-clear-btn" id="favClearBtn" onclick="clearFavs()" style="display:none">Remove all</button>
-</div>
-
-<!-- LOADING SCREEN -->
-<div id="loadingScreen" class="loading-screen">
-  <div class="loading-bg"></div>
-  <div class="loading-content">
-    <div class="loading-logo-wrap">
-      <img src="images/logo-loading.png" alt="Kit Finder" class="loading-logo"/>
-      <img src="images/ball-spin.png" alt="" class="loading-ball-img"/>
-    </div>
-    <p class="loading-text"><span data-i18n="loading_text">Searching across 100+ stores</span><span class="loading-dots"></span></p>
-  </div>
-</div>
-
-<!-- LOADING SCREEN -->
-<div id="loadingScreen" class="loading-screen">
-  <div class="loading-bg"></div>
-  <div class="loading-content">
-    <div class="loading-logo-wrap">
-      <img src="images/logo-loading.png" alt="Kit Finder" class="loading-logo"/>
-      <img src="images/ball-spin.png" alt="" class="loading-ball-img"/>
-    </div>
-    <p class="loading-text"><span data-i18n="loading_text">Searching across 100+ stores</span><span class="loading-dots"></span></p>
-  </div>
-</div>
-
-<script src="app.js?v=216" defer></script>
-<script src="auth.js?v=196"></script>
-<!-- INFO PAGE (about / privacy / terms) -->
-<div id="info-page">
-  <div class="content-card">
-    <!-- WHY KIT FINDER -->
-    <div class="info-section" id="info-why">
-      <h1 data-i18n="why_kf_title">Why Kit Finder?</h1>
-      <p>Kit Finder is the world's first <span class="highlight">search engine built exclusively for football shirts</span>. One search. 100+ specialist stores. Over 200,000 vintage, retro and classic kits — all in real time.</p>
-      <h2 data-i18n="why_h2_photo">🔍 Search by Photo</h2>
-      <p>Don't know the name? Just upload a photo. Our <span class="highlight">AI identifies the team, season and version</span> and finds every matching listing across all stores in seconds.</p>
-      <h2 data-i18n="why_h2_original">✅ 100% Original — Zero Fakes</h2>
-      <p>Every shirt on Kit Finder is <span class="highlight">authentic and genuine</span>. We only work with specialist retailers. No replicas, no counterfeits, ever.</p>
-      <h2 data-i18n="why_h2_prices">💰 Best Prices, Guaranteed</h2>
-      <p>The same shirt at different prices across 100+ stores — <span class="highlight">we show them all</span> so you always find the best deal. Filter by club, league, decade, size, brand and price range.</p>
-      <h2 data-i18n="why_h2_global">🌍 Global Coverage</h2>
-      <p>Stores across <span class="highlight">Europe, Americas, Asia and Oceania</span>. Every currency converted automatically. Plus thousands of second-hand listings from specialist resellers worldwide.</p>
-      <p style="text-align:center;margin-top:1.5rem;"><span class="highlight">Your next grail shirt is one search away.</span><br>— The Kit Finder Team</p>
-    </div>
-    <!-- ABOUT -->
-    <div class="info-section" id="info-about">
-      <h1 data-i18n="about_title">About Us</h1>
-      <p>Welcome to <span class="highlight">Kit Finder</span>, the ultimate destination for <span class="highlight">football shirt collectors</span> and enthusiasts around the world.</p>
-      <p>Our <span class="highlight">mission</span> is simple: to make finding your dream football shirt as easy as possible. Whether you're searching for a <span class="highlight">classic vintage jersey</span> from the 90s, a rare <span class="highlight">limited edition</span> kit, or the latest release from your favourite club, we've got you covered.</p>
-      <p>Kit Finder is a <span class="highlight">search engine</span> that aggregates listings from multiple trusted <span class="highlight">football shirt retailers</span> and marketplaces. We don't sell shirts directly — instead, we help you <span class="highlight">discover</span>, <span class="highlight">compare</span>, and find the <span class="highlight">best deals</span> across the web.</p>
-      <p>Our platform features thousands of shirts from clubs across the globe, spanning decades of <span class="highlight">football history</span>. From Premier League giants to Serie A legends, from national teams to obscure lower-league gems — if it exists, you can find it here.</p>
-      <p>We are <span class="highlight">passionate collectors</span> ourselves, and we built Kit Finder because we wanted a better way to hunt for shirts. We hope it helps you find that special jersey you've been looking for.</p>
-      <h2 data-i18n="about_h2_authentic">100% Authentic — Zero Fakes</h2>
-      <p>Every single shirt on Kit Finder is <span class="highlight">100% original and genuine</span>. We partner exclusively with trusted specialist retailers who sell only <span class="highlight">authentic vintage and retro football shirts</span>. You will never find a fake, replica or counterfeit shirt through Kit Finder. That's our promise.</p>
-      <h2 data-i18n="about_h2_photo">Search by Photo</h2>
-      <p>Kit Finder is the only football shirt search engine with <span class="highlight">AI-powered photo search</span>. Tap the camera icon, upload a photo of any shirt, and our system will identify it and find every matching listing across all our stores. Perfect for shirts you've spotted at a market, in an old photo, or on social media — but don't know the name of.</p>
-      <h2 data-i18n="about_h2_best">The Best Place to Find Vintage Shirts at the Best Price</h2>
-      <p>With <span class="highlight">100+ specialist stores</span> searched simultaneously, Kit Finder is simply the best place on the internet to find <span class="highlight">original vintage and retro football shirts at the best prices</span>. Compare listings side by side, filter by decade, size and brand, and find the deal you deserve.</p>
-      <p style="text-align:center;margin-top:1.5rem;"><span class="highlight">Happy hunting!</span><br>— The Kit Finder Team</p>
-    </div>
-    <!-- PRIVACY -->
-    <div class="info-section" id="info-privacy">
-      <h1 data-i18n="privacy_title">Privacy Policy</h1>
-      <p class="last-updated">Last updated: March 2026</p>
-      <p>At <span class="highlight">Kit Finder</span>, we are committed to protecting your <span class="highlight">privacy</span> and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, and safeguard your data when you use our website.</p>
-      <h2 data-i18n="priv_h2_1">1. Information We Collect</h2>
-      <p>We may collect <span class="highlight">non-personal information</span> automatically when you visit our site, including your browser type, device information, IP address, and browsing behaviour. We use cookies and similar technologies to enhance your experience and analyse site traffic.</p>
-      <p>We do <span class="highlight">not</span> collect personal information such as your name, email address, or payment details unless you voluntarily provide them (e.g., through a contact form).</p>
-      <h2 data-i18n="priv_h2_2">2. How We Use Your Information</h2>
-      <p>The information we collect is used to improve our services, personalise your experience, analyse website performance, and ensure the security of our platform. We may also use <span class="highlight">aggregated, anonymised data</span> for statistical purposes.</p>
-      <h2 data-i18n="priv_h2_3">3. Cookies</h2>
-      <p>Our website uses <span class="highlight">cookies</span> to remember your preferences, such as currency selection and favourites. You can disable cookies in your browser settings, but this may affect some functionality of the site.</p>
-      <h2 data-i18n="priv_h2_4">4. Third-Party Links</h2>
-      <p>Kit Finder contains links to <span class="highlight">external websites</span> (retailers and marketplaces). We are not responsible for the privacy practices or content of these third-party sites. We encourage you to review their privacy policies before providing any personal information.</p>
-      <h2 data-i18n="priv_h2_5">5. Affiliate Disclosure</h2>
-      <p>We participate in <span class="highlight">affiliate programmes</span>, which means we may earn a commission when you click on links to partner stores and make a purchase. This does not affect the price you pay.</p>
-      <h2 data-i18n="priv_h2_6">6. Data Security</h2>
-      <p>We implement appropriate <span class="highlight">technical and organisational measures</span> to protect your information against unauthorised access, alteration, or destruction. However, no method of transmission over the internet is 100% secure.</p>
-      <h2 data-i18n="priv_h2_7">7. Children's Privacy</h2>
-      <p>Our website is not intended for children under the age of 13. We do not knowingly collect personal information from children.</p>
-      <h2 data-i18n="priv_h2_8">8. Changes to This Policy</h2>
-      <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with a revised "Last updated" date.</p>
-      <h2 data-i18n="priv_h2_9">9. Contact Us</h2>
-      <p>If you have any questions about this Privacy Policy, please contact us through the <span class="highlight">Contact</span> section on our website.</p>
-    </div>
-    <!-- TERMS -->
-    <div class="info-section" id="info-terms">
-      <h1 data-i18n="terms_title">Terms of Use</h1>
-      <p class="last-updated">Last updated: March 2026</p>
-      <p>Welcome to <span class="highlight">Kit Finder</span>. By accessing and using our website, you agree to be bound by these Terms of Use. Please read them carefully before using our services.</p>
-      <h2 data-i18n="terms_h2_1">1. Acceptance of Terms</h2>
-      <p>By using Kit Finder, you acknowledge that you have read, understood, and agree to be bound by these <span class="highlight">Terms of Use</span>. If you do not agree to these terms, please do not use our website.</p>
-      <h2 data-i18n="terms_h2_2">2. Description of Service</h2>
-      <p>Kit Finder is a <span class="highlight">football shirt search engine</span> that aggregates listings from various third-party retailers and marketplaces. We do not sell products directly. All purchases are made through external websites, and we are not responsible for transactions conducted on those platforms.</p>
-      <h2 data-i18n="terms_h2_3">3. Use of the Website</h2>
-      <p>You agree to use Kit Finder only for <span class="highlight">lawful purposes</span> and in a manner that does not infringe upon the rights of others or restrict their use of the website. You must not misuse, hack, or attempt to gain unauthorised access to our systems.</p>
-      <h2 data-i18n="terms_h2_4">4. Intellectual Property</h2>
-      <p>All content on Kit Finder, including logos, text, graphics, and design, is the <span class="highlight">property of Kit Finder</span> or its licensors and is protected by intellectual property laws. You may not reproduce, distribute, or use any content without prior written permission.</p>
-      <h2 data-i18n="terms_h2_5">5. Third-Party Links</h2>
-      <p>Our website contains links to <span class="highlight">third-party websites</span>. These links are provided for your convenience. We do not endorse, control, or assume responsibility for the content, products, or services offered by these external sites.</p>
-      <h2 data-i18n="terms_h2_6">6. Accuracy of Information</h2>
-      <p>We strive to provide <span class="highlight">accurate and up-to-date</span> information. However, we do not guarantee the accuracy, completeness, or reliability of any listings, prices, or product descriptions displayed on our site. Information is subject to change without notice.</p>
-      <h2 data-i18n="terms_h2_7">7. Affiliate Relationships</h2>
-      <p>Kit Finder participates in <span class="highlight">affiliate marketing programmes</span>. We may earn commissions when you click on links to partner stores and make purchases. This does not affect the price you pay for any products.</p>
-      <h2 data-i18n="terms_h2_8">8. Disclaimer of Warranties</h2>
-      <p>Kit Finder is provided <span class="highlight">"as is"</span> without warranties of any kind, either express or implied. We do not warrant that the website will be uninterrupted, error-free, or free of viruses or other harmful components.</p>
-      <h2 data-i18n="terms_h2_9">9. Limitation of Liability</h2>
-      <p>To the fullest extent permitted by law, Kit Finder shall not be liable for any <span class="highlight">indirect, incidental, or consequential damages</span> arising from your use of the website or any third-party products or services.</p>
-      <h2 data-i18n="terms_h2_10">10. Changes to Terms</h2>
-      <p>We reserve the right to <span class="highlight">modify these Terms of Use</span> at any time. Any changes will be effective immediately upon posting on this page. Your continued use of the website constitutes acceptance of the revised terms.</p>
-      <h2 data-i18n="terms_h2_11">11. Governing Law</h2>
-      <p>These Terms of Use shall be governed by and construed in accordance with the laws of the jurisdiction in which Kit Finder operates, without regard to conflict of law principles.</p>
-      <h2 data-i18n="terms_h2_12">12. Contact</h2>
-      <p>If you have any questions about these Terms of Use, please contact us through the <span class="highlight">Contact</span> section on our website.</p>
-    </div>
-    <!-- AFFILIATE DISCLOSURE -->
-    <div class="info-section" id="info-affiliate">
-      <h1 data-i18n="affiliate_title">Affiliate Disclosure</h1>
-      <p class="last-updated">Last updated: March 2026</p>
-      <p><span class="highlight">Kit Finder</span> is a participant in various <span class="highlight">affiliate marketing programmes</span>. This means that when you click on links to products on our website and make a purchase, we may earn a <span class="highlight">commission</span> from the retailer or marketplace at no additional cost to you.</p>
-      <h2 data-i18n="aff_h2_1">1. How It Works</h2>
-      <p>When you search for a football shirt on Kit Finder and click on a product listing, you will be redirected to the <span class="highlight">partner store's website</span> to complete your purchase. If you buy the product, Kit Finder may receive a small <span class="highlight">referral fee</span> from the store. This commission helps us keep the website running and continue improving our service.</p>
-      <h2 data-i18n="aff_h2_2">2. Does It Affect the Price?</h2>
-      <p><span class="highlight">No.</span> The price you pay for any product is exactly the same whether you use Kit Finder or go directly to the store. Our affiliate partnerships do <span class="highlight">not</span> increase the cost of any item for you.</p>
-      <h2 data-i18n="aff_h2_3">3. Our Commitment to You</h2>
-      <p>We are committed to providing <span class="highlight">honest and unbiased</span> search results. Our affiliate relationships do not influence which products appear in your search results or how they are ranked. We display listings based on <span class="highlight">relevance</span> and <span class="highlight">availability</span>, not on commission rates.</p>
-      <h2 data-i18n="aff_h2_4">4. Which Programmes Do We Use?</h2>
-      <p>Kit Finder works with a variety of trusted <span class="highlight">football shirt retailers</span> and marketplaces through their affiliate programmes. These include various <span class="highlight">specialist football shirt stores</span>. Each partner has been selected for their reliability and quality of service.</p>
-      <h2 data-i18n="aff_h2_5">5. Transparency</h2>
-      <p>We believe in full <span class="highlight">transparency</span>. Every product link on Kit Finder is an affiliate link. We want you to know that while we earn a small commission from your purchases, our primary goal is to help you <span class="highlight">find the best football shirts</span> at the best prices.</p>
-      <h2 data-i18n="aff_h2_6">6. Questions</h2>
-      <p>If you have any questions about our affiliate relationships or how we earn revenue, please don't hesitate to reach out. We're always happy to provide more information about how <span class="highlight">Kit Finder</span> works.</p>
-    </div>
-    <!-- PROFILE PAGE -->
-    <div class="info-section" id="info-profile">
-      <h1>Edit Profile</h1>
-      <div style="text-align:center;margin-bottom:1rem;">
-        <!-- Preview circular -->
-        <div style="position:relative;display:inline-block;margin-bottom:10px;">
-          <div id="kfAvatarCropWrap" style="width:110px;height:110px;border-radius:50%;overflow:hidden;border:3px solid #1FAF6D;cursor:grab;position:relative;margin:0 auto;user-select:none;">
-            <img id="kfProfilePreview" src="" alt="Avatar" style="position:absolute;width:100%;height:100%;object-fit:cover;top:0;left:0;user-select:none;-webkit-user-drag:none;"/>
-          </div>
-          <button onclick="document.getElementById('kfAvatarUpload').click()" style="position:absolute;bottom:2px;right:2px;background:#1FAF6D;border:none;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          </button>
-        </div>
-        <!-- Controles de ajuste de posición -->
-        <div id="kfCropControls" style="display:none;margin-bottom:8px;">
-          <p style="font-size:11px;color:#9aa3ad;margin-bottom:6px;" data-i18n="profile_drag">Drag to reposition · Pinch to zoom</p>
-          <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;">
-            <button class="kf-crop-btn" onclick="kfZoomPhoto(-10)" title="Zoom out">−</button>
-            <button class="kf-crop-btn" onclick="kfZoomPhoto(10)" title="Zoom in">+</button>
-          </div>
-        </div>
-        <p style="font-size:12px;color:#9aa3ad;" data-i18n="profile_tap_photo">Tap the camera to change photo</p>
-      </div>
-      <label style="display:block;font-size:13px;font-weight:600;color:#5a6472;margin-bottom:6px;">Nickname</label>
-      <input class="kf-auth-input" id="kfNicknameInput" type="text" placeholder="How should we call you?" maxlength="30" autocomplete="off" style="margin-bottom:1.2rem;"/>
-      <div id="kfProfileError" style="display:none;font-size:13px;color:#e63946;margin-bottom:8px;text-align:center;"></div>
-      <button class="kf-auth-submit" onclick="kfSaveProfile()" style="width:100%;margin-bottom:.8rem;">Save changes</button>
-    </div>
-    <!-- SETTINGS PAGE -->
-    <div class="info-section" id="info-settings">
-      <h1 data-i18n="settings_title">Settings</h1>
-      <!-- CURRENCY DROPDOWN -->
-      <h2 data-i18n="settings_currency">Currency</h2>
-      <p style="font-size:13px;color:#5a6472;margin-bottom:.8rem;" data-i18n="settings_currency_desc">Prices across all stores will be shown in your selected currency.</p>
-      <div style="position:relative;margin-bottom:1.5rem;">
-        <button id="kfCurrencyDropBtn" class="kf-settings-select" onclick="kfToggleCurrencyDd()">
-          <span id="kfCurrencyLabel">EUR - Euro</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div id="kfCurrencyDd" class="kf-settings-dd">
-          <input id="kfCurrencySearch" class="kf-settings-dd-search" placeholder="Search currency…" oninput="kfFilterCurrencyDd(this.value)"/>
-          <div id="kfCurrencyDdList" class="kf-settings-dd-list"></div>
-        </div>
-      </div>
-      <!-- LANGUAGE DROPDOWN -->
-      <h2 data-i18n="settings_lang">Language</h2>
-      <p style="font-size:13px;color:#5a6472;margin-bottom:.8rem;" data-i18n="settings_lang_desc">Choose your preferred language for the interface.</p>
-      <div style="position:relative;margin-bottom:1.5rem;">
-        <button id="kfLangDropBtn" class="kf-settings-select" onclick="kfToggleLangDd()">
-          <span id="kfLangLabel">🇬🇧 English</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div id="kfLangDd" class="kf-settings-dd">
-          <div id="kfLangDdList" class="kf-settings-dd-list"></div>
-        </div>
-      </div>
-      <div id="kfSettingsSaveMsg" style="display:none;text-align:center;color:#1FAF6D;font-size:14px;font-weight:600;margin-bottom:10px;">✓ Saved!</div>
-      <button class="kf-auth-submit" onclick="kfSaveSettings()" style="width:100%;margin-bottom:.8rem;" data-i18n="settings_save">Save settings</button>
-    </div>
-    <!-- BACK BUTTON (shared) -->
-    <div style="text-align:center;">
-      <button class="back-link" onclick="closeInfo()">← Back to Kit Finder</button>
-    </div>
-  </div>
-</div>
-
-<script src="info.js?v=160" defer></script>
-
-<!-- ── La Grada Newsletter Pop-up ───────────────────────────── -->
-<!-- Overlay (fondo oscuro) -->
-<div id="kfLgOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9100;backdrop-filter:blur(2px);transition:opacity .25s ease;" onclick="kfLgDismiss()"></div>
-
-<!-- Modal -->
-<div id="kfLgModal" style="display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9101;width:min(480px,94vw);background:#0d1117;border-radius:16px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.7);font-family:'Outfit',sans-serif;">
-  <!-- Cabecera con imagen de fondo igual a la imagen adjunta -->
-  <div style="position:relative;height:240px;overflow:hidden;">
-    <img src="/blog/header-la-grada.jpg" alt="La Grada" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(.65);">
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(13,17,23,.9) 100%);"></div>
-    <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 28px 22px;text-align:center;">
-      <div style="font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:8px;">KIT FINDER BLOG</div>
-      <div style="font-size:52px;font-weight:900;line-height:1;letter-spacing:-1px;text-transform:uppercase;"><span style="color:#fff;">LA </span><span style="color:#1FAF6D;">GRADA</span></div>
-      <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:10px;line-height:1.55;">The history, culture and stories behind football shirts.<br>From iconic kits to forgotten gems.</div>
-    </div>
-    <button onclick="kfLgDismiss()" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,.5);border:0;color:#fff;border-radius:50%;width:30px;height:30px;font-size:18px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;">&times;</button>
-  </div>
-  <!-- Formulario -->
-  <div style="padding:22px 28px 28px;background:#0d1117;">
-    <div id="kfLgForm" style="display:flex;gap:10px;flex-wrap:wrap;">
-      <input id="kfLgEmail" type="email" placeholder="your@email.com"
-        style="flex:1;min-width:160px;padding:12px 16px;border:1.5px solid rgba(255,255,255,.18);border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:rgba(255,255,255,.07);color:#fff;"
-        onfocus="this.style.borderColor='#1FAF6D'" onblur="this.style.borderColor='rgba(255,255,255,.18)'"
-        onkeydown="if(event.key==='Enter')kfLgSubscribe()">
-      <button onclick="kfLgSubscribe()"
-        style="background:#1FAF6D;color:#fff;border:0;border-radius:10px;padding:12px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">
-        Subscribe
-      </button>
-    </div>
-    <div id="kfLgMsg" style="display:none;margin-top:10px;font-size:13px;font-weight:600;color:#1FAF6D;"></div>
-    <p style="font-size:11px;color:rgba(255,255,255,.3);margin:14px 0 0;text-align:center;letter-spacing:.3px;">No spam. Unsubscribe any time.</p>
-  </div>
-</div>
-
-<!-- Tarjeta flotante LG — cuadrado con esquinas redondeadas, mas grande -->
-<div id="kfLgCard" onclick="kfLgOpenFromCard()" title="La Grada — Kit Finder Blog Newsletter"
-  style="display:none;position:fixed;bottom:24px;right:20px;z-index:9050;width:68px;height:68px;border-radius:16px;background:#1e2530;box-shadow:0 6px 24px rgba(0,0,0,.45);cursor:pointer;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:900;font-size:19px;letter-spacing:-1px;transition:transform .15s ease,box-shadow .15s ease;"
-  onmouseenter="this.style.transform='scale(1.08)';this.style.boxShadow='0 8px 30px rgba(0,0,0,.55)'" onmouseleave="this.style.transform='scale(1)';this.style.boxShadow='0 6px 24px rgba(0,0,0,.45)'">
-  <span style="color:#fff;">L</span><span style="color:#1FAF6D;">G</span>
-</div>
-
-<script>
-(function(){
-
-  // ── Holy Grails dinámico ──────────────────────────────────────────────────
-  var _HG_POOL = {"Cult Kits": [{"url": "https://www.cultkits.com/products/1991-92-lazio-home-shirt-l-umbro547", "hg_id": "1", "price": 299.99, "currency": "GBP", "img": "images/hg-lazio.jpg", "alt": "Lazio 1991-92", "store": "Cult Kits", "club": "Lazio", "season": "1991-92 Home", "size": "L"}, {"url": "https://www.cultkits.com/products/1991-93-tottenham-away-shirt-l-umbro8907", "hg_id": "ck1", "price": 149.99, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0622/3691/7987/files/0041_28485_5167c5de-fb71-419d-b152-bfb181963a51.jpg?v=1763729100", "alt": "Tottenham 1991-93", "store": "Cult Kits", "club": "Tottenham", "season": "1991-93 Away", "size": "L"}, {"url": "https://www.cultkits.com/products/1991-92-huddersfield-town-away-shirt-s-gola789", "hg_id": "ck2", "price": 149.99, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0622/3691/7987/files/Pro-CaptureOne00083.jpg?v=1773669687", "alt": "Huddersfield 1991-92", "store": "Cult Kits", "club": "Huddersfield Town", "season": "1991-92 Away", "size": "S"}, {"url": "https://www.cultkits.com/products/1991-93-newcastle-united-home-shirt-s-umbro474", "hg_id": "ck3", "price": 149.99, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0622/3691/7987/files/0087_e535b380-707d-4e5e-a17d-61b1299f8f18.jpg?v=1769524471", "alt": "Newcastle 1991-93", "store": "Cult Kits", "club": "Newcastle United", "season": "1991-93 Home", "size": "S"}], "Vintage Football Shirts": [{"url": "https://www.vintagefootballshirts.com/products/1995-boca-juniors-90th-anniversary-home-shirt-l", "hg_id": "2", "price": 298.0, "currency": "GBP", "img": "images/hg-boca.jpg", "alt": "Boca Juniors 1995", "store": "Vintage Football Shirts", "club": "Boca Juniors", "season": "1995 90th Anniversary", "size": "L"}, {"url": "https://www.vintagefootballshirts.com/products/1996-97-ac-milan-lotto-training-shirt-l-2", "hg_id": "vfs1", "price": 150.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0823/7986/6459/files/1996-97-ac-milan-lotto-trainin-55715-1.jpg?v=1730070123", "alt": "AC Milan 1996-97", "store": "Vintage Football Shirts", "club": "AC Milan", "season": "1996-97 Training", "size": "L"}, {"url": "https://www.vintagefootballshirts.com/products/1996-97-stoke-city-asics-away-shirt-m", "hg_id": "vfs2", "price": 175.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0823/7986/6459/files/325T135061743751348_a6de44fb-10b8-49ad-a636-0ec1935a5758.jpg?v=1738321663", "alt": "Stoke City 1996-97", "store": "Vintage Football Shirts", "club": "Stoke City", "season": "1996-97 Away", "size": "M"}, {"url": "https://www.vintagefootballshirts.com/products/1994-95-saint-etienne-lotto-home-shirt-xl", "hg_id": "vfs3", "price": 175.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0823/7986/6459/files/1994-95SaintEtienneLottoHomeShirtXL.jpg?v=1779892821", "alt": "Saint-Etienne 1994-95", "store": "Vintage Football Shirts", "club": "Saint-Etienne", "season": "1994-95 Home", "size": "XL"}], "Football Finery": [{"url": "https://www.footballfinery.co.uk/products/1995-96-real-madrid-away-football-shirt-xl-kelme-5-ff304087", "hg_id": "3", "price": 145.0, "currency": "GBP", "img": "images/hg-realmadrid.jpg", "alt": "Real Madrid 1995-96", "store": "Football Finery", "club": "Real Madrid", "season": "1995-96 Away", "size": "XL"}, {"url": "https://www.footballfinery.co.uk/products/1990-92-france-home-football-shirt-l-adidas-ff305260", "hg_id": "ff1", "price": 160.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0681/3076/7126/files/199092-france-home-football-shirt-l-adidas-ff305260-2118271.png?v=1779507859", "alt": "France 1990-92", "store": "Football Finery", "club": "France", "season": "1990-92 Home", "size": "L"}, {"url": "https://www.footballfinery.co.uk/products/1990-91-cittadella-home-football-shirt-l-virma-ff304052", "hg_id": "ff2", "price": 100.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0681/3076/7126/files/199091-cittadella-home-football-shirt-l-virma-ff304052-8512790.png?v=1775268400", "alt": "Cittadella 1990-91", "store": "Football Finery", "club": "Cittadella", "season": "1990-91 Home", "size": "L"}, {"url": "https://www.footballfinery.co.uk/products/1990-91-juventus-away-football-shirt-l-kappa-ff204364", "hg_id": "ff3", "price": 190.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0681/3076/7126/files/199091-juventus-away-football-shirt-l-kappa-ff204364-445245.jpg?v=1725652285", "alt": "Juventus 1990-91", "store": "Football Finery", "club": "Juventus", "season": "1990-91 Away", "size": "L"}], "Casual Football Shirts": [{"url": "https://casualfootballshirts.co.uk/products/1995-96-flamengo-away-football-shirt-xl-umbro", "hg_id": "7", "price": 125.0, "currency": "GBP", "img": "images/hg-flamengo.jpg", "alt": "Flamengo 1995-96", "store": "Casual Football Shirts", "club": "Flamengo", "season": "1995-96 Away", "size": "XL"}, {"url": "https://casualfootballshirts.co.uk/collections/1990s-football-shirts/products/1993-94-udinese-home-football-shirt-l-lotto-2-pellegrini-matchworn", "hg_id": "cfs1", "price": 250.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0589/1171/9579/files/199394-udinese-home-football-shirt-l-lotto-2-pellegrini-matchworn-ff204360-230622.jpg?v=1758883164", "alt": "Udinese 1993-94", "store": "Casual Football Shirts", "club": "Udinese", "season": "1993-94 Home MW", "size": "L"}, {"url": "https://casualfootballshirts.co.uk/collections/1990s-football-shirts/products/1993-94-burnley-away-football-shirt-2xl-mitre-limited-edition", "hg_id": "cfs2", "price": 200.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0589/1171/9579/files/199394-burnley-away-football-shirt-2xl-mitre-limited-edition-ff304704-9298978.png?v=1779099671", "alt": "Burnley 1993-94", "store": "Casual Football Shirts", "club": "Burnley", "season": "1993-94 Away", "size": "2XL"}, {"url": "https://casualfootballshirts.co.uk/collections/1990s-football-shirts/products/1990-92-chelsea-away-football-shirt-l-umbro", "hg_id": "cfs3", "price": 200.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0589/1171/9579/files/199092-chelsea-away-football-shirt-l-umbro-ff303085-6594313.png?v=1772791830", "alt": "Chelsea 1990-92", "store": "Casual Football Shirts", "club": "Chelsea", "season": "1990-92 Away", "size": "L"}], "Sense of Goal": [{"url": "https://www.senseofgoal.com/products/eintracht-frankfurt-1985-86-heim-trikot-m-erima", "hg_id": "sg1", "price": 349.95, "currency": "EUR", "img": "https://www.senseofgoal.com/cdn/shop/files/IMG_5045-Photoroom.jpg?v=1774202734", "alt": "Eintracht Frankfurt 1985-86", "store": "Sense of Goal", "club": "Eintracht Frankfurt", "season": "1985-86 Home", "size": "M"}, {"url": "https://www.senseofgoal.com/products/olympique-lyonnais-2001-02-auswarts-trikot-xl-adidas", "hg_id": "sg2", "price": 99.95, "currency": "EUR", "img": "//cdn.shopify.com/s/files/1/0759/8093/1415/files/IMG_5247.jpg?v=1714766437", "alt": "Lyon 2001-02", "store": "Sense of Goal", "club": "Olympique Lyon", "season": "2001-02 Away", "size": "XL"}, {"url": "https://www.senseofgoal.com/products/argentinien-1991-heim-trikot-m-adidas", "hg_id": "sg3", "price": 124.95, "currency": "EUR", "img": "//cdn.shopify.com/s/files/1/0759/8093/1415/files/IMG_48377.jpg?v=1719307617", "alt": "Argentina 1991", "store": "Sense of Goal", "club": "Argentina", "season": "1991 Home", "size": "M"}, {"url": "https://www.senseofgoal.com/products/deportivo-1993-94-heim-trikot-l-umbro", "hg_id": "sg4", "price": 149.95, "currency": "EUR", "img": "//cdn.shopify.com/s/files/1/0759/8093/1415/files/s-l1600-2024-08-28T152537.373.png?v=1725116033", "alt": "Deportivo 1993-94", "store": "Sense of Goal", "club": "Deportivo", "season": "1993-94 Home", "size": "L"}], "RetroShirts.ch": [{"url": "https://retroshirts.ch/collections/neuste-chronologisch/products/fussballtrikot-bscyoungboys-1981-83-heim-puma-s-r5441", "hg_id": "10", "price": 499.0, "currency": "CHF", "img": "images/hg-youngboys.jpg", "alt": "BSC Young Boys 1981-83", "store": "RetroShirts.ch", "club": "BSC Young Boys", "season": "1981-83 Home LS", "size": "S"}, {"url": "https://retroshirts.ch/collections/alle-produkte/products/fussballtrikot-riverplate-1996-98-heim-adidas-l-r7592", "hg_id": "rs1", "price": 199.0, "currency": "CHF", "img": "//cdn.shopify.com/s/files/1/0585/4209/6407/files/R7592_1_processed_processed_optimized.jpg?v=1780035121", "alt": "River Plate 1996-98", "store": "RetroShirts.ch", "club": "River Plate", "season": "1996-98 Home", "size": "L"}, {"url": "https://retroshirts.ch/collections/alle-produkte/products/fussballtrikot-1-fckaiserslautern-1996-97-auswarts-adidas-xl-r7297", "hg_id": "rs2", "price": 199.0, "currency": "CHF", "img": "//cdn.shopify.com/s/files/1/0585/4209/6407/files/R7297_1_optimized.jpg?v=1780034710", "alt": "Kaiserslautern 1996-97", "store": "RetroShirts.ch", "club": "Kaiserslautern", "season": "1996-97 Away", "size": "XL"}, {"url": "https://retroshirts.ch/collections/alle-produkte/products/fussballtrikot-santosfc-1996-heim-rhumell-l-r6819", "hg_id": "rs3", "price": 189.0, "currency": "CHF", "img": "//cdn.shopify.com/s/files/1/0585/4209/6407/files/R6819_1_processed_optimized.jpg?v=1780034689", "alt": "Santos FC 1996", "store": "RetroShirts.ch", "club": "Santos FC", "season": "1996 Home", "size": "L"}], "Mystery Jersey King": [{"url": "https://mysteryjerseyking.com/products/1997-98-manchester-united-away-football-shirt-xl-umbro", "hg_id": "11", "price": 150.0, "currency": "GBP", "img": "images/hg-manutd.jpg", "alt": "Manchester United 1997-98", "store": "Mystery Jersey King", "club": "Manchester United", "season": "1997-98 Away", "size": "XL"}, {"url": "https://mysteryjerseyking.com/products/2001-03-tunisia-home-football-shirt-l-uhlsport", "hg_id": "mjk1", "price": 85.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0524/4780/5632/files/200103-tunisia-home-football-shirt-l-uhlsport-ff304494-6268938.png?v=1779449052", "alt": "Tunisia 2001-03", "store": "Mystery Jersey King", "club": "Tunisia", "season": "2001-03 Home", "size": "L"}, {"url": "https://mysteryjerseyking.com/products/sparta-prague-1995-1996-home-shirt-very-good-xxl", "hg_id": "mjk2", "price": 179.99, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0524/4780/5632/files/Sparta_Prague_1995-1996_Home_Football_Shirt.png?v=1779449288", "alt": "Sparta Prague 1995-96", "store": "Mystery Jersey King", "club": "Sparta Prague", "season": "1995-96 Home", "size": "XXL"}, {"url": "https://mysteryjerseyking.com/products/1992-93-boavista-home-football-shirt-xl-diadora", "hg_id": "mjk3", "price": 125.0, "currency": "GBP", "img": "//cdn.shopify.com/s/files/1/0524/4780/5632/files/199293-boavista-home-football-shirt-xl-diadora-ff304924-8680551.png?v=1779448978", "alt": "Boavista 1992-93", "store": "Mystery Jersey King", "club": "Boavista", "season": "1992-93 Home", "size": "XL"}], "Football Shirt Union": [{"url": "https://footballshirtunion.com/products/1989-91-liverpool-goalkeeper-jersey?variant=41875529400397", "hg_id": "fsu1", "price": 122.95, "currency": "EUR", "img": "https://cdn.shopify.com/s/files/1/0591/6904/6605/files/18308A24-2AF0-44C5-BFBB-EFE1A8EC3535.jpg?v=1750447955", "alt": "Liverpool 1989-91", "store": "Football Shirt Union", "club": "Liverpool", "season": "1989-91 Goalkeeper", "size": "S"}, {"url": "https://footballshirtunion.com/products/1999-00-las-palmas-home-jersey-m", "hg_id": "fsu2", "price": 84.99, "currency": "EUR", "img": "//cdn.shopify.com/s/files/1/0591/6904/6605/files/6261BBC7-C5F1-493C-8F88-83D1FA8FE77C.jpg?v=1751055736", "alt": "Las Palmas 1999-00", "store": "Football Shirt Union", "club": "Las Palmas", "season": "1999-00 Home", "size": "M"}, {"url": "https://footballshirtunion.com/products/1994-95-atlas-home-jersey-xl", "hg_id": "fsu3", "price": 219.99, "currency": "EUR", "img": "//cdn.shopify.com/s/files/1/0591/6904/6605/files/F85EEC6F-29F8-46EF-AF9B-B64BCBD8D8EB.jpg?v=1751055736", "alt": "Atlas 1994-95", "store": "Football Shirt Union", "club": "Atlas", "season": "1994-95 Home", "size": "XL"}, {"url": "https://footballshirtunion.com/products/2000-01-werder-bremen-home-jersey-xl", "hg_id": "fsu4", "price": 129.99, "currency": "EUR", "img": "//cdn.shopify.com/s/files/1/0591/6904/6605/files/C86499D1-8FB4-4977-955E-B581268A97C4.jpg?v=1746821261", "alt": "Werder Bremen 2000-01", "store": "Football Shirt Union", "club": "Werder Bremen", "season": "2000-01 Home", "size": "XL"}], "The Kit Dealer": [{"url": "https://www.thekitdealer.com/products/heerenveen-2004-05-away", "hg_id": "tkd1", "price": 150.0, "currency": "AUD", "img": "https://www.thekitdealer.com/cdn/shop/files/Pro-CaptureOne0908-Photoroom.png?v=1747286732", "alt": "Heerenveen 2004-05", "store": "The Kit Dealer", "club": "Heerenveen", "season": "2004-05 Away", "size": "M"}], "El Diez Football": [{"url": "https://eldiezfootball.com/products/camiseta-vintage-umbro-santos-1998-1999-2%C2%AA-excelente", "hg_id": "ed1", "price": 270.0, "currency": "EUR", "img": "https://cdn.shopify.com/s/files/1/0849/0339/5601/files/1_santos_away_98.jpg?v=1737054134", "alt": "Santos 1998-99 Away", "store": "El Diez Football", "club": "Santos", "season": "1998-99 Away", "size": "L"}, {"url": "https://eldiezfootball.com/products/camiseta-espana-juan-carlos-valeron-2000-home-vintage", "hg_id": "ed2", "price": 300.0, "currency": "EUR", "img": "https://cdn.shopify.com/s/files/1/0849/0339/5601/files/035_695264c0-e1f1-47f2-bbfd-a04e0eb820fe.jpg?v=1773318729", "alt": "Spain (Valerón) 2000 Home", "store": "El Diez Football", "club": "Spain (Valerón)", "season": "2000 Home", "size": "XL"}, {"url": "https://eldiezfootball.com/products/camiseta-argentina-pablo-aimar-1999-00-away-vintage", "hg_id": "ed3", "price": 350.0, "currency": "EUR", "img": "https://cdn.shopify.com/s/files/1/0849/0339/5601/files/055.jpg?v=1772811562", "alt": "Argentina (Aimar) 1999-00 Away", "store": "El Diez Football", "club": "Argentina (Aimar)", "season": "1999-00 Away", "size": "L"}, {"url": "https://eldiezfootball.com/products/camiseta-ud-logrones-nayim-match-worn-1998-99-home-vintage", "hg_id": "ed4", "price": 600.0, "currency": "EUR", "img": "https://cdn.shopify.com/s/files/1/0849/0339/5601/files/128.jpg?v=1772566031", "alt": "UD Logroñés (Nayim) 1998-99 Home MW", "store": "El Diez Football", "club": "UD Logroñés (Nayim)", "season": "1998-99 Home MW", "size": "L"}, {"url": "https://eldiezfootball.com/products/camiseta-real-betis-1994-95-home-vintage", "hg_id": "ed5", "price": 470.0, "currency": "EUR", "img": "https://cdn.shopify.com/s/files/1/0849/0339/5601/files/089.jpg?v=1772554879", "alt": "Real Betis 1994-95 Home", "store": "El Diez Football", "club": "Real Betis", "season": "1994-95 Home", "size": "XL"}], "Atrox Casual Club": [{"url": "https://www.atroxcasualclub.com/produtos/athletico-paranaense-1998-1999-home-umbro-gg-xqv", "hg_id": "ax1", "price": 899.9, "currency": "BRL", "img": "https://acdn-us.mitiendanube.com/stores/271/954/products/athletico-paranense-1998-1999-home-umbro-gg-xqv-1-abae203a8c7257d21517797423351346-640-0.webp", "alt": "Athletico Paranaense 1998-99 Home", "store": "Atrox Casual Club", "club": "Athletico Paranaense", "season": "1998-99 Home", "size": "XL"}, {"url": "https://www.atroxcasualclub.com/produtos/bastia-1999-2000-home-reebok-gg-TQk", "hg_id": "ax2", "price": 1199.9, "currency": "BRL", "img": "https://acdn-us.mitiendanube.com/stores/271/954/products/bastia-1999-2000-home-reebok-1-29edf4a138e326a3a317313550464160-640-0.webp", "alt": "Bastia 1999-00 Home", "store": "Atrox Casual Club", "club": "Bastia", "season": "1999-00 Home", "size": "XL"}, {"url": "https://www.atroxcasualclub.com/produtos/blumenau-1996-home-trovatto-sports-g-ec1Z", "hg_id": "ax3", "price": 899.9, "currency": "BRL", "img": "https://acdn-us.mitiendanube.com/stores/271/954/products/blumenau-1996-home-trovatto-sports-1-f2a60728cb231b366f17244403510823-640-0.webp", "alt": "Blumenau 1996 Home", "store": "Atrox Casual Club", "club": "Blumenau", "season": "1996 Home", "size": "L"}, {"url": "https://www.atroxcasualclub.com/produtos/brescia-1992-1994-away-uhlsport-g-bacO", "hg_id": "ax4", "price": 1199.9, "currency": "BRL", "img": "https://acdn-us.mitiendanube.com/stores/271/954/products/brescia-1992-1994-away-uhlsport-1-1ef3dea15a3a26e1a517520950499047-640-0.webp", "alt": "Brescia 1992-94 Away", "store": "Atrox Casual Club", "club": "Brescia", "season": "1992-94 Away", "size": "L"}, {"url": "https://www.atroxcasualclub.com/produtos/estrela-vermelha-1996-1998-away-kappa-g-fTw", "hg_id": "ax5", "price": 1799.9, "currency": "BRL", "img": "https://acdn-us.mitiendanube.com/stores/271/954/products/estrela-vermelha-1996-1998-away-kappa-1-1bcd1a88a959c242a217302254788664-640-0.webp", "alt": "Red Star Belgrade 1996-98 Away", "store": "Atrox Casual Club", "club": "Red Star Belgrade", "season": "1996-98 Away", "size": "L"}, {"url": "https://www.atroxcasualclub.com/produtos/independiente-1995-1996-away-adidas-lqp", "hg_id": "ax6", "price": 1799.9, "currency": "BRL", "img": "https://acdn-us.mitiendanube.com/stores/271/954/products/independiente-1995-1996-away-adidas-1-96e4a002f517e1724e17734418840338-640-0.webp", "alt": "Independiente 1995-96 Away", "store": "Atrox Casual Club", "club": "Independiente", "season": "1995-96 Away", "size": "L"}]};
-
-  function _buildHgCards() {
-    var stage = document.getElementById('hgStage');
-    if (!stage) return;
-    stage.innerHTML = '';
-    // Para cada tienda, elegir 1 camiseta aleatoria
-    Object.keys(_HG_POOL).forEach(function(store) {
-      var items = _HG_POOL[store];
-      var item = items[Math.floor(Math.random() * items.length)];
-      var a = document.createElement('a');
-      a.className = 'hg-card';
-      a.href = item.url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.setAttribute('data-hg', item.hg_id);
-      a.setAttribute('data-hg-price', item.price);
-      a.setAttribute('data-hg-currency', item.currency);
-      a.innerHTML =
-        '<div class="hg-card-img">' +
-          '<img src="' + item.img + '" alt="' + item.alt + '" loading="lazy"/>' +
-          '<span class="hg-card-store-badge">' + item.store + '</span>' +
-        '</div>' +
-        '<div class="hg-card-body">' +
-          '<div class="hg-card-info">' +
-            '<span class="hg-card-club">' + item.club + '</span>' +
-            '<span class="hg-card-season">' + item.season + '</span>' +
-            '<span class="hg-card-size">' + item.size + '</span>' +
-          '</div>' +
-          '<span class="hg-card-price"></span>' +
-        '</div>';
-      stage.appendChild(a);
-    });
-    // Verificar disponibilidad y eliminar las vendidas
-    checkHolyGrails();
-    // Actualizar precios con divisa del usuario
-    if (typeof updateHGPrices === 'function') updateHGPrices();
-    // Inicializar carrusel
-    if (typeof hgInit === 'function') hgInit();
-    if (typeof hgLayout === 'function') setTimeout(hgLayout, 50);
-  }
-
-  // Orden aleatorio de Holy Grails
-  function shuffleHolyGrails(){
-    var stage = document.querySelector('.hg-stage');
-    if(!stage) return;
-    var cards = Array.from(stage.querySelectorAll('.hg-card'));
-    for(var i = cards.length - 1; i > 0; i--){
-      var j = Math.floor(Math.random() * (i + 1));
-      stage.insertBefore(cards[j], cards[i].nextSibling);
-      var tmp = cards[i]; cards[i] = cards[j]; cards[j] = tmp;
+      const rr=JSON.parse(cachedR),dd=JSON.parse(cachedD);
+      // Validacion basica: tasas realistas
+      if(!rr.USD||rr.USD<0.5||rr.USD>2)throw new Error("bad USD");
+      if(!rr.GBP||rr.GBP<0.8||rr.GBP>1.5)throw new Error("bad GBP");
+      Object.assign(RATES_TO_EUR,rr);
+      Object.assign(DISPLAY_RATES,dd);
+      console.log("💱 Tasas desde cache");
+      return;
+    }catch(err){
+      localStorage.removeItem(KEY_RATES);
+      localStorage.removeItem(KEY_DISP);
+      localStorage.removeItem(KEY_TIME);
     }
   }
+  // APIs en cascada: open.er-api (principal, sin key, actualiza diario) → frankfurter.dev (respaldo)
+  const APIS=[
+    "https://open.er-api.com/v6/latest/EUR",
+    "https://api.frankfurter.dev/v1/latest?from=EUR"
+  ];
+  for(const apiUrl of APIS){
+    try{
+      const resp=await Promise.race([fetch(apiUrl),new Promise((_,rej)=>setTimeout(()=>rej(new Error("timeout")),6000))]);
+      if(!resp.ok)throw new Error("HTTP "+resp.status);
+      const data=await resp.json();
+      // open.er-api devuelve {rates:{USD:1.17,...}}
+      // frankfurter.dev devuelve {rates:{USD:1.17,...}}
+      const raw=data.rates||{};
+      if(!raw.USD||!raw.GBP)throw new Error("rates missing");
+      const toEUR={EUR:1},fromEUR={EUR:1};
+      for(const[cur,val]of Object.entries(raw)){
+        if(val>0){fromEUR[cur]=Math.round(val*10000)/10000;toEUR[cur]=Math.round(10000/val)/10000;}
+      }
+      // Validacion final
+      if(!toEUR.USD||toEUR.USD<0.5||toEUR.USD>2)throw new Error("invalid USD rate");
+      Object.assign(RATES_TO_EUR,toEUR);
+      Object.assign(DISPLAY_RATES,fromEUR);
+      localStorage.setItem(KEY_RATES,JSON.stringify(toEUR));
+      localStorage.setItem(KEY_DISP,JSON.stringify(fromEUR));
+      localStorage.setItem(KEY_TIME,Date.now().toString());
+      console.log("💱 Tasas actualizadas desde",apiUrl,raw.USD?"USD="+raw.USD:"");
+      return;
+    }catch(err){
+      console.warn("⚠️ API fallida:",apiUrl,err.message);
+    }
+  }
+  console.warn("⚠️ Todas las APIs fallaron, usando tasas de respaldo actualizadas May 2026");
+}function toEUR(a,e){const n=RATES_TO_EUR[e||"EUR"]||1;return Math.round(a*n*100)/100}function shopifyToCard(a,e,n){const r=a.variants&&a.variants[0],t=a.images&&a.images[0]&&a.images[0].src;if(!(!a.variants||a.variants.some(a=>a.available!==false)))return null;if((a.title||"").toLowerCase().includes("mystery box"))return null;if(_JUNK_TITLE_RE.test(a.title||""))return null;const o=parseFloat(a.variants&&a.variants[0]&&a.variants[0].price||"0"),i=e.priceDivide100?o/100:o;if(!i||i<=0)return null;if(toEUR(i,e.currency)>5e3)return null;const s=(a.title||"").toLowerCase(),l=(a.body_html||"").toLowerCase();if(["gallery products are not for sale","this is not for sale","exhibition piece","exhibition only","not available for purchase","display model"].some(a=>s.includes(a)||l.includes(a)))return null;const c=new Set(["xs","s","m","l","xl","xxl","xxxl","2xl","3xl","xxs","x-small","small","medium","large","x-large","extra large","extra small","kids","youth","junior","child","one size","onesize","os","xs/s","s/m","m/l","l/xl","xl/xxl","6","7","8","10","12","14","16","18","20","22","24","26","28","30","32","34","36","38","40","42","44","46","48","116","128","140","146","152","158","164","176","187","ys","ym","yl","yxl","yxs","yxxl","xyl","p","g","gg","xg","eg","eeg"]),u=/^(x+s|s|m|l|x+l|\d{2,3}|y[sml]|one.?size)$/i,d={"x-large":"XL","extra large":"XL",small:"S",medium:"M",large:"L","x-small":"XS","extra small":"XS","2xl":"XXL","3xl":"XXXL",os:"One size",onesize:"One size","one size":"One size",p:"S",g:"L",gg:"XL",xg:"XL",eg:"XXL",eeg:"XXXL","p/p":"S","g/g":"L"};let m=a.variants?[...new Set(a.variants.filter(a=>a.available!==false).map(a=>a.option1).filter(function(a){if(!a||"Default Title"===a)return!1;const e=a.trim().toLowerCase();return!!c.has(e)||(!!u.test(e)||!!d[e])}).map(function(a){const e=a.trim().toLowerCase();return d[e]?d[e]:/^(1[12][0-9]|1[3-9][0-9])$/.test(e)||/^y(xs|s|m|l|xl|xxl)$/i.test(e)||/^xyl$/i.test(e)||/^yl$/i.test(e)?"Kids":a.trim().toUpperCase().replace(/^(EXTRA\s*LARGE|X-LARGE)$/i,"XL").replace(/^(EXTRA\s*SMALL|X-SMALL)$/i,"XS").replace(/^MEDIUM$/i,"M").replace(/^SMALL$/i,"S").replace(/^LARGE$/i,"L")}))]:[];if(0===m.length){const e=(a.body_html||"").replace(/<[^>]*>/g," "),n=extractSizeFromText(a.title,e);n&&(m=[n])}const g=["XS","S","M","L","XL","XXL","XXXL"],h=m.some(a=>g.includes(a)),p=extractSizeFromText(a.title,null),b="Kids"===p;p&&"Kids"!==p&&g.includes(p)&&(m.includes(p)||m.unshift(p));const f=/\b(youth|junior|kids?|child|children|infant|toddler|baby)\b/i.test(a.title),y=(b||f&&!h||m.length>0&&m.every(a=>"Kids"===a))&&!e.noKidsOverride;y&&!h?m=["Kids"]:y&&h&&(m=m.filter(a=>g.includes(a)));const v=r?(parseFloat(r.price)||0)/(e.priceDivide100?100:1):0,k=guessColor(a.title),w=extractBrandFromTitle(a.title),z=extractVersionFromTitle(a.title),S=extractColorsFromTitle(a.title),E=(a.product_type||"").toLowerCase(),L=Array.isArray(a.tags)?a.tags.join(" ").toLowerCase():(a.tags||"").toLowerCase(),j=(a.body_html||"").replace(/<[^>]*>/g," ").toLowerCase(),B=a.title+" "+E+" "+L+" "+j,x=w||extractBrandFromTitle(B),C=z||extractVersionFromTitle(B),R=S.length?S:extractColorsFromTitle(B),T=(a.body_html||"").replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim().toLowerCase();var _priceMultiplier=(e.url&&(e.url.includes("football-curated.com")?7.4625:(e.url.includes("thefootballidiots.com")?10.78:(e.url.includes("iconicjersey.com")?1.1625:(e.url.includes("shearerscupboard.com")?1.6294:1)))))||1;return{id:"shop_"+e.name.replace(/\s/g,"_")+"_"+a.id,club:a.title,league:extractLeagueFromTitle(a.title),name:a.title,season:extractSeasonFromTitle(a.title),version:C,brand:y?"Kids":x,price:(n||v)*_priceMultiplier,currency:e.currency||"EUR",oldPrice:null,sizes:m.length?m:["One size"],store:e.name,storeUrl:e.url,url:e.url+"/products/"+a.handle,main:k,accent:"#1e2530",colors:R,deal:null,rating:null,reviews:null,image:t||null,images:(a.images||[]).map(function(a){return a.src}).filter(Boolean),isShopify:!0,description:T,tags:Array.isArray(a.tags)?a.tags.join(" ").toLowerCase():(a.tags||"").toLowerCase()}}loadExchangeRates();document.addEventListener("DOMContentLoaded",function(){if(typeof kfLgInit==="function")kfLgInit();});const WOO_STORES=[{name:"Retro Calcio Shirts",url:"https://retrocalcioshirts.com"},{name:"RB Jerseys",url:"https://www.rb-jerseys.com",currency:"USD"},{name:"Football Legends Kits",url:"https://footballlegendskits.com"},{name:"Football Thrift Shop",url:"https://footballthrift.shop",currency:"PLN"},{name:"Kickback",url:"https://kickback.pl",currency:"PLN"},{name:"Football Second Hand",url:"https://footballsecondhand.com",currency:"PLN"},{name:"Valde Vintage",url:"https://valdevintage.com"},{name:"Nr10 Store",url:"https://nr10.store"},{name:"Kitroom Football",url:"https://www.kitroomfootball.com",currency:"GBP"},{name:"Football Time Capsule",url:"https://thefootballtimecapsule.com",currency:"USD"},{name:"Goalmarkt",url:"https://goalmarkt.com",currency:"IDR"},{name:"Kainkuno",url:"https://kainkuno.id",currency:"IDR"},{name:"Back to the Football",url:"https://backtothefootball.com",currency:"EUR"},{name:"Football & Vintage Amsterdam",url:"http://footballandvintageamsterdam.com",currency:"EUR"},{name:"Maglie Calcio Vintage",url:"https://www.magliecalciovintage.it",currency:"EUR"},{name:"Football World GS",url:"https://footballworldgs.it",currency:"EUR"},{name:"Arsij Store",url:"https://www.arsijstore.com",currency:"EUR"},{name:"Vintage Maillots",url:"https://vintagemaillots.com",currency:"EUR"}],_wooCatalogueCache={},_fetchingWoo={};function wooToCard(a,e){if((a.name||a.title||"").toLowerCase().includes("mystery box"))return null;if(_JUNK_TITLE_RE.test(a.name||a.title||""))return null;const n=a.name||"",r=a.images&&a.images[0]&&a.images[0].src,t=a.prices&&void 0!==a.prices.currency_minor_unit?a.prices.currency_minor_unit:2,o=a.prices?parseInt(a.prices.price||"0",10)/Math.pow(10,t):0;if(!o||o<=0)return null;const i=a.prices&&a.prices.currency_code||e.currency||"EUR";if(toEUR(o,i)>5e3)return null;if(!1===a.is_purchasable)return null;if(!1===a.is_in_stock)return null;let s=[];if(a.variations&&a.variations.length){const e=(a.attributes||[]).find(function(a){return/size|talla|taille|groesse|grösse|größe|tamaño|rozmiar/i.test(a.name)});e&&e.terms&&(s=e.terms.map(function(a){return a.name}).filter(isValidSizeWoo).map(normaliseSizeWoo),s=[...new Set(s)])}if(0===s.length){const a=extractSizeFromText(n,"");a&&(s=[a])}const l=["XS","S","M","L","XL","XXL","XXXL"],c=s.some(function(a){return l.includes(a)}),u=/\b(youth|junior|kids?|child|children|infant|toddler|baby)\b/i.test(n);u&&!c&&(s=["Kids"]);const d=(a.short_description||a.description||"").replace(/<[^>]*>/g," ").replace(/\s+/g," ").trim().toLowerCase(),m=n+" "+d,g=extractBrandFromTitle(m),h=extractVersionFromTitle(m),p=extractColorsFromTitle(m);return{id:"woo_"+e.name.replace(/\s/g,"_")+"_"+a.id,club:n,league:extractLeagueFromTitle(n),name:n,season:extractSeasonFromTitle(n),version:h,brand:u&&!c?"Kids":g,price:o,currency:i,oldPrice:null,sizes:s.length?s:["One size"],store:e.name,storeUrl:e.url,url:a.permalink||e.url+"/product/"+(a.slug||""),main:guessColor(n),accent:"#1e2530",colors:p,deal:null,rating:null,reviews:null,image:r||null,images:(a.images||[]).map(function(a){return a.src||a.thumbnail}).filter(Boolean),isShopify:!1,description:d,tags:""}}function isValidSizeWoo(a){if(!a)return!1;const e=a.trim().toLowerCase();return/^(x+s|xs|s|m|l|x+l|xxl|xxxl|2xl|3xl|\d{2,3}|one.?size|kids?|youth|junior)$/i.test(e)||/^(small|medium|large|x-large|extra.large|extra.small|x-small)$/i.test(e)}function normaliseSizeWoo(a){const e=a.trim().toLowerCase(),n={"x-large":"XL","extra large":"XL",small:"S",medium:"M",large:"L","x-small":"XS","extra small":"XS","2xl":"XXL","3xl":"XXXL",os:"One size",onesize:"One size","one size":"One size",kids:"Kids",youth:"Kids",junior:"Kids"};return n[e]?n[e]:/^(1[12][0-9]|1[3-9][0-9])$/.test(e)?"Kids":a.trim().toUpperCase()}async function fetchWooCatalogue(a){const e=a.url.replace(/\/$/,"");return _wooCatalogueCache[e]?_wooCatalogueCache[e]:(_fetchingWoo[e]||(_fetchingWoo[e]=async function(){const n=[];for(let r=1;r<=20;r++)try{const t="/woo?store="+encodeURIComponent(e)+"&page="+r,o=new Promise(function(a,e){setTimeout(function(){e(new Error("timeout"))},8e3)}),i=await Promise.race([fetch(t),o]);if(!i.ok){1===r&&console.log("[KF WOO FAIL]",a.name,i.status);break}const s=await i.json();if(!s.products||!Array.isArray(s.products)||0===s.products.length)break;if(n.push(...s.products),r>=(s.totalPages||1))break;if(s.products.length<100)break}catch(e){1===r&&console.log("[KF WOO ERR]",a.name,e.name,e.message);break}return _wooCatalogueCache[e]=n,n}()),_fetchingWoo[e])}function filterWooCatalogue(a,e,n){const r=[];for(const t of a){const a=normalize(t.name||""),o=normalize((t.short_description||"")+" "+(t.description||""));if(!n.some(function(e){return e.some(function(e){return matchTerm(a,e)||matchTerm(o,e)})}))continue;const i=wooToCard(t,e);i&&r.push(i)}return r}const LEAGUE_DB={"La Liga":["barcelona","fc barcelona","real madrid","atletico madrid","atletico de madrid","atm","sevilla","sevilla fc","real betis","betis","valencia","valencia cf","villarreal","villarreal cf","athletic bilbao","athletic club","real sociedad","osasuna","ca osasuna","getafe","getafe cf","rayo vallecano","rayo","celta vigo","rc celta","celta","espanyol","rcd espanyol","mallorca","rcd mallorca","girona","girona fc","cadiz","cadiz cf","almeria","ud almeria","las palmas","ud las palmas","alaves","deportivo alaves","valladolid","real valladolid","granada","granada cf","elche","elche cf","levante","levante ud","leganes","cd leganes","deportivo","deportivo la coruna","deportivo coruña","racing santander","sporting gijon","zaragoza","real zaragoza","tenerife","cd tenerife","mirandes","cd mirandes","burgos","burgos cf","huesca","sd huesca","eibar","sd eibar","xerez","recreativo","recreativo huelva","numancia","cd numancia","malaga","malaga cf","murcia","real murcia","albacete","albacete bp","ponferradina","sd ponferradina","fuenlabrada","alcorcon","ad alcorcon","lugo","cd lugo","oviedo","real oviedo","cartagena","fc cartagena","ibiza","ud ibiza","castellon","cd castellon"],"Premier League":["arsenal","chelsea","liverpool","manchester united","man united","man utd","manchester city","man city","tottenham","tottenham hotspur","spurs","newcastle","newcastle united","west ham","west ham united","aston villa","villa","everton","brighton","brighton and hove albion","brentford","fulham","crystal palace","wolves","wolverhampton","wolverhampton wanderers","nottingham forest","forest","bournemouth","afc bournemouth","sheffield united","sheffield wednesday","burnley","luton","luton town","leicester","leicester city","ipswich","ipswich town","southampton","leeds","leeds united","sunderland","blackburn","blackburn rovers","bolton","wigan","wigan athletic","stoke","stoke city","swansea","swansea city","cardiff","cardiff city","middlesbrough","boro","coventry","coventry city","hull","hull city","derby","derby county","watford","norwich","norwich city","qpr","queens park rangers","charlton","charlton athletic","portsmouth","reading","west brom","west bromwich albion","wba","birmingham","birmingham city","millwall","barnsley","rotherham","rotherham united","huddersfield","huddersfield town","plymouth","plymouth argyle","oxford united","oxford","bristol city","preston","swansea city","blackpool","peterborough"],"Serie A":["juventus","juve","inter milan","internazionale","fc internazionale","inter milano","ac milan","ac milano","napoli","ssc napoli","roma","as roma","lazio","ss lazio","atalanta","atalanta bc","fiorentina","acf fiorentina","torino","fc torino","bologna","bologna fc","monza","ac monza","lecce","us lecce","sassuolo","us sassuolo","udinese","udinese calcio","salernitana","us salernitana","empoli","empoli fc","hellas verona","cremonese","us cremonese","spezia","spezia calcio","genoa","cfc genoa","sampdoria","uc sampdoria","cagliari","cagliari calcio","venezia","fc venezia","frosinone","frosinone calcio","como","como 1907","parma","parma calcio","palermo","us palermo","brescia","brescia calcio","ascoli","ascoli calcio","bari","ssc bari","reggina","reggina 1914","pescara","delfino pescara","catania","calcio catania","pisa","ac pisa","sudtirol","fc sudtirol","modena","modena fc","cosenza","cosenza calcio","ternana","ternana calcio","cittadella","as cittadella","reggiana","ac reggiana"],Bundesliga:["bayern munich","fc bayern","fc bayern munich","bayern","borussia dortmund","dortmund","bvb","rb leipzig","rasenballsport leipzig","leipzig","bayer leverkusen","leverkusen","bayer 04","eintracht frankfurt","frankfurt","sge","wolfsburg","vfl wolfsburg","borussia monchengladbach","gladbach","monchengladbach","bmg","union berlin","1. fc union berlin","union","freiburg","sc freiburg","sport-club freiburg","hoffenheim","tsg hoffenheim","tsg 1899","mainz","mainz 05","1. fsv mainz","augsburg","fc augsburg","hertha","hertha bsc","hertha berlin","schalke","fc schalke 04","schalke 04","hamburger sv","hsv","hamburger","werder","werder bremen","sv werder","bochum","vfl bochum","vfb stuttgart","stuttgart","vfb","hannover","hannover 96","fortuna dusseldorf","dusseldorf","fortuna","kaiserslautern","1. fc kaiserslautern","fck","paderborn","sc paderborn","heidenheim","1. fc heidenheim","st pauli","fc st pauli","st. pauli","darmstadt","sv darmstadt","greuther furth","spvgg greuther furth","furth","nurnberg","1. fc nurnberg","fcn","karlsruher","karlsruher sc","ksc","1. fc koln","fc koln","koln","cologne","holstein kiel","kiel"],"Ligue 1":["paris saint-germain","psg","paris sg","paris saint germain","olympique marseille","marseille","om","olympique lyonnais","lyon","ol","monaco","as monaco","asmonaco","lille","losc","losc lille","rennes","stade rennais","stade de rennes","nice","ogc nice","gimnastico","lens","rc lens","montpellier","montpellier hsc","mhsc","strasbourg","rc strasbourg","racing strasbourg","nantes","fc nantes","reims","stade de reims","brest","stade brestois","sb29","lorient","fc lorient","angers","angers sco","toulouse","toulouse fc","clermont","clermont foot","auxerre","ajaaccio","aj auxerre","troyes","estac troyes","estac","metz","fc metz","valenciennes","va valenciennes","bordeaux","girondins de bordeaux","girondins","grenoble","grenoble foot","guingamp","en avant guingamp","eag","caen","stade malherbe caen","sm caen","sochaux","fc sochaux","fcsm","sedan","cs sedan","havre","le havre","le havre ac","hac","paris fc","red star","red star fc","saint-etienne","as saint-etienne","asse","nimes","nimes olympique","amiens","amiens sc"],Eredivisie:["ajax","afc ajax","ajax amsterdam","psv","psv eindhoven","feyenoord","feyenoord rotterdam","az","az alkmaar","fc utrecht","utrecht","twente","fc twente","fc twente enschede","vitesse","sbv vitesse","sbe vitesse","willem ii","willem ii tilburg","roda jc","roda jc kerkrade","roda","heerenveen","sc heerenveen","groningen","fc groningen","nec","nec nijmegen","go ahead eagles","de graafschap","fortuna sittard","fortuna","excelsior","sbv excelsior","cambuur","sc cambuur","cambuur leeuwarden","fc volendam","volendam","sparta rotterdam","sparta","pec zwolle","zwolle","heracles","heracles almelo","rkc waalwijk","waalwijk","emmen","fc emmen","almere city","almere","nijmegen","nec nijmegen"],"Primeira Liga":["benfica","sl benfica","sport lisboa e benfica","porto","fc porto","futebol clube do porto","sporting","sporting cp","sporting clube de portugal","sporting lisboa","braga","sc braga","sporting de braga","vitoria guimaraes","guimaraes","vitoria sc","boavista","boavista fc","santa clara","cs santa clara","maritimo","cs maritimo","pacos ferreira","fc pacos de ferreira","estoril","estoril praia","arouca","fc arouca","famalicao","fc famalicao","gil vicente","gil vicente fc","moreirense","moreirense fc","vizela","fc vizela","portimonense","portimonense sc","chaves","gd chaves","casa pia","casa pia ac","estrela amadora","cf estrela amadora","rio ave","rio ave fc","academica","associacao academica de coimbra","belenenses","cf belenenses","os belenenses","nacional","cd nacional","tondela","cd tondela","varzim","varzim sc","leixoes","leixoes sc"],"Super Lig":["galatasaray","galatasaray sk","fenerbahce","fenerbahce sk","besiktas","besiktas jk","trabzonspor","istanbul basaksehir","basaksehir","istanbul basaksehir fk","sivasspor","sivas","demir grup sivasspor","konyaspor","konya","buyuksehir belediye konyaspor","antalyaspor","antalya","fta antalyaspor","kayserispor","kayseri","kasimpasa","kasimpasa sk","alanyaspor","alanya","gaziantep","gaziantep fk","gaziantepspor","hatayspor","hatay","atakas hatayspor","pendikspor","adana demirspor","adana","kirmizi sari adana demirspor","giresunspor","giresun","ankaragucu","ankara","mkek ankaragucu","altay","altay izmir","altinordu","bursaspor","bursa","goztepe","goztepe izmir","rizespor","caykur rizespor","rize","samsunspor","samsun","eyupspor","eyup","bodrumspor","elazigspor","erzurumspor"],"Scottish Premiership":["celtic","celtic fc","rangers","rangers fc","the rangers","hearts","heart of midlothian","hearts fc","hibernian","hibs","hibernian fc","aberdeen","aberdeen fc","st mirren","saint mirren","st. mirren","dundee","dundee fc","dundee united","livingston","livingston fc","st johnstone","saint johnstone","st. johnstone","motherwell","motherwell fc","kilmarnock","kilmarnock fc","ross county","hamilton","hamilton academical","partick thistle","inverness","inverness ct","inverness caledonian thistle","falkirk","raith rovers","airdrieonians","queen of the south","dumbarton","cove rangers","ayr united"],"Belgian Pro League":["club brugge","brugge","club brugge kv","anderlecht","rsc anderlecht","royal sporting club anderlecht","genk","krc genk","standard liege","standard de liege","aa gent","kaa gent","royal antwerp","antwerp","rafc antwerp","beerschot","beerschot ac","cercle brugge","charleroi","sporting charleroi","royal charleroi sporting club","sint-truiden","stvv","sint-truiden vv","mechelen","kv mechelen","kortrijk","kv kortrijk","westerlo","kvc westerlo","zulte waregem","waregem","sv zulte waregem","eupen","as eupen","oud-heverlee leuven","oh leuven","oud heverlee","lierse","lierse kempenzonen","waasmunster","rwdm","rwdm brussels","seraing","rfc seraing","dender","fc dender","union saint-gilloise","union sg","royale union saint-gilloise"],"Super League Greece":["panathinaikos","panathinaikos fc","olympiacos","olympiakos","olympiacos piraeus","olympiakos piraeus","paok","paok fc","paok salonika","paok thessaloniki","aek athens","aek fc","aris thessaloniki","aris fc","asteras tripolis","atromitos","atromitos athens","atromitos fc","panionios","panionios fc","xanthi fc","skoda xanthi","platanias","platanias fc","panaitolikos","panaitolikos fc","ofi crete","ofi crete fc","larissa","aeo larissa","volos fc","volos nfc","pas lamia","ionikos","ionikos fc","ionikos nikeas","levadiakos","levadiakos fc","pas giannina","panetolikos","panetolikos fc","ergotelis","ergotelis fc","panthrakikos","panthrakikos fc","iraklis fc","iraklis thessaloniki","apollon smyrnis","apollon athens","kalloni","aeps kalloni"],Allsvenskan:["malmo","malmo ff","malmoe ff","ifk goteborg","goteborg","ifk göteborg","djurgarden","djurgårdens if","djurgårdens","hammarby","hammarby if","hammarby fotboll","ifk norrkoping","norrkoping","ifk norrköping","kalmar","kalmar ff","bk hacken","hacken","if hacken","ostersunds fk","ostersund","östersunds fk","helsingborg","helsingborgs if","hif","gif sundsvall","sundsvall","sirius","ik sirius","elfsborg","if elfsborg","varberg","varbergs bois","degerfors","degerfors if","brommapojkarna","if brommapojkarna","aik","aik fotboll","mjallby","mjällby aif","halmstad","halmstads bk","hbk","orebro","örebro sk","orebro sk","brage","if brage","trelleborgs ff","trelleborgs"],Eliteserien:["rosenborg","rosenborg bk","rbk","molde","molde fk","viking","viking fk","bodo/glimt","glimt","fk bodo/glimt","bodø/glimt","lillestrom","lillestrøm","lillestrøm sk","lsk","valerenga","vålerenga","vif","vålerenga fotball","brann","sk brann","brann bergen","haugesund","fk haugesund","stabak","stabæk","stabæk fotball","sarpsborg","sarpsborg 08","stromsgodset","strømsgodset","strømsgodset if","odd","odd grenland","sk odd","aalesund","aafk","aalesunds fk","ham-kam","hamarkameratene","sandefjord","sandefjord fotball","tromso","tromsø il","tromsø","fredrikstad","fredrikstad fk","kristiansund","kristiansund bk","sogndal","il sogndal","raufoss","il raufoss"],"Superliga Denmark":["fc copenhagen","fcm","kobenhavn","fc københavn","fck","brondby","brøndby","brøndby if","bif","midtjylland","fc midtjylland","fcm","odense","ob","odense boldklub","aab","aalborg","aab aalborg","aalborg bk","agf","aarhus gf","aarhus gymnastics","randers","randers fc","nordsjaelland","fc nordsjaelland","fcn","fc nordsjælland","sonderjyske","sønderjyske","silkeborg","silkeborg if","vejle","vejle boldklub","vbk","esbjerg","esbjerg fb","efb","lyngby","lyngby bk","lbk","viborg","viborg ff","horsens","ac horsens","hvidovre","hvidovre if","koge","hb koge","koge bk","fremad amager","hik"],Ekstraklasa:["legia warsaw","legia","legia warszawa","lech poznan","lech","kks lech poznan","wisla krakow","wisla","ks wisla krakow","wisla cracovia","wisła kraków","wisła","slask wroclaw","slask","wks slask wroclaw","pogon szczecin","pogon","mks pogon szczecin","rakow czestochowa","rakow","rakow","raków czestochowa","jagiellonia","jagiellonia bialystok","piast gliwice","piast","gornik zabrze","gornik","gornik zabrze","cracovia","ks cracovia","ruch chorzow","ruch","korona kielce","korona","zaglebie lubin","zaglebie","cbsz zaglebie lubin","lks lodz","lks","lodz","widzew lodz","widzew","zagłębie sosnowiec","zaglebie sosnowiec","arka gdynia","arka","miedz legnica","miedz","miedź legnica","gks katowice","gks"],"Czech First League":["sparta prague","sparta","ac sparta prague","ac sparta praha","slavia prague","slavia","sk slavia prague","sk slavia praha","viktoria plzen","plzen","fc viktoria plzen","fc viktoria plzeň","banik ostrava","banik","fc banik ostrava","mlada boleslav","fk mlada boleslav","sigma olomouc","sk sigma olomouc","bohemians","bohemians 1905","fk bohemians 1905","slovacko","fc slovacko","teplice","fk teplice","jablonec","fk jablonec","fk baumit jablonec","liberec","slovan liberec","fc slovan liberec","hradec kralove","fk hradec kralove","fk hradec králové","ceske budejovice","dynamo ceske budejovice","sk dynamo ceske budejovice","dynamo pardubice","fk pardubice","zbrojovka brno","zbrojovka","fc zbrojovka brno","zizkov","fk viktoria zizkov","dukla","fk dukla prague"],"Slovak Super Liga":["slovan bratislava","slovan","sk slovan bratislava","spartak trnava","spartak","fc spartak trnava","zilina","msk zilina","msk žilina","trencin","as trencin","as trenčín","zemplin michalovce","zemplin","ruzomberok","fk ruzomberok","dac dunajska streda","dac","dac 1904 dunajska streda","banik banska bystrica","banik","tatran presov","tatran","pohronie","fk pohronie","senica","fk senica","zlaté moravce","zlate moravce","fc nitra","nitra","bohemians bratislava","petrzalka","fk petrzalka"],"Austrian Bundesliga":["rb salzburg","salzburg","red bull salzburg","fc red bull salzburg","rapid vienna","rapid","sk rapid wien","sk rapid vienna","austria vienna","fk austria wien","fk austria vienna","lask","lask linz","fc lask","wolfsberger ac","wac","rz pellets wac","sturm graz","sk sturm graz","sturm","rheindorf altach","altach","sc rheindorf altach","ried","sv ried","hartberg","tsg hartberg","admira","fc flyeralarm admira","admirado","klagenfurt","sk austria klagenfurt","blau-weiss linz","blau weiss linz","fc blau-weiß linz","wolfsberg","wac wolfsberg","wiener neustadt","sc wiener neustadt","kapfenberger","kapfenberger sv","pasching","askoe pasching"],"Swiss Super League":["fc basel","basel","fcb","young boys","bsc young boys","bsc yb","grasshopper","grasshopper club","gc zurich","grasshoppers","zurich","fc zurich","fcu zurich","servette","fc servette","servette fc","lugano","fc lugano","lucerne","fc lucerne","fc luzern","luzern","sion","fc sion","winterthur","fc winterthur","aarau","fc aarau","lausanne sport","lausanne","fc lausanne-sport","stade lausanne","stade-lausanne ouchy","slo","yverdon","yverdon-sport","yverdon sport","bellinzona","ac bellinzona","thun","fc thun","st gallen","fc st. gallen","fcsg","xamax","neuchatel xamax","neuchatel xamax fcs","vaduz","fc vaduz"],"Premier League Ukraine":["shakhtar donetsk","shakhtar","fc shakhtar donetsk","shaktar","shakhtor","dynamo kyiv","dynamo kiev","fc dynamo kyiv","fk dynamo kyiv","dinamo kyiv","dinamo kiev","dynamo kiew","dinamo kijow","dynamo kijow","fk dynamo kiev","fc dynamo kiev","dynamo kyiv ukraine","dynamo kiev ukraine","fc dynamo","fk dynamo","metalist","metalist kharkiv","fc metalist","metalist 1925","desna","fc desna chernihiv","desna chernihiv","dnipro","fc dnipro","dnipro dnipropetrovsk","vorskla","vorskla poltava","fc vorskla poltava","olimpik donetsk","fc olimpik donetsk","mariupol","fc mariupol","kolos kovalivka","fc kolos kovalivka","inhulets","fc inhulets petrove","inhulets petrove","chornomorets","chornomorets odesa","chernomorets odessa","mynai","fk mynai","fc mynai","rukh lviv","fk rukh lviv","cherkassky dnipro","fc cherkassky dnipro","stal kamianske","fc stal kamianske","polissya zhytomyr","fc polissya","obolon","obolon-brovar","fc obolon kyiv","obolon kyiv","kryvbas","fc kryvbas kryvyi rih","veres","veres rivne","fc veres","zorya luhansk","zorya","fc zorya","karpaty lviv","karpaty","fc karpaty","arsenal kyiv","arsenal kiev","fc arsenal kyiv","metalurh zaporizhzhya","metalurh","volyn lutsk","volyn","fc volyn","illichivets","fc illichivets mariupol","tavriya simferopol","tavriya","oleksandriya","fc oleksandriya"],"Russian Premier League":["zenit","zenit st petersburg","fc zenit","zenit spb","cska moscow","cska","pfc cska moscow","spartak moscow","spartak","fc spartak moscow","lokomotiv moscow","lokomotiv","fk lokomotiv moscow","dynamo moscow","dynamo","fc dynamo moscow","krasnodar","fc krasnodar","akhmat grozny","akhmat","fc akhmat","rubin kazan","rubin","fk rubin kazan","ufa","fc ufa","ural","fc ural yekaterinburg","arsenal tula","fc arsenal tula","rostov","fc rostov","fk rostov","sochi","fc sochi","khimki","fc khimki","nizhny novgorod","fc nizhny novgorod","orenburg","fc orenburg","krylya sovetov","samara","fc krylya sovetov","fakel voronezh","fakel","tambov","fc tambov","torpedo moscow","torpedo","cska permь","perm"],"Nemzeti Bajnokság":["ferencvaros","ferencvarosi tc","ftc","fradi","mol fehervar","fehervar","mol fehervar fc","videoton","fc fehervar","ujpest","ujpest fc","paksi fc","paks","honved","budapest honved","kispest honved","debrecen","dvsc","debreceni vsc","mtk budapest","mtk","zalaegerszeg","zalaegerszegi te","zte","diosgyori vtk","dvtk","diósgyőri vtk","gyori eto","gyor","győri eto fc","kisvarda","kisvarda fc","kisvárda","puskas akademia","puskas","mezokovesd","mezőkövesd zsóry fc","vasas","vasas fc","kazincbarcika","bkfc kazincbarcika","haladás","haladás vse","szombathelyi haladás"],"Fortuna Liga":["slovan bratislava","slovan","spartak trnava","spartak","zilina","msk zilina","trencin","as trencin","zemplin michalovce","ruzomberok","dac dunajska streda","dac","banik banska bystrica","tatran presov","pohronie","senica","nitra","fc nitra","petrzalka","liptovsky mikulas","inter bratislava"],Veikkausliiga:["hjk helsinki","kuopion palloseura","kups kuopio","ilves tampere","sjk seinajoki","seinajoen jalkapallokerho","fc inter turku","ac oulu","if gnistan","vaasan palloseura","ifk mariehamn","ff jaro","fc lahti","tps turku","turun palloseura","fc haka","haka valkeakoski"],"Brasileirão":["flamengo","cr flamengo","clube de regatas do flamengo","palmeiras","sociedade esportiva palmeiras","sep","santos","santos fc","sao paulo","são paulo","sao paulo fc","spfc","corinthians","sport club corinthians paulista","sccp","atletico mineiro","atletico mg","clube atletico mineiro","galo","fluminense","fluminense fc","vasco","vasco da gama","cr vasco da gama","botafogo","botafogo fr","botafogo de futebol e regatas","gremio","grêmio","gremio fbpa","internacional","sport club internacional","colorado","cruzeiro","cruzeiro ec","atletico paranaense","athletico paranaense","cap","athletico pr","fortaleza","fortaleza ec","ceara","ceará","ceara sc","bahia","ec bahia","esporte clube bahia","sport recife","sport","sport club do recife","nautico","clube nautico capibaribe","goias","goiás","goias esporte clube","cuiaba","cuiaba ec","america mg","america mineiro","america fc","bragantino","red bull bragantino","clube atletico bragantino","coritiba","coritiba fbc","parana","parana clube","avai","avaí","avai fc","chapecoense","associacao chapecoense de futebol","joinville","jec","joinville esporte clube","criciuma","criciumá","criciuma ec","ponte preta","aa ponte preta","guarani","guarani fc","juventude","esporte clube juventude","ituano","ituano fc","goianiense","atletico goianiense","america rj","america fc rio de janeiro","bangu","bangu atletico clube","remo","clube do remo","paysandu","paysandu sport clube","abc","abc futebol clube","sampaio correa","csa","centro sportivo alagoano","tombense","tombense fc","mirassol","mirassol fc","novorizontino","novorizontino fc"],"Liga MX":["america","club america","aguilas del america","chivas","guadalajara","chivas guadalajara","deportivo guadalajara","cruz azul","cruz azul fc","pumas unam","pumas","universidad nacional","tigres","tigres uanl","tigres de la uanl","monterrey","cf monterrey","rayados","toluca","deportivo toluca","diablos rojos","atlas","atlas fc","necaxa","club necaxa","tijuana","xolos","xolos tijuana","club tijuana","queretaro","fc queretaro","gallos blancos","puebla","club puebla","franja del ayuntamiento","santos laguna","santos","club santos laguna","leon","club leon","esmeralda","mazatlan","mazatlan fc","atletico san luis","san luis","atletico de san luis","juarez","fc juarez","los bravos de juarez","pachuca","cf pachuca","tuzos","veracruz","tiburones","deportivo veracruz","morelia","atletico morelia","lobos buap","estudiantes tecos","san luis potosi","zacatecas","celaya","club celaya","irapuato","tampico","tampico madero"],"Liga Profesional Argentina":["boca juniors","ca boca juniors","xeneize","river plate","ca river plate","millonario","independiente","ca independiente","rojo","racing club","racing club avellaneda","academia","san lorenzo","ca san lorenzo","cuervo","estudiantes","estudiantes de la plata","estudiantes lp","lanus","ca lanus","velez sarsfield","velez","ca velez sarsfield","huracan","ca huracan","newells old boys","newells","nob","rosario central","ca rosario central","belgrano","ca belgrano","godoy cruz","ca godoy cruz","tomba","san martin de tucuman","ca san martin","atletico tucuman","at tucuman","atletico de tucuman","union santa fe","union","union de santa fe","colon santa fe","colon","ca colon","central cordoba","central córdoba santiago del estero","aldosivi","club atletico aldosivi","platense","ca platense","talleres","talleres de cordoba","ca talleres","sarmiento","ca sarmiento junin","banfield","ca banfield","defensa y justicia","defensa","club atletico defensa y justicia","patronato","atletico patronato","barracas central","ca barracas central","gimnasia la plata","gimnasia","gimnasia y esgrima la plata","tigre","ca tigre","arsenal sarandi","arsenal","quilmes","quilmes ac","chacarita","chacarita juniors","los andes","atletico los andes","temperley","ca temperley","almagro","ca almagro","san martin san juan","ca san martin san juan","deportivo riestra","deportivo riestra"],MLS:["atlanta united","atlanta united fc","la galaxy","los angeles galaxy","lafc","los angeles fc","seattle sounders","sounders fc","seattle sounders fc","new england revolution","new england rev","revolution","portland timbers","portland","new york city","nyc fc","new york city fc","new york red bulls","red bulls","ny red bulls","toronto fc","toronto","chicago fire","chicago fire fc","columbus crew","crew","dc united","d.c. united","washington dc united","minnesota united","minnesota loons","orlando city","orlando city sc","philadelphia union","union","houston dynamo","dynamo","sporting kansas city","skc","kansas city","fc dallas","dallas","colorado rapids","rapids","real salt lake","rsl","salt lake","san jose earthquakes","quakes","earthquakes","inter miami","miami","inter miami cf","nashville sc","nashville","austin fc","austin","charlotte fc","charlotte","cf montreal","montreal","impact montreal","cincinnati","fc cincinnati","vancouver whitecaps","whitecaps","st louis city","st. louis city sc","stl city","san diego","san diego fc","new england","ne revolution","new york","nyc","los angeles","la","portland","timbers","seattle","sounders"],"Liga Colombiana":["atletico nacional","atletico nacional de medellin","junior barranquilla","junior","atletico junior","millonarios","millonarios fc","america de cali","america","america cali","deportivo cali","cali","verde y blanco","once caldas","deportivo once caldas","atletico bucaramanga","bucaramanga","deportes tolima","tolima","independiente medellin","ind medellin","indep medellin","deportivo independiente medellin","peñarol","atletico peñarol de armenia","patriotas boyaca","patriotas","deportes boyaca","boy","santa fe","independiente santa fe","boyaca chico","boyaca chico fc","deportivo pasto","pasto","club deportivo pasto","envigado","envigado fc","aguilas doradas","aguilas","rionegro aguilas","union magdalena","union magdalena fc","real cartagena","cartagena","fortaleza ceif","fortaleza","jaguares de cordoba","jaguares","pereira","deportivo pereira","equidad","la equidad","la equidad seguros","bogota","club bogota","chicó","chicó fc","cucuta","cucuta deportivo"],"Liga Ecuatoriana":["barcelona sc","barcelona guayaquil","bsc","emelec","club sport emelec","liga de quito","ldu quito","liga deportiva universitaria de quito","ldu","el nacional","club el nacional","aucas","sociedad deportiva aucas","deportivo cuenca","cuenca","club deportivo cuenca","manta","club atletico manta","tecnico universitario","technico universitario","orense","orense sc","mushuc runa","mushuc runa sporting club","macara","cd macara","independiente del valle","independiente valle","idv","delfin","delfin sc","guayaquil city","guayaquil city fc","olmedo","cd olmedo riobamba","imbabura","imbabura sc","cumbaya","cumbaya fc","gualaceo","club deportivo gualaceo","universidad","universidad catolica","libertad","libertad fc"],"Liga 1 Perú":["alianza lima","club alianza lima","universitario","universitario de deportes","u de deportes","sporting cristal","cristal","club sporting cristal","cesar vallejo","universidad cesar vallejo","melgar","fnc melgar","club atletico melgar","atletico grau","grau","atlético grau","sport boys","sport boys association","sport boys callao","sport huancayo","sport huancayo fc","cajamarca","club deportivo cajamarca","cienciano","cienciano del cusco","binacional","asociacion deportiva binacional","llacuabamba","deportivo municipal","asociacion deportivo municipal","mannucci","carlos mannucci","union comercio","union comercio sc","alianza atletico","alianza atletico sullana","academia cantolao","cantolao","ayacucho","ayacucho fc","vallejo","cesar vallejo fc","inti gas","inti gas deportes"],"Primera División Chile":["colo colo","club social y deportivo colo-colo","universidad de chile","u de chile","club universidad de chile","la u","universidad catolica","club deportivo universidad catolicá","uc","everton","everton vina","cd everton de vina del mar","cobresal","cd cobresal","audax italiano","audax","ci audax italiano","antofagasta","cd antofagasta","palestino","club deportivo palestino","deportes iquique","iquique","cd iquique","curico unido","curico","curicó unido","deportes copiapo","copiapo","cd copiapo","union la calera","calera","club deportes union la calera","cobreloa","cd cobreloa","rangers","rangers de talca","cd rangers","deportes temuco","temuco","cd temuco","deportes valdivia","valdivia","cd valdivia","deportes puerto montt","puerto montt","cd puerto montt","la serena","cd la serena","nublense","deportes nublense","cd nublense","union san felipe","union san felipe fc","concepcion","deportes concepcion","huachipato","cd huachipato"],"Primera División Uruguay":["nacional montevideo","club nacional de football","nacional football club","penarol","peñarol","club atletico peñarol","club atletico penarol","defensor sporting","defensor uruguay","club atletico defensor sporting","danubio","danubio fc","liverpool fc uruguay","liverpool futbol club uruguay","liverpool uruguay","fenix uruguay","ca fenix","club atletico fenix uruguay","plaza colonia","ca plaza colonia","montevideo wanderers","wanderers uruguay","mv wanderers","ca river plate uruguay","river plate uruguay","club atletico river plate uruguay","ca racing club uruguay","racing club uruguay","racing uruguay","rampla juniors","rampla","ca rampla juniors","ca progreso uruguay","progreso uruguay","boston river","boston river fc","ca cerro uruguay","cerro uruguay","cerro largo","cerro largo fc","juventud de las piedras","ca juventud uruguay","atletico torque","torque uruguay","ca torque","fc barros blancos","barros blancos","deportivo maldonado","maldonado uruguay","villa espanola","ca villa espanola"],"Primera División Venezuela":["caracas fc","caracas","caracas football club","deportivo lara","lara","academia deportivo lara","zamora","zamora fc","club atletico zamora","zulia","zulia fc","metropolitanos","metropolitanos fc","monagas","monagas sc","carabobo","carabobo fc","trujillanos","trujillanos fc","estudiantes de merida","estudiantes","estudiantes de merida fc","mineros de guayana","mineros","mineros guayana","academia puerto cabello","puerto cabello","atletico venezuela","atletico venezuela fc","hermanos colon","hermanos colón","deportivo petare","petare","union atletico maracaibo","uam","deportivo lara","lara","rayo vallecano venezuela"],"J1 League":["urawa red diamonds","urawa","urawa reds","gamba osaka","gamba","kashima antlers","kashima","antlers","yokohama f marinos","yokohama marinos","f marinos","marinos","ys yokohama","yokohama f. marinos","kawasaki frontale","kawasaki","frontale","vissel kobe","kobe","vissel","nagoya grampus","nagoya","grampus","grampus eight","sagan tosu","tosu","sagan","cerezo osaka","cerezo","sanfrecce hiroshima","hiroshima","sanfrecce","avispa fukuoka","avispa","shonan bellmare","shonan","bellmare","fc tokyo","fctokyo","tokyo verdy","verdy","fc machida zelvia","machida","zelvia","shimizu s pulse","shimizu","s-pulse","kyoto sanga","kyoto","sanga","kyoto purple sanga","kyoto sanga fc","kashiwa reysol","kashiwa","reysol","fagiano okayama","fagiano","v-varen nagasaki","v-varen","mito hollyhock","mito","hollyhock","jef united chiba","jef","jef united","chiba","consadole sapporo","sapporo","hokkaido consadole","hokkaido consadole sapporo","vanraure hachinohe","hachinohe","vanraure","vegalta sendai","sendai","vegalta","blaublitz akita","akita","blaublitz","montedio yamagata","yamagata","montedio","iwaki fc","iwaki","tochigi city","omiya ardija","omiya","ardija","yokohama fc","ventforet kofu","kofu","ventforet","albirex niigata","niigata","albirex","kataller toyama","kataller","toyama","jubilo iwata","iwata","jubilo","fujieda myfc","fujieda","tokushima vortis","tokushima","vortis","fc imabari","imabari","oita trinita","oita","trinita","tegevajaro miyazaki","tegevajaro","miyazaki","fukushima united","fukushima","fukushima united fc","tochigi sc","tochigi","thespa kusatsu","thespa","kusatsu","gunma","thespa kusatsu gunma","sc sagamihara","sagamihara","matsumoto yamaga","matsumoto","yamaga","matsumoto yamaga fc","ac nagano parceiro","nagano","parceiro","zweigen kanazawa","kanazawa","zweigen","fc gifu","gifu","reilac shiga","reilac","shiga","reilac shiga fc","fc osaka","nara club","nara","gainare tottori","tottori","gainare","renofa yamaguchi","renofa","kamatamare sanuki","kamatamare","sanuki","ehime fc","ehime","kochi united","kochi","kochi united sc","giravanz kitakyushu","kitakyushu","giravanz","roasso kumamoto","kumamoto","roasso","kagoshima united","kagoshima","kagoshima united fc","fc ryukyu","ryukyu","okinawa","iwate grulla morioka","iwate grulla","morioka","iwate","yscc yokohama","yscc","y.s.c.c. yokohama","azul claro numazu","azul claro","numazu","japan national team","japan","samurai blue","japon","japón","nadeshiko japan","nadeshiko","japan women"],"K League 1":["jeonbuk motors","jeonbuk","jeonbuk hyundai motors","ulsan hyundai","ulsan","ulsan hd","suwon samsung","suwon","suwon samsung bluewings","pohang steelers","pohang","seongnam","seongnam fc","seongnam ilhwa chunma","jeju united","jeju","fc seoul","seoul","incheon united","incheon","gangwon","gangwon fc","gwangju","gwangju fc","daegu","daegu fc","daejeon","daejeon citizen","daejeon hana citizen","gimcheon sangmu","sangmu","kimcheon sangmu","suwon fc","suwon city","jeonnam dragons","jeonnam","chonnam","bucheon","bucheon fc 1995","seoul e-land","e-land","chungnam asan","asan","ansan greeners","ansan"],"Chinese Super League":["guangzhou","guangzhou fc","guangzhou city","shanghai shenhua","shenhua","shanghai greenland shenhua","beijing guoan","guoan","beijing fc","jiangsu suning","jiangsu","jiangsu football club","shandong luneng","shandong","shandong taishan","shenzhen","shenzhen fc","henan jianye","henan","henan songshan longmen","wuhan","wuhan fc","wuhan three towns","chengdu rongcheng","chengdu","tianjin","tianjin teda","tianjin jinmen tiger","dalian","dalian pro","qingdao","qingdao hainiu","hebei","hebei fc","shanghai port","shanghai sipg","port fc","changchun yatai","changchun","liaoning","liaoning fc","guangzhou city","guangzhou r&f","meizhou hakka","meizhou","zhejiang","zhejiang fc","zhejiang professional","shandong","shandong energy","cangzhou mighty lions","cangzhou"],"Saudi Pro League":["al hilal","al-hilal","al hilal sfc","al nassr","al-nassr","al nassr fc","al ahli","al-ahli","al ahli sc","al ittihad","al-ittihad","al ittihad club","al shabab","al-shabab","al ettifaq","al-ettifaq","al qadsiah","al-qadsiah","al taawoun","al-taawoun","al fateh","al-fateh","al khaleej","al-khaleej","abha","abha club","al hazem","al-hazem","al feiha","al-feiha","al okhdood","al-okhdood","al riyadh","al-riyadh","al raed","al-raed","damac","damac fc","al wehda","al-wehda","al batin","al-batin","al qadsiah","al qadsiah fc"],"A-League":["sydney fc","sydney football club","melbourne city fc","melbourne city","melbourne victory","melbourne victory fc","western sydney wanderers","wsw","brisbane roar","brisbane roar fc","adelaide united","adelaide united fc","central coast mariners","central coast mariners fc","perth glory","perth glory fc","wellington phoenix","wellington phoenix fc","western united","western united fc","macarthur fc","macarthur bulls","newcastle jets","newcastle jets fc","auckland city fc"],__national_europe:["spain","españa","england","france","germany","deutschland","italy","italia","portugal","netherlands","holland","holanda","belgica","belgium","croatia","croacia","serbia","ukraine","ucrania","poland","polonia","switzerland","suiza","scotland","escocia","denmark","dinamarca","austria","sweden","suecia","norway","noruega","czechia","czech","republica checa","turkey","turquia","greece","grecia","romania","rumania","roumanie","hungary","hungria","slovakia","eslovaquia","slovenia","eslovenia","albania","finland","finlandia","northern ireland","wales","gales","ireland","irlanda","russia","rusia","iceland","islandia","montenegro","bosnia","herzegovina","north macedonia","macedonia","moldova","luxembourg","liechtenstein","malta","andorra","san marino","gibraltar","armenia","azerbaijan","georgia","belarus","estonia","latvia","lithuania","faroe islands","cyprus","israel","kosovo","republic of ireland","czech republic","republic of north macedonia"],__national_america:["argentina","argentina national","seleccion argentina","afa argentina","albiceleste","bolivia","bolivia national","seleccion bolivia","la verde bolivia","brazil","brasil","brazil national","brasil national","selecao brasileira","cbf","seleccion brasil","canada","canada national","canada soccer","les rouges","chile","chile national","seleccion chile","la roja chile","colombia","colombia national","seleccion colombia","fcf colombia","los cafeteros","costa rica","costa rica national","seleccion costa rica","la sele","cuba","cuba national","seleccion cuba","ecuador","ecuador national","seleccion ecuador","la tri ecuador","el salvador","el salvador national","seleccion el salvador","la selecta","united states","usa","usa national","usmnt","uswnt","us soccer","united states national","guatemala","guatemala national","seleccion guatemala","los chapines","guyana","guyana national","haiti","haiti national","seleccion haiti","honduras","honduras national","seleccion honduras","los catrachos","jamaica","jamaica national","reggae boyz","jamaica football","mexico","mexico national","seleccion mexico","seleccion mexicana","el tri","tricolor mexico","nicaragua","nicaragua national","seleccion nicaragua","panama","panama national","seleccion panama","los canaleros","paraguay","paraguay national","seleccion paraguay","albirroja","peru","peru national","seleccion peru","blanquirroja","puerto rico","puerto rico national","seleccion puerto rico","dominican republic","republica dominicana","dominican republic national","republica dominicana national","suriname","surinam","suriname national","trinidad","trinidad and tobago","trinidad tobago","trinidad national","trinidad tobago national","soca warriors","uruguay","uruguay national","seleccion uruguay","celeste uruguay","la celeste","venezuela","venezuela national","seleccion venezuela","la vinotinto"],__national_africa:["senegal","nigeria","ghana","cameroon","camerun","ivory coast","cote divoire","cote d'ivoire","morocco","marruecos","egypt","egipto","mali","guinea","tanzania","zambia","zimbabwe","south africa","sudafrica","ethiopia","kenya","uganda","mozambique","angola","sierra leone","gambia","cape verde","equatorial guinea","drc","congo","burkina faso","gabon","benin","guinea-bissau","rwanda","somalia","liberia","mauritania","comoros","malawi","sudan","algeria","argelia","tunisia","tunez","libya","togo","madagascar","niger","chad","central african republic","namibia","botswana","lesotho","eswatini","djibouti","eritrea","cabo verde","guinea ecuatorial"],__national_asia:["japan national","japan shirt","japan jersey","japan football","japon national","japon shirt","japan 2002","japan 1998","japan 2006","japan 2010","japan 2014","japan 2018","japan 2022","jfa shirt","jfa jersey","nakamura shirt","nakata shirt","kagawa shirt","honda shirt","endo shirt","south korea national","korea national","korea shirt","korea jersey","korea football","south korea shirt","south korea jersey","korean national","republic of korea","korea 2002","korea 2006","korea 2010","korea 2014","korea 2018","korea 2022","park ji sung","son heung","cha bum","hong myung","lee young","china national","china shirt","china jersey","china pr shirt","china pr jersey","china football","iran national","iran shirt","iran jersey","iran football","team melli","saudi arabia national","saudi arabia shirt","saudi arabia jersey","saudi national","saudi football","qatar national","qatar shirt","qatar jersey","qatar football","iraq national","iraq shirt","iraq jersey","uae national","united arab emirates shirt","uae shirt","uae jersey","uzbekistan national","uzbekistan shirt","thailand national","thailand shirt","thailand jersey","vietnam national","vietnam shirt","indonesia national","indonesia shirt","philippines national","india national","india shirt","india jersey","bahrain national","jordan national","oman national","kuwait national","syria national","malaysia national","singapore national","north korea national","dprk national","dprk shirt","palestine national","lebanon national","australia national","australia shirt","australia jersey","socceroos","australia 1974","australia 2006","australia 2010","australia 2014","australia 2018","australia 2022"],__national_oceania:["australia","new zealand","nueva zelanda","fiji","papua new guinea","solomon islands","vanuatu","samoa","tahiti","new caledonia","tonga","cook islands","american samoa","micronesia","marshall islands","palau","kiribati"]},NATIONAL_CONTINENT_MAP={__national_europe:"nt-europe",__national_america:"nt-america",__national_africa:"nt-africa",__national_asia:"nt-asia",__national_oceania:"nt-oceania"};let _ntGuardClubKeys=null;const _NT_GUARD_SKIP=new Set(["america","nacional","united","city","real","athletic","club","sport","sporting","racing","international","colorado","victoria","union","liberty","independence","forward","wanderers","rangers","warriors","dynamo","olympic","orient","cosmos","galaxy","wolves","eagles","lions","tigers","phoenix","thunder","fire","energy","progress","argentina","bolivia","brazil","brasil","canada","chile","colombia","costa rica","cuba","ecuador","el salvador","united states","usa","guatemala","guyana","haiti","honduras","jamaica","mexico","nicaragua","panama","paraguay","peru","puerto rico","dominican republic","republica dominicana","suriname","surinam","trinidad","trinidad tobago","uruguay","venezuela","england","france","germany","spain","italy","portugal","netherlands","belgium","poland","croatia","serbia","turkey","scotland","ireland","japan","south korea","china","australia","new zealand","senegal","nigeria","ghana","cameroon","morocco","egypt"]);function _getGuardClubKeys(){return _ntGuardClubKeys||(_ntGuardClubKeys=Object.keys(CLUB_TO_LEAGUE).filter(a=>a.length>=4&&!_NT_GUARD_SKIP.has(a)).sort((a,e)=>e.length-a.length),_ntGuardClubKeys)}function matchesNationalContinent(a,e){const n=matchesNationalContinent._bl||(matchesNationalContinent._bl=["gremio","palmeiras","corinthians","flamengo","fluminense","cruzeiro","botafogo","vasco","santos","sao paulo","atletico mineiro","internacional","athletico paranaense","fortaleza","coritiba","chapecoense","novorizontino","ituano","guarani","ponte preta","mirassol","tombense","avai","bragantino","goias","cuiaba","ceara","bahia","juventude","criciuma","operario","londrina","vila nova","sport recife","nautico","paysandu","sampaio correa","boca juniors","river plate","san lorenzo","independiente","racing club","estudiantes","velez sarsfield","newells","rosario central","talleres","belgrano","godoy cruz","banfield","lanus","huracan","argentinos juniors","colon","defensa y justicia","club america","guadalajara","chivas","cruz azul","pumas unam","tigres uanl","monterrey","rayados","santos laguna","pachuca","leon","atlas","toluca","colo colo","universidad de chile","universidad catolica","cobreloa","huachipato","penarol","nacional montevideo","defensor sporting","danubio","alianza lima","universitario","sporting cristal","barcelona sc","emelec","liga de quito","olimpia asuncion","cerro porteno","libertad","the strongest","bolivar","wilstermann","atletico nacional","millonarios","deportivo cali","junior barranquilla","chelsea","arsenal","liverpool","manchester","tottenham","everton","bayern","dortmund","schalke","wolfsburg","juventus","inter milan","ac milan","napoli","roma","lazio","fiorentina","paris saint-germain","psg","marseille","lyon","monaco","ajax","feyenoord","psv","benfica","porto","sporting cp","galatasaray","fenerbahce","besiktas","barcelona","real madrid","atletico madrid","sevilla","valencia","villarreal","espanyol","real betis","real sociedad","athletic bilbao"]),r=normalize(a.name||a.club||"");for(const a of n){const e=a.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");if(new RegExp("(?<![a-z])"+e+"(?![a-z])").test(r))return!1}if(NATIONAL_CONTINENT_MAP[a.league]===e)return!0;if(a.league&&a.league.startsWith("__national_")&&NATIONAL_CONTINENT_MAP[a.league]!==e)return!1;if(a.league&&!a.league.startsWith("__national_"))return!1;const t=a.name||a.club||"",o=extractLeagueFromTitle(t);if(o){if(!o.startsWith("__national_"))return!1;if(NATIONAL_CONTINENT_MAP[o]!==e)return!1;const a=normalize(t),n=_getGuardClubKeys();for(const e of n){const n=e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");if(new RegExp("(?<![a-z])"+n+"(?![a-z])").test(a))return!1}return!0}const i="__national_"+e.replace("nt-",""),s=LEAGUE_DB[i]||[],l=normalize(t).split(/\bvs?\.?\s|\bagainst\b|\bcontra\b/i)[0],c=[...s].sort((a,e)=>e.length-a.length);for(const a of c){const e=normalize(a);if(!e)continue;const n=e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");if(new RegExp("(?<![a-z])"+n+"(?![a-z])").test(l))return!0}return!1}const LEAGUE_TEAMS={"La Liga":["barcelona","real madrid","atletico madrid","sevilla","real betis","valencia","villarreal","athletic bilbao","real sociedad","osasuna","getafe","rayo vallecano","celta vigo","espanyol","mallorca","girona","cadiz","almeria","las palmas","alaves","valladolid","granada","elche","levante","leganes","deportivo la coruna","racing santander","sporting gijon","zaragoza","tenerife","mirandes","burgos","huesca","eibar","oviedo","cartagena","malaga","murcia","albacete","xerez","recreativo huelva","numancia","ponferradina","fuenlabrada","alcorcon","lugo","ibiza","castellon","real union","badajoz","cordoba","extremadura","don benito","navalcarnero","union deportiva logrones"],"Segunda División":["racing santander","sporting gijon","zaragoza","tenerife","mirandes","burgos","huesca","eibar","oviedo","cartagena","malaga","murcia","albacete","cadiz","levante","leganes","elche","valladolid","granada","las palmas","castellon","andorra","ibiza","alcorcon","villarreal b","real madrid castilla","lugo","ponferradina","fuenlabrada","numancia","cordoba","badajoz","extremadura","logrones","real union irun","sestao river","barakaldo","amorebieta","gimnastic tarragona","sd huesca","sd eibar","fc cartagena","real oviedo","ud ibiza"],"Premier League":["arsenal","chelsea","liverpool","manchester united","manchester city","tottenham","newcastle united","west ham","aston villa","everton","brighton","brentford","fulham","crystal palace","wolverhampton","nottingham forest","bournemouth","sheffield united","burnley","luton town","leicester city","ipswich town","southampton","leeds united","sunderland","blackburn rovers","bolton","stoke city","swansea city","cardiff city","middlesbrough","west bromwich albion","birmingham city","hull city","derby county","watford","norwich city","queens park rangers","charlton athletic","portsmouth","sheffield wednesday","millwall","barnsley","rotherham united","huddersfield town","oxford united","bristol city","blackpool","reading","coventry city","wigan athletic","nottingham","crystal palace","wolverhampton wanderers","ipswich"],Championship:["leeds united","sheffield united","sunderland","blackburn rovers","queens park rangers","middlesbrough","hull city","derby county","watford","norwich city","coventry city","swansea city","millwall","cardiff city","stoke city","burnley","bristol city","birmingham city","west bromwich albion","ipswich town","huddersfield town","preston north end","luton town","plymouth argyle","oxford united","leicester city","southampton","sheffield wednesday","rotherham united","wigan athletic","barnsley","blackpool","reading","portsmouth","bristol rovers","charlton athletic","mk dons","peterborough united","wycombe wanderers","fleetwood town"],"League One":["bolton wanderers","portsmouth","charlton athletic","peterborough united","oxford united","bristol rovers","wigan athletic","exeter city","barnsley","fleetwood town","shrewsbury town","cambridge united","burton albion","cheltenham town","accrington stanley","lincoln city","derby county","leyton orient","stevenage","northampton town","wycombe wanderers","morecambe","forest green rovers","bristol city"],"League Two":["stockport county","leyton orient","exeter city","northampton town","bradford city","salford city","harrogate town","sutton united","crawley town","colchester united","tranmere rovers","carlisle united","doncaster rovers","grimsby town","swindon town","newport county","rochdale","barrow","AFC wimbledon","mansfield town","crewe alexandra"],"Serie A":["juventus","inter milan","ac milan","napoli","roma","lazio","atalanta","fiorentina","torino","bologna","monza","lecce","sassuolo","udinese","empoli","hellas verona","genoa","sampdoria","cagliari","venezia","frosinone","como","parma","palermo","brescia","bari","pescara","cremonese","spezia","pisa","modena","cosenza","reggina","catania","internazionale","ac milano","spal","chievo","crotone","benevento","ascoli","ternana","cittadella","sudtirol","lecco","feralpisalo"],"Serie B":["palermo","brescia","bari","pescara","cremonese","spezia","pisa","modena","cosenza","reggina","catania","frosinone","venezia","sampdoria","ascoli","cittadella","ternana","como","parma","benevento","lecco","sudtirol","feralpisalo","spal","reggiana","pordenone","chievo","perugia","crotone","entella","juve stabia","foggia","avellino","salernitana","empoli b","lecce b"],Bundesliga:["bayern munich","borussia dortmund","rb leipzig","bayer leverkusen","eintracht frankfurt","wolfsburg","borussia monchengladbach","union berlin","sc freiburg","hoffenheim","mainz 05","augsburg","hertha berlin","schalke","hamburger sv","werder bremen","bochum","vfb stuttgart","hannover","fortuna dusseldorf","kaiserslautern","paderborn","heidenheim","st pauli","darmstadt","greuther furth","nurnberg","karlsruher","fc koln","holstein kiel","borussia mg","eintracht","1. fc koln","1860 munich","fsv mainz","fc augsburg"],"Bundesliga 2":["hamburger sv","schalke","fortuna dusseldorf","kaiserslautern","paderborn","greuther furth","nurnberg","karlsruher","hannover","hertha berlin","ssv ulm","darmstadt","magdeburg","braunschweig","rostock","elversberg","wehen wiesbaden","osnabrück","1860 munich","jahn regensburg","sv sandhausen","vfl bochum","fc ingolstadt","arminia bielefeld","erzgebirge aue","dynamo dresden","holstein kiel","hansa rostock"],"Ligue 1":["paris saint-germain","psg","marseille","lyon","monaco","lille","rennes","nice","lens","montpellier","strasbourg","nantes","reims","brest","lorient","angers","toulouse","clermont","auxerre","troyes","metz","bordeaux","saint-etienne","caen","guingamp","sochaux","le havre","amiens","grenoble","nimes","valenciennes","sedan","ajaccio","laval","bastia","paris fc"],"Ligue 2":["auxerre","troyes","caen","grenoble","nimes","amiens","le mans","sochaux","valenciennes","laval","guingamp","pau fc","paris fc","concarneau","annecy","rodez","metz","bastia","dunkerque","bordeaux","saint-etienne","sedan","niort","quevilly rouen","red star","villefranche","ajaccio","bastia uscl","dijon","martigues","aubagne"],Eredivisie:["ajax","psv eindhoven","feyenoord","az alkmaar","fc utrecht","fc twente","vitesse","willem ii","heerenveen","groningen","nec nijmegen","go ahead eagles","fortuna sittard","excelsior","cambuur","fc volendam","sparta rotterdam","pec zwolle","heracles","rkc waalwijk","almere city","emmen","roda jc","sc heerenveen","sc cambuur","mvv maastricht","fc den bosch","telstar","top oss"],"Primeira Liga":["benfica","porto","sporting cp","braga","vitoria guimaraes","boavista","santa clara","maritimo","pacos ferreira","estoril","arouca","famalicao","gil vicente","moreirense","vizela","portimonense","chaves","casa pia","estrela amadora","rio ave","academica","belenenses","cd nacional"],"Super Lig":["galatasaray","fenerbahce","besiktas","trabzonspor","istanbul basaksehir","sivasspor","konyaspor","antalyaspor","kayserispor","kasimpasa","alanyaspor","gaziantep","hatayspor","adana demirspor","giresunspor","ankaragucu","altay","bursaspor","goztepe","rizespor","samsunspor","eyupspor"],"Scottish Premiership":["celtic","rangers","hearts","hibernian","aberdeen","st mirren","dundee","dundee united","livingston","st johnstone","motherwell","kilmarnock","ross county","partick thistle","inverness","falkirk","ayr united"],"Belgian Pro League":["club brugge","anderlecht","genk","standard liege","aa gent","royal antwerp","beerschot","cercle brugge","charleroi","sint-truiden","mechelen","kortrijk","westerlo","zulte waregem","eupen","oh leuven","union saint-gilloise","rwdm"],Allsvenskan:["malmo","ifk goteborg","djurgarden","hammarby","ifk norrkoping","kalmar","bk hacken","aik","if elfsborg","varberg","ostersunds fk","helsingborg","gif sundsvall","sirius","degerfors","mjallby","halmstad","orebro","brommapojkarna"],Eliteserien:["rosenborg","molde","viking","bodo glimt","lillestrom","valerenga","brann","haugesund","stabak","sarpsborg","stromsgodset","odd","aalesund","ham-kam","sandefjord","tromso","fredrikstad","kristiansund"],"Superliga Denmark":["fc copenhagen","brondby","fc midtjylland","odense","aalborg","agf","randers","nordsjaelland","sonderjyske","silkeborg","vejle","esbjerg","lyngby","viborg","horsens","hvidovre"],Ekstraklasa:["legia warsaw","lech poznan","wisla krakow","slask wroclaw","pogon szczecin","rakow czestochowa","jagiellonia","piast gliwice","gornik zabrze","cracovia","ruch chorzow","korona kielce","zaglebie lubin","lks lodz","widzew lodz","arka gdynia","miedz legnica","gks katowice","zaglebie sosnowiec","stal mielec","warta poznan","radomiak radom","puszcza niepolomice","motor lublin","gornik leczna","termalica bruk-bet","sandecja nowy sacz","stomil olsztyn","odra opole","resovia","gks tychy","chrobry glogow"],"Czech First League":["sparta prague","slavia prague","viktoria plzen","banik ostrava","mlada boleslav","sigma olomouc","bohemians 1905","slovacko","teplice","jablonec","slovan liberec","hradec kralove","dynamo pardubice","zbrojovka brno"],"Slovak Super Liga":["slovan bratislava","spartak trnava","msk zilina","as trencin","zemplin michalovce","ruzomberok","dac dunajska streda","banik banska bystrica","tatran presov","pohronie","senica","fc nitra"],"Austrian Bundesliga":["red bull salzburg","rapid vienna","austria vienna","lask linz","wolfsberger ac","sturm graz","rheindorf altach","sv ried","hartberg","admira","austria klagenfurt","blau-weiss linz"],"Swiss Super League":["fc basel","young boys","grasshopper","fc zurich","servette","fc lugano","fc lucerne","fc sion","fc winterthur","fc aarau","lausanne sport","yverdon","fc st gallen","neuchatel xamax","fc vaduz"],"Primeira Liga":["benfica","porto","sporting cp","braga","vitoria guimaraes","boavista","santa clara","maritimo","pacos ferreira","estoril","arouca","famalicao","gil vicente","moreirense","vizela","portimonense","chaves","casa pia","estrela amadora","rio ave","academica","belenenses","cd nacional","tondela","varzim","leixoes","vitoria setubal","desportivo aves","sporting covilha"],"Liga Portugal 2":["sporting covilha","farense","varzim","leixoes","ac viseu","academico viseu","fc penafiel","fc arouca","cd mafra","trofense","oliveirense","vitoria setubal","desportivo aves","alverca","sporting braga b","porto b","benfica b","sporting b","fc felgueiras","u adrense","penafiel","academica coimbra","ud oliveirense","fc vizela b"],"Super Lig":["galatasaray","fenerbahce","besiktas","trabzonspor","istanbul basaksehir","sivasspor","konyaspor","antalyaspor","kayserispor","kasimpasa","alanyaspor","gaziantep","hatayspor","adana demirspor","giresunspor","ankaragucu","altay","bursaspor","goztepe","rizespor","samsunspor","eyupspor","karagumruk","pendikspor","istanbulspor","umraniyespor","sakaryaspor","boluspor","bandirmaspor","erzurumspor"],"Scottish Premiership":["celtic","rangers","hearts","hibernian","aberdeen","st mirren","dundee","dundee united","livingston","st johnstone","motherwell","kilmarnock","ross county","partick thistle","inverness","falkirk","ayr united","hamilton academical","raith rovers","queen of the south","dumbarton","stirling albion","clyde","alloa athletic","arbroath","caledonian thistle","queen's park"],"Belgian Pro League":["club brugge","anderlecht","genk","standard liege","aa gent","royal antwerp","beerschot","cercle brugge","charleroi","sint-truiden","mechelen","kortrijk","westerlo","zulte waregem","eupen","oh leuven","union saint-gilloise","rwdm","seraing","beerschot va","lierse","lommel sk","dender","beveren"],"Super League Greece":["panathinaikos","olympiacos","olympiakos","paok","aek athens","aris thessaloniki","asteras tripolis","atromitos","panionios","xanthi fc","platanias","panaitolikos","ofi crete","larissa","volos fc","pas lamia","ionikos","levadiakos","pas giannina","panetolikos","ergotelis","iraklis","apollon smyrnis","kalloni"],Allsvenskan:["malmo","ifk goteborg","djurgarden","hammarby","ifk norrkoping","kalmar","bk hacken","aik","if elfsborg","varberg","ostersunds fk","helsingborg","gif sundsvall","sirius","degerfors","mjallby","halmstad","orebro","brommapojkarna","gefle if","gais","trelleborgs","jonkopings sodra","superettan"],Eliteserien:["rosenborg","molde","viking","bodo glimt","lillestrom","valerenga","brann","haugesund","stabak","sarpsborg","stromsgodset","odd","aalesund","ham-kam","sandefjord","tromso","fredrikstad","kristiansund","sandefjord fotball","vif","start","sogndal","jerv","kfum oslo"],"Superliga Denmark":["fc copenhagen","brondby","fc midtjylland","odense","aalborg","agf","randers","nordsjaelland","sonderjyske","silkeborg","vejle","esbjerg","lyngby","viborg","horsens","hvidovre","fremad amager","naestved","ab","b93","b1903","kolding if","hobro","ac horsens"],Ekstraklasa:["legia warsaw","lech poznan","wisla krakow","slask wroclaw","pogon szczecin","rakow czestochowa","jagiellonia","piast gliwice","gornik zabrze","cracovia","ruch chorzow","korona kielce","zaglebie lubin","lks lodz","widzew lodz","arka gdynia","miedz legnica","gks katowice","zaglebie sosnowiec","stal mielec","warta poznan","radomiak radom","puszcza niepolomice","motor lublin","gornik leczna","sandecja","stomil olsztyn","odra opole","resovia","gks tychy","chrobry glogow","zagłębie lubin","zagłębie sosnowiec"],"Czech First League":["sparta prague","slavia prague","viktoria plzen","banik ostrava","mlada boleslav","sigma olomouc","bohemians 1905","slovacko","teplice","jablonec","slovan liberec","hradec kralove","dynamo pardubice","zbrojovka brno","fastav zlin","fc zbrojovka","fc vysocina jihlava","sk sigma","fk jablonec","fc slovacko"],"Slovak Super Liga":["slovan bratislava","spartak trnava","msk zilina","as trencin","zemplin michalovce","ruzomberok","dac dunajska streda","banik banska bystrica","tatran presov","pohronie","senica","fc nitra","inter bratislava","sk sigma olomouc"],"Austrian Bundesliga":["red bull salzburg","rapid vienna","austria vienna","lask linz","wolfsberger ac","sturm graz","rheindorf altach","sv ried","hartberg","admira","austria klagenfurt","blau-weiss linz","fc flyeralarm admira","austria lustenau","fc dornbirn","sc wiener neustadt","kapfenberger sv"],"Swiss Super League":["fc basel","young boys","grasshopper","fc zurich","servette","fc lugano","fc lucerne","fc sion","fc winterthur","fc aarau","lausanne sport","yverdon","fc st gallen","neuchatel xamax","fc vaduz","fc wil","fc schaffhausen","fc thun","fc chiasso"],"Premier League Ukraine":["shakhtar donetsk","dynamo kyiv","metalist kharkiv","fc desna","fc dnipro","vorskla poltava","chornomorets odesa","rukh lviv","fc inhulets","obolon kyiv","kryvbas","metalist 1925","kolos kovalivka","fc mynai","lviv","olimpik donetsk"],"Russian Premier League":["zenit","cska moscow","spartak moscow","lokomotiv moscow","dynamo moscow","krasnodar","akhmat grozny","rubin kazan","fc ufa","fc ural","arsenal tula","fc rostov","fc sochi","khimki","torpedo moscow","fakel voronezh","krylya sovetov","cska","pfc sochi","orenburg","nizhny novgorod"],"Nemzeti Bajnokság":["ferencvaros","mol fehervar","ujpest","paksi fc","budapest honved","debrecen","mtk budapest","zalaegerszeg","diosgyori vtk","gyori eto","kisvarda","puskas akademia","mezokovesd","kecskemet","ferencvarosi tc","fehérvár"],"Fortuna Liga":["slovan bratislava","spartak trnava","msk zilina","as trencin","zemplin michalovce","ruzomberok","dac dunajska streda","tatran presov","pohronie","senica","fc nitra","inter bratislava"],"Brasileirão":["flamengo","palmeiras","santos","sao paulo","corinthians","atletico mineiro","fluminense","vasco da gama","botafogo","gremio","internacional","cruzeiro","athletico paranaense","fortaleza","ceara","bahia","sport recife","goias","cuiaba","america mineiro","red bull bragantino","coritiba","avai","chapecoense","ponte preta","juventude","criciuma","guarani","mirassol","novorizontino","abc","sampaio correa","remo","paysandu","nautivo","clube do remo","tombense","ituano","operario","londrina","vila nova"],"Série B Brasil":["cruzeiro","sport recife","coritiba","chapecoense","avai","criciuma","guarani","ponte preta","sampaio correa","remo","paysandu","ituano","tombense","novorizontino","londrina","operario","brasil de pelotas","confianca","brusque","athletic club","abc","clube do remo","botafogo sp","goias b"],"Liga MX":["club america","chivas guadalajara","cruz azul","pumas unam","tigres uanl","cf monterrey","deportivo toluca","atlas fc","club necaxa","club tijuana","fc queretaro","club puebla","santos laguna","club leon","mazatlan fc","atletico san luis","fc juarez","cf pachuca","deportivo veracruz","atletico morelia","celaya","tampico madero","irapuato","atletico potosino","correos","mineros de zacatecas","unam","deportivo guadalajara"],"Liga Profesional Argentina":["boca juniors","river plate","independiente","racing club","san lorenzo","estudiantes la plata","club lanus","velez sarsfield","huracan","newells old boys","rosario central","belgrano","godoy cruz","atletico tucuman","union santa fe","colon santa fe","central cordoba","talleres cordoba","banfield","defensa y justicia","patronato","barracas central","gimnasia la plata","club tigre","arsenal sarandi","platense","sarmiento","aldosivi","quilmes","all boys","temperley","chacarita juniors","deportivo riestra","san martin san juan","atletico rafaela","brown adrogu","villa dalmine","mitre santiago del estero"],MLS:["atlanta united","la galaxy","los angeles fc","seattle sounders","new england revolution","portland timbers","new york city fc","new york red bulls","toronto fc","chicago fire","columbus crew","dc united","minnesota united","orlando city","philadelphia union","houston dynamo","sporting kansas city","fc dallas","colorado rapids","real salt lake","san jose earthquakes","inter miami","nashville sc","austin fc","charlotte fc","cf montreal","fc cincinnati","vancouver whitecaps","st louis city","san diego fc","new england","nycfc","lafc","nyrb","revolution","timbers","sounders"],"Liga Colombiana":["atletico nacional","junior barranquilla","millonarios","america de cali","deportivo cali","once caldas","atletico bucaramanga","deportes tolima","independiente medellin","independiente santa fe","boyaca chico","deportivo pasto","envigado","aguilas doradas","deportivo pereira","la equidad","union magdalena","jaguares de cordoba","deportivo rionegro","deportes quindio","leones fc"],"Liga Ecuatoriana":["barcelona sc","emelec","ldu quito","el nacional","aucas","deportivo cuenca","tecnico universitario","orense sc","mushuc runa","cd macara","independiente del valle","delfin sc","guayaquil city","cd olmedo","imbabura sc","universidad catolica ecuador","deportivo azogues","clan juvenil","rocafuerte"],"Liga 1 Perú":["alianza lima","universitario de deportes","sporting cristal","universidad cesar vallejo","fnc melgar","atletico grau","sport boys","sport huancayo","cienciano del cusco","asociacion deportiva binacional","deportivo municipal","carlos mannucci","union comercio","alianza atletico sullana","ayacucho fc","academia cantolao","cusco fc","comerciantes unidos"],"Primera División Chile":["colo colo","universidad de chile","universidad catolica","everton de vina","cobresal","audax italiano","cd antofagasta","palestino","deportes iquique","curico unido","deportes copiapo","union la calera","cobreloa","rangers de talca","deportes temuco","cd la serena","deportes nublense","huachipato","deportes melipilla","deportes santa cruz","union san felipe","provincial osorno","deportes recoleta","iberia los angeles"],"Primera División Uruguay":["nacional montevideo","club nacional de football","club atletico penarol","penarol","peñarol","defensor sporting","defensor uruguay","danubio","danubio fc","liverpool fc uruguay","liverpool uruguay","ca fenix","fenix uruguay","plaza colonia","montevideo wanderers","wanderers uruguay","ca river plate uruguay","river plate uruguay","ca racing club uruguay","rampla juniors","rampla","ca progreso uruguay","boston river","boston river fc","ca cerro uruguay","cerro largo","cerro largo fc","juventud de las piedras","atletico torque","barros blancos","deportivo maldonado","villa espanola"],"Primera División Venezuela":["caracas fc","deportivo lara","zamora fc","zulia fc","metropolitanos fc","monagas sc","carabobo fc","trujillanos fc","estudiantes de merida","mineros de guayana","academia puerto cabello","atletico venezuela","deportivo petare","puerto cabello","hermanos colon","lala fc","caracas fc ii"],"J1 League":["urawa red diamonds","urawa reds","gamba osaka","kashima antlers","yokohama f marinos","yokohama marinos","f marinos","kawasaki frontale","vissel kobe","nagoya grampus","grampus eight","sagan tosu","cerezo osaka","sanfrecce hiroshima","avispa fukuoka","shonan bellmare","fc tokyo","tokyo verdy","fc machida zelvia","shimizu s-pulse","kyoto sanga","kyoto sanga fc","kashiwa reysol","fagiano okayama","v-varen nagasaki","mito hollyhock","jef united chiba","consadole sapporo","hokkaido consadole","vanraure hachinohe","vegalta sendai","blaublitz akita","montedio yamagata","iwaki fc","tochigi city","omiya ardija","yokohama fc","ventforet kofu","albirex niigata","kataller toyama","jubilo iwata","fujieda myfc","tokushima vortis","fc imabari","oita trinita","tegevajaro miyazaki","fukushima united","tochigi sc","thespa kusatsu gunma","sc sagamihara","matsumoto yamaga","ac nagano parceiro","zweigen kanazawa","fc gifu","reilac shiga fc","fc osaka","nara club","gainare tottori","renofa yamaguchi","kamatamare sanuki","ehime fc","kochi united sc","giravanz kitakyushu","roasso kumamoto","kagoshima united","fc ryukyu","iwate grulla morioka","yscc yokohama","azul claro numazu","japan national team","samurai blue","nadeshiko japan"],"J2 League":["consadole sapporo","vanraure hachinohe","vegalta sendai","blaublitz akita","montedio yamagata","iwaki fc","tochigi city","omiya ardija","yokohama fc","shonan bellmare","ventforet kofu","albirex niigata","kataller toyama","jubilo iwata","fujieda myfc","tokushima vortis","fc imabari","sagan tosu","oita trinita","tegevajaro miyazaki"],"J3 League":["fukushima united","tochigi sc","thespa kusatsu gunma","sc sagamihara","matsumoto yamaga","ac nagano parceiro","zweigen kanazawa","fc gifu","reilac shiga fc","fc osaka","nara club","gainare tottori","renofa yamaguchi","kamatamare sanuki","ehime fc","kochi united sc","giravanz kitakyushu","roasso kumamoto","kagoshima united","fc ryukyu"],JFL:["iwate grulla morioka","yscc yokohama","azul claro numazu"],"K League 1":["jeonbuk hyundai motors","ulsan hyundai","suwon samsung bluewings","pohang steelers","seongnam fc","jeju united","fc seoul","incheon united","gangwon fc","gwangju fc","daegu fc","daejeon citizen","gimcheon sangmu","suwon fc","jeonnam dragons","bucheon fc","anyang","daejeon hana citizen","chungnam asan"],"Chinese Super League":["guangzhou fc","shanghai shenhua","beijing guoan","jiangsu fc","shandong taishan","shenzhen fc","henan fc","wuhan three towns","chengdu rongcheng","tianjin teda","dalian pro","qingdao hainiu","hebei fc","shanghai port","changchun yatai","meizhou hakka","zhejiang fc","shanghai greenland shenhua","beijing fc","tianjin jinmen tiger"],"Saudi Pro League":["al hilal","al nassr","al ahli","al ittihad","al shabab","al ettifaq","al qadsiah","al taawoun","al fateh","al khaleej","abha club","al hazem","al feiha","al okhdood","al riyadh","al raed","damac fc","al wehda","al batin","al tai"],"A-League":["sydney fc","melbourne city","melbourne victory","western sydney wanderers","brisbane roar","adelaide united","central coast mariners","perth glory","wellington phoenix","western united","macarthur fc","newcastle jets","auckland city","auckland fc"],"Super League Greece":["panathinaikos","olympiacos","olympiakos","paok","aek athens","aris thessaloniki","asteras tripolis","atromitos","panionios","xanthi fc","platanias","panaitolikos","ofi crete","larissa","volos fc","pas lamia","ionikos","levadiakos","pas giannina","panetolikos","ergotelis","iraklis","apollon smyrnis","kalloni"],"Liga Portugal 2":["sporting covilha","farense","varzim","leixoes","ac viseu","academico viseu","fc penafiel","fc arouca","cd mafra","trofense","oliveirense","vitoria setubal","desportivo aves","alverca","porto b","benfica b","sporting b"],"Bundesliga 2":["hamburger sv","schalke","fortuna dusseldorf","kaiserslautern","paderborn","greuther furth","nurnberg","karlsruher","hannover","hertha berlin","ssv ulm","darmstadt","magdeburg","braunschweig","rostock","elversberg","wehen wiesbaden","osnabrück","jahn regensburg","arminia bielefeld","erzgebirge aue","dynamo dresden"],"Serie B":["palermo","brescia","bari","pescara","cremonese","spezia","pisa","modena","cosenza","reggina","catania","frosinone","venezia","sampdoria","ascoli","cittadella","ternana","parma","benevento","lecco","sudtirol","feralpisalo","spal","reggiana","pordenone","chievo","perugia","crotone","salernitana"],"Ligue 2":["auxerre","troyes","caen","grenoble","nimes","amiens","le mans","sochaux","valenciennes","laval","guingamp","pau fc","paris fc","concarneau","annecy","rodez","metz","bastia","dunkerque","bordeaux","saint-etienne","sedan","niort","dijon"],"Segunda División":["racing santander","sporting gijon","zaragoza","tenerife","mirandes","burgos","huesca","eibar","oviedo","cartagena","malaga","murcia","albacete","cadiz","levante","leganes","elche","valladolid","granada","las palmas","castellon","andorra","ibiza","alcorcon","villarreal b","real madrid castilla","lugo","ponferradina","fuenlabrada","numancia","cordoba","badajoz"],Championship:["leeds united","sheffield united","sunderland","blackburn rovers","queens park rangers","middlesbrough","hull city","derby county","watford","norwich city","coventry city","swansea city","millwall","cardiff city","stoke city","burnley","bristol city","birmingham city","west bromwich albion","ipswich town","huddersfield town","preston north end","luton town","plymouth argyle","oxford united","leicester city","southampton","sheffield wednesday","rotherham united","wigan athletic","barnsley","blackpool","reading","portsmouth","bristol rovers","charlton athletic"],"League One":["bolton wanderers","portsmouth","charlton athletic","peterborough united","oxford united","bristol rovers","wigan athletic","exeter city","barnsley","fleetwood town","shrewsbury town","cambridge united","burton albion","cheltenham town","lincoln city","leyton orient","stevenage","northampton town","wycombe wanderers","morecambe","forest green rovers"],"League Two":["stockport county","exeter city","northampton town","bradford city","salford city","harrogate town","sutton united","crawley town","colchester united","tranmere rovers","carlisle united","doncaster rovers","grimsby town","swindon town","newport county","rochdale","barrow","AFC wimbledon","mansfield town","crewe alexandra"],"Süper Lig 2":["eyupspor","samsunspor","kocaelispor","bandirmaspor","pendikspor","erzurumspor","goztepe","boluspor","sakaryaspor","amed sportif","keciörengücü","altinordu","umraniyespor","manisa fk","istanbulspor","karagumruk","altay izmir"],"Liga Nacional Guatemala":["comunicaciones","municipal","deportivo antigua","xelajú mc","coatepeque","malacateco","guastatoya","achuapa","iztapa","antigua gfc"],"Primera División Costa Rica":["ld alajuelense","deportivo saprissa","herediano","cartaginés","pérez zeledón","liberia mia","santa ana","limón"],"A-League Women":["sydney fc women","melbourne city women","perth glory women","brisbane roar women","western sydney wanderers women","melbourne victory women","canberra united","newcastle jets women","wellington phoenix women","western united women"],"New Zealand Football Championship":["auckland city fc","team wellington","western springs","waitakere united","eastern suburbs","hamilton wanderers","southern united","hawkes bay united"],"Oceania Champions League":["auckland city fc","team wellington","ba fc fiji","lautoka fc","rewa fc","hekari united"],Veikkausliiga:["hjk helsinki","kuopion palloseura","kups","ilves tampere","sjk seinajoki","fc inter turku","ac oulu","if gnistan","vaasan palloseura","ifk mariehamn","ff jaro","fc lahti","tps turku","turun palloseura","fc haka","haka valkeakoski"],"HNL Croatia":["dinamo zagreb","hajduk split","hnk rijeka","nk osijek","lokomotiva zagreb","nk istra 1961","nk varazdin","hnk gorica","slaven belupo","vukovar 1991"],"Serbian SuperLiga":["red star belgrade","crvena zvezda","partizan belgrade","partizan beograd","fk partizan","fk vojvodina","fk cukaricki","tsc backa topola","fk radnicki nis","spartak subotica","fk novi pazar","napredak krusevac","ofk belgrade","mladost lucani"],"League of Ireland":["shamrock rovers","bohemians","dundalk fc","derry city","shelbourne","st patricks athletic","sligo rovers","drogheda united","galway united","waterford fc","cork city","bray wanderers","finn harps","athlone town"],"NIFL Premiership":["linfield fc","glentoran fc","crusaders fc","cliftonville fc","coleraine fc","larne fc","glenavon fc","ballymena united","dungannon swifts","portadown fc","carrick rangers fc","newry city"],"National League":["wrexham","notts county","chesterfield","bromley","barnet","oldham athletic","york city","solihull moors","fc halifax town","woking","aldershot town","boreham wood","maidenhead united","eastleigh","southend united","wealdstone","dagenham and redbridge","torquay united","gateshead","rochdale","ebbsfleet united","altrincham","kidderminster harriers","maidstone united","dorking wanderers","hartlepool united"],"National League North":["boston united","brackley town","scarborough athletic","curzon ashton","chester","kings lynn town","kettering town","hereford","afc fylde","buxton","spennymoor town","gloucester city","tamworth","banbury united","darlington","southport","afc telford united","chorley","blyth spartans","farsley celtic"],"National League South":["tonbridge angels","dartford","maidstone united","worthing","hampton and richmond","slough town","st albans city","chippenham town","hemel hempstead town","bath city","dulwich hamlet","havant and waterlooville","chelmsford city","welling united","braintree town","dover athletic","taunton town","truro city","weymouth","oxford city"],"Primera Federación":["fc cartagena","real union","ce europa","sd tarazona","algeciras","hercules","marbella","sabadell","antequera","ibiza","sd amorebieta","cd badajoz","deportivo","atletico sanluqueno","linares deportivo","real avila","cd teruel","juventud torremolinos","cultural leonesa","sd logrones","sd ponferradina","fc andorra","sestao river","cf intercity","yeclano deportivo","cd eldense","villarreal b","cordoba","ce l'hospitalet","orihuela","recreativo huelva","ud melilla","cd alcoyano","rayo majadahonda","real union club"],"Segunda Federación":["rayo vallecano b","getafe b","real madrid castilla","atletico madrid b","barcelona b","real betis b","sevilla atletico","valencia mestalla","villarreal c","athletic bilbao b","real sociedad b","osasuna promesas","celta vigo b","deportivo fabril","racing ferrol","sd compostela","rayo cantabria","laredo","gimnastica torrelavega","cd guijuelo","salamanca cf","zamora cf","ud sanse","cd mirandes b","arandina","cd numancia","ud socuellamos","cd manchego","quintanar del rey","alcala","conquense","cf trival valderas","cd canillas","flat earth fc","marino de luanco","cd praviano","covadonga","ud llanera","cd colunga","lenense","rsd alcala","mostoles","rayo majadahonda b"],"Tercera RFEF":["cd leganes b","rsd alcala b","cd canillas b","cd toledo","cd tarancon","ud almansa","ud villarrubia","cd guadalajara","cd madridejos","cd illescas","barakaldo cf","arenas club","gernika","leioa","amurrio","santutxu","sodupe","basconia","derio","eibar b","real union b","cd izarra","mutilvera","peña sport","itaroa huarte","cirbonero","txantrea","cortes","cd tudelano","san juan","cd santa ana","cd calahorra","ud logrones b","cd alfaro","cd yague","cd arnedo","cd azagra","cd alberite","cd varea","cd navarrete","cd lumbreras"],"3. Liga":["sc verl","msv duisburg","rot-weiss essen","wehen wiesbaden","vfb oldenburg","1860 munich","saarbrucken","ingolstadt","viktoria koln","osnabrück","waldhof mannheim","sv meppen","erzgebirge aue","energie cottbus","vfb lübeck","alemannia aachen","jahn regensburg","hallescher fc","preussen munster","tsv havelse","vfb stuttgart ii","bayern munich ii","borussia dortmund ii","arminia bielefeld","dynamo dresden","fc magdeburg","würzburger kickers","türkgücü münchen","fsv zwickau","sv sandhausen","unterhaching","spvgg unterhaching"],"Regionalliga Nord":["vfl wolfsburg ii","werder bremen ii","hannover 96 ii","vfb oldenburg ii","eintracht braunschweig ii","hsv hamburg ii","st pauli ii","vfl osnabruck ii","kickers emden","lüneburger sk","atlas delmenhorst","vfv hildesheim","teutonia hamburg","heider sv","phönix lübeck","victoria hamburg","altona 93","blau-weiss lohne"],"Regionalliga Nordost":["hertha berlin ii","union berlin ii","energie cottbus ii","bfc dynamo","lok leipzig","chemie leipzig","babelsberg 03","carl zeiss jena","vfc plauen","rot-weiss erfurt","hallescher fc ii","magdeburg ii","fc eilenburg","berliner ak","tennis borussia","germania halberstadt","viktoria berlin","sv lichtenberg"],"Regionalliga West":["fortuna düsseldorf ii","fc koln ii","bayer leverkusen ii","sc paderborn ii","borussia monchengladbach ii","rot-weiss ahlen","sportfreunde lotte","preußen münster ii","rot-weiss oberhausen","wuppertaler sv","fortuna koln","sc wiedenbrück","bonner sc","ssv ulm ii","vfl bochum ii","ssvg velbert","sportfreunde siegen","alemannia aachen ii"],"Regionalliga Südwest":["eintracht frankfurt ii","sv darmstadt ii","mainz 05 ii","wormatia worms","sv elversberg ii","kickers offenbach","stuttgarter kickers","ssv ulm","tsg balingen","fv illertissen","sonnenhof großaspach","fc 08 homburg","fk pirmasens","tus koblenz","schott mainz","sv röchling völklingen","fv engers","spvgg neckarelz"],"Regionalliga Bayern":["bayern munich ii","1860 munich ii","spvgg greuther fürth ii","fc augsburg ii","fc ingolstadt ii","spvgg bayreuth","würzburger kickers ii","fc schweinfurt 05","sv schalding-heining","viktoria aschaffenburg","türkgücü münchen ii","1. fc nürnberg ii","wacker burghausen","fv illertissen","vfb eichstätt","fc memmingen","sv heimstetten","1. fc saarbrücken ii"],"Serie C":["vicenza","padova","feralpisalo","pordenone","triestina","albinoleffe","pro patria","lecco","pro vercelli","novara","giana erminio","pergolettese","virtus verona","lf mantova","trento","arzignano valchiampo","cesena","imolese","entella","lucchese","carrarese","pontedera","viterbese","siena","pistoiese","san donato tavarnelle","montevarchi","recanatese","fidelis andria","cerignola","virtus francavilla","potenza","giugliano","turris","juve stabia","paganese","messina","crotone","catanzaro","vibonese","acr messina","latina","monterosi","picerno","gelbison","fidelis andria","team altamura","casertana","sorrento","brindisi","taranto","monopoli","foggia","audace cerignola"],"Serie D":["piacenza","fiorenzuola","aglianese","progresso","united riccione","san marino calcio","ravenna","imolese","forlì","rimini","real forte querceta","ghiviborgo","massese","seravezza pozzi","viareggio","grosseto","poggibonsi","pianese","flaminia","trastevere","ostiamare","aprilia","insieme formia","cassino","atletico terme fiuggi","cynthialbalonga","w3 maccarese","tivoli","monterotondo","unipomezia","nettuno","ladispoli","civitavecchia"],"National 1":["red star","villefranche","avranches","boulogne","rouen","quevilly rouen","versailles","chambly","cholet","châteauroux","orléans","us créteil","fréjus","marignane","sète","olympique alès","nîmes olympique","hyères","cannes","martigues","stade briochin","us concarneau"],"National 2":["fc versailles","us boulogne","beauvais","entente ssg","fc fleury","stade reims b","fc metz b","fcsm","racing besançon","sr colmar","fc mulhouse","fca","stade lavallois b","fc nantes b","stade rennais b","fc lorient b","guingamp b","brest b","vannes","chartres","tours fc","bourges","so cholet","angers b"],"National 3":["psg b","racing club de france","red star b","us créteil b","villemomble","entente sannois","fc 93","blanc mesnil","drancy jc","fc poissy","evreux","quevilly b","rouen b","oissel","petit-quevilly","grand-quevilly"],"Primeira Liga Portugal 2":["sporting b","benfica b","porto b","braga b","vitoria guimaraes b","fc arouca","estoril","maritimo","nacional","belenenses","academica","academico viseu","leixoes","mafra","penafiel","trofense","oliveirense","cd feirense","fc vizela","alverca","ud vilafranquense","farense","ud leiria"],"Eredivisie 2":["roda jc","vvv venlo","helmond sport","oss","dordrecht","den bosch","telstar","volendam","cambuur","de graafschap","jong ajax","jong az","jong psv","jong fc utrecht","nac breda","excelsior","sc heerenveen b","fc eindhoven","top oss","mvv maastricht"],"Jupiler Pro League 2":["waasland-beveren","beerschot","lierse","lommel","westerlo","rwdm","deinze","patro eisden","thes sport","virton","seraing","union sg b","cercle brugge b"],"Super League Greece 2":["ofi crete","kavala","apollon smyrnis","ionikos","levadiakos","panserraikos","ergotelis","kallithea","proodeftiki","acharnaikos","panachaiki","trikala","ethnikos asteras","doxa dramas","niki volos","pierikos"],"Série B Brasil":["cruzeiro","sport recife","coritiba","chapecoense","avai","criciuma","guarani","ponte preta","sampaio correa","remo","paysandu","ituano","tombense","novorizontino","londrina","operario","brasil de pelotas","confianca","brusque","athletic club","abc","goias","botafogo sp","csa","vitoria","amazonas","ceara b"],"Série C Brasil":["abc","botafogo pb","treze","campinense","nautico","ferroviario","floresta","altos","maranhao","imperatriz","manaus","amazonas","gremio novorizontino","ferroviaria","mirassol b","ypiranga","caxias","figueirense","hercilio luz","marcilio dias","joinville"],"Primera B Argentina":["quilmes","all boys","temperley","chacarita","deportivo riestra","brown adrogue","estudiantes buenos aires","almirante brown","sacachispas","san telmo","atlanta","talleres remedios","club comunicaciones","club sportivo italiano","deportivo español","villa dalmine b","csd flandria","san martin burzaco","midland","defensores belgrano"],"Primera B Chile":["deportes temuco b","provincial osorno b","deportes valdivia","magallanes","san luis quillota","deportes melipilla b","san antonio unido","deportivo colina","barnechea","union san felipe b","rangers talca b","deportes limache"],"Segunda División Perú":["carlos stein","santos","university","pirata fc","unión huaral","atlético grau b","unión comercio b","deportivo coopsol","sport ancash","juan aurich","cienciano b","fbc melgar b"],"K League 2":["anyang","fc ansan","jeonnam dragons","gyeongnam fc","busan ipark","chungnam asan","seoul e-land","bucheon fc 1995","seongnam fc b","gimcheon sangmu b","daejeon citizen b","cheonan city"],"Chinese League One":["kunshan fc","nanjing city","zibo cuju","jiangxi beidamen","shaanxi changan","yanbian longding","chengdu better city","dalian pro b","guangxi pingguo","liaoning","hunan billows","tibet lhasa","sichuan jiuniu","suzhou dongwu","wuhan changjiang"],"Thai League 2":["chiangmai fc","nakhon ratchasima","samut prakan","pt prachuap","khon kaen united","udon thani","trat fc","nongbua pitchaya","lampang fc","ayutthaya united","chainat hornbill","suphanburi"],"V.League 2":["binh duong","can tho","pho hien","dong nai","khanh hoa","quang nam","tphcm 2","brvt","an giang","dong thap","kien giang"],"Indian Super League":["mumbai city fc","atk mohun bagan","bengaluru fc","kerala blasters","chennai fc","fc goa","northeast united","odisha fc","jamshedpur fc","hyderabad fc","east bengal","punjab fc"],"I-League India":["mohammedan sc","churchill brothers","real kashmir","rajasthan united","gokulam kerala","sreenidi deccan","sudeva delhi","aizawl fc","rg punjab fc","inter kashi"],"Liga de Expansión MX":["atlante","tampico madero","cimarrones","tlaxcala","correcaminos","dorados","tepatitlan","cancun fc","tapatío","celaya","mineros","alebrijes","leones negros","venados","la paz","raya2"],"USL Championship":["louisville city","colorado springs","new mexico united","sacramento republic","el paso locomotive","san antonio fc","indy eleven","birmingham legion","memphis 901","tampa bay rowdies","pittsburgh riverhounds","orange county sc","oakland roots","detroit city","las vegas lights","hartford athletic","charleston battery","phoenix rising"],"MLS Next Pro":["new york red bulls ii","la galaxy ii","inter miami ii","atlanta united 2","orlando city b","columbus crew 2","fc cincinnati 2","philadelphia union ii","toronto fc ii","vancouver whitecaps fc 2","portland timbers 2","seattle sounders fc 2","houston dynamo 2","sporting kc ii","st. louis city 2","austin fc ii","charlotte fc 2"],"HNL Croatia":["dinamo zagreb","gnk dinamo zagreb","dinamo croatia","hajduk split","hnk hajduk split","hajduk croatia","hnk rijeka","rijeka croatia","nk osijek","osijek croatia","nk lokomotiva zagreb","lokomotiva zagreb","nk istra 1961","istra 1961","istra pula","nk varazdin","varazdin croatia","hnk gorica","gorica croatia","slaven belupo","slaven belupo koprivnica","slaven koprivnica","hnk vukovar 1991","vukovar 1991","nk sibenik","sibenik croatia","nk inter zapresic","inter zapresic","hnk cibalia","cibalia vinkovci","nk zagreb","zagreb croatia","nk slaven belupo"],"Serbian SuperLiga":["red star belgrade","crvena zvezda","fk crvena zvezda","crvena zvezda belgrade","crvena zvezda beograd","partizan belgrade","fk partizan","partizan serbia","partizan beograd","fc partizan","partizan fc","fk partizan belgrade","fk partizan beograd","partizan adidas","partizan kappa","partizan nike","partizan home","partizan away","fk vojvodina","vojvodina novi sad","fk cukaricki","cukaricki belgrade","fk tsc backa topola","tsc backa topola","fk radnicki nis","radnicki nis","fk spartak subotica","spartak subotica","fk novi pazar","radnicki kragujevac","fk radnicki kragujevac","fk napredak krusevac","napredak krusevac","fk zeleznicar pancevo","zeleznicar pancevo","imt novi beograd","fk mladost lucani","mladost lucani","ofk belgrade","ofk beograd","fk javor ivanjica","javor ivanjica","fk radnik surdulica","radnik surdulica","fk vozdovac","fk macva sabac","fk proleter novi sad","fk metalac gornji milanovac"],"League of Ireland":["shamrock rovers","shamrock rovers fc","bohemians dublin","bohemian fc dublin","bohemians fc","dundalk fc","dundalk ireland","derry city","derry city fc","shelbourne fc","shelbourne dublin","st patricks athletic","st patrick's athletic","sligo rovers","sligo rovers fc","drogheda united","drogheda united fc","galway united fc","galway united ireland","waterford fc ireland","cork city fc","cork city ireland","bray wanderers","bray wanderers fc","ucd afc","university college dublin","longford town","longford town fc","finn harps","finn harps fc","athlone town","athlone town fc","cobh ramblers","cobh ramblers fc","wexford fc","wexford youths","treaty united","treaty united fc","kerry fc ireland"],"League of Ireland First Division":["cobh ramblers fc","bray wanderers fc","treaty united fc","wexford youths","athlone town fc","longford town fc","finn harps fc","kerry fc ireland"],"NIFL Premiership":["linfield fc","linfield belfast","glentoran fc","glentoran belfast","crusaders fc belfast","crusaders belfast","cliftonville fc","cliftonville belfast","coleraine fc","coleraine northern ireland","larne fc","larne northern ireland","glenavon fc","glenavon lurgan","ballymena united","ballymena united fc","dungannon swifts","dungannon swifts fc","portadown fc","portadown northern ireland","carrick rangers fc","carrick rangers northern ireland","newry city afc","newry city fc","warrenpoint town","warrenpoint town fc","institute fc derry","ballinamallard united","ballinamallard fc","ards fc northern ireland","dergview fc","annagh united fc","bangor fc northern ireland","knockbreda fc","lisburn distillery","distillery fc belfast","loughgall fc","dollingstown fc","dundela fc","limavady united","tobermore united","banbridge town fc"]},CLUB_TO_LEAGUE={};for(const[a,e]of Object.entries(LEAGUE_DB))if(!a.startsWith("__national_"))for(const n of e){const e=normalize(n);CLUB_TO_LEAGUE[e]||(CLUB_TO_LEAGUE[e]=a)}const NATIONAL_TEAM_LOOKUP={};for(const[a,e]of Object.entries(LEAGUE_DB))if(a.startsWith("__national_"))for(const n of e){const e=normalize(n);NATIONAL_TEAM_LOOKUP[e]||(NATIONAL_TEAM_LOOKUP[e]=a)}function extractLeagueFromTitle(a){const e=normalize(a||""),n=e.split(/\bvs?\.?\s|\bagainst\b|\bcontra\b/i),r=n[0],t=Object.keys(CLUB_TO_LEAGUE).sort((a,e)=>e.length-a.length),o=Object.keys(NATIONAL_TEAM_LOOKUP).sort((a,e)=>e.length-a.length);function i(a){for(const e of t){const n=e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");if(new RegExp("(?<![a-z])"+n+"(?![a-z])").test(a))return CLUB_TO_LEAGUE[e]}for(const e of o){const n=e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");if(new RegExp("(?<![a-z])"+n+"(?![a-z])").test(a))return NATIONAL_TEAM_LOOKUP[e]}return null}return i(r)||(n.length>1?i(e):null)||""}function extractSeasonFromTitle(a){if(!a)return"";const e=a;let n=e.match(/\b((?:19|20)\d{2})\s*[\/\-]\s*((?:19|20)\d{2})\b/);if(n){const a=parseInt(n[1]),e=parseInt(n[2]);if(e===a+1)return a+"/"+String(e).slice(-2)}if(n=e.match(/\b((?:19|20)\d{2})\s*[\/\-]\s*(\d{2})\b/),n){const a=parseInt(n[1]),e=parseInt(n[2]);let r=100*Math.floor(a/100)+e;if(r<=a&&(r+=100),r===a+1)return a+"/"+n[2].padStart(2,"0")}if(n=e.match(/\b([6-9]\d|0\d|[12]\d)\s*\/\s*([6-9]\d|0\d|[12]\d)\b/),n){const a=parseInt(n[1]);if(parseInt(n[2])===(a+1)%100){return(a>=60?1900:2e3)+a+"/"+n[2].padStart(2,"0")}}return""}function normalize(a){return(a||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/ª/g,"a").replace(/º/g,"o")}const TEAM_ALIASES={japon:["japan"],japan:["japon"],alemania:["germany","deutschland"],germany:["alemania","deutschland"],deutschland:["alemania","germany"],francia:["france"],france:["francia"],"españa":["spain","espana"],espana:["spain","españa"],spain:["españa","espana"],italia:["italy"],italy:["italia"],inglaterra:["england"],england:["inglaterra"],escocia:["scotland"],scotland:["escocia"],gales:["wales"],wales:["gales"],irlanda:["ireland","eire"],ireland:["irlanda"],holanda:["netherlands","holland","paises bajos"],netherlands:["holanda","holland"],holland:["holanda","netherlands"],belgica:["belgium","belgique","belgie"],belgium:["belgica","belgique","belgie"],suiza:["switzerland","schweiz","suisse"],switzerland:["suiza","schweiz","suisse"],suecia:["sweden","sverige"],sweden:["suecia","sverige"],noruega:["norway","norge"],norway:["noruega","norge"],dinamarca:["denmark","danmark"],denmark:["dinamarca","danmark"],finlandia:["finland","suomi"],finland:["finlandia","suomi"],austria:["oesterreich","osterreich"],hungria:["hungary","magyarorszag"],hungary:["hungria","magyarorszag"],"republica checa":["czech republic","czechia","cesko"],"czech republic":["republica checa","czechia","cesko"],czech:["republica checa","czechia"],eslovaquia:["slovakia","slovensko"],slovakia:["eslovaquia","slovensko"],rumania:["romania","rumanía"],romania:["rumania"],grecia:["greece","ellada"],greece:["grecia","ellada"],turquia:["turkey","turkiye"],turkey:["turquia","turkiye"],rusia:["russia","rossiya"],russia:["rusia","rossiya"],ucrania:["ukraine","ukraina"],ukraine:["ucrania","ukraina"],polonia:["poland","polska"],poland:["polonia","polska"],croacia:["croatia","hrvatska"],croatia:["croacia","hrvatska"],serbia:["srbija"],eslovenia:["slovenia","slovenija"],slovenia:["eslovenia","slovenija"],bosnia:["bosnia herzegovina"],albania:["shqiperia"],portugal:["portugal"],marruecos:["morocco","maroc","al maghrib"],morocco:["marruecos","maroc"],argelia:["algeria","algerie","al jazair"],algeria:["argelia","algerie"],tunez:["tunisia","tunisie","tunis"],tunisia:["tunez","tunisie"],egipto:["egypt","misr"],egypt:["egipto","misr"],nigeria:["naija"],sudafrica:["south africa"],"south africa":["sudafrica"],ghana:["ghana"],senegal:["senegal"],camerun:["cameroon","cameroun"],cameroon:["camerun","cameroun"],"costa de marfil":["ivory coast","cote divoire"],"ivory coast":["costa de marfil","cote divoire"],brasil:["brazil"],brazil:["brasil"],argentina:["argentina"],mejico:["mexico","méjico"],mexico:["mejico"],chile:["chile"],colombia:["colombia"],uruguay:["uruguay"],peru:["peru"],ecuador:["ecuador"],paraguay:["paraguay"],venezuela:["venezuela"],canada:["canada"],"estados unidos":["usa","united states"],usa:["estados unidos","united states"],corea:["korea","south korea","corea del sur"],korea:["corea","south korea"],"south korea":["corea","corea del sur","korea"],china:["china"],iran:["iran","persia"],qatar:["qatar"],irak:["iraq"],iraq:["irak"],india:["india","bharat"],tailandia:["thailand"],thailand:["tailandia"],vietnam:["vietnam"],"arabia saudita":["saudi arabia","arabia saudi","saudi"],"saudi arabia":["arabia saudita","arabia saudi"],saudi:["arabia saudita","arabia saudi","saudi arabia"],australia:["socceroos"],"nueva zelanda":["new zealand"],"new zealand":["nueva zelanda"],"costa rica":["costa rica"],"emiratos arabes":["uae","united arab emirates"],uae:["emiratos arabes","united arab emirates"],congo:["dr congo","congo dr","rdc"],"dr congo":["congo","congo dr","rdc"],mali:["mali"],zambia:["zambia"],finlandia:["finland","suomi"],finland:["finlandia","suomi"],hamburgo:["hamburg","hamburger sv","hsv"],hamburg:["hamburgo","hamburger sv","hsv"],"hamburger sv":["hamburgo","hamburg","hsv"],salzburgo:["salzburg","red bull salzburg","rb salzburg"],salzburg:["salzburgo","red bull salzburg","rb salzburg"],munich:["munchen","muenchen","bayern munich","bayern munchen","bayern de munich"],munchen:["munich","muenchen","bayern munich","bayern munchen"],"bayern de munich":["bayern munich","bayern munchen","munich"],marsella:["marseille","olympique marseille","olympique de marseille","om"],marseille:["marsella","olympique marseille","om"],napoles:["napoli","ssc napoli"],napoli:["napoles","ssc napoli"],bolonia:["bologna","bologna fc","fc bologna"],bologna:["bolonia","fc bologna"],milan:["milano","ac milan","inter milan"],milano:["milan","ac milan","inter milan"],roma:["rome","as roma"],florencia:["florence","fiorentina","acf fiorentina"],fiorentina:["florencia","florence","acf fiorentina"],turin:["torino","juventus","juventus turin"],torino:["turin","torino fc"],londres:["london"],london:["londres"],moscu:["moscow","moskva"],moscow:["moscu","moskva"],lisboa:["lisbon","lisboa"],lisbon:["lisboa"],bruselas:["brussels","bruxelles","brussel"],brussels:["bruselas","bruxelles","brussel"],estambul:["istanbul"],istanbul:["estambul"],praga:["prague","praha"],prague:["praga","praha"],varsovia:["warsaw","warszawa"],warsaw:["varsovia","warszawa"],viena:["vienna","wien"],vienna:["viena","wien"],wien:["viena","vienna"],colonia:["cologne","koln","fc koln","1. fc koln"],cologne:["colonia","koln","fc koln"],koln:["colonia","cologne","fc koln"],nuremberg:["nurnberg","nuernberg","1. fc nurnberg"],nurnberg:["nuremberg","nuernberg"],dusseldorf:["duesseldorf","fortuna dusseldorf"],estrasburgo:["strasbourg","rc strasbourg"],strasbourg:["estrasburgo","rc strasbourg"],brujas:["brugge","club brugge"],brugge:["brujas","club brugge"],burdeos:["bordeaux","girondins de bordeaux"],bordeaux:["burdeos"],lyon:["olympique lyonnais","olympique lyon","ol","ol lyon"],"olympique lyonnais":["lyon","olympique lyon","ol","ol lyon"],"olympique lyon":["lyon","olympique lyonnais","ol","ol lyon"],niza:["nice","ogc nice"],nice:["niza","ogc nice"],amberes:["antwerp","royal antwerp"],antwerp:["amberes","royal antwerp"],goteborg:["gothenburg","ifk goteborg"],gothenburg:["goteborg","ifk goteborg"],malmo:["malmoe","malmo ff"],copenhague:["copenhagen","fc copenhagen","kobenhavn"],copenhagen:["copenhague","fc copenhagen","kobenhavn"],atenas:["athens"],athens:["atenas"],belgrado:["belgrade","beograd"],belgrade:["belgrado","beograd"],bucarest:["bucharest","bucuresti"],bucharest:["bucarest","bucuresti"],kiev:["kyiv"],kyiv:["kiev"],moscu:["moscow","moskva"],"paises bajos":["netherlands","holland","holanda"],dortmund:["borussia dortmund","bvb dortmund"],bvb:["borussia dortmund","dortmund"],ajax:["afc ajax","ajax amsterdam"],"manchester united":["man united","man utd"],"man utd":["manchester united"],"man united":["manchester united","man utd"],"psg":["paris saint-germain","paris sg"],"atletico":["atletico madrid","atletico de madrid"],"betis":["real betis"],"celta":["celta vigo","rc celta"],"racing santander":["racing de santander","real racing club","racing club santander"],"racing de santander":["racing santander","real racing club","racing club santander"],"real racing club":["racing santander","racing de santander","racing club santander"],hearts:["heart of midlothian","hearts fc"],"heart of midlothian":["hearts","hearts fc"]};function expandQuery(a){const e=normalize(a),n=(TEAM_ALIASES[e]||[]).map(normalize);return[e,...n.filter(a=>a!==e)]}const _catalogueCache={},_excludedCache={},_fetchingStore={};async function fetchExcludedHandles(a,e){if(_excludedCache[a])return _excludedCache[a];const n=new Set;return await Promise.all(e.map(async function(e){for(let r=1;r<=5;r++)try{const t=a+"/collections/"+e+"/products.json?limit=250&page="+r,o=new Promise((a,e)=>setTimeout(()=>e(new Error("to")),8e3)),i=await Promise.race([fetch(t,{method:"GET",mode:"cors"}),o]);if(!i.ok)break;const s=await i.json();if(!s||!Array.isArray(s.products)||0===s.products.length)break;if(s.products.forEach(a=>n.add(a.handle)),s.products.length<250)break}catch(a){break}})),_excludedCache[a]=n,n}async function fetchStoreCatalogue(a){const e=a.url.replace(/\/$/,"");return _catalogueCache[e]?_catalogueCache[e]:(_fetchingStore[e]||(_fetchingStore[e]=async function(){const n=a.excludeCollections&&a.excludeCollections.length?await fetchExcludedHandles(e,a.excludeCollections):new Set,r=[],t=a.onlyCollection||"";for(let o=1;o<=20;o++)try{const i=t?e+"/collections/"+t+"/products.json?limit=250&page="+o:e+"/products.json?limit=250&page="+o,s=new Promise((a,e)=>setTimeout(()=>e(new Error("timeout")),8000)),l=await Promise.race([fetch(i,{method:"GET",mode:"cors"}),s]);if(!l.ok){1===o&&console.log("[KF FAIL]",a.name,l.status);break}const c=await l.json();if(!c||!Array.isArray(c.products)||0===c.products.length)break;const u=n.size?c.products.filter(a=>!n.has(a.handle)):c.products;if(r.push(...u),c.products.length<250)break}catch(e){1===o&&console.log("[KF ERR]",a.name,e.name,e.message);break}return _catalogueCache[e]=r,r}()),_fetchingStore[e])}const EXACT_MATCH_TERMS=new Set(["admira","angers"]);function matchTerm(a,e){if(e.length<=5||EXACT_MATCH_TERMS.has(e))try{return new RegExp("(?:^|[\\s,\\-\\.\\/\\(\\|])"+e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"(?:$|[\\s,\\-\\.\\/\\)\\|])","i").test(a)}catch(n){return a.includes(e)}return a.includes(e)}function filterCatalogue(a,e,n){const r=[];for(const t of a){const a=normalize(t.title),o=normalize(Array.isArray(t.tags)?t.tags.join(" "):t.tags||""),i=normalize(t.product_type);if(!n.some(e=>e.some(e=>matchTerm(a,e)||matchTerm(o,e)||matchTerm(i,e))))continue;const s=shopifyToCard(t,e);s&&r.push(s)}return r}const _COUNTRY_CLUB_BLACKLIST=["galatasaray","fenerbahce","besiktas","trabzonspor","istanbul basaksehir","sivasspor","konyaspor","antalyaspor","kayserispor","kasimpasa","alanyaspor","gaziantep","hatayspor","adana demirspor","ankaragucu","bursaspor","goztepe","rizespor","samsunspor","eyupspor","karagumruk","bayern","dortmund","schalke","wolfsburg","borussia","bayer leverkusen","eintracht","hertha","hoffenheim","freiburg","mainz","augsburg","koln","bremen","barcelona","real madrid","atletico madrid","sevilla","valencia","villarreal","espanyol","real betis","real sociedad","athletic bilbao","osasuna","getafe","celta","granada","levante","mallorca","elche","cadiz","rayo vallecano","chelsea","arsenal","liverpool","manchester united","manchester city","tottenham","everton","west ham","newcastle","aston villa","leicester","leeds","wolves","crystal palace","southampton","burnley","brighton","brentford","fulham","nottingham forest","watford","norwich","sheffield united","juventus","inter milan","ac milan","napoli","roma","lazio","fiorentina","atalanta","torino","sampdoria","bologna","udinese","sassuolo","hellas verona","verona","paris saint-germain","psg","marseille","lyon","monaco","lille","rennes","nice","strasbourg","montpellier","bordeaux","nantes","reims","lens","ajax","feyenoord","psv","az alkmaar","vitesse","benfica","porto","sporting cp","sporting lisbon","braga","flamengo","fluminense","palmeiras","corinthians","santos","sao paulo","atletico mineiro","internacional","gremio","cruzeiro","botafogo","vasco","boca juniors","river plate","san lorenzo","independiente","racing club","estudiantes","velez sarsfield","newells","rosario central","talleres","celtic","rangers","anderlecht","club brugge","red bull salzburg","zenit","cska moscow","spartak","lokomotiv","dynamo kyiv","shakhtar"];function _isKnownClubTitle(a){return _COUNTRY_CLUB_BLACKLIST.some(function(e){var n=e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");return new RegExp("(?<![a-z])"+n+"(?![a-z])").test(a)})}function filterCatalogueByCountry(a,e,n){const r=[];for(const t of a){const a=normalize(t.title);if(!n.some(e=>e.some(e=>matchTerm(a,e))))continue;if(_isKnownClubTitle(a))continue;const o=shopifyToCard(t,e);o&&r.push(o)}return r}function filterWooCatalogueByCountry(a,e,n){const r=[];for(const t of a){const a=normalize(t.name||t.title||"");if(!n.some(e=>e.some(e=>matchTerm(a,e))))continue;if(_isKnownClubTitle(a))continue;const o=wooToCard(t,e);o&&r.push(o)}return r}async function searchAllStoresForCountry(a,e){if(!a||a.length<2)return;const n=[expandQuery(a)];await Promise.all([...SHOPIFY_STORES.map(async function(a){const r=await fetchStoreCatalogue(a);if(!r||!r.length)return;const t=filterCatalogueByCountry(r,a,n);t.length>0&&e&&e(t)}),...WOO_STORES.map(async function(a){const r=await fetchWooCatalogue(a);if(!r||!r.length)return;const t=filterWooCatalogueByCountry(r,a,n);t.length>0&&e&&e(t)})])}async function searchAllStoresForQuery(a,e){if(!a||a.length<2)return;const n=[expandQuery(a)];await Promise.all([...SHOPIFY_STORES.map(async function(a){const r=await fetchStoreCatalogue(a);if(!r||!r.length)return;const t=filterCatalogue(r,a,n);t.length>0&&e&&e(t)}),...WOO_STORES.map(async function(a){const r=await fetchWooCatalogue(a);if(!r||!r.length)return;const t=filterWooCatalogue(r,a,n);t.length>0&&e&&e(t)})])}async function searchAllStoresForLeague(a,e,n){const r=a.map(a=>expandQuery(a)),t=n?filterCatalogueStrict:filterCatalogue,o=n?filterWooCatalogueStrict:filterWooCatalogue,i=[...SHOPIFY_STORES.map(function(a){return{store:a,type:"shopify"}}),...WOO_STORES.map(function(a){return{store:a,type:"woo"}})];let s=0;await Promise.all(Array.from({length:8},async function(){for(;s<i.length;){const a=i[s++];if("shopify"===a.type){const n=await fetchStoreCatalogue(a.store);if(n&&n.length){const o=t(n,a.store,r);o.length>0&&e&&e(o)}}else{const n=await fetchWooCatalogue(a.store);if(n&&n.length){const t=o(n,a.store,r);t.length>0&&e&&e(t)}}}}))}async function fetchClassicShirtsFile(a){if(!a||a.length<2)return;try{const data=await _loadCSFileData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;var _csImgs=p.images&&p.images.length>0?p.images:p.image?[p.image]:[];if(_csImgs.length===1&&_csImgs[0].match(/-1_[a-z0-9]+\.jpg/i)){var _csBase=_csImgs[0];_csImgs=[_csBase,_csBase.replace(/(-1_)([a-z0-9]+\.jpg)/i,"-2_$2"),_csBase.replace(/(-1_)([a-z0-9]+\.jpg)/i,"-3_$2"),_csBase.replace(/(-1_)([a-z0-9]+\.jpg)/i,"-4_$2")];}shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:p.season||extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"GBP",storeCurrency:"GBP",image:_csImgs[0]||null,images:_csImgs,url:p.url,store:"Classic Shirts",sizes:p.sizes||["One size"],isShopify:false,condition:"Used",main:"#1e2530",accent:"#1e2530",colors:[]});}}catch(e){console.log("[KF CS] err",e.message);}}async function fetchKainkunoShirts(a){if(!a||a.length<2)return;try{const data=await _loadKainkunoData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);for(const p of data.p){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:p.season||extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"IDR",storeCurrency:"IDR",image:p.image||null,images:p.images||[],url:p.url,store:"Kainkuno",sizes:p.sizes||["One size"],isShopify:false,condition:p.condition||"",main:"#1e2530",accent:"#1e2530",colors:[]});}}catch(e){console.log("[KF KAINKUNO] err",e.message);}}async function fetchFFCShirts(a){if(!a||a.length<2)return;try{const data=await _loadFFCData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:p.season||extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"EUR",storeCurrency:"EUR",image:p.image||null,images:p.images||[],url:p.url,store:"Football Futbol Club",sizes:p.sizes||["One size"],isShopify:false,condition:p.condition||"",main:"#1e2530",accent:"#1e2530",colors:[]});}}catch(e){console.log("[KF FFC] err",e.message);}}async function fetch3KotsShirts(a){if(!a||a.length<2)return;try{const data=await _load3KotsData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);const n=[terms];for(const p of data.p){const name=normalize(p.name||"");if(!n.some(b=>b.some(c=>name.includes(c))))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:p.season||extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"EUR",storeCurrency:"EUR",image:p.image||null,images:p.images||[],url:p.url,store:"3Kots",sizes:p.sizes||["One size"],isShopify:false,condition:p.condition||"",main:"#1e2530",accent:"#1e2530",colors:[]});}}catch(e){console.log("[KF 3KOTS] err",e.message);}}async function fetchOH20Shirts(a){if(!a||a.length<2)return;try{const data=await _loadOH20Data();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);const n=[terms];for(const p of data.p){const name=normalize(p.name||"");if(!n.some(b=>b.some(c=>name.includes(c))))continue;const id=p.id||"oh20_"+p.url.split("/").slice(-2,-1)[0];if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:p.season||extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"EUR",storeCurrency:"EUR",image:p.image||null,images:p.images||[],url:p.url,store:"OH20 Football Shirts",sizes:p.sizes||["One size"],isShopify:false,condition:p.condition||""});}}catch(e){console.log("[KF OH20] err",e.message);}}async function fetchEbayShirts(a){ebayResults=[];}var _csFileData=null,_csFileFetching=null;async function _loadCSFileData(){if(_csFileData)return _csFileData;if(_csFileFetching)return _csFileFetching;null;return _csFileFetching;}var _kainkunoData=null,_kainkunoFetching=null;async function _loadKainkunoData(){if(_kainkunoData)return _kainkunoData;if(_kainkunoFetching)return _kainkunoFetching;null;return _kainkunoFetching;}var _cfcData=null,_cfcFetching=null;async function _loadCFCData(){if(_cfcData)return _cfcData;if(_cfcFetching)return _cfcFetching;null;return _cfcFetching;}async function fetchCFCShirts(a){if(!a||a.length<2)return;try{const data=await _loadCFCData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:p.season||extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"EUR",storeCurrency:"EUR",image:p.image||null,images:p.images||[],url:p.url,store:"CF Collectives",sizes:p.sizes||["One size"],isShopify:false,condition:p.condition||"Used",main:"#1e2530",accent:"#1e2530",colors:[]});}}catch(e){console.log("[KF CFC] err",e.message);}}var _ffcData=null,_ffcFetching=null;async function _loadFFCData(){if(_ffcData)return _ffcData;if(_ffcFetching)return _ffcFetching;null;return _ffcFetching;}var _3kotsData=null,_3kotsFetching=null;async function _load3KotsData(){if(_3kotsData)return _3kotsData;if(_3kotsFetching)return _3kotsFetching;null;return _3kotsFetching;}var _elmatadorData=null,_elmatadorFetching=null;async function _loadElMatadorData(){if(_elmatadorData)return _elmatadorData;if(_elmatadorFetching)return _elmatadorFetching;null;return _elmatadorFetching;}async function fetchElMatadorShirts(a){if(!a||a.length<2)return;try{const data=await _loadElMatadorData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){if(p.sold_out)continue;const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"EUR",storeCurrency:"EUR",image:p.image||null,images:p.images||[],url:p.url,store:"El Matador Football",sizes:p.sizes||["One size"],isShopify:false,condition:"New",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF ELMATADOR]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF ELMATADOR] err",e.message);}}var _fffData=null,_fffFetching=null;async function _loadFFFData(){if(_fffData)return _fffData;if(_fffFetching)return _fffFetching;null;return _fffFetching;}async function fetchFFFShirts(a){if(!a||a.length<2)return;try{const data=await _loadFFFData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"GBP",storeCurrency:"GBP",image:p.image||null,images:p.images||[],url:p.url,store:"Fitted For Fans",sizes:p.sizes||["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF FFF]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF FFF] err",e.message);}}var _gystData=null,_gystFetching=null;async function _loadGYSTData(){if(_gystData)return _gystData;if(_gystFetching)return _gystFetching;null;return _gystFetching;}async function fetchGYSTShirts(a){if(!a||a.length<2)return;try{const data=await _loadGYSTData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"GBP",storeCurrency:"GBP",image:p.image||null,images:p.images||[],url:p.url,store:"Get Your Shirt Together",sizes:p.sizes||["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF GYST]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF GYST] err",e.message);}}var _bertiesData=null,_bertiesFetching=null;async function _loadBertiesData(){if(_bertiesData)return _bertiesData;if(_bertiesFetching)return _bertiesFetching;null;return _bertiesFetching;}async function fetchBertiesShirts(a){if(!a||a.length<2)return;try{const data=await _loadBertiesData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"GBP",storeCurrency:"GBP",image:p.image||null,images:p.images||[],url:p.url,store:"Berties Shirts",sizes:p.sizes||["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF BERTIES]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF BERTIES] err",e.message);}}var _viceData=null,_viceFetching=null;async function _loadViceData(){if(_viceData)return _viceData;if(_viceFetching)return _viceFetching;null;return _viceFetching;}async function fetchViceShirts(a){if(!a||a.length<2)return;try{const data=await _loadViceData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"GBP",storeCurrency:"GBP",image:p.image||null,images:p.images||[],url:p.url,store:"Vice Football Store",sizes:p.sizes||["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF VICE]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF VICE] err",e.message);}}var _pitchData=null,_pitchFetching=null;async function _loadPitchData(){if(_pitchData)return _pitchData;if(_pitchFetching)return _pitchFetching;null;return _pitchFetching;}async function fetchPitchShirts(a){if(!a||a.length<2)return;try{const data=await _loadPitchData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id=p.id;if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:"GBP",storeCurrency:"GBP",image:p.image||null,images:p.images||[],url:p.url,store:"Pitch Perfect Football Co",sizes:p.sizes||["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF PITCH]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF PITCH] err",e.message);}}var _rarData=null,_rarFetching=null;async function _loadRARData(){if(_rarData)return _rarData;if(_rarFetching)return _rarFetching;null;return _rarFetching;}async function fetchRARShirts(a){if(!a||a.length<2)return;try{const data=await _loadRARData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p[0]||"");if(!terms.every(t=>name.includes(t)))continue;const id="rar_"+encodeURIComponent(p[8]||p[0]).slice(-40);if(shopifyResults.find(r=>r.id===id))continue;var _rarImg=p[9]||null;var _rarImgs=[];if(_rarImg){_rarImgs=[_rarImg];var _rarBase=_rarImg.replace(/\/v1\/fill\/[^/]+\//,'/v1/fill/w_600,h_800,al_c,q_85/');if(_rarBase!==_rarImg)_rarImgs=[_rarBase];}shopifyResults.push({id,name:p[0],club:p[1]||p[0],league:extractLeagueFromTitle(p[0]),season:p[2]||extractSeasonFromTitle(p[0]),version:p[3]||extractVersionFromTitle(p[0]),brand:p[4]||extractBrandFromTitle(p[0]),price:p[5],currency:"USD",storeCurrency:"USD",image:_rarImg,images:_rarImgs,url:p[8],store:"Rare and Retro Sports",sizes:Array.isArray(p[10])&&p[10].length?p[10]:["One size"],isShopify:false,condition:p[11]||"",main:"#1a1a2e",accent:"#e94560",colors:[]});added++;}console.log("[KF RAR]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF RAR] err",e.message);}}var _oh20Data=null,_oh20Fetching=null;async function _loadOH20Data(){if(_oh20Data)return _oh20Data;if(_oh20Fetching)return _oh20Fetching;null;return _oh20Fetching;}var _cfsData=null,_cfsFetching=null;async function _loadCFSData(){if(_cfsData)return _cfsData;if(_cfsFetching)return _cfsFetching;null;return _cfsFetching;}const _CFS_IMG_BASE="https://www.classicfootballshirts.co.uk/cdn-cgi/image/w=360,h=360,q=100,f=webp/pub/media/catalog/product/";const _CFS_BASE="https://www.classicfootballshirts.co.uk/";const _CFS_AFF="?ref=mjk5njr&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";async function fetchCFSShirts(a){if(cfsResults=[],a&&!(a.length<2))try{const data=await _loadCFSData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);const t={products:[]};for(const p of data.p){const name=(p[1]||"").toLowerCase();if(!terms.every(t=>name.includes(t)))continue;const image=p[7]?_CFS_IMG_BASE+p[7]:null;t.products.push({id:p[0],name:p[1],price:p[5],currency:"GBP",image,images:image?[image]:[],url:_CFS_BASE+p[8]+_CFS_AFF,sizes:p[6]||[],brand:p[2],condition:p[4]});if(t.products.length>=400)break;}(t.products||[]).forEach(function(a){const e=a.name||"";_JUNK_TITLE_RE.test(e)||cfsResults.push({id:a.id,name:e,club:e,league:extractLeagueFromTitle(e),season:extractSeasonFromTitle(e),version:extractVersionFromTitle(e),brand:a.brand||extractBrandFromTitle(e),price:a.price,currency:"GBP",storeCurrency:"GBP",image:a.image||null,images:a.images&&a.images.length>0?a.images:a.image?[a.image]:[],url:a.url,store:"Classic Football Shirts",condition:a.condition||"",source:"cfs",sizes:a.sizes||[],isShopify:!1})}),console.log("[KF CFS]",cfsResults.length,"results for",a);mergeAndRender(a);}catch(a){console.log("[KF CFS ERR]",a.message)}}async function fetchClassicShirts(a){if(csResults=[],a&&!(a.length<2))try{const e="/classicshirts?q="+encodeURIComponent(normalize(a)),n=new Promise((a,e)=>setTimeout(()=>e(new Error("timeout")),1e4)),r=await Promise.race([fetch(e),n]);if(!r.ok)return;const t=await r.json();(t.products||[]).forEach(function(a){const e=a.title||"";_JUNK_TITLE_RE.test(e)||csResults.push({id:a.id,name:e,club:e,league:extractLeagueFromTitle(e),season:extractSeasonFromTitle(e),version:extractVersionFromTitle(e),brand:extractBrandFromTitle(e),price:a.price,currency:a.currency||"GBP",storeCurrency:a.currency||"GBP",image:a.image||null,images:(function(imgs,img){if(imgs&&imgs.length>0){if(imgs.length===1&&imgs[0].match(/-1_[a-z0-9]+\.jpg/i)){var base=imgs[0];var s2=base.replace(/(-1_)([a-z0-9]+\.jpg)/i,"-2_$2");var s3=base.replace(/(-1_)([a-z0-9]+\.jpg)/i,"-3_$2");var s4=base.replace(/(-1_)([a-z0-9]+\.jpg)/i,"-4_$2");imgs=[base,s2,s3,s4];}return imgs;}return img?[img]:[]})(a.images,a.image),url:a.url,store:"Classic Shirts",condition:"Used",source:"classicshirts",sizes:[],isShopify:!1})}),console.log("[KF ClassicShirts]",csResults.length,"results for",a)}catch(a){console.log("[KF ClassicShirts ERR]",a.message)}}
+var _cultkitsData=null,_cuFetching=null;async function _loadCultkitsData(){if(_cultkitsData)return _cultkitsData;if(_cuFetching)return _cuFetching;null;return _cuFetching;}async function fetchCultKitsShirts(a){if(!a||a.length<2)return;try{const data=await _loadCultkitsData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id||"ck-"+p.url;if(shopifyResults.find(r=>r.id===id))continue;const img=p.image||null;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"GBP",storeCurrency:p.currency||"GBP",image:img,images:img?[img]:[],url:p.url,store:"Cult Kits",sizes:p.sizes||[],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF CULTKITS]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF CULTKITS] err",e.message);}}
 
-  function checkHolyGrails(){
-    var cards = document.querySelectorAll('.hg-card');
-    cards.forEach(function(card){
-      var url = card.href;
-      if(!url) return;
-      try {
-        var u = new URL(url);
-        var jsonUrl = u.origin + u.pathname.split('?')[0] + '.js';
-        fetch(jsonUrl)
-          .then(function(r){ return r.json(); })
-          .then(function(data){
-            var available = false;
-            if(data.variants){
-              available = data.variants.some(function(v){ return v.available; });
-            }
-            if(!available){
-              card.remove();
-              console.log('[HG] Eliminado (sold out):', u.pathname);
-            }
-          })
-          .catch(function(){ /* CORS bloqueado o no es Shopify, ignorar */ });
-      } catch(e){}
+var _vfsData=null,_vfsFetching=null;async function _loadVFSData(){if(_vfsData)return _vfsData;if(_vfsFetching)return _vfsFetching;null;return _vfsFetching;}async function fetchVFSShirts(a){if(!a||a.length<2)return;try{const data=await _loadVFSData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id||"vfs-"+p.url;if(shopifyResults.find(r=>r.id===id))continue;const img=p.image||null;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"GBP",storeCurrency:p.currency||"GBP",image:img,images:img?[img]:[],url:p.url,store:"Vintage Football Shirts",sizes:p.sizes||[],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF VFS]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF VFS] err",e.message);}}
+
+var _satData=null,_satFetching=null;async function _loadSaturdaysData(){if(_satData)return _satData;if(_satFetching)return _satFetching;null;return _satFetching;}async function fetchSaturdaysShirts(a){if(!a||a.length<2)return;try{const data=await _loadSaturdaysData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id||"sat-"+p.url;if(shopifyResults.find(r=>r.id===id))continue;const img=p.image||null;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"GBP",storeCurrency:p.currency||"GBP",image:img,images:img?[img]:[],url:p.url,store:"Saturdays Football",sizes:p.sizes||[],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF SAT]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF SAT] err",e.message);}}
+
+var _casData=null,_casFetching=null;async function _loadCasualData(){if(_casData)return _casData;if(_casFetching)return _casFetching;null;return _casFetching;}async function fetchCasualShirts(a){if(!a||a.length<2)return;try{const data=await _loadCasualData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id||"cas-"+p.url;if(shopifyResults.find(r=>r.id===id))continue;const img=p.image||null;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"GBP",storeCurrency:p.currency||"GBP",image:img,images:img?[img]:[],url:p.url,store:"Casual Football Shirts",sizes:p.sizes||[],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF CAS]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF CAS] err",e.message);}}
+
+var _c11Data=null,_c11Fetching=null;async function _loadClassic11Data(){if(_c11Data)return _c11Data;if(_c11Fetching)return _c11Fetching;null;return _c11Fetching;}async function fetchClassic11Shirts(a){if(!a||a.length<2)return;try{const data=await _loadClassic11Data();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id||"c11-"+p.url;if(shopifyResults.find(r=>r.id===id))continue;const img=p.image||null;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"GBP",storeCurrency:p.currency||"GBP",image:img,images:img?[img]:[],url:p.url,store:"Classic 11",sizes:p.sizes||[],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF C11]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF C11] err",e.message);}}
+
+var _vfaData=null,_vfaFetching=null;async function _loadVFAData(){if(_vfaData)return _vfaData;if(_vfaFetching)return _vfaFetching;null;return _vfaFetching;}async function fetchVFAShirts(a){if(!a||a.length<2)return;try{const data=await _loadVFAData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id||"vfa-"+p.url;if(shopifyResults.find(r=>r.id===id))continue;const img=p.image||null;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"EUR",storeCurrency:p.currency||"EUR",image:img,images:img?[img]:[],url:p.url,store:"Vintage Football Area",sizes:p.sizes||[],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF VFA]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF VFA] err",e.message);}}
+
+var _retData=null,_retFetching=null;async function _loadRetroshirtsData(){if(_retData)return _retData;if(_retFetching)return _retFetching;null;return _retFetching;}async function fetchRetroshirtsShirts(a){if(!a||a.length<2)return;try{const data=await _loadRetroshirtsData();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id||"ret-"+p.url;if(shopifyResults.find(r=>r.id===id))continue;const img=p.image||null;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"CHF",storeCurrency:p.currency||"CHF",image:img,images:img?[img]:[],url:p.url,store:"Retroshirts",sizes:p.sizes||[],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF RET]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF RET] err",e.message);}}
+
+var _le7Data=null,_le7Fetching=null;async function _loadLe7Data(){if(_le7Data)return _le7Data;if(_le7Fetching)return _le7Fetching;null;return _le7Fetching;}async function fetchLe7Shirts(a){if(!a||a.length<2)return;try{const data=await _loadLe7Data();if(!data||!data.p)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data.p){const name=normalize(p.name||"");if(!terms.every(t=>name.includes(t)))continue;const id=p.id||"le7-"+p.url;if(shopifyResults.find(r=>r.id===id))continue;const img=p.image||null;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:p.brand||extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"EUR",storeCurrency:p.currency||"EUR",image:img,images:img?[img]:[],url:p.url,store:"Le 7 Sorelle",sizes:p.sizes||[],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF LE7]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF LE7] err",e.message);}}
+
+var _workerCache={};var _workerPending=false;
+function _workerProductToCard(p){
+  var sizes=[];
+  try{sizes=Array.isArray(p.sizes)?p.sizes:(typeof p.sizes==='string'?JSON.parse(p.sizes):[]);}catch(e){}
+  if(!sizes||!sizes.length)sizes=['One size'];
+  return{
+    id:p.id,name:p.name,club:p.name,
+    league:extractLeagueFromTitle(p.name),
+    season:p.season||extractSeasonFromTitle(p.name),
+    version:extractVersionFromTitle(p.name),
+    brand:p.brand||extractBrandFromTitle(p.name),
+    price:p.price,currency:p.currency||'GBP',storeCurrency:p.currency||'GBP',
+    image:p.image||null,images:p.image?[p.image]:[],
+    url:p.url,store:p.store,sizes:sizes,isShopify:false,
+    condition:p.condition||'Used',main:guessColor(p.name),accent:'#1e2530',colors:[]
+  };
+}
+async function fetchWorkerResults(query){
+  if(!query||query.length<2)return;
+  var cacheKey=query.toLowerCase().trim();
+  if(_workerCache[cacheKey]){_workerPending=false;return;}
+  _workerCache[cacheKey]=true;
+  try{
+    var url='https://kitfinder-search.wearekitfinder.workers.dev/search?q='+encodeURIComponent(query)+'&page=1&limit=10000';
+    var r=await fetch(url);
+    if(!r.ok)return;
+    var data=await r.json();
+    if(!data.products||!data.products.length)return;
+    var seen=new Set(shopifyResults.map(function(x){return x.id;}));
+    data.products.forEach(function(p){
+      if(!seen.has(p.id))shopifyResults.push(_workerProductToCard(p));
+    });
+    console.log('[KF WORKER]',data.products.length,'of',data.total,'results for',query);
+  }catch(e){console.log('[KF WORKER] err',e.message);}
+}
+var _lineupData=null,_lineupFetching=null;async function _loadLineupData(){if(_lineupData)return _lineupData;if(_lineupFetching)return _lineupFetching;null;return _lineupFetching;}async function fetchLineupShirts(a){if(!a||a.length<2)return;try{const data=await _loadLineupData();if(!data||!Array.isArray(data))return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id="lineup-"+p.url.split("/").pop();if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"EUR",storeCurrency:p.currency||"EUR",image:p.image||null,images:p.image?[p.image]:[],url:p.url,store:"Lineup Vintage Shop",sizes:["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF LINEUP]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF LINEUP] err",e.message);}}
+
+var _wlfsData=null,_wlfsFetching=null;async function _loadWLFSData(){if(_wlfsData)return _wlfsData;if(_wlfsFetching)return _wlfsFetching;null;return _wlfsFetching;}async function fetchWLFSShirts(a){if(!a||a.length<2)return;try{const data=await _loadWLFSData();if(!data||!Array.isArray(data))return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of data){const name=normalize(p.name||"");if(!terms.some(t=>name.includes(t)))continue;const id="wlfs-"+p.url.split("/").pop();if(shopifyResults.find(r=>r.id===id))continue;shopifyResults.push({id,name:p.name,club:p.name,league:extractLeagueFromTitle(p.name),season:extractSeasonFromTitle(p.name),version:extractVersionFromTitle(p.name),brand:extractBrandFromTitle(p.name),price:p.price,currency:p.currency||"EUR",storeCurrency:p.currency||"EUR",image:p.image||null,images:p.image?[p.image]:[],url:p.url,store:"We Love Football Shirts",sizes:["One size"],isShopify:false,condition:"Used",main:guessColor(p.name),accent:"#1e2530",colors:[]});added++;}console.log("[KF WLFS]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF WLFS] err",e.message);}}
+
+var _ofshopData=null,_ofshopFetching=null;async function _loadOFShopData(){if(_ofshopData)return _ofshopData;if(_ofshopFetching)return _ofshopFetching;_ofshopFetching=(async function(){try{const store=encodeURIComponent("https://originalfootball.shop");const allProducts=[];for(let page=1;page<=20;page++){const resp=await fetch("/shopify?store="+store+"&page="+page);if(!resp.ok)break;const data=await resp.json();if(!data.products||!data.products.length)break;allProducts.push(...data.products);if(!data.hasMore)break;}return _ofshopData=allProducts;}catch(e){console.log("[KF OFSHOP] load err",e.message);return null;}})();return _ofshopFetching;}async function fetchOFShopShirts(a){if(!a||a.length<2)return;try{const products=await _loadOFShopData();if(!products||!products.length)return;const terms=normalize(a).split(/\s+/).filter(t=>t.length>=2);var added=0;for(const p of products){if(!p.variants||!p.variants.some(v=>v.available!==false))continue;const name=normalize(p.title||"");if(!terms.some(t=>name.includes(t)))continue;const id="ofshop-"+p.id;if(shopifyResults.find(r=>r.id===id))continue;const img=p.images&&p.images[0]?p.images[0].src:null;if(!img)continue;const price=parseFloat(p.variants[0].price||0);if(!price||price<=0)continue;shopifyResults.push({id,name:p.title,club:p.title,league:extractLeagueFromTitle(p.title),season:extractSeasonFromTitle(p.title),version:extractVersionFromTitle(p.title),brand:extractBrandFromTitle(p.title),price,currency:"EUR",storeCurrency:"EUR",image:img,images:[img],url:"https://originalfootball.shop/products/"+p.handle,store:"Original Football Shop",sizes:["One size"],isShopify:true,condition:"Used",main:guessColor(p.title),accent:"#1e2530",colors:[]});added++;}console.log("[KF OFSHOP]",added,"results for",a);if(added>0)applyFilters();}catch(e){console.log("[KF OFSHOP] err",e.message);}}
+let shopifyResults=[],ebayResults=[],csResults=[],cfsResults=[],shopifyLoading=!1,lastQuery="";async function searchShopifyStores(a){if(!a||a.length<2)return void(shopifyResults=[]);shopifyLoading=!0,lastQuery=a,shopifyResults=[];const e=new Set;let n=!0;await searchAllStoresForQuery(a,function(r){lastQuery===a&&(r.forEach(a=>{const n=a.id||a.url+"||"+a.name;e.has(n)||(e.add(n),shopifyResults.push(a))}),n&&(n=!1,mergeAndRender(a)))}),mergeAndRender(a),shopifyLoading=!1}function mergeAndRender(a){if(_workerPending)return;applyFilters()}function showShopifyStatus(a){}function showShopifyStatusTimed(a,e){}var KF_CLUB_ALIASES={"hearts":"heart of midlothian"};function _kfAlias(q){if(!q)return q;var k=q.toLowerCase().trim();return KF_CLUB_ALIASES[k]||q;}function triggerSearch(){isFavView=!1,"function"==typeof _hideWcHeader&&_hideWcHeader();let a="flex"===document.getElementById("results").style.display?document.getElementById("resultsSearch").value.trim():document.getElementById("landingSearch").value.trim();a=_kfAlias(a);document.getElementById("resultsSearch").value=a,showLoading(),window.scrollTo(0,0),document.getElementById("landing").style.display="none",document.getElementById("results").style.display="flex";var e=document.getElementById("holyGrails");e&&(e.style.display="none");var n=document.getElementById("footballGiants");n&&(n.style.display="none");var r=document.getElementById("worldCup2026");r&&(r.style.display="none");var t=document.getElementById("landingFooter");t&&(t.style.display="none");if(typeof _kfShowBlogBanner==="function")_kfShowBlogBanner();setTimeout(function(){var _afb=document.getElementById("activeFilterBadges");if(_afb){_afb.innerHTML="";_afb.style.display="none";}if(shopifyResults=[],renderCards([]),a.length>=2){showShopifyStatus("🔍 Searching specialist stores…"),ebayResults=[],csResults=[];if(window.kfTrack)window.kfTrack("search",{search_term:a});var e=Date.now();_workerPending=true;fetchWorkerResults(a).then(function(){
+    try{
+      _leagueSearchActive=!1;
+      var _terms=normalize(a).split(/\s+/).filter(function(t){return t.length>=2;});
+      var _seen=new Set(shopifyResults.map(function(x){return x.id;}));
+      FEED.forEach(function(p){
+        if(_seen.has(p.id))return;
+        var _n=normalize(p.name||'');
+        if(!_terms.some(function(t){return _n.includes(t);}))return;
+        shopifyResults.push(p);
+      });
+      applyFilters();
+      showShopifyStatusTimed("✅ <strong>"+shopifyResults.length+"</strong> shirts found");
+    _workerPending=false;
+    }catch(e){console.log('[KF THEN ERR]',e.message);_workerPending=false;}
+    setTimeout(function(){hideLoading();_firstSearchDone=!0;},3000);
+  })}},80)}let favourites=JSON.parse(localStorage.getItem("kf_favs")||"[]");function saveFavs(){localStorage.setItem("kf_favs",JSON.stringify(favourites))}updateFavBadge();var _imgCache={};function cardImgNav(a,e,n){a.preventDefault(),a.stopPropagation();var r=e.parentElement;if(r){var t;try{t=JSON.parse(r.getAttribute("data-imgs"))}catch(a){return}if(t&&!(t.length<2)){var o=parseInt(r.getAttribute("data-img-idx")||"0");var maxTries=t.length;var tried=0;function tryNext(){o=((o+n)%t.length+t.length)%t.length;tried++;if(tried>maxTries)return;r.setAttribute("data-img-idx",o);var i=r.querySelector(".card-carousel-img");if(i){var testImg=new Image();testImg.onload=function(){i.src=t[o];};testImg.onerror=function(){if(tried<maxTries)tryNext();};testImg.src=t[o];};}tryNext();}}}
+
+// Mostrar flechas al primer toque en móvil
+document.addEventListener('touchstart', function(e){
+  var carousel = e.target.closest('.card-carousel[data-imgs]');
+  if(carousel){
+    // Si ya está touched, no hacer nada (las flechas ya visibles)
+    if(carousel.classList.contains('touched')) return;
+    // Primer toque: mostrar flechas, no navegar (sin bloquear scroll del menu)
+    var inDrawer=e.target.closest('.mob-drawer');
+    if(!inDrawer)e.preventDefault();
+    carousel.classList.add('touched');
+    // Quitar touched de otros carousels
+    document.querySelectorAll('.card-carousel.touched').forEach(function(c){
+      if(c!==carousel) c.classList.remove('touched');
+    });
+  } else {
+    // Toque fuera: ocultar todas las flechas
+    document.querySelectorAll('.card-carousel.touched').forEach(function(c){
+      c.classList.remove('touched');
     });
   }
-  function applyRandomStart(){
-    // Sobreescribir el índice inicial del carrusel con uno aleatorio
-    // después de que hgInit() haya terminado
-    setTimeout(function(){
-      if(typeof _hgTotal !== 'undefined' && _hgTotal > 0){
-        window._hgIdx = Math.floor(Math.random() * _hgTotal);
-        if(typeof hgLayout === 'function') hgLayout();
+}, {passive: false});function toggleFav(a,e,n){a.preventDefault(),a.stopPropagation();const r=shopifyResults.find(a=>a.id===e)||ebayResults.find(a=>a.id===e)||FEED.find(a=>a.id===e);if(!r)return;const t=favourites.findIndex(a=>a.id===e);-1===t?(favourites.push(r),n.classList.add("active")):(favourites.splice(t,1),n.classList.remove("active")),saveFavs(),updateFavBadge(),isFavView&&(shopifyResults=favourites.slice(),applyFilters())}function updateFavBadge(){[document.getElementById("favBadge"),document.getElementById("favBadge2")].forEach(function(a){a&&(favourites.length>0?(a.textContent=favourites.length,a.style.display="flex"):a.style.display="none")})}function renderFavPanel(){const a=document.getElementById("favBody"),e=document.getElementById("favClearBtn");if(a){if(0===favourites.length)return a.innerHTML='<div class="fav-empty">❤️<br><br>No saved shirts yet.<br>Tap the heart on any shirt to save it here.</div>',void(e&&(e.style.display="none"));e&&(e.style.display="block"),a.innerHTML="",favourites.forEach(function(e){const n=document.createElement("div");n.className="fav-item";const r=document.createElement("div");if(r.className="fav-item-shirt",e.image){const a=document.createElement("img");a.src=e.image,a.style.cssText="width:52px;height:52px;object-fit:contain;border-radius:6px;",a.onerror=function(){this.style.display="none"},r.appendChild(a)}else r.innerHTML='<img src="images/placeholder.png" alt="No image" style="width:52px;height:52px;object-fit:contain;">';const t=document.createElement("div");t.className="fav-item-info",t.innerHTML='<div class="fav-item-club">'+escHtml(e.league||e.store||"")+'</div><div class="fav-item-name">'+escHtml(e.name||e.club||"")+'</div><div class="fav-item-price">'+(e.price?fmtPrice(e.price,e.currency):"")+"</div>";const o=document.createElement("button");o.className="fav-item-remove",o.title="Quitar favorito",o.innerHTML="♥",o.addEventListener("click",function(a){a.stopPropagation(),removeFav(e.id)}),n.appendChild(r),n.appendChild(t),n.appendChild(o),n.style.cursor="pointer",n.addEventListener("click",function(a){a.target!==o&&e.url&&window.open(affiliateUrl(e.url),"_blank")}),a.appendChild(n)})}}function removeFav(a){favourites=favourites.filter(function(e){return e.id!==a}),saveFavs(),updateFavBadge(),renderFavPanel(),document.querySelectorAll(".card-fav-btn").forEach(function(e){const n=e.closest("[data-id]");n&&n.dataset.id===a&&e.classList.remove("active")})}let isFavView=!1;function openFavs(){isFavView=!0,"function"==typeof _hideWcHeader&&_hideWcHeader(),window.scrollTo(0,0),document.getElementById("landing").style.display="none",document.getElementById("results").style.display="flex";var a=document.getElementById("holyGrails");a&&(a.style.display="none");var e=document.getElementById("footballGiants");e&&(e.style.display="none");var n=document.getElementById("worldCup2026");n&&(n.style.display="none");var r=document.getElementById("landingFooter");r&&(r.style.display="none"),shopifyResults=favourites.slice();const t=document.getElementById("shopifyStatus");t&&(t.style.display="none");const o=document.getElementById("resultsSearch");o&&(o.value=""),clearFilters(),visibleCount=12,applyFilters();const i=document.getElementById("resultsCount");i&&(i.innerHTML="<strong>"+favourites.length+"</strong> shirt"+(1!==favourites.length?"s":"")+" found");var _fab=document.getElementById('kfFavAlertsBanner');if(_fab)_fab.style.display='block'}function closeFavs(){}function clearFavs(){favourites=[],saveFavs(),updateFavBadge(),isFavView&&openFavs()}function clearFilters(){document.querySelectorAll(".sidebar .fp-section-body.open").forEach(function(a){a.classList.remove("open");const e=a.previousElementSibling;e&&e.classList.remove("open")}),document.querySelectorAll(".sidebar .fp-chip[data-league],.sidebar .fp-chip[data-version],.sidebar .fp-size-btn[data-size]").forEach(a=>a.classList.remove("active")),document.querySelectorAll(".fp-size-btn[data-decade]").forEach(a=>a.classList.remove("active")),selectedBrands.clear();const a=document.getElementById("brandSearch");a&&(a.value=""),renderBrandTags();const e=document.getElementById("sidebarBrandDd");e&&e.classList.remove("open");const n=document.getElementById("priceMinInput"),r=document.getElementById("priceMaxInput");n&&(n.value=""),r&&(r.value=""),resetPriceRange(),visibleCount=12,applyFilters()}function buildCountryDd(){const a=document.getElementById("countryDd");a.innerHTML="";const e=document.createElement("input");e.type="text",e.className="country-search-input",e.placeholder="Search currency…",e.oninput=function(){var q=e.value.toLowerCase();renderCountryOpts(_kfCurrencyList().filter(function(c){return c.currency.toLowerCase().includes(q)||c.label.toLowerCase().includes(q)}))},e.onclick=function(a){a.stopPropagation()},a.appendChild(e),renderCountryOpts(_kfCurrencyList())}var _CURRENCY_NAMES={EUR:"Euro",USD:"US Dollar",GBP:"British Pound",AUD:"Australian Dollar",CAD:"Canadian Dollar",CHF:"Swiss Franc",JPY:"Japanese Yen",CNY:"Chinese Yuan",KRW:"South Korean Won",MXN:"Mexican Peso",BRL:"Brazilian Real",PLN:"Polish Zloty",SEK:"Swedish Krona",NOK:"Norwegian Krone",DKK:"Danish Krone",CZK:"Czech Koruna",HUF:"Hungarian Forint",RON:"Romanian Leu",BGN:"Bulgarian Lev",TRY:"Turkish Lira",INR:"Indian Rupee",IDR:"Indonesian Rupiah",THB:"Thai Baht",ZAR:"South African Rand",NZD:"New Zealand Dollar",SGD:"Singapore Dollar",HKD:"Hong Kong Dollar",RUB:"Russian Ruble",UAH:"Ukrainian Hryvnia",ARS:"Argentine Peso",CLP:"Chilean Peso",COP:"Colombian Peso",PEN:"Peruvian Sol",ALL:"Albanian Lek",DZD:"Algerian Dinar",SAR:"Saudi Riyal",AMD:"Armenian Dram",BOB:"Bolivian Boliviano",BAM:"Bosnian Mark",GTQ:"Guatemalan Quetzal",ISK:"Icelandic Krona",MKD:"Macedonian Denar",MDL:"Moldovan Leu",NIO:"Nicaraguan Cordoba",PYG:"Paraguayan Guarani",RSD:"Serbian Dinar",UYU:"Uruguayan Peso",VES:"Venezuelan Bolivar",AED:"UAE Dirham"};function _kfCurrencyList(){var seen={},list=[];COUNTRIES.forEach(function(c){if(!seen[c.currency]){seen[c.currency]=1;list.push({currency:c.currency,symbol:c.symbol,label:_CURRENCY_NAMES[c.currency]||c.currency,_country:c})}});list.sort(function(a,b){return a.currency.localeCompare(b.currency)});return list}function renderCountryOpts(a){const e=document.getElementById("countryDd");e.querySelectorAll(".country-opt").forEach(a=>a.remove());var items=Array.isArray(a)&&a.length&&a[0].currency&&!a[0].name?a:_kfCurrencyList();items.forEach(function(item){const n=document.createElement("div");var isActive=item.currency===currentCountry.currency;n.className="country-opt"+(isActive?" active":"");n.innerHTML='<span class="country-opt-name">'+item.currency+' - '+item.label+'</span><span class="country-opt-sym">'+item.symbol+'</span>';n.addEventListener("mousedown",function(ev){ev.preventDefault();currentCountry=item._country;localStorage.setItem("kf_country",JSON.stringify(item._country));var f=document.getElementById("countryFlag");if(f)f.textContent=item.currency;var f2=document.getElementById("countryFlag2");if(f2)f2.textContent=item.currency;e.classList.remove("open");applyFilters();if(typeof updateHGPrices==="function")updateHGPrices()});e.appendChild(n)})}function toggleCountry(){const a=document.getElementById("countryDd");a.classList.contains("open")?a.classList.remove("open"):(buildCountryDd(),a.classList.add("open"),setTimeout(function(){const e=a.querySelector(".country-search-input");e&&e.focus()},50))}if(document.addEventListener("click",function(a){const e=document.getElementById("countryBtn"),n=document.getElementById("countryDd");e&&n&&!e.contains(a.target)&&!n.contains(a.target)&&n.classList.remove("open")}),currentCountry){const a=document.getElementById("countryFlag");a&&(a.textContent=currentCountry.currency||currentCountry.flag);const e=document.getElementById("countryFlag2");e&&(e.textContent=currentCountry.currency||currentCountry.flag)}buildDecades(),buildSidebarBrandChips(),function(){var a=500,e=document.getElementById("rangeMin"),n=document.getElementById("rangeMax");e&&(e.max=a),n&&(n.max=a,n.value=a);var r=document.getElementById("priceMax");r&&(r.textContent="€"+a)}();var _hgIdx=0,_hgCards=[],_hgTotal=0;function hgInit(){if(_hgCards=Array.from(document.querySelectorAll("#hgStage .hg-card")),0!==(_hgTotal=_hgCards.length)){var a=_hgCards.findIndex(function(a){return"10"===a.getAttribute("data-hg")});_hgIdx=a>=0?a:Math.floor(_hgTotal/2),hgLayout()}}function hgWrap(a){return(a%_hgTotal+_hgTotal)%_hgTotal}function hgLayout(){var a=document.getElementById("hgStage");if(a&&0!==_hgTotal){var e=a.offsetWidth;if(0!==e){var n=window.innerWidth<=600,r=n?230:340,t=n?180:270,o=e/2,i=o-.75*t/2,s=[-2,-1,0,1,2],l=s.map(function(a){return hgWrap(_hgIdx+a)});_hgCards.forEach(function(a,e){var n=l.indexOf(e);if(-1===n)return a.style.opacity="0",a.style.pointerEvents="none",a.style.zIndex="0",a.style.transform="translateX(-50%) scale(0.5)",a.style.left=o+"px",void(a.style.width=t+"px");var c=s[n],u=Math.abs(c);if(a.classList.remove("hg-center"),0===c)a.classList.add("hg-center"),a.style.width=r+"px",a.style.left=o+"px",a.style.transform="translateX(-50%) scale(1)",a.style.opacity="1",a.style.zIndex="10",a.style.pointerEvents="auto";else{var d,m=1===u?.88:.75,g=1===u?.8:.5,h=c>0?1:-1;d=1===u?o+h*(.55*i):o+h*i,a.style.width=t+"px",a.style.left=d+"px",a.style.transform="translateX(-50%) scale("+m+")",a.style.opacity=g.toString(),a.style.zIndex=(5-u).toString(),a.style.pointerEvents="none"}})}else setTimeout(hgLayout,50)}}function hgNav(a){0!==_hgTotal?(_hgIdx=hgWrap(_hgIdx+a),hgLayout()):hgInit()}function updateHGPrices(){document.querySelectorAll("#hgStage .hg-card[data-hg-price]").forEach(function(a){var e=parseFloat(a.getAttribute("data-hg-price")),n=a.getAttribute("data-hg-currency")||"EUR",r=a.querySelector(".hg-card-price");r&&!isNaN(e)&&(r.textContent=fmtPrice(e,n))})}!function(){var a;window.addEventListener("resize",function(){clearTimeout(a),a=setTimeout(hgLayout,150)})}(),function(){var a=document.getElementById("hgStage");if(a){var e=null;a.addEventListener("touchstart",function(a){e=a.touches[0].pageX},{passive:!0}),a.addEventListener("touchend",function(a){if(null!==e){var n=a.changedTouches[0].pageX-e;Math.abs(n)>40&&hgNav(n<0?1:-1),e=null}},{passive:!0})}}(),function(){function a(){var e=document.getElementById("hgStage");if(e){var n=e.querySelectorAll(".hg-card");if(0!==n.length){_hgCards=Array.from(n),_hgTotal=_hgCards.length;var r=_hgCards.findIndex(function(a){return"10"===a.getAttribute("data-hg")});_hgIdx=r>=0?r:Math.floor(_hgTotal/2),e.offsetWidth>0?hgLayout():setTimeout(a,100)}}}a(),updateHGPrices(),window.addEventListener("load",function(){if(!_hgTotal)a(),updateHGPrices()})}();var _WC_TEAMS=["Argentina","Brazil","Colombia","Ecuador","Paraguay","Uruguay","Germany","Austria","Belgium","Bosnia","Croatia","Scotland","Spain","France","England","Norway","Netherlands","Portugal","Czech Republic","Sweden","Switzerland","Turkey","Saudi Arabia","Australia","Qatar","South Korea","Iraq","Iran","Japan","Jordan","Uzbekistan","Algeria","Cape Verde","Ivory Coast","Egypt","Ghana","Morocco","DR Congo","Senegal","South Africa","Tunisia","Canada","USA","Mexico","Curacao","Haiti","Panama","New Zealand"],_WC_TITLE_KEYWORDS=["argentina","brazil","brasil","colombia","ecuador","paraguay","uruguay","germany","deutschland","austria","belgium","bosnia","croatia","scotland","spain","españa","france","england","norway","netherlands","holland","portugal","czech republic","czech","sweden","switzerland","turkey","saudi arabia","saudi","australia","qatar","south korea","korea","iraq","iran","japan","jordan","uzbekistan","algeria","cape verde","cabo verde","ivory coast","cote d'ivoire","côte d'ivoire","egypt","ghana","morocco","maroc","dr congo","congo","senegal","south africa","tunisia","tunisie","canada","usa","united states","mexico","méxico","curacao","curaçao","haiti","panama","new zealand"];function _wcTitleMatch(a){if(!a)return!1;for(var e=a.toLowerCase(),n=0;n<_WC_TITLE_KEYWORDS.length;n++)if(-1!==e.indexOf(_WC_TITLE_KEYWORDS[n]))return!0;return!1}function searchWorldCup(){isFavView=!1,_isWorldCupView=!0,showLoading(),document.getElementById("landing").style.display="none",document.getElementById("results").style.display="flex";var a=document.getElementById("holyGrails");a&&(a.style.display="none");var e=document.getElementById("footballGiants");e&&(e.style.display="none");var n=document.getElementById("worldCup2026");n&&(n.style.display="none");var r=document.getElementById("landingFooter");r&&(r.style.display="none"),document.getElementById("resultsSearch").value="",document.getElementById("landingSearch").value="",window.scrollTo(0,0),_showWcHeader(),setTimeout(function(){var a=Date.now();shopifyResults=[],renderCards([]),_leagueSearchActive=!1;var e=new Set;SHOPIFY_STORES.forEach(function(a){var n=a.url.replace(/\/$/,""),r=_catalogueCache[n];if(r&&r.length)for(var t=0;t<r.length;t++){var o=r[t];if(o.title&&_wcTitleMatch(o.title)&&((!o.variants||o.variants.some(function(a){return a.available}))&&!_JUNK_TITLE_RE.test(o.title))){var i=o.variants&&o.variants[0],s=parseFloat(i&&i.price||"0"),l=a.priceDivide100?s/100:s;if(l&&!(l<=0)){var c=o.images&&o.images[0]&&o.images[0].src,u="shop_"+a.name.replace(/\s/g,"_")+"_"+o.id;if(!e.has(u)){e.add(u);var d=[],m=/^(x+s|xs|s|m|l|xl|x+l|xxl|xxxl|2xl|3xl|one.?size|kids|youth|junior|\d{2,3})$/i;if(o.variants){var g={};o.variants.forEach(function(a){if(a.available){var e=(a.option1||"").trim();if(e&&"Default Title"!==e&&m.test(e)){var n=e.toUpperCase();g[n]||(g[n]=1,d.push(n))}}})}if(0===d.length){var h=extractSizeFromText(o.title,"");h&&(d=[h])}shopifyResults.push({id:u,name:o.title,club:o.title,price:l,currency:a.currency||"EUR",image:c||null,images:(o.images||[]).map(function(i){return i.src;}).filter(Boolean),url:a.url+"/products/"+o.handle,store:a.name,storeUrl:a.url,sizes:d.length?d:["One size"],isShopify:!0,league:"",season:extractSeasonFromTitle(o.title),version:"",brand:extractBrandFromTitle(o.title),tags:"",description:""})}}}}}),WOO_STORES.forEach(function(a){var n=a.url.replace(/\/$/,""),r=_wooCatalogueCache[n];if(r&&r.length)for(var t=0;t<r.length;t++){var o=r[t],i=o.name||o.title||"";if(_wcTitleMatch(i)){var s=o.images&&o.images[0]&&(o.images[0].src||o.images[0].thumbnail)||null,l=parseFloat(o.prices&&o.prices.price?parseInt(o.prices.price)/100:o.price)||0;if(l&&!(l<=0)){var c="woo_"+a.name.replace(/\s/g,"_")+"_"+o.id;if(!e.has(c)){e.add(c);var u=extractSizeFromText(i,""),d=u?[u]:["One size"];shopifyResults.push({id:c,name:i,club:i,price:l,currency:a.currency||"EUR",image:s,images:(o.images||[]).map(function(im){return im.src||im.thumbnail;}).filter(Boolean),url:o.permalink||o.slug||a.url+"/product/"+o.slug,store:a.name,storeUrl:a.url,sizes:d,isShopify:!1,league:"",season:extractSeasonFromTitle(i),version:"",brand:extractBrandFromTitle(i),tags:"",description:""})}}}}}),shopifyResults.length>0&&applyFilters();Promise.all(["argentina national shirt","brazil national shirt","germany national shirt","france national shirt","england national shirt","spain national shirt","netherlands national shirt","portugal national shirt","mexico national shirt","japan national shirt","usa national shirt","colombia national shirt","morocco national shirt","croatia national shirt"].map(function(a){return fetchEbayShirts(a).catch(function(){})})).then(function(){ebayResults.forEach(function(a){_wcTitleMatch(a.name)&&(e.has(a.id)||(e.add(a.id),shopifyResults.push(a)))}),Promise.all([
+  fetchWorkerResults("argentina"),fetchWorkerResults("brazil"),
+  fetchWorkerResults("france"),fetchWorkerResults("germany"),
+  fetchWorkerResults("spain"),fetchWorkerResults("england"),
+  fetchWorkerResults("portugal"),fetchWorkerResults("netherlands"),
+  fetchWorkerResults("colombia"),fetchWorkerResults("uruguay"),
+  fetchWorkerResults("mexico"),fetchWorkerResults("usa"),
+  fetchWorkerResults("senegal"),fetchWorkerResults("morocco"),
+  fetchWorkerResults("japan"),fetchWorkerResults("south korea"),
+  fetchWorkerResults("croatia"),fetchWorkerResults("switzerland"),
+  fetchWorkerResults("sweden"),fetchWorkerResults("turkey"),
+  fetchWorkerResults("norway"),fetchWorkerResults("austria"),
+  fetchWorkerResults("algeria"),fetchWorkerResults("ghana"),
+  fetchWorkerResults("ecuador"),fetchWorkerResults("paraguay"),
+  fetchWorkerResults("canada"),fetchWorkerResults("australia")
+]).then(function(){
+  var _seen2=new Set();
+  shopifyResults=shopifyResults.filter(function(p){
+    if(_seen2.has(p.id))return false;
+    _seen2.add(p.id);
+    return true;
+  });
+  applyFilters();
+});applyFilters(),showShopifyStatusTimed("✅ <strong>"+shopifyResults.length+"</strong> shirts found"),window.scrollTo(0,0);var n=Date.now()-a,r=Math.max(0,2e3-n);setTimeout(function(){hideLoading(),_firstSearchDone=!0},r)})},50)}var _isWorldCupView=!1;function _showWcHeader(){var a=document.getElementById("wcResultsHeader"),e=document.getElementById("normalSearchBar"),n=document.getElementById("sidebarBrandSection");a&&(a.style.display="block"),e&&(e.style.display="none"),n&&(n.style.display="none")}function _hideWcHeader(){var a=document.getElementById("wcResultsHeader"),e=document.getElementById("normalSearchBar"),n=document.getElementById("sidebarBrandSection");a&&(a.style.display="none"),e&&(e.style.display=""),n&&(n.style.display=""),_isWorldCupView=!1}setTimeout(function(){const a=document.querySelectorAll("#hgStage .hg-card");a.forEach(function(a){const e=a.getAttribute("href");e&&Promise.race([fetch(e,{method:"HEAD",mode:"no-cors"}),new Promise((_,r)=>setTimeout(()=>r(new Error("timeout")),1000))]).then(function(a){}).catch(function(n){console.warn("[KF] Holy Grail link broken:",e,n.message);a.style.display="none";if(typeof hgInit==="function")setTimeout(hgInit,50);})}),console.log("[KF] Holy Grails link check: verified",a.length,"links")},5e3);// ─── URL ROUTER v2 ────────────────────────────────────────────────────────────
+function _slugify(s){return s.toLowerCase().replace(/[áà]/g,'a').replace(/[éè]/g,'e').replace(/[íì]/g,'i').replace(/[óò]/g,'o').replace(/[úù]/g,'u').replace(/ñ/g,'n').replace(/ã/g,'a').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function _setUrl(path,title){try{if(!path||path==='/'||path.startsWith('/?'))return;window.history.pushState({path:path},title||'Kit Finder',path);document.title=title||'Kit Finder — Find Vintage & Retro Football Shirts';}catch(e){}}
+
+// Wrappers para actualizar URL en cada acción
+var _origTriggerSearch=triggerSearch;
+triggerSearch=function(){
+  _origTriggerSearch.apply(this,arguments);
+  setTimeout(function(){var q=document.getElementById('resultsSearch').value.trim();
+    _setUrl(q?'/results?q='+encodeURIComponent(q):'/results',q?q+' Football Shirts — Kit Finder':'Results — Kit Finder');
+  },60);
+};
+var _origOpenFavs=openFavs;
+openFavs=function(){_origOpenFavs.apply(this,arguments);_setUrl('/favourites','Favourites — Kit Finder');};
+function goHome(a){a.preventDefault(),isFavView=!1,"function"==typeof _hideWcHeader&&_hideWcHeader(),document.getElementById("landing").style.display="flex",document.getElementById("results").style.display="none";var e=document.getElementById("holyGrails");e&&(e.style.display="block");var n=document.getElementById("footballGiants");n&&(n.style.display="block");var r=document.getElementById("worldCup2026");r&&(r.style.display="block");var t=document.getElementById("landingFooter");t&&(t.style.display="block"),setTimeout(function(){hgInit(),updateHGPrices()},50),document.getElementById("landingSearch").value="",document.getElementById("resultsSearch").value="",shopifyResults=[],ebayResults=[],csResults=[],cfsResults=[],resetPriceRange(),currentData=[],_leagueSearchActive=!1;const o=document.getElementById("cardsGrid");o&&(o.innerHTML="");const i=document.getElementById("shopifyStatus");i&&(i.style.display="none",i.innerHTML="");const s=document.getElementById("activeFilterBadges");s&&(s.style.display="none",s.innerHTML=""),clearFP(),document.querySelectorAll("#fpPanel .fp-section-header.open, #fpPanel .fp-sub-header.open").forEach(function(a){a.classList.remove("open"),a.nextElementSibling&&a.nextElementSibling.classList.remove("open")}),clearFilters();var _fab=document.getElementById("kfFavAlertsBanner");if(_fab)_fab.style.display="none";window.scrollTo(0,0)}function toggleMobileNav(){var d=document.getElementById("mobDrawer"),o=document.getElementById("mobOverlay");d&&d.classList.toggle("open"),o&&o.classList.toggle("open");var isOpen=d&&d.classList.contains("open");if(isOpen){var sy=window.scrollY||window.pageYOffset||0;document.body.dataset.kfScrollY=String(sy);document.documentElement.style.setProperty('--kf-scroll-top',(-sy)+'px');document.body.classList.add("kf-drawer-open");document.documentElement.classList.add("kf-drawer-open");}else{document.body.classList.remove("kf-drawer-open");document.documentElement.classList.remove("kf-drawer-open");var sy2=parseInt(document.body.dataset.kfScrollY||"0",10);document.documentElement.style.removeProperty('--kf-scroll-top');if(sy2)window.scrollTo(0,sy2);delete document.body.dataset.kfScrollY;}if(!isOpen){setTimeout(function(){var inner=document.getElementById("mobDrawerInner");if(inner){inner.classList.remove("show-continents","show-items")}},300)}}
+
+// --- NEW SLIDE MENU SYSTEM ---
+var _mobMenuMode='';
+var _mobLeagueData={
+  'league': {
+    title:'Shop by League',
+    continents:[
+      {name:'Europe', items:[
+        {label:'Austrian clubs',fn:"navPickLeague('Austrian Bundesliga',event)"},{label:'Belgian clubs',fn:"navPickLeague('Belgian Pro League',event)"},{label:'Croatian clubs',fn:"navPickLeague('HNL Croatia',event)"},{label:'Czech clubs',fn:"navPickLeague('Czech First League',event)"},{label:'Danish clubs',fn:"navPickLeague('Superliga Denmark',event)"},{label:'Dutch clubs',fn:"navPickLeague('Eredivisie',event)"},{label:'English clubs',fn:"navPickLeague('Premier League',event)"},{label:'Finnish clubs',fn:"navPickLeague('Veikkausliiga',event)"},{label:'French clubs',fn:"navPickLeague('Ligue 1',event)"},{label:'German clubs',fn:"navPickLeague('Bundesliga',event)"},{label:'Greek clubs',fn:"navPickLeague('Super League Greece',event)"},{label:'Hungarian clubs',fn:"navPickLeague('Nemzeti Bajnokság',event)"},{label:'Irish clubs',fn:"navPickLeague('League of Ireland',event)"},{label:'Italian clubs',fn:"navPickLeague('Serie A',event)"},{label:'N. Irish clubs',fn:"navPickLeague('NIFL Premiership',event)"},{label:'Norwegian clubs',fn:"navPickLeague('Eliteserien',event)"},{label:'Polish clubs',fn:"navPickLeague('Ekstraklasa',event)"},{label:'Portuguese clubs',fn:"navPickLeague('Primeira Liga',event)"},{label:'Russian clubs',fn:"navPickLeague('Russian Premier League',event)"},{label:'Scottish clubs',fn:"navPickLeague('Scottish Premiership',event)"},{label:'Serbian clubs',fn:"navPickLeague('Serbian SuperLiga',event)"},{label:'Spanish clubs',fn:"navPickLeague('La Liga',event)"},{label:'Swedish clubs',fn:"navPickLeague('Allsvenskan',event)"},{label:'Swiss clubs',fn:"navPickLeague('Swiss Super League',event)"},{label:'Turkish clubs',fn:"navPickLeague('Super Lig',event)"},{label:'Ukrainian clubs',fn:"navPickLeague('Premier League Ukraine',event)"}
+      ]},
+      {name:'America', items:[
+        {label:'Argentine clubs',fn:"navPickLeague('Liga Profesional Argentina',event)"},{label:'Brazilian clubs',fn:"navPickLeague('Brasileirão',event)"},{label:'Chilean clubs',fn:"navPickLeague('Primera División Chile',event)"},{label:'Colombian clubs',fn:"navPickLeague('Liga Colombiana',event)"},{label:'Ecuadorian clubs',fn:"navPickLeague('Liga Ecuatoriana',event)"},{label:'Mexican clubs',fn:"navPickLeague('Liga MX',event)"},{label:'Peruvian clubs',fn:"navPickLeague('Liga 1 Perú',event)"},{label:'US & Canadian clubs',fn:"navPickLeague('MLS',event)"},{label:'Uruguayan clubs',fn:"navPickLeague('Primera División Uruguay',event)"},{label:'Venezuelan clubs',fn:"navPickLeague('Primera División Venezuela',event)"}
+      ]},
+      {name:'Asia & Oceania', items:[
+        {label:'Australian clubs',fn:"navPickLeague('A-League',event)"},{label:'Chinese clubs',fn:"navPickLeague('Chinese Super League',event)"},{label:'Japanese clubs',fn:"navPickLeague('J1 League',event)"},{label:'Korean clubs',fn:"navPickLeague('K League 1',event)"},{label:'Saudi clubs',fn:"navPickLeague('Saudi Pro League',event)"}
+      ]},
+      {name:'Africa', items:[
+        {label:'Algerian clubs',fn:"navPickCountry('Algeria',event)"},{label:'Egyptian clubs',fn:"navPickCountry('Egypt',event)"},{label:'Moroccan clubs',fn:"navPickCountry('Morocco',event)"},{label:'South African clubs',fn:"navPickCountry('South Africa',event)"},{label:'Tunisian clubs',fn:"navPickCountry('Tunisia',event)"}
+      ]}
+    ]
+  },
+  'country': {
+    title:'Shop by Country',
+    continents:[
+      {name:'Europe', items:[
+        {label:'Austria',fn:"navPickCountry('Austria',event)"},{label:'Belgium',fn:"navPickCountry('Belgium',event)"},{label:'Croatia',fn:"navPickCountry('Croatia',event)"},{label:'Czech Republic',fn:"navPickCountry('Czech Republic',event)"},{label:'Denmark',fn:"navPickCountry('Denmark',event)"},{label:'England',fn:"navPickCountry('England',event)"},{label:'Finland',fn:"navPickCountry('Finland',event)"},{label:'France',fn:"navPickCountry('France',event)"},{label:'Germany',fn:"navPickCountry('Germany',event)"},{label:'Greece',fn:"navPickCountry('Greece',event)"},{label:'Hungary',fn:"navPickCountry('Hungary',event)"},{label:'Ireland',fn:"navPickCountry('Ireland',event)"},{label:'Italy',fn:"navPickCountry('Italy',event)"},{label:'Netherlands',fn:"navPickCountry('Netherlands',event)"},{label:'Norway',fn:"navPickCountry('Norway',event)"},{label:'Poland',fn:"navPickCountry('Poland',event)"},{label:'Portugal',fn:"navPickCountry('Portugal',event)"},{label:'Russia',fn:"navPickCountry('Russia',event)"},{label:'Scotland',fn:"navPickCountry('Scotland',event)"},{label:'Serbia',fn:"navPickCountry('Serbia',event)"},{label:'Spain',fn:"navPickCountry('Spain',event)"},{label:'Sweden',fn:"navPickCountry('Sweden',event)"},{label:'Switzerland',fn:"navPickCountry('Switzerland',event)"},{label:'Turkey',fn:"navPickCountry('Turkey',event)"},{label:'Ukraine',fn:"navPickCountry('Ukraine',event)"},{label:'Wales',fn:"navPickCountry('Wales',event)"}
+      ]},
+      {name:'America', items:[
+        {label:'Argentina',fn:"navPickCountry('Argentina',event)"},{label:'Brazil',fn:"navPickCountry('Brazil',event)"},{label:'Canada',fn:"navPickCountry('Canada',event)"},{label:'Chile',fn:"navPickCountry('Chile',event)"},{label:'Colombia',fn:"navPickCountry('Colombia',event)"},{label:'Costa Rica',fn:"navPickCountry('Costa Rica',event)"},{label:'Ecuador',fn:"navPickCountry('Ecuador',event)"},{label:'Mexico',fn:"navPickCountry('Mexico',event)"},{label:'Paraguay',fn:"navPickCountry('Paraguay',event)"},{label:'Peru',fn:"navPickCountry('Peru',event)"},{label:'Uruguay',fn:"navPickCountry('Uruguay',event)"},{label:'USA',fn:"navPickCountry('USA',event)"}
+      ]},
+      {name:'Africa', items:[
+        {label:'Algeria',fn:"navPickCountry('Algeria',event)"},{label:'Cameroon',fn:"navPickCountry('Cameroon',event)"},{label:'Egypt',fn:"navPickCountry('Egypt',event)"},{label:'Ghana',fn:"navPickCountry('Ghana',event)"},{label:'Ivory Coast',fn:"navPickCountry('Ivory Coast',event)"},{label:'Mali',fn:"navPickCountry('Mali',event)"},{label:'Morocco',fn:"navPickCountry('Morocco',event)"},{label:'Nigeria',fn:"navPickCountry('Nigeria',event)"},{label:'Senegal',fn:"navPickCountry('Senegal',event)"},{label:'South Africa',fn:"navPickCountry('South Africa',event)"},{label:'Tunisia',fn:"navPickCountry('Tunisia',event)"}
+      ]},
+      {name:'Asia & Oceania', items:[
+        {label:'Australia',fn:"navPickCountry('Australia',event)"},{label:'China',fn:"navPickCountry('China',event)"},{label:'India',fn:"navPickCountry('India',event)"},{label:'Iran',fn:"navPickCountry('Iran',event)"},{label:'Japan',fn:"navPickCountry('Japan',event)"},{label:'Qatar',fn:"navPickCountry('Qatar',event)"},{label:'Saudi Arabia',fn:"navPickCountry('Saudi Arabia',event)"},{label:'South Korea',fn:"navPickCountry('South Korea',event)"}
+      ]}
+    ]
+  }
+};
+
+function mobShowContinents(mode){
+  _mobMenuMode=mode;
+  var data=_mobLeagueData[mode];
+  // Actualizar título y label del back
+  document.getElementById('mobPanel2Title').textContent=data.title;
+  var bl1=document.getElementById('mobBackLabel1');
+  if(bl1)bl1.textContent='Menu';
+  // Construir lista de continentes
+  var list=document.getElementById('mobContinentsList');
+  list.innerHTML='';
+  data.continents.forEach(function(cont,i){
+    var btn=document.createElement('button');
+    btn.className='mob-section-btn';
+    btn.style.paddingLeft='20px';
+    btn.innerHTML=cont.name+' <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg>';
+    btn.onclick=function(){mobShowItems(i);};
+    var div=document.createElement('div');
+    div.className='mob-section';
+    div.appendChild(btn);
+    list.appendChild(div);
+  });
+  var inner=document.getElementById('mobDrawerInner');
+  inner.classList.remove('show-items');
+  inner.classList.add('show-continents');
+}
+
+function mobShowItems(contIdx){
+  var data=_mobLeagueData[_mobMenuMode];
+  var cont=data.continents[contIdx];
+  document.getElementById('mobPanel3Title').textContent=cont.name;
+  // Actualizar label del back con el nombre del panel 2
+  var bl2=document.getElementById('mobBackLabel2');
+  if(bl2)bl2.textContent=document.getElementById('mobPanel2Title').textContent;
+  var list=document.getElementById('mobItemsList');
+  list.innerHTML='';
+  cont.items.forEach(function(item){
+    var a=document.createElement('a');
+    a.className='mob-direct-link';
+    a.href='#';
+    a.textContent=item.label;
+    var _tsy=0,_tsx=0,_scrolled=false;
+    a.addEventListener('touchstart',function(e){
+      _tsy=e.touches[0].clientY;
+      _tsx=e.touches[0].clientX;
+      _scrolled=false;
+    },{passive:true});
+    a.addEventListener('touchmove',function(e){
+      var dy=Math.abs(e.touches[0].clientY-_tsy);
+      var dx=Math.abs(e.touches[0].clientX-_tsx);
+      if(dy>5||dx>5)_scrolled=true;
+    },{passive:true});
+    a.addEventListener('touchend',function(e){
+      if(_scrolled)return;
+      e.preventDefault();
+      eval(item.fn);toggleMobileNav();
+    },{passive:false});
+    a.addEventListener('click',function(e){e.preventDefault();});
+    list.appendChild(a);
+  });
+  document.getElementById('mobDrawerInner').classList.add('show-items');
+}
+
+function mobGoBack(toPanel){
+  var inner=document.getElementById('mobDrawerInner');
+  if(toPanel===1){inner.classList.remove('show-continents','show-items');}
+  else if(toPanel===2){inner.classList.remove('show-items');}
+}
+
+function mobToggle(btn){
+  if(!wasOpen){body.classList.add("open");btn.classList.add("open");}
+  else{body.classList.remove("open");btn.classList.remove("open");}
+}function toggleNavDd(a){
+  var e=a.nextElementSibling,n=e.classList.contains("open");
+  document.querySelectorAll(".nav-dd-menu.open").forEach(function(m){m.classList.remove("open");});
+  if(!n){
+    if(e.classList.contains("nav-dd-wide")){
+      // Posicionar con top correcto ANTES de hacerlo visible
+      // left y transform ya están en CSS (fixed, centrado en viewport)
+      var r=a.getBoundingClientRect();
+      e.style.top=(r.bottom+6)+"px";
+      // Forzar reflow para que el top se aplique antes del display:block+opacity
+      e.getBoundingClientRect();
+    }
+    e.classList.add("open");
+  }
+}function navPickLeague(a,e){e.preventDefault(),document.querySelectorAll(".nav-dd-menu.open").forEach(function(a){a.classList.remove("open")});var n=document.getElementById("navLinks");n&&n.classList.remove("open");var r=document.getElementById("navMobileToggle");r&&r.classList.remove("open"),fpLeagueVal=a,searchFromFP()}function navPickCountry(a,e){e.preventDefault(),document.querySelectorAll(".nav-dd-menu.open").forEach(function(a){a.classList.remove("open")});var n=document.getElementById("navLinks");n&&n.classList.remove("open");var r=document.getElementById("navMobileToggle");r&&r.classList.remove("open"),triggerCountrySearch(a)}function triggerCountrySearch(a){isFavView=!1,"function"==typeof _hideWcHeader&&_hideWcHeader();const e=a;showLoading(),window.scrollTo(0,0),document.getElementById("landing").style.display="none",document.getElementById("results").style.display="flex";var n=document.getElementById("holyGrails");n&&(n.style.display="none");var r=document.getElementById("footballGiants");r&&(r.style.display="none");var t=document.getElementById("worldCup2026");t&&(t.style.display="none");var o=document.getElementById("landingFooter");o&&(o.style.display="none"),document.getElementById("resultsSearch").value="",document.getElementById("landingSearch").value="",setTimeout(function(){shopifyResults=[],renderCards([]),showShopifyStatus("🔍 Searching specialist stores…"),ebayResults=[],csResults=[];var a=Date.now();const n=fetchEbayShirts(e),r=fetchClassicShirts(e),_cfsC=fetchCFSShirts(e);var t=new Set;searchAllStoresForCountry(e,function(a){a.forEach(function(a){var e=a.id||a.url+"||"+a.name;t.has(e)||(t.add(e),shopifyResults.push(a))}),applyFilters()}).then(function(){return Promise.all([n,r,_cfsC])}).then(function(){var e=new Set(shopifyResults.map(function(a){return a.id}));ebayResults.forEach(function(a){e.has(a.id)||(e.add(a.id),shopifyResults.push(a))}),csResults.forEach(function(a){e.has(a.id)||(e.add(a.id),shopifyResults.push(a))}),cfsResults.forEach(function(a){e.has(a.id)||(e.add(a.id),shopifyResults.push(a))}),applyFilters(),showShopifyStatusTimed("✅ <strong>"+shopifyResults.length+"</strong> shirts found");var n=Date.now()-a,r=Math.max(0,2e3-n);setTimeout(function(){hideLoading(),_firstSearchDone=!0},r)})},50)}function navBlog(a){a.preventDefault();var e=document.getElementById("navLinks");e&&e.classList.remove("open");var n=document.getElementById("navMobileToggle");n&&n.classList.remove("open");window.location.href="/blog";}
+function searchFromFP(){isFavView=!1,"function"==typeof _hideWcHeader&&_hideWcHeader(),showLoading(),window.scrollTo(0,0);var a=Date.now();const e=[...document.querySelectorAll("#fpPanel .fp-size-btn[data-size].active")].map(a=>a.dataset.size),n=[...document.querySelectorAll("#fpPanel .fp-size-btn[data-decade].active")].map(a=>a.dataset.decade),r=[...fpBrands],t=parseFloat(document.getElementById("fpMin").value)||0,o=parseFloat(document.getElementById("fpMax").value)||99999,i=fpVersionVal,s=fpLeagueVal,l=document.getElementById("landingSearch").value.trim();document.getElementById("landing").style.display="none",document.getElementById("results").style.display="flex";var c=document.getElementById("holyGrails");c&&(c.style.display="none");var u=document.getElementById("footballGiants");u&&(u.style.display="none");var d=document.getElementById("worldCup2026");d&&(d.style.display="none");var m=document.getElementById("landingFooter");if(m&&(m.style.display="none"),closeFP(),s){document.querySelectorAll(".sidebar .fp-chip[data-league]").forEach(function(a){a.classList.remove("active")});const a=document.querySelector('.sidebar .fp-chip[data-league="'+s+'"]');a&&a.classList.add("active")}if(i){document.querySelectorAll(".sidebar .fp-chip[data-version]").forEach(function(a){a.classList.remove("active")});const a=document.querySelector('.sidebar .fp-chip[data-version="'+i+'"]');a&&a.classList.add("active")}e.length&&e.forEach(function(a){const e=document.querySelector('.sidebar .fp-size-btn[data-size="'+a+'"]');e&&e.classList.add("active")}),r.length&&(r.forEach(function(a){selectedBrands.has(a)||selectedBrands.add(a)}),"function"==typeof renderBrandTags&&renderBrandTags(),"function"==typeof buildSidebarBrandChips&&buildSidebarBrandChips()),n.length&&n.forEach(function(a){const e=document.querySelector('#decadeList .fp-size-btn[data-decade="'+a+'"]');e&&e.classList.add("active")});if(typeof _kfShowBlogBanner==="function")_kfShowBlogBanner();setTimeout(function(){function c(a){return a.filter(function(a){if(s)if(s.startsWith("nt-")){if(!matchesNationalContinent(a,s))return!1}else if(!_leagueSearchActive){if((a.league||extractLeagueFromTitle(a.name||a.club||""))!==s)return!1}if(i){const e=[a.name,a.club,a.description,a.tags].filter(Boolean).join(" "),n=a.version||extractVersionFromTitle(e);if("Other"===i){if(n&&"Other"!==n)return!1}else if(n!==i)return!1}if(e.length&&!a.sizes.some(a=>e.includes(a)))return!1;if(n.length){const _src2=(a.season||extractSeasonFromTitle(a.name||a.club||"")+" "+(a.name||a.club||"")).replace(/[^0-9\/\-]/g," ");const _yrs2=[];const _m4b=_src2.match(/\b(19\d{2}|20\d{2})\b/g);if(_m4b)_m4b.forEach(function(y){_yrs2.push(parseInt(y));});const _m2b=_src2.match(/\b([6-9]\d|0\d|1\d|2\d)\b/g);if(_m2b)_m2b.forEach(function(y){var nn=parseInt(y);var ff=nn>=60?1900+nn:2000+nn;if(ff>=1960&&ff<=2030)_yrs2.push(ff);});if(!_yrs2.length){const _raw2=(a.season||extractSeasonFromTitle(a.name||a.club||"")+"").replace(/[^0-9\/\-]/g,"").split(/[\/\-]/)[0];let _r2=parseInt(_raw2)||0;if(_r2>0&&_r2<100)_r2+=_r2>=60?1900:2e3;if(_r2>0)_yrs2.push(_r2);}if(!_yrs2.length||!n.some(function(dec){const _d2=parseInt(dec);return _yrs2.some(function(y){return y>=_d2&&y<_d2+10});}))return!1;}if(r.length&&!r.some(e=>(a.brand||"").toLowerCase().includes(e.toLowerCase())||(a.name||"").toLowerCase().includes(e.toLowerCase())))return!1;const l=a.price*(RATES_TO_EUR[a.currency||"EUR"]||1);return!(t&&l<t)&&!(o<99999&&l>o)})}shopifyResults=[],renderCards([]);let u=[];if(s)u=l?[l]:s.startsWith("nt-")?_NT_SEARCH_TERMS[s]||["national team football shirt"]:(LEAGUE_TEAMS[s]||[]).slice(0,20),u.length||(u=["football shirt"]);else if(l)u=[l];else if(r.length)u=r.slice(0,3);else if(n.length){const a=[];n.forEach(function(e){const n=parseInt(e);for(let e=n;e<n+10;e+=2)a.push(String(e))}),u=a.slice(0,8).concat(["retro","vintage","classic"])}else if(i&&"Other"!==i){const a=i.toLowerCase();u="goalkeeper"===a?["goalkeeper kit","goalkeeper shirt","goalkeeper jersey","keeper shirt","keeper kit","gk shirt","gk kit","gk jersey","portero","gardien","torwart","goleiro","arquero","guarda-redes","portiere","bramkarz","football shirt","jersey"]:"home"===a?["home kit","home shirt","home jersey","1st kit","first kit","kit 1","local kit","local shirt","heim trikot","heimtrikot","maillot domicile","maillot maison","maglia casa","prima maglia","primera equipacion","camiseta local","thuisshirt","thuis shirt","football shirt","jersey"]:"away"===a?["away kit","away shirt","away jersey","2nd kit","second kit","kit 2","visitante","fuera","segunda equipacion","auswarts trikot","auswarts shirt","maillot exterieur","maillot deplacement","maglia trasferta","seconda maglia","uitshirt","uit shirt","borte shirt","borta shirt","football shirt","jersey"]:"third"===a?["third kit","third shirt","third jersey","3rd kit","alternate kit","kit 3","tercera equipacion","tercera camiseta","drittes trikot","dritte shirt","maillot troisieme","troisieme maillot","terza maglia","maglia terza","derde shirt","football shirt","jersey"]:"fourth"===a?["fourth kit","fourth shirt","fourth jersey","4th kit","4th shirt","kit 4","cuarta equipacion","cuarta camiseta","camiseta 4","viertes trikot","vierte shirt","maillot quatrieme","quatrieme maillot","quarta maglia","maglia quarta","maglia 4","vierde shirt","shirt 4","football shirt","jersey"]:[a+" kit",a+" shirt",a+" jersey","football shirt","jersey"]}else u=["football shirt","jersey","camiseta","retro","vintage"];document.getElementById("resultsSearch").value=l||"";const d=new Set;let m,g,h=!0;function p(a){if(a.forEach(function(a){const e=a.id||a.url+"||"+a.name;d.has(e)||(d.add(e),shopifyResults.push(a))}),h&&shopifyResults.length>0){h=!1;const a=c(shopifyResults);a.length>0&&renderCards(a)}}if(_leagueSearchActive=!(!s||l),s&&!l)m=searchAllStoresForLeague(u,p,!1);else{m=searchAllStoresForQuery(u[0]||"",p)}if(!l&&s&&s.startsWith("nt-")){const a=_NT_EBAY_QUERIES[s]||["national team football shirt"];g=Promise.all(a.map(a=>fetchEbayShirts(a).catch(()=>{})))}else{g=fetchEbayShirts(l||u[0]||"")}const b=l||u[0]||"";csResults=[];const f=fetchClassicShirts(b),_cfsF=fetchCFSShirts(b);Promise.all([m.catch(function(a){console.log("[KF] searchPromise err",a)}),g.catch(function(a){console.log("[KF] ebayPromise err",a)}),f.catch(function(a){console.log("[KF] csPromise err",a)}),_cfsF.catch(function(a){console.log("[KF] cfsPromise err",a)})]).then(function(){_leagueSearchActive=!(!s||l);const e=new Set(shopifyResults.map(a=>a.id));ebayResults.forEach(function(a){e.has(a.id)||(e.add(a.id),shopifyResults.push(a))}),csResults.forEach(function(a){e.has(a.id)||(e.add(a.id),shopifyResults.push(a))}),cfsResults.forEach(function(a){e.has(a.id)||(e.add(a.id),shopifyResults.push(a))}),console.log("[KF MERGE] Shopify:",shopifyResults.length-ebayResults.length-csResults.length,"eBay:",ebayResults.length,"ClassicShirts:",csResults.length,"Total before filter:",shopifyResults.length);const n=c(shopifyResults);console.log("[KF MERGE] After filter:",n.length),_leagueSearchActive=!1,renderCards(n);showShopifyStatusTimed("✅ <strong>"+n.length+"</strong> shirts found");var r=Date.now()-a,t=Math.max(0,2e3-r);setTimeout(function(){hideLoading(),_firstSearchDone=!0},t)})},80)}
+function toggleResultsFilter(){
+  var panel=document.getElementById("resultsFilterPanel");
+  var btn=document.getElementById("filterToggleBtn");
+  if(!panel)return;
+  var isOpen=panel.classList.contains("open");
+  if(isOpen){
+    // Cerrar filtros
+    panel.classList.remove("open");
+    btn&&btn.classList.remove("open");
+    // Desbloquear scroll del body
+    document.body.style.overflow="";
+    document.body.style.position="";
+    document.body.style.width="";
+    var sy=parseInt(document.body.dataset.filterScrollY||"0",10);
+    if(sy){window.scrollTo(0,sy);}
+    delete document.body.dataset.filterScrollY;
+  } else {
+    // Abrir filtros
+    panel.classList.add("open");
+    btn&&btn.classList.add("open");
+    // En movil: el sidebar empuja las tarjetas abajo — scroll hasta la toolbar
+    if(window.innerWidth<=900){
+      setTimeout(function(){
+        var toolbar=document.querySelector(".results-toolbar");
+        if(toolbar){
+          var top=toolbar.getBoundingClientRect().top+window.pageYOffset-8;
+          window.scrollTo({top:top,behavior:"smooth"});
+        }else{
+          window.scrollTo({top:0,behavior:"smooth"});
+        }
+      },30);
+    }
+  }
+}
+function clearFP(){fpLeagueVal="",fpVersionVal="",fpBrands.clear(),document.querySelectorAll(".fp-chip,.fp-size-btn").forEach(a=>a.classList.remove("active")),renderFpBrandTags(),document.getElementById("fpBrandInput").value="",hideFpBrands(),document.getElementById("fpMin").value="",document.getElementById("fpMax").value="",checkLandingFilters()}
+function closeFP(){document.getElementById("fpPanel").classList.remove("open"),document.getElementById("fpOverlay").classList.remove("open")}
+function checkLandingFilters(){const a=document.getElementById("fpSearchBtn");if(!a)return;const e=!!fpLeagueVal,n=!!fpVersionVal,r=fpBrands.size>0,t=null!==document.querySelector("#fpPanel .fp-size-btn[data-size].active"),o=null!==document.querySelector("#fpPanel .fp-size-btn[data-decade].active"),i=!!document.getElementById("fpMin").value,s=!!document.getElementById("fpMax").value,l=e||n||r||t||o||i||s;a.disabled=!l}
+function toggleSec(a){a.classList.toggle("open"),a.nextElementSibling.classList.toggle("open")}
+function toggleSub(a){a.classList.toggle("open"),a.nextElementSibling.classList.toggle("open")}document.getElementById("landingSearch").addEventListener("keydown",function(a){"Enter"===a.key&&triggerSearch()}),document.getElementById("resultsSearch").addEventListener("keydown",function(a){"Enter"===a.key&&triggerSearch()}),document.addEventListener("click",function(a){a.target.closest(".nav-dropdown")||document.querySelectorAll(".nav-dd-menu.open").forEach(function(a){a.classList.remove("open")})});let fpLeagueVal="",fpVersionVal="",_leagueSearchActive=!1;function checkLandingFilters(){const a=document.getElementById("fpSearchBtn");if(!a)return;const e=!!fpLeagueVal,n=!!fpVersionVal,r=fpBrands.size>0,t=null!==document.querySelector("#fpPanel .fp-size-btn[data-size].active"),o=null!==document.querySelector("#fpPanel .fp-size-btn[data-decade].active"),i=!!document.getElementById("fpMin").value,s=!!document.getElementById("fpMax").value,l=e||n||r||t||o||i||s;a.disabled=!l}
+function pickLeague(a){document.querySelectorAll('.fp-chip[onclick*="pickLeague"]').forEach(a=>a.classList.remove("active")),a.classList.toggle("active"),fpLeagueVal=a.classList.contains("active")?a.dataset.value:"",checkLandingFilters()}
+function pickVersion(a){document.querySelectorAll('.fp-chip[onclick*="pickVersion"]').forEach(a=>a.classList.remove("active")),a.classList.toggle("active"),fpVersionVal=a.classList.contains("active")?a.dataset.value:"",checkLandingFilters()}let fpBrands=new Set;function filterFpBrands(a){const e=document.getElementById("fpBrandDd");if(!e)return;const n=(a||"").trim().toLowerCase(),r=""===n?FEATURED_BRANDS.slice(0,6):ALL_BRANDS.filter(a=>a.toLowerCase().includes(n)).slice(0,8);if(e.innerHTML="",r.forEach(function(a){const n=document.createElement("div");n.className="fp-brand-opt"+(fpBrands.has(a)?" selected":""),n.textContent=a,n.addEventListener("mousedown",function(e){e.preventDefault(),toggleFpBrand(a)}),e.appendChild(n)}),0===r.length){const a=document.createElement("div");a.className="fp-brand-opt",a.style.color="var(--gray-400)",a.style.fontStyle="italic",a.textContent="No brands found",e.appendChild(a)}e.classList.add("open")}
+function kfLgInit() {
+  // Si ya está suscrito o ya lo ha descartado, mostrar solo la tarjeta LG
+  if (localStorage.getItem('kf_blog_subscribed')) return;
+  if (localStorage.getItem('kf_lg_dismissed')) {
+    var card = document.getElementById('kfLgCard');
+    if (card) card.style.display = 'flex';
+    return;
+  }
+  // No saltar el modal automaticamente: mostrar solo la tarjeta LG
+  var card = document.getElementById('kfLgCard');
+  if (card) card.style.display = 'flex';
+}
+function kfLgDismiss() {
+  // Cerrar el modal, guardar el dismiss y mostrar la tarjeta
+  var overlay = document.getElementById('kfLgOverlay');
+  var modal = document.getElementById('kfLgModal');
+  var card = document.getElementById('kfLgCard');
+  if (overlay) overlay.style.display = 'none';
+  if (modal) modal.style.display = 'none';
+  if (card) card.style.display = 'flex';
+  localStorage.setItem('kf_lg_dismissed', '1');
+}
+function kfLgOpenFromCard() {
+  // Volver a abrir el modal desde la tarjeta LG
+  var overlay = document.getElementById('kfLgOverlay');
+  var modal = document.getElementById('kfLgModal');
+  var card = document.getElementById('kfLgCard');
+  if (overlay) overlay.style.display = 'block';
+  if (modal) modal.style.display = 'block';
+  if (card) card.style.display = 'none';
+}
+function kfLgSubscribe() {
+  var email = (document.getElementById('kfLgEmail') || {}).value;
+  if (!email || !email.includes('@')) {
+    var msg = document.getElementById('kfLgMsg');
+    if (msg) { msg.textContent = 'Please enter a valid email.'; msg.style.color = '#e63946'; msg.style.display = 'block'; }
+    return;
+  }
+  _kfSaveBlogSubscriber(email.trim(), 'kfLgMsg', 'kfLgForm');
+}
+function kfSubscribeBlog() {
+  kfLgSubscribe();
+}
+function kfSubscribeBlogPage() {
+  var email = (document.getElementById('kfBlogEmailBlog') || {}).value;
+  if (!email || !email.includes('@')) {
+    var msg = document.getElementById('kfBlogMsgBlog');
+    if (msg) { msg.textContent = 'Please enter a valid email.'; msg.style.display = 'block'; }
+    return;
+  }
+  _kfSaveBlogSubscriber(email.trim(), 'kfBlogMsgBlog', null);
+}
+function kfSubscribeBlogPage() {
+  var email = (document.getElementById('kfBlogEmailBlog') || {}).value;
+  if (!email || !email.includes('@')) {
+    var msg = document.getElementById('kfBlogMsgBlog');
+    if (msg) { msg.textContent = 'Please enter a valid email.'; msg.style.display = 'block'; }
+    return;
+  }
+  _kfSaveBlogSubscriber(email.trim(), 'kfBlogMsgBlog', null);
+}
+function _kfSaveBlogSubscriber(email, msgId, formId) {
+  var msg = document.getElementById(msgId);
+  if (msg) { msg.textContent = 'Subscribing…'; msg.style.display = 'block'; }
+  // Save to Firestore blogSubscribers collection
+  function _doSave(db) {
+    var docId = email.replace(/[^a-zA-Z0-9]/g, '_');
+    db.collection('blogSubscribers').doc(docId).set({
+      email: email,
+      subscribedAt: Date.now(),
+      source: 'laGrada'
+    }, { merge: true }).then(function() {
+      localStorage.setItem('kf_blog_subscribed', '1');
+      if (msg) { msg.textContent = '✅ Subscribed! We\'ll email you when new articles go live.'; msg.style.color = '#1FAF6D'; msg.style.display = 'block'; }
+      if (formId) { var f = document.getElementById(formId); if (f) f.style.display = 'none'; }
+      // Cerrar el modal y ocultar la tarjeta
+      var overlay = document.getElementById('kfLgOverlay');
+      var modal = document.getElementById('kfLgModal');
+      var card = document.getElementById('kfLgCard');
+      if (overlay) overlay.style.display = 'none';
+      if (modal) setTimeout(function(){ modal.style.display = 'none'; }, 2500);
+      if (card) card.style.display = 'none';
+    }).catch(function(err) {
+      if (msg) { msg.textContent = 'Something went wrong. Try again.'; msg.style.display = 'block'; }
+    });
+  }
+  // Try to get db from firebase (loaded by auth.js)
+  if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length) {
+    _doSave(firebase.firestore());
+  } else {
+    // Fallback: wait for firebase to load
+    var tries = 0;
+    var iv = setInterval(function() {
+      tries++;
+      if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length) {
+        clearInterval(iv);
+        _doSave(firebase.firestore());
+      } else if (tries > 20) {
+        clearInterval(iv);
+        if (msg) { msg.textContent = 'Something went wrong. Try again.'; msg.style.display = 'block'; }
       }
-    }, 200);
+    }, 300);
+  }
+}
+function hideFpBrands(){const a=document.getElementById("fpBrandDd");a&&a.classList.remove("open")}
+function openFP(){document.getElementById("fpPanel").classList.add("open"),document.getElementById("fpOverlay").classList.add("open")}
+function navNewIn(a){a.preventDefault();var e=document.getElementById("navLinks");e&&e.classList.remove("open");var n=document.getElementById("navMobileToggle");n&&n.classList.remove("open"),document.getElementById("landingSearch").value="football shirt",document.getElementById("sortSelect").value="newest",triggerSearch()}
+function renderFpBrandTags(){const a=document.getElementById("fpBrandTags");a&&(a.innerHTML="",fpBrands.forEach(function(e){const n=document.createElement("span");n.className="fp-brand-tag";const r=document.createElement("span");r.textContent=e;const t=document.createElement("span");t.className="fp-brand-tag-x",t.textContent="×",t.addEventListener("mousedown",function(a){a.preventDefault(),toggleFpBrand(e)}),n.appendChild(r),n.appendChild(t),a.appendChild(n)}))}
+function toggleFpBrand(a){fpBrands.has(a)?fpBrands.delete(a):fpBrands.add(a),renderFpBrandTags(),filterFpBrands(document.getElementById("fpBrandInput").value),checkLandingFilters()}
+var _origGoHome=goHome;
+goHome=function(e){_origGoHome.apply(this,[e]);try{window.history.replaceState({},'Kit Finder — Find Vintage & Retro Football Shirts','/');}catch(ex){}document.title='Kit Finder — Find Vintage & Retro Football Shirts';};
+var _origSearchWorldCup=searchWorldCup;
+searchWorldCup=function(){_origSearchWorldCup.apply(this,arguments);_setUrl('/world-cup-kits','World Cup 2026 Kits — Kit Finder');};
+var _origSearchMatchWorn=searchMatchWorn;
+searchMatchWorn=function(){_origSearchMatchWorn.apply(this,arguments);_setUrl('/match-worn','Match Worn & Issued Shirts — Kit Finder');};
+var _origNavPickLeague=navPickLeague;
+navPickLeague=function(league,e){_origNavPickLeague.apply(this,[league,e]);
+  setTimeout(function(){_setUrl('/league/'+_slugify(league),league+' Football Shirts — Kit Finder');},60);
+};
+var _origNavPickCountry=navPickCountry;
+navPickCountry=function(country,e){_origNavPickCountry.apply(this,[country,e]);
+  setTimeout(function(){_setUrl('/country/'+_slugify(country),country+' Football Shirts — Kit Finder');},60);
+};
+var _origShowInfo=showInfo;
+showInfo=function(section,e){_origShowInfo.apply(this,[section,e]);
+  var titles={why:'Why Kit Finder? — Kit Finder',about:'About Us — Kit Finder',privacy:'Privacy Policy — Kit Finder',terms:'Terms of Use — Kit Finder',affiliate:'Affiliate Disclosure — Kit Finder'};
+  _setUrl('/'+section,titles[section]||'Kit Finder');
+};
+var _origTriggerCountrySearch=triggerCountrySearch;
+triggerCountrySearch=function(country){_origTriggerCountrySearch.apply(this,[country]);
+  setTimeout(function(){_setUrl('/country/'+_slugify(country),country+' Football Shirts — Kit Finder');},60);
+};
+
+// Al cargar la página: leer URL y navegar donde corresponde
+(function(){
+  var path=window.location.pathname;
+  var search=window.location.search;
+  var params=new URLSearchParams(search);
+
+  function _hideAll(){
+    document.getElementById('landing').style.display='none';
+    document.getElementById('results').style.display='flex';
+    var hg=document.getElementById('holyGrails');if(hg)hg.style.display='none';
+    var fg=document.getElementById('footballGiants');if(fg)fg.style.display='none';
+    var wc=document.getElementById('worldCup2026');if(wc)wc.style.display='none';
+    var lf=document.getElementById('landingFooter');if(lf)lf.style.display='none';
   }
 
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ _buildHgCards(); checkHolyGrails(); applyRandomStart(); });
-  } else {
-    shuffleHolyGrails(); setTimeout(checkHolyGrails, 1000); applyRandomStart();
+  if(path==='/results'||path==='/results/'){
+    var q=params.get('q')||'';
+    setTimeout(function(){
+      if(q){document.getElementById('landingSearch').value=q;_origTriggerSearch();}
+      else _hideAll();
+    },120);
+  } else if(path==='/match-worn'||path==='/match-worn/'){
+    setTimeout(function(){_origSearchMatchWorn();},120);
+  } else if(path==='/why'||path==='/why/'){
+    setTimeout(function(){showInfo('why',{preventDefault:function(){}});},120);
+  } else if(path==='/profile'||path==='/profile/'){
+    setTimeout(function(){if(typeof kfOpenProfile==='function')kfOpenProfile();else showInfo('profile',{preventDefault:function(){}});},300);
+  } else if(path==='/settings'||path==='/settings/'){
+    setTimeout(function(){if(typeof kfOpenSettings==='function')kfOpenSettings();else showInfo('settings',{preventDefault:function(){}});},300);
+  } else if(path==='/world-cup-kits'||path==='/world-cup-kits/'){
+    setTimeout(function(){_origSearchWorldCup();},120);
+  } else if(path.startsWith('/league/')){
+    var leagueSlug=path.replace('/league/','').replace(/\/$/,'');
+    // Buscar en el mapa slug → nombre real
+    var leagueName=_SLUG_TO_LEAGUE[leagueSlug]||'';
+    if(leagueName){setTimeout(function(){fpLeagueVal=leagueName;searchFromFP();},200);}
+  } else if(path.startsWith('/country/')){
+    var countrySlug=path.replace('/country/','').replace(/\/$/,'');
+    var countryName=_SLUG_TO_COUNTRY[countrySlug]||'';
+    if(countryName){setTimeout(function(){_origTriggerCountrySearch(countryName);},200);}
+  } else if(path==='/favourites'||path==='/favourites/'){
+    setTimeout(openFavs,120);
+  } else if(path==='/about'||path==='/about/'){
+    setTimeout(function(){showInfo('about',{preventDefault:function(){}});},120);
+  } else if(path==='/privacy'||path==='/privacy/'){
+    setTimeout(function(){showInfo('privacy',{preventDefault:function(){}});},120);
+  } else if(path==='/terms'||path==='/terms/'){
+    setTimeout(function(){showInfo('terms',{preventDefault:function(){}});},120);
+  } else if(path==='/affiliate'||path==='/affiliate/'){
+    setTimeout(function(){showInfo('affiliate',{preventDefault:function(){}});},120);
   }
+
+  // Botón "atrás"
+  window.addEventListener('popstate',function(){
+    var p=window.location.pathname,s=window.location.search;
+    if(p==='/'||p==='/index.html'){var fe={preventDefault:function(){}};_origGoHome(fe);}
+    else if(p==='/results'){var q2=new URLSearchParams(s).get('q')||'';if(q2){document.getElementById('landingSearch').value=q2;_origTriggerSearch();}}
+    else if(p==='/match-worn'){_origSearchMatchWorn();}
+    else if(p==='/why'){showInfo('why',{preventDefault:function(){}});}
+    else if(p==='/world-cup-kits'){_origSearchWorldCup();}
+    else if(p==='/favourites'){_origOpenFavs();}
+    else if(p.startsWith('/league/')){var ls=p.replace('/league/','');var ln=_SLUG_TO_LEAGUE[ls]||'';if(ln){fpLeagueVal=ln;searchFromFP();}}
+    else if(p.startsWith('/country/')){var cs=p.replace('/country/','');var cn=_SLUG_TO_COUNTRY[cs]||'';if(cn)_origTriggerCountrySearch(cn);}
+  });
 })();
-</script>
+
+// Mapas slug ↔ nombre real para ligas y países
+var _SLUG_TO_LEAGUE={
+  'fortuna-liga':'Fortuna Liga',
+  'slovak-super-liga':'Slovak Super Liga',
+  'austrian-bundesliga':'Austrian Bundesliga','belgian-pro-league':'Belgian Pro League',
+  'hnl-croatia':'HNL Croatia','czech-first-league':'Czech First League',
+  'superliga-denmark':'Superliga Denmark','eredivisie':'Eredivisie',
+  'premier-league':'Premier League','veikkausliiga':'Veikkausliiga',
+  'ligue-1':'Ligue 1','bundesliga':'Bundesliga',
+  'super-league-greece':'Super League Greece','nemzeti-bajnoksag':'Nemzeti Bajnokság',
+  'league-of-ireland':'League of Ireland','serie-a':'Serie A',
+  'nifl-premiership':'NIFL Premiership','eliteserien':'Eliteserien',
+  'ekstraklasa':'Ekstraklasa','primeira-liga':'Primeira Liga',
+  'russian-premier-league':'Russian Premier League','scottish-premiership':'Scottish Premiership',
+  'serbian-superliga':'Serbian SuperLiga','la-liga':'La Liga',
+  'allsvenskan':'Allsvenskan','swiss-super-league':'Swiss Super League',
+  'super-lig':'Super Lig','premier-league-ukraine':'Premier League Ukraine',
+  'liga-profesional-argentina':'Liga Profesional Argentina',
+  'brasileirao':'Brasileirão','primera-division-chile':'Primera División Chile',
+  'liga-colombiana':'Liga Colombiana','liga-ecuatoriana':'Liga Ecuatoriana',
+  'liga-mx':'Liga MX','liga-1-peru':'Liga 1 Perú','mls':'MLS',
+  'primera-division-uruguay':'Primera División Uruguay',
+  'primera-division-venezuela':'Primera División Venezuela',
+  'a-league':'A-League','chinese-super-league':'Chinese Super League',
+  'j1-league':'J1 League','k-league-1':'K League 1','saudi-pro-league':'Saudi Pro League'
+};
+var _SLUG_TO_COUNTRY={
+  'austria':'Austria','belgium':'Belgium','croatia':'Croatia','czech-republic':'Czech Republic',
+  'denmark':'Denmark','england':'England','finland':'Finland','france':'France',
+  'germany':'Germany','greece':'Greece','hungary':'Hungary','ireland':'Ireland',
+  'italy':'Italy','netherlands':'Netherlands','norway':'Norway','poland':'Poland',
+  'portugal':'Portugal','russia':'Russia','scotland':'Scotland','serbia':'Serbia',
+  'spain':'Spain','sweden':'Sweden','switzerland':'Switzerland','turkey':'Turkey',
+  'ukraine':'Ukraine','wales':'Wales','argentina':'Argentina','brazil':'Brazil',
+  'canada':'Canada','chile':'Chile','colombia':'Colombia','costa-rica':'Costa Rica',
+  'ecuador':'Ecuador','mexico':'Mexico','paraguay':'Paraguay','peru':'Peru',
+  'uruguay':'Uruguay','usa':'USA','venezuela':'Venezuela','algeria':'Algeria',
+  'cameroon':'Cameroon','egypt':'Egypt','ghana':'Ghana','guinea':'Guinea',
+  'ivory-coast':'Ivory Coast','mali':'Mali','morocco':'Morocco','nigeria':'Nigeria',
+  'senegal':'Senegal','somalia':'Somalia','south-africa':'South Africa',
+  'tunisia':'Tunisia','australia':'Australia','china':'China','india':'India',
+  'iran':'Iran','japan':'Japan','qatar':'Qatar','saudi-arabia':'Saudi Arabia',
+  'south-korea':'South Korea','indonesia':'Indonesia','iraq':'Iraq',
+  'new-zealand':'New Zealand','thailand':'Thailand','vietnam':'Vietnam'
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── kfFgClick: Football Giants button handler ────────────────────────────────
+// Simula una búsqueda real escribiendo en el buscador y llamando a triggerSearch.
+// Así funciona igual que si el usuario hubiera escrito el nombre del club.
+function kfFgClick(teamName){
+  fgSearch(teamName);
+}
+
+var _FG_MULTI={
+  "Paris Saint-Germain":["paris saint-germain","psg","paris sg","paris saint germain"],
+  "Barcelona":["barcelona","fc barcelona","barca","fcb"],
+  "Real Madrid":["real madrid","real madrid cf"],
+  "Manchester United":["manchester united","man united","man utd","mufc"],
+  "Liverpool":["liverpool","liverpool fc"],
+  "Bayern Munich":["bayern munich","fc bayern","fc bayern munich","bayern munchen"],
+  "Juventus":["juventus","juventus fc","juve"],
+  "Ajax":["ajax","afc ajax","ajax amsterdam"],
+  "Boca Juniors":["boca juniors","ca boca juniors","boca"],
+  "AC Milan":["ac milan","milan","ac milano"],
+  "Arsenal":["arsenal","arsenal fc"],
+  "Flamengo":["flamengo","cr flamengo"]
+};
+function fgSearch(a){
+  console.log("[KF FG] click on:",a);
+  var multi=_FG_MULTI[a]||[a];
+  isFavView=false;
+  if(typeof _hideWcHeader==="function")_hideWcHeader();
+  showLoading();window.scrollTo(0,0);
+  document.getElementById("landing").style.display="none";
+  document.getElementById("results").style.display="flex";
+  var hg=document.getElementById("holyGrails");if(hg)hg.style.display="none";
+  var fg2=document.getElementById("footballGiants");if(fg2)fg2.style.display="none";
+  var wc=document.getElementById("worldCup2026");if(wc)wc.style.display="none";
+  var lf=document.getElementById("landingFooter");if(lf)lf.style.display="none";
+  // Escribir el primer alias en el buscador para que applyFilters funcione
+  var rs=document.getElementById("resultsSearch");if(rs)rs.value=multi[0]||a;
+  var ls=document.getElementById("landingSearch");if(ls)ls.value="";
+  shopifyResults=[];ebayResults=[];csResults=[];cfsResults=[];
+  renderCards([]);
+  var seen=new Set();var startTime=Date.now();
+  function addResults(res){
+    if(!res||!res.length)return;
+    res.forEach(function(r){var k=r.id||r.url+"||"+r.name;if(!seen.has(k)){seen.add(k);shopifyResults.push(r);}});
+    applyFilters();
+  }
+  var safetyTimeout=setTimeout(function(){
+    console.log("[KF FG] safety timeout — "+shopifyResults.length+" results so far");
+    hideLoading();_firstSearchDone=true;
+  },15000);
+  var mainTerm=multi[0]||a;
+  // Buscar en D1 Worker todos los aliases en paralelo
+  Promise.all(multi.map(function(term){
+    return fetchWorkerResults(term).catch(function(){});
+  })).then(function(){
+    clearTimeout(safetyTimeout);
+    // Añadir Vintsoccer (FEED)
+    try{
+      var _seen2=new Set(shopifyResults.map(function(x){return x.id;}));
+      FEED.forEach(function(p){
+        if(_seen2.has(p.id))return;
+        var _n=normalize(p.name||'');
+        if(!multi.some(function(term){return _n.includes(normalize(term));}))return;
+        shopifyResults.push(p);
+      });
+    }catch(e2){}
+    applyFilters();
+    console.log("[KF FG] done —",shopifyResults.length,"results in",(Date.now()-startTime)+"ms");
+    hideLoading();_firstSearchDone=true;
+  }).catch(function(e){
+    clearTimeout(safetyTimeout);
+    console.log("[KF FG] err",e&&e.message);
+    hideLoading();_firstSearchDone=true;
+  });
+}
+
+var _mwRunning=false;
+function searchMatchWorn(){
+  if(_mwRunning)return;
+  _mwRunning=true;
+  isFavView=false;
+  if(typeof _hideWcHeader==="function")_hideWcHeader();
+  showLoading();
+  window.scrollTo(0,0);
+  document.getElementById("landing").style.display="none";
+  document.getElementById("results").style.display="flex";
+  var hg=document.getElementById("holyGrails"); if(hg)hg.style.display="none";
+  var fg=document.getElementById("footballGiants"); if(fg)fg.style.display="none";
+  var wc=document.getElementById("worldCup2026"); if(wc)wc.style.display="none";
+  var lf=document.getElementById("landingFooter"); if(lf)lf.style.display="none";
+  document.getElementById("resultsSearch").value="";
+  document.getElementById("landingSearch").value="";
+  shopifyResults=[];ebayResults=[];csResults=[];cfsResults=[];
+  renderCards([]);
+
+  // defer el trabajo pesado un tick para que el browser pinte la pantalla de carga antes
+  setTimeout(function(){
+  var startTime=Date.now();
+
+  function _mwMatch(t){
+    if(!t)return false;
+    var n=t.toLowerCase();
+    return n.indexOf("match worn")!==-1||n.indexOf("match issued")!==-1||n.indexOf("player worn")!==-1||n.indexOf("player issue")!==-1||n.indexOf("match prepared")!==-1;
+  }
+
+  // --- STEP 1: scan already-cached catalogues immediately (same pattern as searchWorldCup) ---
+  var seen=new Set();
+  SHOPIFY_STORES.forEach(function(store){
+    var key=store.url.replace(/\/$/,"");
+    var cat=_catalogueCache[key];
+    if(!cat||!cat.length)return;
+    cat.forEach(function(p){
+      if(!p.title||!_mwMatch(p.title))return;
+      if(!p.variants||!p.variants.some(function(v){return v.available}))return;
+      if(_JUNK_TITLE_RE.test(p.title))return;
+      var price=parseFloat(p.variants&&p.variants[0]&&p.variants[0].price||"0");
+      if(store.priceDivide100)price/=100;
+      if(!price||price<=0)return;
+      var id="shop_"+store.name.replace(/\s/g,"_")+"_"+p.id;
+      if(seen.has(id))return;
+      seen.add(id);
+      shopifyResults.push(shopifyToCard(p,store));
+    });
+  });
+  WOO_STORES.forEach(function(store){
+    var key=store.url.replace(/\/$/,"");
+    var cat=_wooCatalogueCache[key];
+    if(!cat||!cat.length)return;
+    cat.forEach(function(p){
+      var title=p.name||p.title||"";
+      if(!_mwMatch(title))return;
+      var id="woo_"+store.name.replace(/\s/g,"_")+"_"+p.id;
+      if(seen.has(id))return;
+      var card=wooToCard(p,store);
+      if(!card)return;
+      seen.add(id);
+      shopifyResults.push(card);
+    });
+  });
+  // Remove nulls (shopifyToCard can return null)
+  shopifyResults=shopifyResults.filter(Boolean);
+  if(shopifyResults.length>0)applyFilters();
+
+  // --- STEP 2: fetch stores not yet cached, scan as they load ---
+  var allStores=[
+    ...SHOPIFY_STORES.filter(function(s){return!s.url.includes("golacokits");}).map(function(s){return{store:s,type:"shopify"};}),
+    ...WOO_STORES.map(function(s){return{store:s,type:"woo"};})
+  ];
+  var storePromises=allStores.map(function(entry){
+    var key=entry.store.url.replace(/\/$/,"");
+    var alreadyCached=entry.type==="shopify"?!!_catalogueCache[key]:!!_wooCatalogueCache[key];
+    if(alreadyCached)return Promise.resolve(); // already scanned above
+    var fetchFn=entry.type==="shopify"?fetchStoreCatalogue:fetchWooCatalogue;
+    return fetchFn(entry.store).then(function(cat){
+      if(!cat||!cat.length)return;
+      cat.forEach(function(p){
+        var title=entry.type==="shopify"?(p.title||""):(p.name||p.title||"");
+        if(!_mwMatch(title))return;
+        var id=(entry.type==="shopify"?"shop_":"woo_")+entry.store.name.replace(/\s/g,"_")+"_"+p.id;
+        if(seen.has(id))return;
+        var card=entry.type==="shopify"?shopifyToCard(p,entry.store):wooToCard(p,entry.store);
+        if(!card)return;
+        seen.add(id);
+        shopifyResults.push(card);
+      });
+      if(shopifyResults.length>0)applyFilters();
+    }).catch(function(){});
+  });
+
+  // --- STEP 3: eBay — two separate fetches accumulating into local array ---
+  var mwEbayResults=[];
+  function fetchEbayMW(q){return Promise.resolve();}
+  var ebayPromise=Promise.all(["match worn","match issued"].map(fetchEbayMW));
+
+  // --- STEP 4: merge and finish ---
+  Promise.all(storePromises.concat([ebayPromise])).then(function(){
+    
+    applyFilters();
+    var elapsed=Date.now()-startTime;
+    setTimeout(function(){hideLoading();_firstSearchDone=true;},Math.max(0,2000-elapsed));
+    _mwRunning=false;
+  });
+  }, 0); // cierre del setTimeout que deja pintar la pantalla de carga
+}
+
+// ── Búsqueda por imagen (Google Lens style) ──────────────────────────────────
+
+// Crear overlay de animación de análisis
+var _kfAnalyzeTextTimer=null,_kfScanTimer=null;
+function _kfShowAnalyzing(imgUrl){
+  var el=document.getElementById("kfAnalyzingOverlay");
+  if(!el){
+    el=document.createElement("div");
+    el.id="kfAnalyzingOverlay";
+    el.style.cssText="display:flex;position:fixed;inset:0;background:rgba(10,14,20,.85);z-index:99999;align-items:center;justify-content:center;flex-direction:column;padding:1rem;";
+    el.innerHTML='<div style="position:relative;width:min(78vw,300px);height:min(78vw,300px);border-radius:18px;overflow:hidden;box-shadow:0 12px 50px rgba(0,0,0,.5);background:#0d1117;">'
+      +'<img id="kfAnalyzingImg" src="" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""/>'
+      +'<div style="position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.04),rgba(0,0,0,.22));"></div>'
+      +'<img id="kfScanLens" src="images/lupa-scan.png" style="position:absolute;top:4%;left:4%;width:100px;height:100px;object-fit:contain;z-index:2;transition:top .42s ease-in-out,left .42s ease-in-out;filter:drop-shadow(0 4px 12px rgba(0,0,0,.6));" alt=""/>'
+    +'</div>'
+    +'<p id="kfAnalyzingMsg" style="font-size:16px;font-weight:800;color:#fff;margin:1.3rem 0 .25rem;text-align:center;">Analysing your shirt</p>'
+    +'<p id="kfAnalyzingDetail" style="font-size:13px;color:#2ecc71;font-weight:700;text-align:center;min-height:18px;letter-spacing:.2px;">Detecting team</p>';
+    document.body.appendChild(el);
+  }
+  el.style.display="flex";
+  var im=document.getElementById("kfAnalyzingImg");
+  if(im&&imgUrl)im.src=imgUrl;
+  var lens=document.getElementById("kfScanLens");
+  if(_kfScanTimer)clearInterval(_kfScanTimer);
+  if(lens){
+    var mv=function(){if(!document.getElementById("kfAnalyzingOverlay"))return;var t=Math.random()*70+3,l=Math.random()*70+3;lens.style.top=t+"%";lens.style.left=l+"%";};
+    mv();
+    _kfScanTimer=setInterval(mv,520);
+  }
+  var phrases=["Detecting team","Reading badge and sponsor","Identifying the season","Home or away kit?","Almost there"];
+  var idx=0;
+  var d=document.getElementById("kfAnalyzingDetail");
+  if(d)d.textContent=phrases[0];
+  if(_kfAnalyzeTextTimer)clearInterval(_kfAnalyzeTextTimer);
+  _kfAnalyzeTextTimer=setInterval(function(){idx=(idx+1)%phrases.length;var dd=document.getElementById("kfAnalyzingDetail");if(dd)dd.textContent=phrases[idx];},1100);
+}
+function _kfUpdateAnalyzing(msg,detail){
+  var m=document.getElementById("kfAnalyzingMsg");
+  if(m)m.textContent=msg;
+  if(detail){
+    if(_kfAnalyzeTextTimer){clearInterval(_kfAnalyzeTextTimer);_kfAnalyzeTextTimer=null;}
+    var d=document.getElementById("kfAnalyzingDetail");
+    if(d)d.textContent=detail;
+  }
+}
+function _kfHideAnalyzing(){
+  if(_kfAnalyzeTextTimer){clearInterval(_kfAnalyzeTextTimer);_kfAnalyzeTextTimer=null;}
+  if(_kfScanTimer){clearInterval(_kfScanTimer);_kfScanTimer=null;}
+  var el=document.getElementById("kfAnalyzingOverlay");
+  if(el)el.style.display="none";
+}
+
+async function kfPhotoSearch(searchTerms){
+  isFavView=false;
+  if(typeof _hideWcHeader==="function")_hideWcHeader();
+  var lp=document.getElementById("landing");if(lp)lp.style.display="none";
+  var rp=document.getElementById("results");if(rp)rp.style.display="flex";
+  ["holyGrails","footballGiants","worldCup2026","landingFooter"].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display="none";});
+  window.scrollTo(0,0);
+  showLoading();
+  var rs=document.getElementById("resultsSearch");if(rs)rs.value="";
+  var ls=document.getElementById("landingSearch");if(ls)ls.value="";
+  shopifyResults=[];ebayResults=[];csResults=[];
+  var seen=new Set();
+  await Promise.all(searchTerms.map(async function(q){
+    if(!q||q.length<2)return;
+    try{
+      var url="https://kitfinder-search.wearekitfinder.workers.dev/search?q="+encodeURIComponent(q)+"&page=1&limit=10000";
+      var r=await fetch(url);
+      if(!r.ok)return;
+      var data=await r.json();
+      if(!data.products)return;
+      data.products.forEach(function(p){if(!seen.has(p.id)){seen.add(p.id);shopifyResults.push(_workerProductToCard(p));}});
+    }catch(e){}
+  }));
+  applyFilters();
+  setTimeout(function(){hideLoading();_firstSearchDone=!0;},600);
+}
+async function kfSearchByImage(input){
+  var file=input.files[0];
+  if(!file)return;
+  input.value="";
+
+  var _kfImgUrl=URL.createObjectURL(file);
+  _kfShowAnalyzing(_kfImgUrl);
+  _kfUpdateAnalyzing("Analysing your shirt");
+
+  try{
+    var base64=await new Promise(function(resolve,reject){
+      var reader=new FileReader();
+      reader.onload=function(e){
+        var img=new Image();
+        img.onload=function(){
+          var maxDim=1024,w=img.width,h=img.height;
+          if(w>maxDim||h>maxDim){if(w>h){h=Math.round(h*maxDim/w);w=maxDim;}else{w=Math.round(w*maxDim/h);h=maxDim;}}
+          var canvas=document.createElement("canvas");canvas.width=w;canvas.height=h;
+          canvas.getContext("2d").drawImage(img,0,0,w,h);
+          resolve(canvas.toDataURL("image/jpeg",0.85).split(",")[1]);
+        };
+        img.onerror=reject;
+        img.src=e.target.result;
+      };
+      reader.onerror=reject;
+      reader.readAsDataURL(file);
+    });
+
+    _kfUpdateAnalyzing("Identifying shirt...","Analysing team, season & version");
+
+    var response=await fetch("/vision",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({imageData:base64,mediaType:"image/jpeg"})
+    });
+
+    var data=await response.json();
+    if(!response.ok||data.error){throw new Error(data.error||"Vision error");}
+    var parsed=data;
+
+    _kfUpdateAnalyzing("Match found!","Searching across 100+ stores");
+
+    // Construir query principal
+    var parts=[];
+    if(parsed.team)parts.push(parsed.team);
+    if(parsed.version&&parsed.version!=="home")parts.push(parsed.version);
+    if(parsed.year)parts.push(parsed.year);
+    if(parsed.brand&&!parsed.team)parts.push(parsed.brand);
+    if(parsed.player)parts.push(parsed.player);
+
+    var query=parts.length>0?parts.join(" "):(parsed.query||"");
+    query=query.trim();
+
+    if(query.length<2){
+      _kfHideAnalyzing();
+      alert("Could not identify the shirt. Try a clearer photo showing the front of the shirt.");
+      return;
+    }
+
+    // Generar variantes de año y temporada
+    var searchTerms=[query];
+    if(parsed.team&&parsed.year){
+      var team=parsed.team+((parsed.version&&parsed.version!=="home")?" "+parsed.version:"");
+      var yrStr=String(parsed.year);
+      // Extraer años del string (ej: "1998-1999", "1998/99", "1998")
+      var y1=null,y2=null;
+      var mFull=yrStr.match(/(\d{4})[\-\/](\d{4})/);
+      var mShort=yrStr.match(/(\d{4})[\-\/](\d{2})/);
+      var mSingle=yrStr.match(/^(\d{4})$/);
+      if(mFull){y1=parseInt(mFull[1]);y2=parseInt(mFull[2]);}
+      else if(mShort){y1=parseInt(mShort[1]);y2=y1+1;}
+      else if(mSingle){y1=parseInt(mSingle[1]);y2=y1+1;}
+
+      if(y1&&y2){
+        var y1s=String(y1).slice(-2),y2s=String(y2).slice(-2);
+        [
+          team+" "+y1,
+          team+" "+y2,
+          team+" "+y1+"/"+y2s,
+          team+" "+y1+"-"+y2s,
+          team+" "+y1s+"/"+y2s,
+          team+" "+y1s+"-"+y2s,
+          team+" "+y1+"/"+y2,
+          team+" "+y1+"-"+y2
+        ].forEach(function(v){if(searchTerms.indexOf(v)<0)searchTerms.push(v);});
+      }
+    }
+
+    setTimeout(function(){
+      _kfHideAnalyzing();
+      // Buscar todas las variantes sin mostrar texto en el buscador
+      kfPhotoSearch(searchTerms);
+    },800);
+
+  }catch(err){
+    _kfHideAnalyzing();
+    alert("Image search failed: "+err.message);
+  }
+}
