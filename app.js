@@ -691,95 +691,26 @@ function searchMatchWorn(){
   document.getElementById("landingSearch").value="";
   shopifyResults=[];ebayResults=[];csResults=[];cfsResults=[];
   renderCards([]);
-
-  // defer el trabajo pesado un tick para que el browser pinte la pantalla de carga antes
-  setTimeout(function(){
-  var startTime=Date.now();
-
   function _mwMatch(t){
     if(!t)return false;
     var n=t.toLowerCase();
     return n.indexOf("match worn")!==-1||n.indexOf("match issued")!==-1||n.indexOf("player worn")!==-1||n.indexOf("player issue")!==-1||n.indexOf("match prepared")!==-1;
   }
-
-  // --- STEP 1: scan already-cached catalogues immediately (same pattern as searchWorldCup) ---
   var seen=new Set();
-  SHOPIFY_STORES.forEach(function(store){
-    var key=store.url.replace(/\/$/,"");
-    var cat=_catalogueCache[key];
-    if(!cat||!cat.length)return;
-    cat.forEach(function(p){
-      if(!p.title||!_mwMatch(p.title))return;
-      if(!p.variants||!p.variants.some(function(v){return v.available}))return;
-      if(_JUNK_TITLE_RE.test(p.title))return;
-      var price=parseFloat(p.variants&&p.variants[0]&&p.variants[0].price||"0");
-      if(store.priceDivide100)price/=100;
-      if(!price||price<=0)return;
-      var id="shop_"+store.name.replace(/\s/g,"_")+"_"+p.id;
-      if(seen.has(id))return;
-      seen.add(id);
-      shopifyResults.push(shopifyToCard(p,store));
+  _workerTermsSearch(["match worn","match issued","player worn","player issue","match prepared"],function(cards){
+    var added=false;
+    (cards||[]).forEach(function(c){
+      if(!c)return;
+      var nm=c.name||c.title||"";
+      if(!_mwMatch(nm))return;
+      if(seen.has(c.id))return;
+      seen.add(c.id);shopifyResults.push(c);added=true;
     });
-  });
-  WOO_STORES.forEach(function(store){
-    var key=store.url.replace(/\/$/,"");
-    var cat=_wooCatalogueCache[key];
-    if(!cat||!cat.length)return;
-    cat.forEach(function(p){
-      var title=p.name||p.title||"";
-      if(!_mwMatch(title))return;
-      var id="woo_"+store.name.replace(/\s/g,"_")+"_"+p.id;
-      if(seen.has(id))return;
-      var card=wooToCard(p,store);
-      if(!card)return;
-      seen.add(id);
-      shopifyResults.push(card);
-    });
-  });
-  // Remove nulls (shopifyToCard can return null)
-  shopifyResults=shopifyResults.filter(Boolean);
-  if(shopifyResults.length>0)applyFilters();
-
-  // --- STEP 2: fetch stores not yet cached, scan as they load ---
-  var allStores=[
-    ...SHOPIFY_STORES.filter(function(s){return!s.url.includes("golacokits");}).map(function(s){return{store:s,type:"shopify"};}),
-    ...WOO_STORES.map(function(s){return{store:s,type:"woo"};})
-  ];
-  var storePromises=allStores.map(function(entry){
-    var key=entry.store.url.replace(/\/$/,"");
-    var alreadyCached=entry.type==="shopify"?!!_catalogueCache[key]:!!_wooCatalogueCache[key];
-    if(alreadyCached)return Promise.resolve(); // already scanned above
-    var fetchFn=entry.type==="shopify"?fetchStoreCatalogue:fetchWooCatalogue;
-    return fetchFn(entry.store).then(function(cat){
-      if(!cat||!cat.length)return;
-      cat.forEach(function(p){
-        var title=entry.type==="shopify"?(p.title||""):(p.name||p.title||"");
-        if(!_mwMatch(title))return;
-        var id=(entry.type==="shopify"?"shop_":"woo_")+entry.store.name.replace(/\s/g,"_")+"_"+p.id;
-        if(seen.has(id))return;
-        var card=entry.type==="shopify"?shopifyToCard(p,entry.store):wooToCard(p,entry.store);
-        if(!card)return;
-        seen.add(id);
-        shopifyResults.push(card);
-      });
-      if(shopifyResults.length>0)applyFilters();
-    }).catch(function(){});
-  });
-
-  // --- STEP 3: eBay — two separate fetches accumulating into local array ---
-  var mwEbayResults=[];
-  function fetchEbayMW(q){return Promise.resolve();}
-  var ebayPromise=Promise.all(["match worn","match issued"].map(fetchEbayMW));
-
-  // --- STEP 4: merge and finish ---
-  Promise.all(storePromises.concat([ebayPromise])).then(function(){
-    
+    if(added)applyFilters();
+  }).then(function(){
     applyFilters();
-    var elapsed=Date.now()-startTime;
-    setTimeout(function(){hideLoading();_firstSearchDone=true;},Math.max(0,2000-elapsed));
-    _mwRunning=false;
-  });
-  }, 0); // cierre del setTimeout que deja pintar la pantalla de carga
+    hideLoading();_firstSearchDone=true;_mwRunning=false;
+  }).catch(function(){hideLoading();_mwRunning=false;});
 }
 
 // ── Búsqueda por imagen (Google Lens style) ──────────────────────────────────
