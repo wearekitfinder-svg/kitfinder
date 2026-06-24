@@ -79,7 +79,7 @@ function _workerProductToCard(p){
     id:p.id,name:p.name,club:p.name,
     league:extractLeagueFromTitle(p.name),
     season:p.season||extractSeasonFromTitle(p.name),
-    version:extractVersionFromTitle(p.name),
+    version:(p.store==='Footy Sweats'?'Other':extractVersionFromTitle(p.name)),
     brand:p.brand||extractBrandFromTitle(p.name),
     price:p.price,currency:p.currency||'GBP',storeCurrency:p.currency||'GBP',
     image:p.image||null,images:p.image?[p.image]:[],
