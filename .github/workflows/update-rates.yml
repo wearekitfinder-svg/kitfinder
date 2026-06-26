@@ -1,0 +1,47 @@
+# .github/workflows/update-rates.yml
+# Actualiza solo los tipos de cambio (objeto RATES de app.js) con datos reales.
+# Va en el REPOSITORIO PÚBLICO de la web (donde está app.js). No necesita secretos.
+
+name: Actualizar tasas de cambio (semanal)
+
+on:
+  schedule:
+    # 03:00 UTC del lunes (un poco después de la actualización de tiendas)
+    - cron: '0 3 * * 1'
+  workflow_dispatch:        # también se puede lanzar a mano
+
+permissions:
+  contents: write           # para poder commitear app.js
+
+jobs:
+  rates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Actualizar el objeto RATES de app.js
+        run: python update_rates.py
+
+      - name: Validar que app.js sigue correcto
+        run: |
+          node --check app.js
+          node -e "const fs=require('fs');new Function(fs.readFileSync('app.js','utf8'));console.log('app.js OK')"
+
+      - name: Commitear si hubo cambios
+        run: |
+          if git diff --quiet -- app.js; then
+            echo "Sin cambios en las tasas."
+            exit 0
+          fi
+          git config user.name  "github-actions"
+          git config user.email "github-actions@github.com"
+          git add app.js
+          git commit -m "Actualizar tasas de cambio (automático)"
+          git push
+          echo "app.js actualizado y subido."
