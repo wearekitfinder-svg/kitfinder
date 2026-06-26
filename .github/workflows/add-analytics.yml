@@ -1,0 +1,39 @@
+# .github/workflows/add-analytics.yml
+# Añade el analytics (GA4) a TODAS las páginas .html que aún no lo tengan.
+# Va en el REPOSITORIO PÚBLICO de la web. Se lanza a mano cuando quieras.
+
+name: Añadir analytics a todas las páginas
+
+on:
+  workflow_dispatch:        # solo a mano (es una tarea puntual / cuando añadas páginas)
+
+permissions:
+  contents: write
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Inyectar analytics en las páginas que falten
+        run: python add_analytics.py
+
+      - name: Commitear si hubo cambios
+        run: |
+          if git diff --quiet; then
+            echo "Nada que cambiar; todas ya tenían analytics."
+            exit 0
+          fi
+          git config user.name  "github-actions"
+          git config user.email "github-actions@github.com"
+          git add -A
+          git commit -m "Añadir analytics (GA4) a las páginas que faltaban"
+          git push
+          echo "Páginas actualizadas y subidas."
