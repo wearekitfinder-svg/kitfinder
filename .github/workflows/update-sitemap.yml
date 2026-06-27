@@ -1,0 +1,43 @@
+# .github/workflows/update-sitemap.yml
+# Regenera sitemap.xml cada semana mirando las paginas reales del repo.
+# Asi las paginas nuevas (blog, clubes...) entran solas y la fecha se actualiza.
+# Va en el REPOSITORIO PUBLICO de la web. No necesita secretos.
+
+name: Actualizar sitemap (semanal)
+
+on:
+  schedule:
+    # 05:00 UTC del lunes (despues del resto de tareas)
+    - cron: '0 5 * * 1'
+  workflow_dispatch:        # tambien a mano
+
+permissions:
+  contents: write
+
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generar sitemap.xml
+        run: python gen_sitemap.py
+
+      - name: Commitear si hubo cambios
+        run: |
+          if git diff --quiet -- sitemap.xml; then
+            echo "Sin cambios en el sitemap."
+            exit 0
+          fi
+          git config user.name  "github-actions"
+          git config user.email "github-actions@github.com"
+          git add sitemap.xml
+          git commit -m "Actualizar sitemap (automatico)"
+          git push
+          echo "sitemap.xml actualizado."
