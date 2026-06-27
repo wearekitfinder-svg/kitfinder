@@ -167,6 +167,28 @@ function _kfInitFirebase() {
     }
   });
 
+  // ── Alertas: sellar precio de referencia en cada favorito ────────────────────
+  // La 1a vez que se guarda un favorito, anotamos su precio y stock de ese momento.
+  // Asi luego podemos detectar bajadas de precio o vuelta a stock (restock).
+  function kfStampAlerts(favs) {
+    if (!Array.isArray(favs)) return favs;
+    var now = Date.now();
+    favs.forEach(function(f) {
+      if (!f) return;
+      // solo sellar si aun no tiene precio de referencia
+      if (f.alertPrice === undefined || f.alertPrice === null) {
+        var p = parseFloat(f.price);
+        if (!isNaN(p) && p > 0) {
+          f.alertPrice = p;                       // precio ancla (no cambia)
+          f.alertCurrency = f.currency || 'EUR';
+          f.alertAdded = now;                     // cuando se marco
+          f.alertInStock = (f.available !== false); // stock en ese momento
+        }
+      }
+    });
+    return favs;
+  }
+
   // ── Cloud sync ───────────────────────────────────────────────────────────────
   function kfSyncCloud(user) {
     if (!user) return Promise.resolve();
@@ -179,7 +201,7 @@ function _kfInitFirebase() {
       localFavs.forEach(function(f) {
         if (!ids.has(f.id)) { merged.push(f); ids.add(f.id); }
       });
-      return ref.set({ favourites: merged, email: user.email, updatedAt: Date.now() }, { merge: true }).then(function() {
+      return ref.set({ favourites: kfStampAlerts(merged), email: user.email, updatedAt: Date.now() }, { merge: true }).then(function() {
         localStorage.setItem('kf_favs', JSON.stringify(merged));
         if (typeof favourites !== 'undefined') {
           favourites.length = 0;
@@ -195,8 +217,8 @@ function _kfInitFirebase() {
     if (_origSaveFavs) _origSaveFavs();
     var user = auth.currentUser;
     if (user) {
-      var favs = JSON.parse(localStorage.getItem('kf_favs') || '[]');
-      db.collection('users').doc(user.uid).set({ favourites: favs, updatedAt: Date.now() }, { merge: true }).catch(function() {});
+      var favs = kfStampAlerts(JSON.parse(localStorage.getItem('kf_favs') || '[]'));
+      db.collection('users').doc(user.uid).set({ favourites: favs, email: user.email, updatedAt: Date.now() }, { merge: true }).catch(function() {});
     }
   };
 
