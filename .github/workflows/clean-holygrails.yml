@@ -1,0 +1,47 @@
+# .github/workflows/clean-holygrails.yml
+# Revisa una vez por semana las camisetas de Holy Grails (_HG_POOL de index.html)
+# y borra SOLO las que estén claramente vendidas. Ante cualquier duda, las deja.
+# Va en el REPOSITORIO PÚBLICO de la web. No necesita secretos.
+
+name: Limpiar Holy Grails (vendidas)
+
+on:
+  schedule:
+    # 04:00 UTC del lunes (después de tiendas y tasas)
+    - cron: '0 4 * * 1'
+  workflow_dispatch:        # también a mano
+
+permissions:
+  contents: write
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Borrar las camisetas vendidas del pool
+        run: python hg_clean.py index.html --apply
+
+      - name: Validar que index.html sigue correcto
+        run: |
+          python -c "import re,json; h=open('index.html',encoding='utf-8').read(); json.loads(re.search(r'_HG_POOL\s*=\s*(\{.*?\});',h,re.S).group(1)); print('index.html OK')"
+
+      - name: Commitear si hubo cambios
+        run: |
+          if git diff --quiet -- index.html; then
+            echo "Sin vendidas esta semana; nada que borrar."
+            exit 0
+          fi
+          git config user.name  "github-actions"
+          git config user.email "github-actions@github.com"
+          git add index.html
+          git commit -m "Holy Grails: borrar camisetas vendidas (automatico)"
+          git push
+          echo "index.html actualizado."
