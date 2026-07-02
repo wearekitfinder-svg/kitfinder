@@ -15,15 +15,19 @@ def fetch_rates():
     return data['rates']
 
 def fmt(v):
-    # 4 decimales, sin ceros sobrantes
-    s = f"{v:.4f}".rstrip('0').rstrip('.')
+    # 4 cifras significativas; notacion cientifica para valores muy pequenos
+    # (RATES_TO_EUR guarda EUR por 1 unidad de divisa, y para divisas debiles
+    # eso puede ser < 0.0001, donde 4 decimales fijos redondearian a 0)
+    s = f"{v:.4g}"
+    if 'e' not in s and '.' in s:
+        s = s.rstrip('0').rstrip('.')
     return s if s else "0"
 
 def main():
     src = open(APP, encoding='utf-8').read()
-    m = re.search(r'RATES=\{([^}]*)\}', src)
+    m = re.search(r'\bRATES_TO_EUR=\{([^}]*)\}', src)
     if not m:
-        raise SystemExit("No encontré el objeto RATES={...} en app.js")
+        raise SystemExit("No encontré el objeto RATES_TO_EUR={...} en app.js")
 
     # divisas actuales (mantenemos la misma lista y orden)
     pares = re.findall(r'([A-Z]{3}):[0-9.]+', m.group(1))
@@ -35,13 +39,15 @@ def main():
         if cur == 'EUR':
             nuevos.append("EUR:1"); continue
         if cur in api and api[cur] > 0:
-            nuevos.append(f"{cur}:{fmt(api[cur])}"); cambiadas += 1
+            # la API devuelve unidades de divisa por 1 EUR; RATES_TO_EUR
+            # guarda el reciproco (EUR por 1 unidad de divisa)
+            nuevos.append(f"{cur}:{fmt(1/api[cur])}"); cambiadas += 1
         else:
             # si la API no la trae, conservar el valor viejo
             viejo = re.search(rf'{cur}:([0-9.]+)', m.group(1)).group(1)
             nuevos.append(f"{cur}:{viejo}")
 
-    nuevo_obj = "RATES={" + ",".join(nuevos) + "}"
+    nuevo_obj = "RATES_TO_EUR={" + ",".join(nuevos) + "}"
     out = src[:m.start()] + nuevo_obj + src[m.end():]
 
     if out == src:
