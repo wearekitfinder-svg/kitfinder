@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Shirt Value Checker — Find Prices by Team, Size & Season | Kit Finder</title>
+<meta name="description" content="Check how many vintage football shirts are listed for any team, size and season — and see if a price is a bargain."/>
+<link rel="canonical" href="https://wearekitfinder.com/shirt-checker"/>
+<meta name="robots" content="index, follow"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/styles.css?v=171"/>
+<link rel="icon" href="/images/favicon.png"/>
+<style>
+  .sc-wrap{max-width:480px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+  .sc-logo{display:flex;align-items:center;gap:12px;margin-bottom:2rem;text-decoration:none;}
+  .sc-logo img{height:52px;}
+  .sc-logo span{font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:2px;color:#1e2530;}
+  .sc-wrap h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;color:#1e2530;margin-bottom:.4rem;line-height:1.2;}
+  .sc-wrap p.sc-sub{font-size:15px;color:#5a6472;margin-bottom:1.8rem;}
+  .sc-field{position:relative;margin-bottom:1.2rem;}
+  .sc-label{display:block;font-size:13px;font-weight:600;color:#1e2530;margin-bottom:6px;}
+  .sc-team-input{width:100%;box-sizing:border-box;padding:12px 14px;font-size:15px;font-family:"Outfit",sans-serif;border:1.5px solid #e2e6ea;border-radius:10px;outline:none;}
+  .sc-team-input:focus,.sc-team-input.open{border-color:#1FAF6D;}
+  .sc-team-dd{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:280px;overflow-y:auto;background:#fff;border:1px solid #e2e6ea;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.08);z-index:20;}
+  .sc-team-dd.open{display:block;}
+  .sc-team-opt{padding:9px 14px;font-size:14px;font-family:"Outfit",sans-serif;color:#1e2530;cursor:pointer;border-bottom:.5px solid #f4f5f7;display:flex;justify-content:space-between;align-items:center;}
+  .sc-team-opt:last-child{border-bottom:none;}
+  .sc-team-opt:hover{background:#f4f5f7;}
+  .sc-team-opt .sc-team-country{font-size:12px;color:#9aa3ad;}
+  .sc-team-empty{padding:9px 14px;font-size:13px;color:#9aa3ad;font-style:italic;}
+</style>
+<script src="/analytics.js?v=1" defer></script>
+</head>
+<body style="background:#f4f5f7;font-family:'Outfit',sans-serif;">
+<div class="sc-wrap">
+  <a class="sc-logo" href="/">
+    <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
+    <span>KIT FINDER</span>
+  </a>
+  <h1>Shirt Value Checker</h1>
+  <p class="sc-sub">Pick a team to see how many shirts are listed, the average price, and whether a deal is a bargain.</p>
+
+  <div class="sc-field">
+    <label class="sc-label" for="teamSearchInput">Team</label>
+    <input class="sc-team-input" id="teamSearchInput" type="text" placeholder="Search team…" autocomplete="off"
+      oninput="onTeamInput(this.value)" onfocus="onTeamFocus()" onblur="setTimeout(onTeamBlur,200)"/>
+    <div class="sc-team-dd" id="teamSearchDropdown"></div>
+  </div>
+
+  <!-- TODO (next iteration): size / season / version fields + live count, avg price, bargain indicator -->
+</div>
+<script src="/shirt-checker.js?v=1" defer></script>
+</body>
+</html>
