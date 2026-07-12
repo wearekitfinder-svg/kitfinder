@@ -4,17 +4,18 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Shirt Value Checker — Find Prices by Team, Size & Season | Kit Finder</title>
-<meta name="description" content="Check how many vintage football shirts are listed for any team, size and season — and see if a price is a bargain."/>
+<meta name="description" content="Check how many vintage football shirts are listed for any team, size and season, and see the average price."/>
 <link rel="canonical" href="https://wearekitfinder.com/shirt-checker"/>
 <meta name="robots" content="index, follow"/>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="/styles.css?v=171"/>
 <link rel="icon" href="/images/favicon.png"/>
 <style>
-  .sc-wrap{max-width:480px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
-  .sc-logo{display:flex;align-items:center;gap:12px;margin-bottom:2rem;text-decoration:none;}
+  .sc-wrap{max-width:920px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
+  .sc-fields-row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;}
+  .sc-fields-row .sc-field{flex:1 1 200px;min-width:180px;margin-bottom:1.2rem;}
+  .sc-logo{display:flex;align-items:center;margin-bottom:2rem;text-decoration:none;}
   .sc-logo img{height:52px;}
-  .sc-logo span{font-family:"Bebas Neue",sans-serif;font-size:28px;letter-spacing:2px;color:#1e2530;}
   .sc-wrap h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;color:#1e2530;margin-bottom:.4rem;line-height:1.2;}
   .sc-wrap p.sc-sub{font-size:15px;color:#5a6472;margin-bottom:1.8rem;}
   .sc-field{position:relative;margin-bottom:1.2rem;}
@@ -28,6 +29,49 @@
   .sc-team-opt:hover{background:#f4f5f7;}
   .sc-team-opt .sc-team-country{font-size:12px;color:#9aa3ad;}
   .sc-team-empty{padding:9px 14px;font-size:13px;color:#9aa3ad;font-style:italic;}
+  .sc-dd-trigger{width:100%;box-sizing:border-box;padding:12px 14px;font-size:15px;font-family:"Outfit",sans-serif;border:1.5px solid #e2e6ea;border-radius:10px;outline:none;background:#fff;color:#1e2530;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;}
+  .sc-dd-trigger:hover,.sc-dd-trigger.open{border-color:#1FAF6D;}
+  .sc-dd-trigger-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .sc-dd-chevron{flex-shrink:0;color:#9aa3ad;transition:transform .15s;}
+  .sc-dd-trigger.open .sc-dd-chevron{transform:rotate(180deg);}
+  .sc-dd-panel{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:280px;overflow-y:auto;background:#fff;border:1px solid #e2e6ea;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.08);z-index:20;padding:10px;}
+  .sc-dd-panel.open{display:block;}
+  .sc-dd-list{display:flex;flex-direction:column;gap:2px;}
+  .sc-dd-option{padding:9px 14px;font-size:14px;font-family:"Outfit",sans-serif;color:#1e2530;cursor:pointer;border-radius:8px;user-select:none;display:flex;align-items:center;justify-content:space-between;}
+  .sc-dd-option:hover{background:#f4f5f7;}
+  .sc-dd-option.active{background:#1FAF6D;color:#fff;font-weight:600;}
+  .sc-decade-option{font-weight:600;}
+  .sc-accordion-chevron{flex-shrink:0;color:#9aa3ad;transition:transform .15s;}
+  .sc-decade-option.expanded .sc-accordion-chevron{transform:rotate(-90deg);}
+  .sc-season-panel{right:auto;width:150px;max-height:none;overflow:visible;transition:width .12s;}
+  .sc-season-panel.wide{width:300px;}
+  .sc-season-flex{display:flex;gap:8px;align-items:flex-start;}
+  .sc-decade-col{flex:0 0 auto;min-width:120px;}
+  .sc-pairs-col{flex:1 1 auto;min-width:130px;max-height:260px;overflow-y:auto;border-left:1px solid #e2e6ea;padding-left:8px;}
+  .sc-clear-row{display:flex;justify-content:flex-end;margin-bottom:.8rem;}
+  .sc-clear-btn{background:none;border:none;color:#5a6472;font-size:13px;font-family:"Outfit",sans-serif;font-weight:600;cursor:pointer;padding:4px 0;text-decoration:underline;}
+  .sc-clear-btn:hover{color:#1FAF6D;}
+  .sc-count-box{margin:1.6rem 0;text-align:center;padding:1.4rem 1rem;background:#fff;border-radius:14px;border:1px solid #e2e6ea;}
+  .sc-count-num{font-family:"Bebas Neue",sans-serif;font-size:clamp(4.5rem,14vw,7.5rem);color:#1FAF6D;line-height:1;letter-spacing:1px;transition:opacity .15s;}
+  .sc-count-num.sc-count-loading{opacity:.4;}
+  .sc-count-label{font-size:13px;color:#5a6472;margin-top:4px;}
+  .sc-search-btn{width:100%;box-sizing:border-box;padding:14px;background:#1FAF6D;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;font-family:"Outfit",sans-serif;cursor:pointer;margin-top:.4rem;}
+  .sc-search-btn:hover{background:#178a55;}
+  .sc-search-btn:disabled{background:#c7ccd2;cursor:default;}
+  .sc-avg-box{margin:1.6rem 0 1rem;text-align:center;display:none;}
+  .sc-avg-label{font-size:12px;color:#5a6472;text-transform:uppercase;letter-spacing:.5px;}
+  .sc-avg-value{font-family:"Bebas Neue",sans-serif;font-size:1.8rem;color:#1e2530;}
+  .sc-result-card{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid #e2e6ea;border-radius:12px;padding:10px;margin-bottom:10px;text-decoration:none;color:inherit;}
+  .sc-result-img{width:64px;height:64px;object-fit:cover;border-radius:8px;background:#f4f5f7;flex-shrink:0;}
+  .sc-result-info{flex:1;min-width:0;}
+  .sc-result-name{font-size:14px;font-weight:600;color:#1e2530;line-height:1.3;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .sc-result-store{font-size:12px;color:#9aa3ad;}
+  .sc-result-price{font-size:15px;font-weight:700;color:#1FAF6D;white-space:nowrap;}
+  .sc-results-empty,.sc-results-loading{padding:2rem 1rem;text-align:center;color:#9aa3ad;font-size:14px;}
+  .sc-history-box{background:#fff;border:1px dashed #e2e6ea;border-radius:12px;padding:1.4rem 1rem;text-align:center;}
+  .sc-history-name{font-size:14px;font-weight:600;color:#1e2530;margin-bottom:6px;}
+  .sc-history-detail{font-size:13px;color:#5a6472;}
+  .sc-history-price{font-weight:700;color:#1FAF6D;}
 </style>
 <script src="/analytics.js?v=1" defer></script>
 </head>
@@ -35,19 +79,87 @@
 <div class="sc-wrap">
   <a class="sc-logo" href="/">
     <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
-    <span>KIT FINDER</span>
   </a>
   <h1>Shirt Value Checker</h1>
-  <p class="sc-sub">Pick a team to see how many shirts are listed, the average price, and whether a deal is a bargain.</p>
+  <p class="sc-sub">Pick a team to see how many shirts are listed and the average price.</p>
 
-  <div class="sc-field">
-    <label class="sc-label" for="teamSearchInput">Team</label>
-    <input class="sc-team-input" id="teamSearchInput" type="text" placeholder="Search team…" autocomplete="off"
-      oninput="onTeamInput(this.value)" onfocus="onTeamFocus()" onblur="setTimeout(onTeamBlur,200)"/>
-    <div class="sc-team-dd" id="teamSearchDropdown"></div>
+  <div class="sc-fields-row">
+    <div class="sc-field">
+      <label class="sc-label" for="teamSearchInput">Team</label>
+      <input class="sc-team-input" id="teamSearchInput" type="text" placeholder="Search team…" autocomplete="off"
+        oninput="onTeamInput(this.value)" onfocus="onTeamFocus()" onblur="setTimeout(onTeamBlur,200)"/>
+      <div class="sc-team-dd" id="teamSearchDropdown"></div>
+    </div>
+
+    <div class="sc-field">
+      <label class="sc-label">Size</label>
+      <button type="button" class="sc-dd-trigger" id="sizeTrigger" onclick="toggleDd('size')">
+        <span class="sc-dd-trigger-text" id="sizeTriggerText">Any size</span>
+        <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="sc-dd-panel" id="sizePanel">
+        <div class="sc-dd-list" id="sizeList">
+          <div class="sc-dd-option" data-size="XS" onclick="pickSize(this,event)">XS</div>
+          <div class="sc-dd-option" data-size="S" onclick="pickSize(this,event)">S</div>
+          <div class="sc-dd-option" data-size="M" onclick="pickSize(this,event)">M</div>
+          <div class="sc-dd-option" data-size="L" onclick="pickSize(this,event)">L</div>
+          <div class="sc-dd-option" data-size="XL" onclick="pickSize(this,event)">XL</div>
+          <div class="sc-dd-option" data-size="XXL" onclick="pickSize(this,event)">XXL</div>
+          <div class="sc-dd-option" data-size="3XL" onclick="pickSize(this,event)">3XL</div>
+          <div class="sc-dd-option" data-size="4XL" onclick="pickSize(this,event)">4XL</div>
+          <div class="sc-dd-option" data-size="Woman" onclick="pickSize(this,event)">Woman</div>
+          <div class="sc-dd-option" data-size="Kids" onclick="pickSize(this,event)">Kids</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sc-field">
+      <label class="sc-label">Season</label>
+      <button type="button" class="sc-dd-trigger" id="seasonTrigger" onclick="toggleDd('season')">
+        <span class="sc-dd-trigger-text" id="seasonTriggerText">Any season</span>
+        <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="sc-dd-panel sc-season-panel" id="seasonPanel">
+        <div class="sc-season-flex" id="seasonList"></div>
+      </div>
+    </div>
+
+    <div class="sc-field">
+      <label class="sc-label">Version</label>
+      <button type="button" class="sc-dd-trigger" id="versionTrigger" onclick="toggleDd('version')">
+        <span class="sc-dd-trigger-text" id="versionTriggerText">Any version</span>
+        <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="sc-dd-panel" id="versionPanel">
+        <div class="sc-dd-list" id="versionList">
+          <div class="sc-dd-option" data-version="Local" onclick="pickVersion(this,event)">Home</div>
+          <div class="sc-dd-option" data-version="Visitante" onclick="pickVersion(this,event)">Away</div>
+          <div class="sc-dd-option" data-version="Tercera" onclick="pickVersion(this,event)">Third</div>
+          <div class="sc-dd-option" data-version="Cuarta" onclick="pickVersion(this,event)">Fourth</div>
+          <div class="sc-dd-option" data-version="Portero" onclick="pickVersion(this,event)">Goalkeeper</div>
+          <div class="sc-dd-option" data-version="Otro" onclick="pickVersion(this,event)">Other</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- TODO (next iteration): size / season / version fields + live count, avg price, bargain indicator -->
+  <div class="sc-clear-row">
+    <button class="sc-clear-btn" onclick="clearAllFilters()">Clear all</button>
+  </div>
+
+  <div class="sc-count-box">
+    <div class="sc-count-num" id="liveCountNum">–</div>
+    <div class="sc-count-label" id="countLabel">shirts available</div>
+  </div>
+
+  <button class="sc-search-btn" id="searchBtn" onclick="runSearch()">Search</button>
+
+  <div class="sc-avg-box" id="avgBox">
+    <div class="sc-avg-label">Average price</div>
+    <div class="sc-avg-value" id="avgValue">—</div>
+  </div>
+
+  <div class="sc-results" id="resultsBox"></div>
 </div>
 <script src="/shirt-checker.js?v=1" defer></script>
 </body>
