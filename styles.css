@@ -136,7 +136,7 @@ body{overflow-x:hidden!important;overflow-y:auto!important;min-height:0!importan
 
 /* ── World Cup 2026 Section ── */
 .wc-section{position:relative;overflow:hidden}
-.wc-hero{position:relative;min-height:96vh;display:flex;align-items:center;justify-content:center;cursor:default;background:url(images/collage_mundial.jpg) center center/cover no-repeat}
+.wc-hero{position:relative;min-height:96vh;display:flex;align-items:center;justify-content:center;cursor:default;background:url(images/long_sleeve_hero_v3.jpg) center center/cover no-repeat}
 .wc-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,15,30,.45),rgba(10,15,30,.35))}
 .wc-hero-content{position:relative;z-index:2;text-align:center;max-width:700px;padding:2rem 1.5rem;display:flex;flex-direction:column;align-items:center;gap:1.2rem}
 .wc-hero-title{font-family:"Bebas Neue",sans-serif;font-size:clamp(36px,6vw,64px);color:#fff;letter-spacing:3px;line-height:1.05;text-shadow:0 4px 24px rgba(0,0,0,.5)}
@@ -150,7 +150,7 @@ body{overflow-x:hidden!important;overflow-y:auto!important;min-height:0!importan
 
 /* ── World Cup Results Header ── */
 .wc-results-header{width:100%}
-.wc-results-hero{position:relative;min-height:28vh;display:flex;align-items:center;background:url(images/collage_mundial.jpg) center center/cover no-repeat}
+.wc-results-hero{position:relative;min-height:28vh;display:flex;align-items:center;background:url(images/bg-shirts-p3.jpg) center center/cover no-repeat}
 .wc-results-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,15,30,.5),rgba(10,15,30,.4))}
 .wc-results-inner{position:relative;z-index:2;display:flex;align-items:center;gap:2rem;max-width:1200px;margin:0 auto;padding:2rem 2rem;width:100%}
 .wc-results-logo-link{flex-shrink:0}

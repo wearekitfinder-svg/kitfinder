@@ -9,11 +9,11 @@ HOY = datetime.date.today().isoformat()
 
 # (1) Rutas que viven dentro del index.html (la SPA las dibuja con JS).
 #     No son archivos: hay que listarlas a mano.
-SPA_ROUTES = ["/", "/results", "/match-worn", "/world-cup-kits", "/why", "/about", "/valuation"]
+SPA_ROUTES = ["/", "/results", "/match-worn", "/long-sleeve-kits", "/why", "/about", "/valuation"]
 
 def prioridad(ruta):
     if ruta == "/": return ("daily", "1.0")
-    if ruta in ("/results", "/match-worn", "/world-cup-kits"): return ("daily", "0.9")
+    if ruta in ("/results", "/match-worn", "/long-sleeve-kits"): return ("daily", "0.9")
     if ruta.startswith(("/clubs/", "/national/", "/leagues/")): return ("weekly", "0.8")
     if ruta.startswith("/blog"): return ("weekly", "0.7")
     if ruta in ("/about", "/why", "/valuation"): return ("monthly", "0.5")
