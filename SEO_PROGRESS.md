@@ -132,3 +132,27 @@ Commit: `06ffed5`.
 3. **Precisión histórica** — lista completa entregada al usuario en el chat para su revisión dato por dato. Nada de esto se ha tocado en el código; si el usuario pide correcciones, será un commit aparte posterior a su revisión.
 4. ~~`og:image`~~ — corregido.
 5. **Colombia y Ghana añadidos** al ItemList del home y al hub de `/national` — fuera del alcance estricto pedido originalmente, pero corrige un bug preexistente menor. Sigue pendiente de confirmación del usuario (no revertido, sigue en la rama).
+
+---
+
+## Ronda 4 — rama `fix-redirects-agosto`: Search Console marcaba 10 URLs como "Página con redirección"
+
+Investigado con `curl -I` en producción (no era caché de Search Console — confirmado con timestamps del propio día). Dos causas distintas:
+
+### Causa A — 9 rutas SPA devolvían un 308 real hacia `/` (bug de producto, no solo SEO)
+
+`/results`, `/match-worn`, `/about`, `/privacy`, `/terms`, `/affiliate`, `/favourites`, `/profile`, `/settings`. La regla `_redirects` de cada una (`/results /index.html 200`) debía ser un rewrite interno transparente, pero Cloudflare Pages redirige automáticamente cualquier petición literal a `/index.html` hacia `/` — el rewrite de `_redirects` vuelve a pasar por esa normalización y genera un 308 real visible para el cliente y para Google. Mismo mecanismo que ya vimos con `/why` y `/long-sleeve-kits`.
+
+**Resuelto** con el mismo patrón: 9 Cloudflare Pages Functions nuevas (`functions/results.js`, `functions/match-worn.js`, `functions/about.js`, `functions/privacy.js`, `functions/terms.js`, `functions/affiliate.js`, `functions/favourites.js`, `functions/profile.js`, `functions/settings.js`), cada una sirviendo `index.html` real vía `context.env.ASSETS.fetch()` apuntando a `/` (no a `/index.html`, que dispara la misma normalización). Sin `HTMLRewriter` — estas rutas no necesitan meta único, solo dejar de redirigir. Se quitaron las 9 líneas ahora redundantes de `_redirects` (quedan solo `/league/*` y `/country/*`, sin tocar).
+
+Verificado en local con `wrangler pages dev` (en puerto limpio — un proceso huérfano de sesiones de prueba anteriores en el puerto 8788 dio falsos negativos al principio, con la versión vieja de `_redirects` todavía respondiendo; resuelto matando todos los procesos node y usando un puerto nuevo): las 9 rutas devuelven 200 sin `Location`, con `app.js`/`auth.js`/`info.js` cargados (interactividad intacta). Home, `/clubs/barcelona/`, `/shirt-checker`, `/league/*`, `/country/*` sin cambios. Commit `8ac3240`.
+
+### Causa B — 39 páginas estáticas (25 clubs + 4 leagues + 7 national + 3 hubs) con canonical contradictorio
+
+Cada una declara `<link rel="canonical">` **sin barra final**, pero Cloudflare Pages solo sirve 200 en la versión **con barra final** — la versión sin barra (la que la propia página declara canónica) hace 308 hacia la versión con barra. Mismo patrón en `sitemap.xml`, el `ItemList` del home, y todos los enlaces internos (`.kf-related`, enlaces de los hubs): todo sin barra, apuntando sistemáticamente a la URL que redirige en vez de la que sirve contenido.
+
+**Pendiente**: el usuario va a revisar el ajuste "Trailing Slash" en el dashboard de Cloudflare Pages (Settings → Builds & deployments) antes de tocar código. Si ese ajuste resuelve las 39 páginas, no hace falta ningún cambio de archivo. Si no, la Opción 2 (Functions + `HTMLRewriter` para `/clubs/*`, `/leagues/*`, `/national/*`, sacándolas del `exclude` de `_routes.json`) queda como plan B.
+
+### Hallazgo aparte, pendiente, NO tocado
+
+`/clubs/liverpool`, `/clubs/manchester-united` y `/clubs/arsenal` (páginas originales, previas a la rama `seo-improvements-agosto`) enlazan en su sección "Also popular" a `/national/england`, que no existe como página propia — cae en el fallback de la SPA y sirve el HTML genérico del home con su propio título (soft-404 silencioso, ni 404 real ni contenido real). Dos opciones a decidir más adelante: crear `/national/england` como página real, o quitar ese enlace de las 3 páginas afectadas. No forma parte del alcance de esta ronda.
