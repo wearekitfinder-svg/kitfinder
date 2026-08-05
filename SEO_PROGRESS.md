@@ -104,6 +104,27 @@ El `ItemList` JSON-LD de `index.html` ahora tiene 32 posiciones (10 clubes + 5 s
 - `502aa43` — fix menor: `gen_sitemap.py` había quedado fuera del commit anterior por un error de pathspec en el `git add`.
 - `3cfdc99` — fix: extensión correcta de `og:image`/`twitter:image` en 39 archivos.
 
+## Ronda 3 — verificación factual con fuentes reales (WebSearch, no memoria)
+
+El usuario verificó por su cuenta 5 de las afirmaciones marcadas como dudosas en la ronda 2 y confirmó que eran errores reales. Se verificó cada una con búsquedas web antes de tocar el código (fuentes citadas en los commits):
+
+- **Tottenham**: Nike desde 2021 → corregido a 2017 (releva a Under Armour, cuyo contrato era 2012-17). Consecuencia: la camiseta de la final de Champions 2018-19 se reasignó al bloque de Nike, no Puma/Under Armour como decía antes.
+- **Tottenham**: Admiral → Hummel en 1985 saltaba a Le Coq Sportif (1980-85) de por medio. Corregido con los 3 proveedores y sus años.
+- **Inter Milan**: la afirmación "evitó marca de fabricante por tradición durante décadas" no tiene fuente — se eliminó y se sustituyó por datos verificados (Mecsport 1982-86, Misura sponsor 1982-90).
+- **Borussia Dortmund**: Nike "mid-1990s" → corregido a 1990 (segundo club europeo de Nike tras el PSG).
+- **Borussia Dortmund**: "Continentale" descrito como Continental (neumáticos) — es incorrecto. Die Continentale es una aseguradora alemana sin relación con Continental. Corregido.
+
+Commit: `02e0b41`.
+
+Adicionalmente se resolvieron los 2 puntos que quedaban pendientes de verificar:
+
+- **Atlético Madrid**: el texto atribuía la llegada de Nike a "Diego Simeone rebuilt the club" (2010s). Verificado: Nike es proveedor desde 2001-02, una década antes de que Simeone llegara (2011) — no era solo la fecha, era una relación causal inventada. Corregido sin perder el hecho real de que el título 2013-14 se ganó en camiseta Nike.
+- **Corinthians**: "a high-profile partnership with a media conglomerate" ahora nombra explícitamente Media Sports Investment (MSI), 2004-2007, verificado en Wikipedia.
+
+Commit: `06ffed5`.
+
+**Nota**: las formulaciones "vagas" restantes (décadas sin marca de fabricante nombrada, sobre todo en Peñarol y Nacional Uruguay, donde ninguna década tiene marca asociada) no se han tocado — el usuario indicó que no son errores, solo imprecisas, y que decidiría si prefiere reescribirlas para sonar menos precisas de lo que son. Pendiente de esa decisión, no de una verificación factual.
+
 ## Pendiente de revisión humana (actualizado)
 
 1. ~~Trade-off de UX~~ — resuelto (ver arriba).
