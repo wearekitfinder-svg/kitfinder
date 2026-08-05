@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /.netlify/
 
 Sitemap: https://wearekitfinder.com/sitemap.xml
