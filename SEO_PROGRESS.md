@@ -20,22 +20,24 @@ La función real de "comprobar el valor de una camiseta" ya vive en `/shirt-chec
 
 ## Tarea 1 — Meta/OG/JSON-LD para `/long-sleeve-kits` y `/why`
 
-**Archivos nuevos**: `long-sleeve-kits/index.html`, `why/index.html`.
-**Archivo modificado**: `_redirects`.
+### Historial de esta tarea (revisado tras detectar una regresión real)
 
-### Cómo funciona el routing real (corrección a mi propia hipótesis inicial)
+La primera implementación (commit `7b314ef`) creó `long-sleeve-kits/index.html` y `why/index.html` como HTML estático puro (mismo patrón que las páginas de club) y quitó esas dos rutas de `_redirects` para que Cloudflare sirviera ese archivo en vez de reenviar al SPA.
 
-Antes de tocar nada investigué `_redirects` (no `_routes.json`, que solo gobierna qué rutas invocan Cloudflare Pages Functions — y aquí no hay ninguna Function de tipo catch-all para el SPA). El fallback del SPA en este sitio lo gestiona **`_redirects`**, con reglas explícitas tipo `/why /index.html 200`. Los clubes/ligas/países existentes funcionan como páginas estáticas simplemente porque **no** están en `_redirects` — Cloudflare Pages sirve el archivo físico directamente si existe.
+**Se probó en local con `wrangler pages dev` (replicando el comportamiento real de Cloudflare Pages, incluyendo `_redirects`) y se confirmó una regresión de producto real, no solo teórica**: esas dos páginas estáticas no cargaban `app.js`, `auth.js` ni `info.js` — solo `analytics.js`. Cualquier usuario que entrara directo a `/long-sleeve-kits` o `/why` (bookmark, link compartido, resultado de Google, botón "atrás/adelante" del navegador, o simplemente refrescar la página) perdía por completo la funcionalidad real (el buscador de manga larga / el overlay "Why Kit Finder") y solo veía un lander con un botón que le mandaba de vuelta a `/` sin ejecutar la búsqueda. La navegación *interna* del sitio (menú `nav-link` con `onclick="searchLongSleeve()"` / `onclick="showInfo('why',event)"`) no se veía afectada porque nunca llega a pedir esa URL al servidor — pero cualquier entrada externa sí.
 
-Por eso, para que `/long-sleeve-kits` y `/why` sirvan mi HTML nuevo en vez de redirigir al SPA, **quité esas dos líneas de `_redirects`**. `_routes.json` no necesitó ningún cambio (mi hipótesis original en el prompt de trabajo suponía que sí, pero al investigar confirmé que no aplica aquí).
+**Corregido en el commit `28ad936`**, con una solución distinta: en vez de servir HTML estático, se añadieron `functions/long-sleeve-kits.js` y `functions/why.js` (Cloudflare Pages Functions). Cada una pide el `index.html` real de la SPA vía `context.env.ASSETS.fetch()` y usa `HTMLRewriter` para sustituir *solo* las etiquetas del `<head>` (title, description, keywords, canonical, OG, Twitter) e inyectar un JSON-LD `WebPage` + `BreadcrumbList` propio — el `<body>` (y por tanto `app.js`/`auth.js`/`info.js` y toda la interactividad) llega intacto al navegador. Mismo documento para bots y para usuarios reales (no es cloaking: nadie recibe contenido distinto de nadie).
 
-### Qué contienen las páginas nuevas
+Verificado en local (`wrangler pages dev`) tras el fix:
+- `GET /long-sleeve-kits` → 200, `<title>` único, `app.js`/`auth.js`/`info.js` presentes.
+- `GET /why` → 200, `<title>` único, `app.js`/`auth.js`/`info.js` presentes.
+- `/clubs/barcelona`, `/results`, `/match-worn` sin cambios de comportamiento.
 
-Mismo patrón que `clubs/barcelona`: title/description/keywords/canonical/OG/Twitter únicos, `meta robots`, y JSON-LD `WebPage` (no `CollectionPage`, porque no son colecciones de productos por club — son páginas de herramienta/información del sitio) con `isPartOf: WebSite` y `BreadcrumbList`.
+Se eliminaron `long-sleeve-kits/index.html` y `why/index.html` (ya redundantes) y se volvió a añadir `/long-sleeve-kits` y `/why` a `SPA_ROUTES` en `gen_sitemap.py`, porque al dejar de ser carpetas físicas ya no las detecta `descubrir_carpetas()`.
 
-**Decisión a revisar**: el contenido es un wrapper estático simple (logo + texto + CTA hacia `/`), no la experiencia interactiva real (el buscador de manga larga, el overlay de "Why"). Esto es una **regresión de UX en la navegación directa/hard-refresh**: antes, visitar `/why` directamente mostraba el overlay interactivo vía el SPA; ahora muestra esta página estática con un botón "Start searching now" que lleva a `/`. Es el mismo trade-off que ya asumen las páginas de club/liga/país existentes (son landers con CTA, no la búsqueda embebida), así que sigue el patrón establecido — pero es una regresión real de la experiencia de usuario en esas dos rutas específicas a cambio de indexabilidad SEO. Si se prefiere no perder esa interactividad en el hard-refresh, habría que revertir el cambio en `_redirects` y buscar otro mecanismo (p. ej. inyectar meta tags dinámicamente en el `index.html` del SPA vía Cloudflare Pages Function, bastante más complejo).
+**Nota sobre `_redirects`**: las líneas de `/long-sleeve-kits` y `/why` siguen sin estar en `_redirects` (correcto — ahora la Function es quien resuelve la ruta directamente, no necesita ese reenvío).
 
-**No se tocó** `/results` ni `/match-worn`, como se pidió explícitamente.
+**No se tocó** `/results` ni `/match-worn`, como se pidió explícitamente. Durante la verificación se detectó que ambas rutas devuelven un `308` a `/` en `wrangler pages dev` local — se confirmó comparando contra el commit `ae67d72` (previo a todo el trabajo de hoy) que ese comportamiento ya existía antes, es una particularidad del servidor de desarrollo local y no algo introducido por este trabajo.
 
 ---
 
@@ -89,10 +91,23 @@ El `ItemList` JSON-LD de `index.html` ahora tiene 32 posiciones (10 clubes + 5 s
 
 ## Todo lo pedido se completó. Nada quedó bloqueado.
 
-## Pendiente de revisión humana (resumen para el usuario)
+## Ronda 2 (tras revisión del usuario): 4 puntos resueltos
 
-1. **Trade-off de UX en `/long-sleeve-kits` y `/why`**: hard-refresh/visita directa ahora muestra un lander estático en vez de la experiencia interactiva. Ver Tarea 1 arriba.
-2. **Fechas/marcas de patrocinador con menor certeza** en algunas de las 15 páginas de club nuevas — revisar antes de publicar si la precisión histórica es crítica.
-3. **Slug `nacional-uruguay`** en vez de `nacional` — confirmar que es el criterio deseado.
-4. **Colombia y Ghana añadidos** al ItemList del home y al hub de `/national` — fuera del alcance estricto pedido, pero corrige un bug preexistente menor.
-5. **`og:image` usa `og-image.png`** en todas las páginas de club (nuevas y viejas) pero el archivo real en `images/` es `og-image.jpg` (el home sí usa `.jpg`). Este bug **ya existía** en las 10 páginas de club originales antes de este trabajo — no lo tocué por estar fuera de alcance, pero probablemente vale la pena corregirlo en una pasada aparte (afecta las 25 páginas de club, no solo las 15 nuevas).
+1. **UX de `/long-sleeve-kits` y `/why` — corregido**, no solo explicado. Ver la sección reescrita de Tarea 1 arriba: se reemplazó el HTML estático por una Cloudflare Pages Function con `HTMLRewriter` que sirve la SPA real (interactividad 100% intacta) con `<head>` propio por ruta. Verificado en vivo con `wrangler pages dev`, no solo por lectura de código. Commit `28ad936`.
+2. **Slug de Uruguay — confirmado**: `clubs/nacional-uruguay`. Verificado que no colisiona con ningún otro slug existente en `clubs/`, `national/` ni `leagues/` (no existe ningún otro "nacional-*" ni "nacional" a secas en el repo).
+3. **Precisión histórica de los 15 clubes nuevos**: lista completa de afirmaciones formuladas de forma general (y algunas dudas adicionales detectadas en esta ronda de revisión, más allá de lo que se había marcado la primera vez) entregada directamente al usuario en la conversación — no se publicó ni modificó ningún dato histórico sin su revisión.
+4. **`og:image` — corregido**, commit separado `3cfdc99` ("fix: correct og:image extension (pre-existing bug)"). El alcance real era mayor de lo documentado inicialmente: no solo las 25 páginas de club, sino también las 4 páginas de liga + hub `/leagues`, y las 7 páginas de selección + hub `/national` — **39 archivos, 78 ocurrencias** de `og-image.png` → `og-image.jpg`.
+
+## Commits añadidos en esta ronda
+
+- `28ad936` — fix de `/long-sleeve-kits` y `/why` (Function + HTMLRewriter en vez de HTML estático).
+- `502aa43` — fix menor: `gen_sitemap.py` había quedado fuera del commit anterior por un error de pathspec en el `git add`.
+- `3cfdc99` — fix: extensión correcta de `og:image`/`twitter:image` en 39 archivos.
+
+## Pendiente de revisión humana (actualizado)
+
+1. ~~Trade-off de UX~~ — resuelto (ver arriba).
+2. ~~Slug `nacional-uruguay`~~ — confirmado, sin colisión.
+3. **Precisión histórica** — lista completa entregada al usuario en el chat para su revisión dato por dato. Nada de esto se ha tocado en el código; si el usuario pide correcciones, será un commit aparte posterior a su revisión.
+4. ~~`og:image`~~ — corregido.
+5. **Colombia y Ghana añadidos** al ItemList del home y al hub de `/national` — fuera del alcance estricto pedido originalmente, pero corrige un bug preexistente menor. Sigue pendiente de confirmación del usuario (no revertido, sigue en la rama).
