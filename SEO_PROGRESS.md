@@ -151,7 +151,16 @@ Verificado en local con `wrangler pages dev` (en puerto limpio — un proceso hu
 
 Cada una declara `<link rel="canonical">` **sin barra final**, pero Cloudflare Pages solo sirve 200 en la versión **con barra final** — la versión sin barra (la que la propia página declara canónica) hace 308 hacia la versión con barra. Mismo patrón en `sitemap.xml`, el `ItemList` del home, y todos los enlaces internos (`.kf-related`, enlaces de los hubs): todo sin barra, apuntando sistemáticamente a la URL que redirige en vez de la que sirve contenido.
 
-**Pendiente**: el usuario va a revisar el ajuste "Trailing Slash" en el dashboard de Cloudflare Pages (Settings → Builds & deployments) antes de tocar código. Si ese ajuste resuelve las 39 páginas, no hace falta ningún cambio de archivo. Si no, la Opción 2 (Functions + `HTMLRewriter` para `/clubs/*`, `/leagues/*`, `/national/*`, sacándolas del `exclude` de `_routes.json`) queda como plan B.
+**Resuelto sin tocar el dashboard.** Antes de buscar el ajuste "Trailing Slash", se investigó si existía realmente: no lo hay en Cloudflare Pages clásico (evidencia de la comunidad oficial de Cloudflare — un feature request abierto desde 2021 pidiendo exactamente esto sigue sin resolverse). Tampoco hay `wrangler.toml` con sección `[assets]` en este repo (el sistema moderno "Workers Static Assets" sí tiene `html_handling`, pero requeriría migrar de Pages clásico a ese modelo — fuera de alcance para esta noche). Se confirmó que el repo nunca tuvo esa sección: existió un `wrangler.toml` mínimo hace tiempo (solo `name` y `pages_build_output_dir`, sin `[assets]`) y fue borrado.
+
+Se aplicó directamente la Opción 2: 3 Cloudflare Pages Functions con rutas catch-all — `functions/clubs/[[path]].js`, `functions/leagues/[[path]].js`, `functions/national/[[path]].js` — con lógica compartida en `functions/_lib/serve-category.js` (prefijo `_` para que Cloudflare no lo trate como ruta propia). Se sacaron `/clubs/*`, `/leagues/*`, `/national/*` del `exclude` de `_routes.json` para que las Functions puedan interceptar.
+
+**Dos bugs no triviales encontrados y corregidos durante la verificación** (ver commit `356616d` para el detalle completo):
+
+1. `curl -I` (HEAD) daba falsos negativos. Las Functions solo exportaban `onRequestGet`, y Cloudflare solo enruta peticiones HEAD a esa función cuando NO existe un directorio físico en disco con el mismo path — funcionaba siempre para `/why` (ya no tiene carpeta), fallaba para `/clubs/*` (sí tiene carpeta real). Solución: `onRequest` en vez de `onRequestGet`, maneja ambos métodos.
+2. Pedir el asset interno como `.../slug/index.html` (nombre de archivo explícito) dispara la misma normalización de "URL limpia" que ya vimos en `/why` — Cloudflare redirige para quitar `index.html` del path, así que la propia función devolvía el 308 igual, solo que generado por el código en vez de por el routing externo. Solución: pedir el asset con barra final (`.../slug/`), la única forma que `ASSETS.fetch` devuelve directa sin redirigir.
+
+Verificado en local con `wrangler pages dev` (GET y HEAD) en las **39 páginas**: sin barra → 200 directo; con barra → 301 limpio hacia la sin barra (ya no compiten dos URLs con 200 a la vez); canonical de cada página coincide con la URL que sirve 200. Home, `/why`, `/results`, `/shirt-checker`, y un club inexistente (soft-404 preexistente de toda la plataforma, no una regresión de este fix) verificados sin cambios. Commit `356616d`.
 
 ### Hallazgo aparte, pendiente, NO tocado
 
