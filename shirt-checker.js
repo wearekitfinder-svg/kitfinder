@@ -1,4 +1,4 @@
-// shirt-checker.js — team autocomplete for the Shirt Value Checker page
+// shirt-checker.js — team autocomplete for the Advanced Search page
 const TEAMS_API = 'https://kitfinder-search.wearekitfinder.workers.dev/teams';
 const SHIRT_CHECK_API = 'https://kitfinder-search.wearekitfinder.workers.dev/shirt-check';
 
