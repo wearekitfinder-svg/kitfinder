@@ -165,3 +165,29 @@ Verificado en local con `wrangler pages dev` (GET y HEAD) en las **39 páginas**
 ### Hallazgo aparte, pendiente, NO tocado
 
 `/clubs/liverpool`, `/clubs/manchester-united` y `/clubs/arsenal` (páginas originales, previas a la rama `seo-improvements-agosto`) enlazan en su sección "Also popular" a `/national/england`, que no existe como página propia — cae en el fallback de la SPA y sirve el HTML genérico del home con su propio título (soft-404 silencioso, ni 404 real ni contenido real). Dos opciones a decidir más adelante: crear `/national/england` como página real, o quitar ese enlace de las 3 páginas afectadas. No forma parte del alcance de esta ronda.
+
+---
+
+## Ronda 5 — rama `add-england-national`: cierre del hallazgo pendiente de la ronda 4
+
+Se creó `/national/england` siguiendo exactamente la plantilla de las otras 7 selecciones (title/description/OG/Twitter/canonical propios, JSON-LD `CollectionPage` + `BreadcrumbList`, ~300 palabras de historia, sección `.kf-facts`). No hizo falta tocar `functions/national/[[path]].js` ni `serve-category.js` — la Function catch-all ya sirve cualquier página estática dentro de `/national/*`, así que en cuanto existió `national/england/index.html` los tres enlaces de Liverpool, Manchester United y Arsenal empezaron a resolver en 200 real.
+
+Añadida también a `sitemap.xml`, al grid y al `ItemList` JSON-LD del hub `/national`, y al `ItemList` JSON-LD del home (posición 33).
+
+**Contenido histórico verificado con fuentes reales antes de publicar** (Mundial 1966, periodos de Umbro/Admiral/Nike, finales de Eurocopa 2021 y 2024) — lista completa con enlaces entregada al usuario en el chat para revisión dato por dato, mismo procedimiento que la ronda 3.
+
+**Nota de precisión sobre el año 1984 (transición Admiral → Umbro)**: es el año mejor respaldado — coincide de forma independiente en Wikipedia (*England national football team kit*) y en footballshirtculture.com (que cifra explícitamente en "29 years" el segundo periodo de Umbro hasta 2013, lo que cuadra con 1984). No es, sin embargo, un dato unánime: una tercera fuente consultada (resumen de búsqueda sobre anorak.co.uk) daba 1981 en su lugar, sin mayor detalle. Se publicó 1984 por ser la versión con doble respaldo independiente, pero queda constancia aquí de que existe una segunda versión circulando en fuentes no primarias, por si en el futuro aparece una fuente oficial (FA, Umbro/Admiral) que la zanje de forma definitiva.
+
+Verificado en local con `wrangler pages dev` (GET y HEAD): `/national/england` → 200 directo, `/national/england/` → 301 limpio hacia la versión sin barra, canonical coincide con la URL que sirve 200. Enlaces "Also popular" de los 3 clubes confirmados apuntando y resolviendo correctamente. Home, hub `/national`, `/national/brazil` y `/clubs/liverpool` verificados sin cambios.
+
+---
+
+## Cierre de fase — resumen de las 3 rondas (agosto 2026)
+
+Esta fase de trabajo SEO queda cerrada con el merge de `add-england-national` a `main`. Resumen de alcance completo, de más antigua a más reciente:
+
+1. **`seo-improvements-agosto`** (rondas 1-3) — auditoría técnica de SEO ejecutada de forma autónoma: bug de `/valuation` fantasma en el sitemap, Functions con `HTMLRewriter` para `/long-sleeve-kits` y `/why` (evitando la regresión de perder `app.js`/`auth.js`/`info.js`), 3 páginas hub nuevas (`/clubs`, `/leagues`, `/national`), robots.txt limpiado, 15 landing pages de club nuevas, fix de `og:image` en 39 archivos, y una ronda completa de verificación factual con fuentes reales que corrigió 5 errores históricos confirmados (Tottenham, Inter Milan, Borussia Dortmund, Atlético Madrid, Corinthians). Sitemap resultante: 48 URLs.
+2. **`fix-redirects-agosto`** (ronda 4) — resueltas las 10 URLs que Search Console marcaba como "Página con redirección": 9 rutas SPA que hacían 308 real hacia `/` (Functions nuevas por ruta) y 39 páginas estáticas con canonical contradictorio por la falta de control de trailing slash en Cloudflare Pages clásico (3 Functions catch-all para `/clubs/*`, `/leagues/*`, `/national/*`). Dejó como hallazgo pendiente, sin tocar, el enlace roto a `/national/england`.
+3. **`add-england-national`** (ronda 5) — cierre de ese hallazgo: página de Inglaterra creada con el mismo rigor factual que el resto del contenido histórico del sitio, sin necesidad de tocar las Functions ya existentes.
+
+**Todo lo pedido en esta fase está completado.** No queda ningún hallazgo abierto de las auditorías de agosto. Próximos temas de SEO, si surgen, empiezan una fase nueva y un documento (o sección) nuevo.
