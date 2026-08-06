@@ -132,3 +132,36 @@ Commit: `06ffed5`.
 3. **Precisión histórica** — lista completa entregada al usuario en el chat para su revisión dato por dato. Nada de esto se ha tocado en el código; si el usuario pide correcciones, será un commit aparte posterior a su revisión.
 4. ~~`og:image`~~ — corregido.
 5. **Colombia y Ghana añadidos** al ItemList del home y al hub de `/national` — fuera del alcance estricto pedido originalmente, pero corrige un bug preexistente menor. Sigue pendiente de confirmación del usuario (no revertido, sigue en la rama).
+
+---
+
+## Ronda 4 — rama `fix-redirects-agosto`: Search Console marcaba 10 URLs como "Página con redirección"
+
+Investigado con `curl -I` en producción (no era caché de Search Console — confirmado con timestamps del propio día). Dos causas distintas:
+
+### Causa A — 9 rutas SPA devolvían un 308 real hacia `/` (bug de producto, no solo SEO)
+
+`/results`, `/match-worn`, `/about`, `/privacy`, `/terms`, `/affiliate`, `/favourites`, `/profile`, `/settings`. La regla `_redirects` de cada una (`/results /index.html 200`) debía ser un rewrite interno transparente, pero Cloudflare Pages redirige automáticamente cualquier petición literal a `/index.html` hacia `/` — el rewrite de `_redirects` vuelve a pasar por esa normalización y genera un 308 real visible para el cliente y para Google. Mismo mecanismo que ya vimos con `/why` y `/long-sleeve-kits`.
+
+**Resuelto** con el mismo patrón: 9 Cloudflare Pages Functions nuevas (`functions/results.js`, `functions/match-worn.js`, `functions/about.js`, `functions/privacy.js`, `functions/terms.js`, `functions/affiliate.js`, `functions/favourites.js`, `functions/profile.js`, `functions/settings.js`), cada una sirviendo `index.html` real vía `context.env.ASSETS.fetch()` apuntando a `/` (no a `/index.html`, que dispara la misma normalización). Sin `HTMLRewriter` — estas rutas no necesitan meta único, solo dejar de redirigir. Se quitaron las 9 líneas ahora redundantes de `_redirects` (quedan solo `/league/*` y `/country/*`, sin tocar).
+
+Verificado en local con `wrangler pages dev` (en puerto limpio — un proceso huérfano de sesiones de prueba anteriores en el puerto 8788 dio falsos negativos al principio, con la versión vieja de `_redirects` todavía respondiendo; resuelto matando todos los procesos node y usando un puerto nuevo): las 9 rutas devuelven 200 sin `Location`, con `app.js`/`auth.js`/`info.js` cargados (interactividad intacta). Home, `/clubs/barcelona/`, `/shirt-checker`, `/league/*`, `/country/*` sin cambios. Commit `8ac3240`.
+
+### Causa B — 39 páginas estáticas (25 clubs + 4 leagues + 7 national + 3 hubs) con canonical contradictorio
+
+Cada una declara `<link rel="canonical">` **sin barra final**, pero Cloudflare Pages solo sirve 200 en la versión **con barra final** — la versión sin barra (la que la propia página declara canónica) hace 308 hacia la versión con barra. Mismo patrón en `sitemap.xml`, el `ItemList` del home, y todos los enlaces internos (`.kf-related`, enlaces de los hubs): todo sin barra, apuntando sistemáticamente a la URL que redirige en vez de la que sirve contenido.
+
+**Resuelto sin tocar el dashboard.** Antes de buscar el ajuste "Trailing Slash", se investigó si existía realmente: no lo hay en Cloudflare Pages clásico (evidencia de la comunidad oficial de Cloudflare — un feature request abierto desde 2021 pidiendo exactamente esto sigue sin resolverse). Tampoco hay `wrangler.toml` con sección `[assets]` en este repo (el sistema moderno "Workers Static Assets" sí tiene `html_handling`, pero requeriría migrar de Pages clásico a ese modelo — fuera de alcance para esta noche). Se confirmó que el repo nunca tuvo esa sección: existió un `wrangler.toml` mínimo hace tiempo (solo `name` y `pages_build_output_dir`, sin `[assets]`) y fue borrado.
+
+Se aplicó directamente la Opción 2: 3 Cloudflare Pages Functions con rutas catch-all — `functions/clubs/[[path]].js`, `functions/leagues/[[path]].js`, `functions/national/[[path]].js` — con lógica compartida en `functions/_lib/serve-category.js` (prefijo `_` para que Cloudflare no lo trate como ruta propia). Se sacaron `/clubs/*`, `/leagues/*`, `/national/*` del `exclude` de `_routes.json` para que las Functions puedan interceptar.
+
+**Dos bugs no triviales encontrados y corregidos durante la verificación** (ver commit `356616d` para el detalle completo):
+
+1. `curl -I` (HEAD) daba falsos negativos. Las Functions solo exportaban `onRequestGet`, y Cloudflare solo enruta peticiones HEAD a esa función cuando NO existe un directorio físico en disco con el mismo path — funcionaba siempre para `/why` (ya no tiene carpeta), fallaba para `/clubs/*` (sí tiene carpeta real). Solución: `onRequest` en vez de `onRequestGet`, maneja ambos métodos.
+2. Pedir el asset interno como `.../slug/index.html` (nombre de archivo explícito) dispara la misma normalización de "URL limpia" que ya vimos en `/why` — Cloudflare redirige para quitar `index.html` del path, así que la propia función devolvía el 308 igual, solo que generado por el código en vez de por el routing externo. Solución: pedir el asset con barra final (`.../slug/`), la única forma que `ASSETS.fetch` devuelve directa sin redirigir.
+
+Verificado en local con `wrangler pages dev` (GET y HEAD) en las **39 páginas**: sin barra → 200 directo; con barra → 301 limpio hacia la sin barra (ya no compiten dos URLs con 200 a la vez); canonical de cada página coincide con la URL que sirve 200. Home, `/why`, `/results`, `/shirt-checker`, y un club inexistente (soft-404 preexistente de toda la plataforma, no una regresión de este fix) verificados sin cambios. Commit `356616d`.
+
+### Hallazgo aparte, pendiente, NO tocado
+
+`/clubs/liverpool`, `/clubs/manchester-united` y `/clubs/arsenal` (páginas originales, previas a la rama `seo-improvements-agosto`) enlazan en su sección "Also popular" a `/national/england`, que no existe como página propia — cae en el fallback de la SPA y sirve el HTML genérico del home con su propio título (soft-404 silencioso, ni 404 real ni contenido real). Dos opciones a decidir más adelante: crear `/national/england` como página real, o quitar ese enlace de las 3 páginas afectadas. No forma parte del alcance de esta ronda.
