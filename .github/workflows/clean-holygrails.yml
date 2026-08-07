@@ -1,5 +1,5 @@
 # .github/workflows/clean-holygrails.yml
-# Revisa una vez por semana las camisetas de Holy Grails (_HG_POOL de index.html)
+# Revisa a diario las camisetas de Holy Grails (_HG_POOL de index.html)
 # y borra SOLO las que estén claramente vendidas. Ante cualquier duda, las deja.
 # Va en el REPOSITORIO PÚBLICO de la web. No necesita secretos.
 
@@ -7,8 +7,8 @@ name: Limpiar Holy Grails (vendidas)
 
 on:
   schedule:
-    # 04:00 UTC del lunes (después de tiendas y tasas)
-    - cron: '0 4 * * 1'
+    # 04:00 UTC cada día (después de tiendas y tasas)
+    - cron: '0 4 * * *'
   workflow_dispatch:        # también a mano
 
 permissions:
