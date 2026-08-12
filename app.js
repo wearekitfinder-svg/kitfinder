@@ -36,7 +36,7 @@ function hideLoading(){var a=document.getElementById("loadingScreen");a&&a.class
       if(!raw.USD||!raw.GBP)throw new Error("rates missing");
       const toEUR={EUR:1},fromEUR={EUR:1};
       for(const[cur,val]of Object.entries(raw)){
-        if(val>0){fromEUR[cur]=Math.round(val*10000)/10000;toEUR[cur]=Math.round(10000/val)/10000;}
+        if(val>0){fromEUR[cur]=Math.round(val*10000)/10000;toEUR[cur]=1/val;}
       }
       // Validacion final
       if(!toEUR.USD||toEUR.USD<0.5||toEUR.USD>2)throw new Error("invalid USD rate");
