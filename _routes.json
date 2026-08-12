@@ -6,7 +6,6 @@
   "exclude": [
     "/images/*",
     "/data/*",
-    "/blog/*",
     "/scripts/*",
     "/*.js",
     "/*.css",
