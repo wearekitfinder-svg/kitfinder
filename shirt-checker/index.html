@@ -11,13 +11,24 @@
 <link rel="stylesheet" href="/styles.css?v=171"/>
 <link rel="icon" href="/images/favicon.png"/>
 <style>
+  body{
+    background:linear-gradient(to bottom,rgba(10,15,30,.55),rgba(10,15,30,.45)),url(/images/loading-collage.jpg) center top/cover no-repeat;
+    background-color:#0a0f1e;
+    min-height:100vh;
+  }
   .sc-wrap{max-width:920px;margin:0 auto;padding:2.5rem 1.5rem 4rem;}
   .sc-fields-row{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;}
   .sc-fields-row .sc-field{flex:1 1 200px;min-width:180px;margin-bottom:1.2rem;}
   .sc-logo{display:flex;align-items:center;margin-bottom:2rem;text-decoration:none;}
-  .sc-logo img{height:52px;}
-  .sc-wrap h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;color:#1e2530;margin-bottom:.4rem;line-height:1.2;}
-  .sc-wrap p.sc-sub{font-size:15px;color:#5a6472;margin-bottom:1.8rem;}
+  .sc-logo img{height:52px;filter:drop-shadow(0 2px 10px rgba(0,0,0,.4));}
+  .sc-wrap h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:700;color:#fff;margin-bottom:.4rem;line-height:1.2;text-shadow:0 4px 24px rgba(0,0,0,.5);text-align:center;}
+  .sc-wrap p.sc-sub{font-size:15px;color:rgba(255,255,255,.85);margin-bottom:1.8rem;text-shadow:0 2px 10px rgba(0,0,0,.4);text-align:center;}
+  .sc-panel{background:rgba(244,245,247,.97);border-radius:20px;padding:1.6rem 1.4rem 1.8rem;box-shadow:0 20px 50px rgba(0,0,0,.35);}
+  @media (max-width:640px){.sc-panel{padding:1.2rem 1rem 1.4rem;border-radius:16px;}}
+  @media (min-width:641px){
+    .sc-logo{margin-left:calc(-1 * max(0px, (100vw - 920px) / 2 - 8px));}
+    .sc-logo img{height:100px;}
+  }
   .sc-field{position:relative;margin-bottom:1.2rem;}
   .sc-label{display:block;font-size:13px;font-weight:600;color:#1e2530;margin-bottom:6px;}
   .sc-team-input{width:100%;box-sizing:border-box;padding:12px 14px;font-size:15px;font-family:"Outfit",sans-serif;border:1.5px solid #e2e6ea;border-radius:10px;outline:none;}
@@ -75,7 +86,7 @@
 </style>
 <script src="/analytics.js?v=1" defer></script>
 </head>
-<body style="background:#f4f5f7;font-family:'Outfit',sans-serif;">
+<body style="font-family:'Outfit',sans-serif;">
 <div class="sc-wrap">
   <a class="sc-logo" href="/">
     <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
@@ -83,6 +94,7 @@
   <h1>Advanced Search</h1>
   <p class="sc-sub">Pick a team to see how many shirts are listed and the average price.</p>
 
+  <div class="sc-panel">
   <div class="sc-fields-row">
     <div class="sc-field">
       <label class="sc-label" for="teamSearchInput">Team</label>
@@ -160,6 +172,7 @@
   </div>
 
   <div class="sc-results" id="resultsBox"></div>
+  </div>
 </div>
 <script src="/shirt-checker.js?v=1" defer></script>
 </body>

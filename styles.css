@@ -143,6 +143,9 @@ body{overflow-x:hidden!important;overflow-y:auto!important;min-height:0!importan
 .wc-hero-sub{font-family:"Outfit",sans-serif;font-size:clamp(14px,2vw,18px);color:rgba(255,255,255,.8);line-height:1.5;max-width:520px}
 .wc-hero-cta{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;font-family:"Outfit",sans-serif;font-size:14px;font-weight:600;padding:10px 24px;border-radius:30px;transition:background .2s,transform .2s;box-shadow:0 4px 16px rgba(31,175,109,.4)}
 .wc-hero-cta:hover{background:var(--green-dark);transform:scale(1.04)}
+.wc-hero.as-hero{background-image:url(images/advance-search.jpeg);text-decoration:none;color:inherit;cursor:pointer}
+.wc-hero.as-hero:hover .wc-hero-overlay{background:linear-gradient(to bottom,rgba(10,15,30,.6),rgba(10,15,30,.5))}
+.wc-hero.as-hero:hover .wc-hero-cta{background:var(--green-dark);transform:scale(1.04)}
 
 @media(max-width:600px){
   .wc-hero{min-height:280px}
