@@ -5,7 +5,7 @@
 
 const META = {
   title: "Long Sleeve Football Shirts — Vintage & Retro Kits | Kit Finder",
-  description: "Search vintage and retro long sleeve football shirts across 150+ specialist stores. Classic winter kits from every club, era and size, all in one search.",
+  description: "Search vintage and retro long sleeve football shirts across 200+ specialist stores. Classic winter kits from every club, era and size, all in one search.",
   keywords: "long sleeve football shirts, vintage long sleeve jersey, retro long sleeve kit, l/s football shirt, long sleeve soccer jersey, classic long sleeve football top",
   canonical: "https://wearekitfinder.com/long-sleeve-kits",
   ogImage: "https://wearekitfinder.com/images/og-image.jpg"

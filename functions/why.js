@@ -4,7 +4,7 @@
 
 const META = {
   title: "Why Kit Finder? — The World's First Football Shirt Search Engine",
-  description: "Kit Finder searches 150+ specialist stores and 325,000+ vintage, retro and classic football shirts in real time. Search by photo, compare prices, 100% authentic.",
+  description: "Kit Finder searches 200+ specialist stores and 370,000+ vintage, retro and classic football shirts in real time. Search by photo, compare prices, 100% authentic.",
   keywords: "why kit finder, football shirt search engine, vintage football shirt finder, football shirt price comparison, football shirt photo search",
   canonical: "https://wearekitfinder.com/why",
   ogImage: "https://wearekitfinder.com/images/og-image.jpg"
