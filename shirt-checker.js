@@ -19,6 +19,34 @@ let selectedVersion = '';
 let DISPLAY_RATES = {EUR:1,USD:1.1386,GBP:0.8627,AUD:1.6515,CAD:1.6156,CHF:0.9222,JPY:184.1935,CNY:7.7443,KRW:1750.3697,MXN:19.9328,BRL:5.8982,PLN:4.2872,SEK:11.0819,NOK:11.3113,DKK:7.4609,CZK:24.2492,HUF:353.8573,RON:5.241,BGN:1.9558,TRY:53.0657,INR:107.4938,IDR:20381.8665,THB:38.0167,ZAR:18.7456,NZD:2.0179,SGD:1.4736,HKD:8.9292,RUB:88.5614,UAH:51.1697,ARS:1679.1643,CLP:1049.7401,COP:3930.3729,PEN:3.8912,ALL:94.2736,DZD:151.9776,SAR:4.2699,AMD:419.3635,BOB:7.8771,BAM:1.9558,GTQ:8.6966,ISK:144.0133,MKD:61.695,MDL:20.1365,NIO:41.9171,PYG:6923.6968,RSD:117.395,UYU:45.6762,VES:710.1021,AED:4.1816};
 let currentCountry = JSON.parse(localStorage.getItem('kf_country') || 'null') || {symbol: '€', currency: 'EUR'};
 
+// Favourites: same 'kf_favs' localStorage key and object shape (id, name,
+// price, currency, image, url, store) as the main site (app.js), so hearts
+// saved here also show up in the main site's favourites panel.
+let FAVOURITES = [];
+try { FAVOURITES = JSON.parse(localStorage.getItem('kf_favs') || '[]'); } catch (err) { FAVOURITES = []; }
+let LAST_RESULTS_BY_ID = {};
+
+function isFavourited(id) {
+  return FAVOURITES.some(function (f) { return f.id === id; });
+}
+
+function toggleFavourite(e, btn) {
+  e.preventDefault();
+  e.stopPropagation();
+  const id = btn.dataset.favId;
+  const idx = FAVOURITES.findIndex(function (f) { return f.id === id; });
+  if (idx === -1) {
+    const p = LAST_RESULTS_BY_ID[id];
+    if (!p) return;
+    FAVOURITES.push({ id: p.id, name: p.name, price: p.price, currency: p.currency, image: p.image, url: p.url, store: p.store });
+    btn.classList.add('active');
+  } else {
+    FAVOURITES.splice(idx, 1);
+    btn.classList.remove('active');
+  }
+  localStorage.setItem('kf_favs', JSON.stringify(FAVOURITES));
+}
+
 function loadExchangeRates() {
   const KEY_DISP = 'kf_display_rates', KEY_TIME = 'kf_exchange_rates_time';
   const cachedD = localStorage.getItem(KEY_DISP), cachedT = localStorage.getItem(KEY_TIME);
@@ -409,6 +437,7 @@ function runSearch() {
   const box = document.getElementById('resultsBox');
   const avgBox = document.getElementById('avgBox');
   avgBox.style.display = 'none';
+  box.classList.remove('sc-results-grid');
   box.innerHTML = '<div class="sc-results-loading">Searching…</div>';
 
   fetch(SHIRT_CHECK_API + '?' + buildShirtCheckParams('list').toString())
@@ -427,6 +456,7 @@ function renderResults(data) {
 
   if (!data.total) {
     avgBox.style.display = 'none';
+    box.classList.remove('sc-results-grid');
     box.innerHTML = '<div class="sc-results-loading">Checking history…</div>';
     fetchHistoryFallback();
     return;
@@ -435,15 +465,34 @@ function renderResults(data) {
   avgBox.style.display = 'block';
   document.getElementById('avgValue').textContent = fmtPriceFromEUR(data.avgPriceEUR);
 
-  box.innerHTML = data.products.map(function (p) {
-    return '<a class="sc-result-card" href="' + escHtml(p.url) + '" target="_blank" rel="noopener">' +
-      '<img class="sc-result-img" src="' + escHtml(p.image || '') + '" alt="" loading="lazy"/>' +
-      '<div class="sc-result-info">' +
-        '<div class="sc-result-name">' + escHtml(p.name) + '</div>' +
-        '<div class="sc-result-store">' + escHtml(p.store) + '</div>' +
+  // Cheapest first — the API doesn't guarantee price order.
+  const sorted = data.products.slice().sort(function (a, b) { return (a.priceEUR || 0) - (b.priceEUR || 0); });
+
+  LAST_RESULTS_BY_ID = {};
+  sorted.forEach(function (p) { LAST_RESULTS_BY_ID[p.id] = p; });
+
+  // Same markup/classes as the /search result card (buildCard() in app.js):
+  // card-img-wrap (image + store badge + fav heart) then card-body with a
+  // price/size meta-row and a "View in store" button — just smaller.
+  box.classList.add('sc-results-grid');
+  box.innerHTML = sorted.map(function (p) {
+    const size = Array.isArray(p.sizes) && p.sizes.length ? p.sizes.join(' · ') : '';
+    return '<div class="card">' +
+      '<div class="card-img-wrap" style="background:#f4f5f7;position:relative;">' +
+        '<img src="' + escHtml(p.image || '') + '" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-sm);" loading="lazy" onerror="this.onerror=null;this.src=\'/images/placeholder.png\';this.style.width=\'60%\';this.style.height=\'60%\';this.style.margin=\'auto\';"/>' +
+        '<span class="badge-store" style="background:var(--green);color:#fff;">' + escHtml(p.store) + '</span>' +
+        '<button class="card-fav-btn' + (isFavourited(p.id) ? ' active' : '') + '" data-fav-id="' + escHtml(p.id) + '" onclick="toggleFavourite(event,this)" aria-label="Save to favourites"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>' +
       '</div>' +
-      '<div class="sc-result-price">' + escHtml(fmtPriceFromEUR(p.priceEUR)) + '</div>' +
-    '</a>';
+      '<div class="card-body">' +
+        '<div class="card-meta-row">' +
+          '<span class="card-price">' + escHtml(fmtPriceFromEUR(p.priceEUR)) + '</span>' +
+          (size ? '<span class="card-size" style="margin-left:auto">' + escHtml(size) + '</span>' : '') +
+        '</div>' +
+        '<a class="card-btn" href="' + escHtml(p.url) + '" target="_blank" rel="noopener noreferrer">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store' +
+        '</a>' +
+      '</div>' +
+    '</div>';
   }).join('');
 }
 

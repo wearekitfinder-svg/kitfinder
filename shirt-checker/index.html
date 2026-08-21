@@ -73,12 +73,28 @@
   .sc-avg-box{margin:1.6rem 0 1rem;text-align:center;display:none;}
   .sc-avg-label{font-size:12px;color:#5a6472;text-transform:uppercase;letter-spacing:.5px;}
   .sc-avg-value{font-family:"Bebas Neue",sans-serif;font-size:1.8rem;color:#1e2530;}
-  .sc-result-card{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid #e2e6ea;border-radius:12px;padding:10px;margin-bottom:10px;text-decoration:none;color:inherit;}
-  .sc-result-img{width:64px;height:64px;object-fit:cover;border-radius:8px;background:#f4f5f7;flex-shrink:0;}
-  .sc-result-info{flex:1;min-width:0;}
-  .sc-result-name{font-size:14px;font-weight:600;color:#1e2530;line-height:1.3;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-  .sc-result-store{font-size:12px;color:#9aa3ad;}
-  .sc-result-price{font-size:15px;font-weight:700;color:#1FAF6D;white-space:nowrap;}
+  /* Advanced Search results reuse the exact .card markup/classes from /search
+     (styles.css) — only these scoped overrides shrink it to fit 3 per row. */
+  .sc-results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .sc-results-grid .card{cursor:default;}
+  .sc-results-grid .card-body{padding:8px 9px 9px;}
+  .sc-results-grid .card-price{font-size:14px;}
+  .sc-results-grid .card-size{font-size:9px;padding:2px 6px;}
+  .sc-results-grid .card-btn{padding:7px;font-size:11px;gap:4px;}
+  .sc-results-grid .card-btn svg{width:11px;height:11px;}
+  .sc-results-grid .badge-store{font-size:8px;padding:2px 6px;}
+  .sc-results-grid .card-fav-btn{width:24px;height:24px;top:6px;right:6px;}
+  .sc-results-grid .card-fav-btn svg{width:13px;height:13px;}
+  @media (max-width:640px){
+    .sc-results-grid{gap:6px;}
+    .sc-results-grid .card-body{padding:6px 7px 7px;}
+    .sc-results-grid .card-price{font-size:12px;}
+    .sc-results-grid .card-size{font-size:8px;padding:1px 5px;}
+    .sc-results-grid .card-btn{font-size:9px;padding:6px;}
+    .sc-results-grid .badge-store{font-size:7px;}
+    .sc-results-grid .card-fav-btn{width:20px;height:20px;}
+    .sc-results-grid .card-fav-btn svg{width:11px;height:11px;}
+  }
   .sc-results-empty,.sc-results-loading{padding:2rem 1rem;text-align:center;color:#9aa3ad;font-size:14px;}
   .sc-history-box{background:#fff;border:1px dashed #e2e6ea;border-radius:12px;padding:1.4rem 1rem;text-align:center;}
   .sc-history-name{font-size:14px;font-weight:600;color:#1e2530;margin-bottom:6px;}
