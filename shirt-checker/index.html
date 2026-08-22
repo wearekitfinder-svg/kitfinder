@@ -74,7 +74,9 @@
   .sc-avg-label{font-size:12px;color:#5a6472;text-transform:uppercase;letter-spacing:.5px;}
   .sc-avg-value{font-family:"Bebas Neue",sans-serif;font-size:1.8rem;color:#1e2530;}
   /* Advanced Search results reuse the exact .card markup/classes from /search
-     (styles.css) — only these scoped overrides shrink it to fit 3 per row. */
+     (styles.css) — these scoped overrides shrink it to fit 3 per row on
+     desktop. On mobile it drops to 1 column, full-size card per row, same
+     as the /search results grid on mobile (styles.css .cards-grid). */
   .sc-results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
   .sc-results-grid .card{cursor:default;}
   .sc-results-grid .card-body{padding:8px 9px 9px;}
@@ -86,14 +88,15 @@
   .sc-results-grid .card-fav-btn{width:24px;height:24px;top:6px;right:6px;}
   .sc-results-grid .card-fav-btn svg{width:13px;height:13px;}
   @media (max-width:640px){
-    .sc-results-grid{gap:6px;}
-    .sc-results-grid .card-body{padding:6px 7px 7px;}
-    .sc-results-grid .card-price{font-size:12px;}
-    .sc-results-grid .card-size{font-size:8px;padding:1px 5px;}
-    .sc-results-grid .card-btn{font-size:9px;padding:6px;}
-    .sc-results-grid .badge-store{font-size:7px;}
-    .sc-results-grid .card-fav-btn{width:20px;height:20px;}
-    .sc-results-grid .card-fav-btn svg{width:11px;height:11px;}
+    .sc-results-grid{grid-template-columns:1fr;gap:10px;}
+    .sc-results-grid .card-body{padding:12px 14px 14px;}
+    .sc-results-grid .card-price{font-size:18px;}
+    .sc-results-grid .card-size{font-size:10px;padding:3px 7px;}
+    .sc-results-grid .card-btn{padding:9px;font-size:13px;gap:6px;}
+    .sc-results-grid .card-btn svg{width:13px;height:13px;}
+    .sc-results-grid .badge-store{font-size:9px;padding:3px 8px;}
+    .sc-results-grid .card-fav-btn{width:30px;height:30px;top:8px;right:8px;}
+    .sc-results-grid .card-fav-btn svg{width:16px;height:16px;}
   }
   .sc-results-empty,.sc-results-loading{padding:2rem 1rem;text-align:center;color:#9aa3ad;font-size:14px;}
   .sc-history-box{background:#fff;border:1px dashed #e2e6ea;border-radius:12px;padding:1.4rem 1rem;text-align:center;}
