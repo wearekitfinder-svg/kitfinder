@@ -162,6 +162,7 @@ function onTeamInput(value) {
   selectedTeam = null;
   openTeamDropdown();
   renderTeamDropdown(value);
+  updateFieldClearButtons();
 }
 
 function onTeamFocus() {
@@ -424,6 +425,54 @@ function updateLiveCount() {
 
 function onFiltersChanged() {
   updateLiveCount();
+  updateFieldClearButtons();
+}
+
+// Each field's own X only appears once that specific field has something
+// set — team checks the input's raw text too (not just selectedTeam),
+// since a team can be "filled" from the user's point of view before a
+// dropdown option is actually picked.
+function updateFieldClearButtons() {
+  const teamVal = document.getElementById('teamSearchInput').value.trim();
+  document.getElementById('teamFieldClear').classList.toggle('visible', !!teamVal);
+  document.getElementById('sizeFieldClear').classList.toggle('visible', selectedSizes.size > 0);
+  document.getElementById('seasonFieldClear').classList.toggle('visible', !!selectedSeason);
+  document.getElementById('versionFieldClear').classList.toggle('visible', !!selectedVersion);
+}
+
+// Each clears only its own field (not the other 3) and re-runs the live
+// count, same as picking/unpicking a value normally would.
+function clearTeamField(e) {
+  if (e) e.stopPropagation();
+  selectedTeam = null;
+  document.getElementById('teamSearchInput').value = '';
+  closeTeamDropdown();
+  onFiltersChanged();
+}
+
+function clearSizeField(e) {
+  if (e) e.stopPropagation();
+  selectedSizes.clear();
+  document.querySelectorAll('#sizeList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
+  document.getElementById('sizeTriggerText').textContent = 'Any size';
+  onFiltersChanged();
+}
+
+function clearSeasonField(e) {
+  if (e) e.stopPropagation();
+  selectedDecade = null;
+  selectedSeason = '';
+  renderSeasonList();
+  document.getElementById('seasonTriggerText').textContent = 'Any season';
+  onFiltersChanged();
+}
+
+function clearVersionField(e) {
+  if (e) e.stopPropagation();
+  selectedVersion = '';
+  document.querySelectorAll('#versionList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
+  document.getElementById('versionTriggerText').textContent = 'Any version';
+  onFiltersChanged();
 }
 
 // Product name/store/etc come straight from scraped external store pages,

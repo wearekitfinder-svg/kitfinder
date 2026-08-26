@@ -32,8 +32,12 @@
   }
   .sc-field{position:relative;margin-bottom:1.2rem;}
   .sc-label{display:block;font-size:13px;font-weight:600;color:#1e2530;margin-bottom:6px;}
-  .sc-team-input{width:100%;box-sizing:border-box;padding:12px 14px;font-size:15px;font-family:"Outfit",sans-serif;border:1.5px solid #e2e6ea;border-radius:10px;outline:none;}
+  .sc-input-wrap,.sc-dd-wrap{position:relative;}
+  .sc-team-input{width:100%;box-sizing:border-box;padding:12px 38px 12px 14px;font-size:15px;font-family:"Outfit",sans-serif;border:1.5px solid #e2e6ea;border-radius:10px;outline:none;}
   .sc-team-input:focus,.sc-team-input.open{border-color:#1FAF6D;}
+  .sc-field-clear-btn{display:none;position:absolute;top:50%;right:10px;transform:translateY(-50%);width:20px;height:20px;align-items:center;justify-content:center;background:none;border:none;padding:0;margin:0;color:#9aa3ad;border-radius:50%;cursor:pointer;transition:color .15s,background .15s;}
+  .sc-field-clear-btn.visible{display:flex;}
+  .sc-field-clear-btn:hover{color:var(--green,#1FAF6D);background:var(--green-light,#e8f8f1);}
   .sc-team-dd{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:280px;overflow-y:auto;background:#fff;border:1px solid #e2e6ea;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.08);z-index:20;}
   .sc-team-dd.open{display:block;}
   .sc-team-opt{padding:9px 14px;font-size:14px;font-family:"Outfit",sans-serif;color:#1e2530;cursor:pointer;border-bottom:.5px solid #f4f5f7;display:flex;justify-content:space-between;align-items:center;}
@@ -41,7 +45,7 @@
   .sc-team-opt:hover{background:#f4f5f7;}
   .sc-team-opt .sc-team-country{font-size:12px;color:#9aa3ad;}
   .sc-team-empty{padding:9px 14px;font-size:13px;color:#9aa3ad;font-style:italic;}
-  .sc-dd-trigger{width:100%;box-sizing:border-box;padding:12px 14px;font-size:15px;font-family:"Outfit",sans-serif;border:1.5px solid #e2e6ea;border-radius:10px;outline:none;background:#fff;color:#1e2530;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;}
+  .sc-dd-trigger{width:100%;box-sizing:border-box;padding:12px 38px 12px 14px;font-size:15px;font-family:"Outfit",sans-serif;border:1.5px solid #e2e6ea;border-radius:10px;outline:none;background:#fff;color:#1e2530;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;}
   .sc-dd-trigger:hover,.sc-dd-trigger.open{border-color:#1FAF6D;}
   .sc-dd-trigger-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .sc-dd-chevron{flex-shrink:0;color:#9aa3ad;transition:transform .15s;}
@@ -119,17 +123,27 @@
   <div class="sc-fields-row">
     <div class="sc-field">
       <label class="sc-label" for="teamSearchInput">Team</label>
-      <input class="sc-team-input" id="teamSearchInput" type="text" placeholder="Search team…" autocomplete="off"
-        oninput="onTeamInput(this.value)" onfocus="onTeamFocus()" onblur="setTimeout(onTeamBlur,200)"/>
+      <div class="sc-input-wrap">
+        <input class="sc-team-input" id="teamSearchInput" type="text" placeholder="Search team…" autocomplete="off"
+          oninput="onTeamInput(this.value)" onfocus="onTeamFocus()" onblur="setTimeout(onTeamBlur,200)"/>
+        <button type="button" class="sc-field-clear-btn" id="teamFieldClear" onclick="clearTeamField(event)" aria-label="Clear team">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
       <div class="sc-team-dd" id="teamSearchDropdown"></div>
     </div>
 
     <div class="sc-field">
       <label class="sc-label">Size</label>
-      <button type="button" class="sc-dd-trigger" id="sizeTrigger" onclick="toggleDd('size')">
-        <span class="sc-dd-trigger-text" id="sizeTriggerText">Any size</span>
-        <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
+      <div class="sc-dd-wrap">
+        <button type="button" class="sc-dd-trigger" id="sizeTrigger" onclick="toggleDd('size')">
+          <span class="sc-dd-trigger-text" id="sizeTriggerText">Any size</span>
+          <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button type="button" class="sc-field-clear-btn" id="sizeFieldClear" onclick="clearSizeField(event)" aria-label="Clear size">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
       <div class="sc-dd-panel" id="sizePanel">
         <div class="sc-dd-list" id="sizeList">
           <div class="sc-dd-option" data-size="XS" onclick="pickSize(this,event)">XS</div>
@@ -148,10 +162,15 @@
 
     <div class="sc-field">
       <label class="sc-label">Season</label>
-      <button type="button" class="sc-dd-trigger" id="seasonTrigger" onclick="toggleDd('season')">
-        <span class="sc-dd-trigger-text" id="seasonTriggerText">Any season</span>
-        <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
+      <div class="sc-dd-wrap">
+        <button type="button" class="sc-dd-trigger" id="seasonTrigger" onclick="toggleDd('season')">
+          <span class="sc-dd-trigger-text" id="seasonTriggerText">Any season</span>
+          <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button type="button" class="sc-field-clear-btn" id="seasonFieldClear" onclick="clearSeasonField(event)" aria-label="Clear season">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
       <div class="sc-dd-panel sc-season-panel" id="seasonPanel">
         <div class="sc-season-flex" id="seasonList"></div>
       </div>
@@ -159,10 +178,15 @@
 
     <div class="sc-field">
       <label class="sc-label">Version</label>
-      <button type="button" class="sc-dd-trigger" id="versionTrigger" onclick="toggleDd('version')">
-        <span class="sc-dd-trigger-text" id="versionTriggerText">Any version</span>
-        <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-      </button>
+      <div class="sc-dd-wrap">
+        <button type="button" class="sc-dd-trigger" id="versionTrigger" onclick="toggleDd('version')">
+          <span class="sc-dd-trigger-text" id="versionTriggerText">Any version</span>
+          <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button type="button" class="sc-field-clear-btn" id="versionFieldClear" onclick="clearVersionField(event)" aria-label="Clear version">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
       <div class="sc-dd-panel" id="versionPanel">
         <div class="sc-dd-list" id="versionList">
           <div class="sc-dd-option" data-version="Local" onclick="pickVersion(this,event)">Home</div>
