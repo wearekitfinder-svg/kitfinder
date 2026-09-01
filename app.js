@@ -68,8 +68,9 @@ function _workerProductToCard(p){
   var sizes=[];
   try{sizes=Array.isArray(p.sizes)?p.sizes:(typeof p.sizes==='string'?JSON.parse(p.sizes):[]);}catch(e){}
   if(!sizes||!sizes.length)sizes=['One size'];
+  var displayName=(p.name_en&&p.name_en.trim())?p.name_en:p.name;
   return{
-    id:p.id,name:p.name,club:p.name,
+    id:p.id,name:displayName,club:displayName,
     league:extractLeagueFromTitle(p.name),
     season:p.season||extractSeasonFromTitle(p.name),
     version:(p.store==='Footy Sweats'?'Other':extractVersionFromTitle(p.name)),
