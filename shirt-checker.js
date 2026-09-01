@@ -410,8 +410,11 @@ function updateLiveCount() {
     .then(function (data) {
       if (requestId !== liveCountRequestId) return;
       const count = data.count || 0;
+      const storeCount = data.storeCount || 0;
       animateCountTo(count);
       document.getElementById('countLabel').textContent = count === 1 ? 'shirt available' : 'shirts available';
+      document.getElementById('storeCountLabel').textContent =
+        'across ' + storeCount.toLocaleString('en-US') + (storeCount === 1 ? ' store' : ' stores');
       numEl.classList.remove('sc-count-loading');
     })
     .catch(function () {
@@ -419,6 +422,7 @@ function updateLiveCount() {
       if (countAnimFrame) cancelAnimationFrame(countAnimFrame);
       numEl.textContent = '—';
       displayedCount = 0;
+      document.getElementById('storeCountLabel').textContent = '';
       numEl.classList.remove('sc-count-loading');
     });
 }
