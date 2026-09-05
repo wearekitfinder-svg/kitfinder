@@ -10,6 +10,7 @@ let teamDropdownOpen = false;
 let selectedSizes = new Set();
 let selectedSeason = '';
 let selectedVersion = '';
+let selectedSleeve = '';
 
 // Currency: mirrors the main site's fmtPrice() logic (app.js) rather than
 // loading all of app.js here. Reads the same 'kf_country' selection and the
@@ -189,7 +190,7 @@ function closeTeamDropdown() {
 // Size, Season and Version are collapsed dropdowns (closed/compact by
 // default, like a native <select>) rather than pills sitting loose on the
 // page. Only one panel is open at a time; clicking outside closes it.
-const DD_NAMES = ['size', 'season', 'version'];
+const DD_NAMES = ['size', 'season', 'version', 'sleeve'];
 let openDd = null;
 
 function toggleDd(name) {
@@ -257,6 +258,23 @@ function pickVersion(el, e) {
     el.classList.add('active');
     selectedVersion = value;
     document.getElementById('versionTriggerText').textContent = el.textContent;
+  }
+  closeAllDd();
+  onFiltersChanged();
+}
+
+function pickSleeve(el, e) {
+  if (e) e.stopPropagation();
+  const value = el.dataset.sleeve;
+  const alreadyActive = el.classList.contains('active');
+  document.querySelectorAll('#sleeveList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
+  if (alreadyActive) {
+    selectedSleeve = '';
+    document.getElementById('sleeveTriggerText').textContent = 'Any sleeve';
+  } else {
+    el.classList.add('active');
+    selectedSleeve = value;
+    document.getElementById('sleeveTriggerText').textContent = el.textContent;
   }
   closeAllDd();
   onFiltersChanged();
@@ -337,6 +355,10 @@ function clearAllFilters() {
   document.querySelectorAll('#versionList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
   document.getElementById('versionTriggerText').textContent = 'Any version';
 
+  selectedSleeve = '';
+  document.querySelectorAll('#sleeveList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
+  document.getElementById('sleeveTriggerText').textContent = 'Any sleeve';
+
   closeAllDd();
   document.getElementById('avgBox').style.display = 'none';
   document.getElementById('resultsBox').innerHTML = '';
@@ -350,6 +372,7 @@ function getFilters() {
     size: Array.from(selectedSizes).join(','),
     season: selectedSeason,
     version: selectedVersion,
+    sleeve: selectedSleeve,
   };
 }
 
@@ -360,6 +383,7 @@ function buildShirtCheckParams(mode) {
   if (filters.size) params.set('size', filters.size);
   if (filters.season) params.set('season', filters.season);
   if (filters.version) params.set('version', filters.version);
+  if (filters.sleeve) params.set('sleeve', filters.sleeve);
   return params;
 }
 
@@ -442,6 +466,7 @@ function updateFieldClearButtons() {
   document.getElementById('sizeFieldClear').classList.toggle('visible', selectedSizes.size > 0);
   document.getElementById('seasonFieldClear').classList.toggle('visible', !!selectedSeason);
   document.getElementById('versionFieldClear').classList.toggle('visible', !!selectedVersion);
+  document.getElementById('sleeveFieldClear').classList.toggle('visible', !!selectedSleeve);
 }
 
 // Each clears only its own field (not the other 3) and re-runs the live
@@ -476,6 +501,14 @@ function clearVersionField(e) {
   selectedVersion = '';
   document.querySelectorAll('#versionList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
   document.getElementById('versionTriggerText').textContent = 'Any version';
+  onFiltersChanged();
+}
+
+function clearSleeveField(e) {
+  if (e) e.stopPropagation();
+  selectedSleeve = '';
+  document.querySelectorAll('#sleeveList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
+  document.getElementById('sleeveTriggerText').textContent = 'Any sleeve';
   onFiltersChanged();
 }
 

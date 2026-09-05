@@ -203,6 +203,25 @@
         </div>
       </div>
     </div>
+
+    <div class="sc-field">
+      <label class="sc-label">Sleeve</label>
+      <div class="sc-dd-wrap">
+        <button type="button" class="sc-dd-trigger" id="sleeveTrigger" onclick="toggleDd('sleeve')">
+          <span class="sc-dd-trigger-text" id="sleeveTriggerText">Any sleeve</span>
+          <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button type="button" class="sc-field-clear-btn" id="sleeveFieldClear" onclick="clearSleeveField(event)" aria-label="Clear sleeve">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="sc-dd-panel" id="sleevePanel">
+        <div class="sc-dd-list" id="sleeveList">
+          <div class="sc-dd-option" data-sleeve="short" onclick="pickSleeve(this,event)">Short sleeve</div>
+          <div class="sc-dd-option" data-sleeve="long" onclick="pickSleeve(this,event)">Long sleeve</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="sc-clear-row">
