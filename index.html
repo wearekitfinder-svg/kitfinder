@@ -1008,9 +1008,13 @@
       </div>
       <div class="results-cards-area">
         <div class="cards-grid" id="cardsGrid"></div>
-        <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
-          <button class="load-more-btn" onclick="loadMore()" data-i18n="load_more_shirts">Load more shirts</button>
+        <div class="infinite-scroll-loader" id="infiniteScrollLoader" style="display:none;">
+          <div class="infinite-loader-logo-wrap">
+            <img src="images/logo-loading.png" alt="" class="infinite-loader-logo"/>
+            <img src="images/ball-spin.png" alt="" class="infinite-loader-ball"/>
+          </div>
         </div>
+        <div class="infinite-scroll-sentinel" id="infiniteScrollSentinel"></div>
       </div>
     </div>
   </div>
