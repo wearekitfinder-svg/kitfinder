@@ -17,9 +17,9 @@
 
 /* ── Infinite scroll loader (transparent, no text) ── */
 .infinite-scroll-loader{display:none;justify-content:center;align-items:center;padding:28px 0;background:transparent}
-.infinite-loader-logo-wrap{position:relative;display:inline-block;width:64px}
-.infinite-loader-logo{width:64px;height:auto;display:block}
-.infinite-loader-ball{position:absolute;top:9.2%;left:5%;width:22.5%;height:auto;object-fit:contain;animation:spinBallCW 1.4s linear infinite}
+.infinite-loader-logo-wrap{position:relative;display:inline-block;width:64px;height:118.93px;overflow:hidden}
+.infinite-loader-logo{width:213.33px;max-width:none;height:auto;display:block}
+.infinite-loader-ball{position:absolute;top:9.2%;left:16.667%;width:75%;height:auto;object-fit:contain;animation:spinBallCW 1.4s linear infinite}
 .infinite-scroll-sentinel{height:1px}
 
 /* ── Botón Filters ── */
