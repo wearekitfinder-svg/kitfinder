@@ -1,11 +1,56 @@
-// shirt-checker.js — team autocomplete for the Advanced Search page
+// shirt-checker.js — team + player autocomplete for the Advanced Search page
 const TEAMS_API = 'https://kitfinder-search.wearekitfinder.workers.dev/teams';
 const SHIRT_CHECK_API = 'https://kitfinder-search.wearekitfinder.workers.dev/shirt-check';
 
 let ALL_TEAMS = [];
 let teamsState = 'idle'; // 'idle' | 'loading' | 'loaded' | 'error'
 let selectedTeam = null;
+let selectedPlayer = null;
 let teamDropdownOpen = false;
+
+// Static list of the 128 players player_extract.py (kitfinder-automation)
+// recognizes in product titles and backfills into products.player — kept
+// as a plain array here (no /players endpoint exists on the Worker, unlike
+// /teams) since it's small, fixed, and needs no country/alias metadata: a
+// case-insensitive substring match against each full canonical name is
+// enough for the same "start typing, see suggestions" flow as teams (e.g.
+// "Mess" -> "Lionel Messi"). Must stay a byte-for-byte match with the
+// canonical names in that file's PLAYERS table (+ the ambiguous-name
+// resolvers' outputs) since the Worker's ?player= filter does a plain
+// p.player = ? equality check, not a fuzzy match.
+const PLAYERS = [
+  'Santiago Cañizares', 'Cosmin Contra', 'Sami Hyypiä', 'Patrik Andersson',
+  'Bixente Lizarazu', 'David Beckham', 'Patrick Vieira', 'Zinedine Zidane',
+  'Kily González', 'Thierry Henry', 'David Trezeguet', 'Rüştü Reçber',
+  'Carles Puyol', 'Alessandro Nesta', 'Cristian Chivu', 'Roberto Carlos',
+  'Clarence Seedorf', 'Michael Ballack', 'Damien Duff', 'Gianluigi Buffon',
+  'Paulo Ferreira', 'Paolo Maldini', 'Luís Figo', 'Pavel Nedvěd',
+  'Ruud van Nistelrooy', 'Cafu', 'Ricardo Carvalho', 'Ashley Cole',
+  'Maniche', 'Andriy Shevchenko', 'Petr Čech', 'John Terry', 'Luís García',
+  'Steven Gerrard', 'Samuel Eto\'o', 'Gianluca Zambrotta', 'Fabio Cannavaro', 'Philipp Lahm',
+  'Cesc Fàbregas', 'Kaká', 'Iker Casillas', 'Dani Alves', 'Eric Abidal',
+  'Zlatan Ibrahimović', 'Didier Drogba', 'Sergio Ramos', 'Xavi',
+  'Franck Ribéry', 'Lionel Messi', 'Fernando Torres', 'Patrice Evra',
+  'Andrés Iniesta', 'Maicon', 'Gerard Piqué', 'Wesley Sneijder',
+  'David Villa', 'Marcelo', 'Arjen Robben', 'Gareth Bale', 'Andrea Pirlo',
+  'Mesut Özil', 'Manuel Neuer', 'David Alaba', 'Marco Reus', 'Diego Godín',
+  'Toni Kroos', 'Ángel Di María', 'Paul Pogba', 'James Rodríguez', 'Neymar',
+  'Jérôme Boateng', 'Leonardo Bonucci', 'Luka Modrić', 'Antoine Griezmann',
+  'Giorgio Chiellini', 'Kevin De Bruyne', 'Eden Hazard',
+  'Marc-André ter Stegen', 'Virgil van Dijk', 'Raphaël Varane',
+  'N\'Golo Kanté', 'Kylian Mbappé', 'Alisson', 'Trent Alexander-Arnold', 'Matthijs de Ligt',
+  'Andy Robertson', 'Frenkie de Jong', 'Robert Lewandowski', 'Sadio Mané',
+  'Joshua Kimmich', 'Alphonso Davies', 'Thibaut Courtois',
+  'Antonio Rüdiger', 'Fabinho', 'Karim Benzema', 'Vinícius Júnior',
+  'Kyle Walker', 'Rúben Dias', 'Alessandro Bastoni', 'Federico Dimarco',
+  'John Stones', 'Rodri', 'Erling Haaland', 'Gregor Kobel', 'Dani Carvajal',
+  'Mats Hummels', 'Ian Maatsen', 'Marcel Sabitzer', 'Jude Bellingham',
+  'Vitinha', 'Phil Foden', 'Harry Kane', 'Gianluigi Donnarumma',
+  'Achraf Hakimi', 'Marquinhos', 'Nuno Mendes', 'Declan Rice',
+  'Lamine Yamal', 'Raphinha', 'Désiré Doué', 'Ousmane Dembélé',
+  'Michael Owen', 'Ronaldo', 'Cristiano Ronaldo', 'Ronaldinho',
+  'Thiago Silva', 'Bernardo Silva', 'Thiago',
+];
 
 let selectedSizes = new Set();
 let selectedSeason = '';
@@ -107,60 +152,94 @@ function matchesTeam(team, q) {
   return (team.aliases || []).some(function (a) { return a.toLowerCase().includes(q); });
 }
 
+function matchesPlayer(name, q) {
+  return name.toLowerCase().includes(q);
+}
+
+// Same input/dropdown drives both team and player suggestions: player
+// matches come from the static PLAYERS list (always available, no fetch),
+// team matches depend on teamsState like before. Results are combined into
+// one list capped at 8, teams first — mirrors how a real "team or player"
+// search would prioritize teams (the page's original purpose) while still
+// surfacing players for a name like "Messi" that matches no team.
 function renderTeamDropdown(query) {
   const dd = document.getElementById('teamSearchDropdown');
   if (!dd) return;
   dd.innerHTML = '';
 
-  if (teamsState === 'loading' || teamsState === 'idle') {
+  const q = (query || '').trim().toLowerCase();
+
+  if (q === '') {
     const d = document.createElement('div');
     d.className = 'sc-team-empty';
-    d.textContent = 'Loading teams…';
-    dd.appendChild(d);
-    return;
-  }
-  if (teamsState === 'error') {
-    const d = document.createElement('div');
-    d.className = 'sc-team-empty';
-    d.textContent = 'Could not load teams. Try again.';
+    d.textContent = 'Start typing a team or player…';
     dd.appendChild(d);
     return;
   }
 
-  const q = (query || '').trim().toLowerCase();
-  const results = q === ''
-    ? []
-    : ALL_TEAMS.filter(function (t) { return matchesTeam(t, q); }).slice(0, 8);
+  const playerMatches = PLAYERS.filter(function (name) { return matchesPlayer(name, q); })
+    .map(function (name) { return { type: 'player', name: name }; });
+
+  let teamMatches = [];
+  let teamStatusMsg = null;
+  if (teamsState === 'loading' || teamsState === 'idle') {
+    teamStatusMsg = 'Loading teams…';
+  } else if (teamsState === 'error') {
+    teamStatusMsg = 'Could not load teams. Try again.';
+  } else {
+    teamMatches = ALL_TEAMS.filter(function (t) { return matchesTeam(t, q); })
+      .map(function (t) { return Object.assign({ type: 'team' }, t); });
+  }
+
+  const results = teamMatches.concat(playerMatches).slice(0, 8);
 
   if (results.length === 0) {
     const d = document.createElement('div');
     d.className = 'sc-team-empty';
-    d.textContent = q === '' ? 'Start typing a team name…' : 'No teams found';
+    d.textContent = teamStatusMsg || 'No teams or players found';
     dd.appendChild(d);
     return;
   }
 
-  results.forEach(function (t) {
+  results.forEach(function (item) {
     const opt = document.createElement('div');
     opt.className = 'sc-team-opt';
-    opt.innerHTML = '<span>' + t.name + '</span><span class="sc-team-country">' + (t.country || '') + '</span>';
-    opt.addEventListener('mousedown', function (e) {
-      e.preventDefault();
-      selectTeam(t);
-    });
+    if (item.type === 'player') {
+      opt.innerHTML = '<span>' + item.name + '</span><span class="sc-team-country">Player</span>';
+      opt.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        selectPlayer(item.name);
+      });
+    } else {
+      opt.innerHTML = '<span>' + item.name + '</span><span class="sc-team-country">' + (item.country || '') + '</span>';
+      opt.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        selectTeam(item);
+      });
+    }
     dd.appendChild(opt);
   });
 }
 
 function selectTeam(team) {
   selectedTeam = team;
+  selectedPlayer = null;
   document.getElementById('teamSearchInput').value = team.name;
+  closeTeamDropdown();
+  onFiltersChanged();
+}
+
+function selectPlayer(name) {
+  selectedPlayer = name;
+  selectedTeam = null;
+  document.getElementById('teamSearchInput').value = name;
   closeTeamDropdown();
   onFiltersChanged();
 }
 
 function onTeamInput(value) {
   selectedTeam = null;
+  selectedPlayer = null;
   openTeamDropdown();
   renderTeamDropdown(value);
   updateFieldClearButtons();
@@ -340,6 +419,7 @@ function pickSeasonPair(year) {
 // (now empty) filters shown on screen.
 function clearAllFilters() {
   selectedTeam = null;
+  selectedPlayer = null;
   document.getElementById('teamSearchInput').value = '';
 
   selectedSizes.clear();
@@ -369,6 +449,7 @@ function clearAllFilters() {
 function getFilters() {
   return {
     team: selectedTeam ? selectedTeam.id : '',
+    player: selectedPlayer || '',
     size: Array.from(selectedSizes).join(','),
     season: selectedSeason,
     version: selectedVersion,
@@ -380,6 +461,7 @@ function buildShirtCheckParams(mode) {
   const filters = getFilters();
   const params = new URLSearchParams({ mode: mode });
   if (filters.team) params.set('team', filters.team);
+  if (filters.player) params.set('player', filters.player);
   if (filters.size) params.set('size', filters.size);
   if (filters.season) params.set('season', filters.season);
   if (filters.version) params.set('version', filters.version);
@@ -474,6 +556,7 @@ function updateFieldClearButtons() {
 function clearTeamField(e) {
   if (e) e.stopPropagation();
   selectedTeam = null;
+  selectedPlayer = null;
   document.getElementById('teamSearchInput').value = '';
   closeTeamDropdown();
   onFiltersChanged();

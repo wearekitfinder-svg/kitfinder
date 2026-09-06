@@ -120,16 +120,16 @@
     <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
   </a>
   <h1>Advanced Search</h1>
-  <p class="sc-sub">Pick a team to see how many shirts are listed and the average price.</p>
+  <p class="sc-sub">Pick a team or player to see how many shirts are listed and the average price.</p>
 
   <div class="sc-panel">
   <div class="sc-fields-row">
     <div class="sc-field">
-      <label class="sc-label" for="teamSearchInput">Team</label>
+      <label class="sc-label" for="teamSearchInput">Team or player</label>
       <div class="sc-input-wrap">
-        <input class="sc-team-input" id="teamSearchInput" type="text" placeholder="Search team…" autocomplete="off"
+        <input class="sc-team-input" id="teamSearchInput" type="text" placeholder="Search team or player…" autocomplete="off"
           oninput="onTeamInput(this.value)" onfocus="onTeamFocus()" onblur="setTimeout(onTeamBlur,200)"/>
-        <button type="button" class="sc-field-clear-btn" id="teamFieldClear" onclick="clearTeamField(event)" aria-label="Clear team">
+        <button type="button" class="sc-field-clear-btn" id="teamFieldClear" onclick="clearTeamField(event)" aria-label="Clear team or player">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
