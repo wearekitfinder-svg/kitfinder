@@ -511,7 +511,7 @@ function _kfInitFirebase() {
       'landing_title_1': 'Find any',
       'landing_title_2': 'football shirt',
       'landing_title_3': 'in one search',
-      'landing_subtitle': 'Search over 370,000 vintage, retro & classic football shirts across 200+ specialist stores',
+      'landing_subtitle': 'Search over 320,000 vintage, retro & classic football shirts across 200+ specialist stores',
       // Football Giants
       'fg_title': 'Football Giants',
       'fg_subtitle': 'Browse vintage & retro football shirts from the world\'s greatest clubs — Barcelona, Real Madrid, Bayern Munich, Liverpool, Man United and more',
@@ -632,7 +632,7 @@ function _kfInitFirebase() {
       'landing_title_1': 'Encuentra cualquier',
       'landing_title_2': 'camiseta de fútbol',
       'landing_title_3': 'en una sola búsqueda',
-      'landing_subtitle': 'Más de 370.000 camisetas vintage, retro y clásicas en más de 200 tiendas especializadas',
+      'landing_subtitle': 'Más de 320.000 camisetas vintage, retro y clásicas en más de 200 tiendas especializadas',
       'fg_title': 'Gigantes del Fútbol',
       'fg_subtitle': 'Explora camisetas vintage y retro de los mejores clubes del mundo — Barcelona, Real Madrid, Bayern Munich, Liverpool, Man United y más',
       'results_count_shirts': 'camisetas encontradas',
@@ -730,7 +730,7 @@ function _kfInitFirebase() {
       'search_placeholder': 'Fußballtrikots suchen (Team, Spieler, Marke…)',
       'search_btn': 'Suchen', 'search_by_photo': 'Per Foto suchen',
       'landing_title_1': 'Jedes', 'landing_title_2': 'Fußballtrikot', 'landing_title_3': 'in einer Suche',
-      'landing_subtitle': 'Über 370.000 Vintage-, Retro- und klassische Trikots in 200+ Fachgeschäften',
+      'landing_subtitle': 'Über 320.000 Vintage-, Retro- und klassische Trikots in 200+ Fachgeschäften',
       'fg_title': 'Fußball-Giganten',
       'fg_subtitle': 'Vintage & Retro Trikots der weltbesten Vereine — Barcelona, Real Madrid, Bayern München, Liverpool, Man United und mehr',
       'no_shirts': 'Keine Trikots gefunden', 'no_shirts_sub': 'Filter oder Suchbegriff anpassen',
@@ -811,7 +811,7 @@ function _kfInitFirebase() {
       'search_placeholder': 'Rechercher des maillots (équipe, joueur, marque…)',
       'search_btn': 'Rechercher', 'search_by_photo': 'Rechercher par photo',
       'landing_title_1': 'Trouvez n\'importe quel', 'landing_title_2': 'maillot de foot', 'landing_title_3': 'en une seule recherche',
-      'landing_subtitle': 'Plus de 370 000 maillots vintage, rétro et classiques dans 200+ boutiques spécialisées',
+      'landing_subtitle': 'Plus de 320 000 maillots vintage, rétro et classiques dans 200+ boutiques spécialisées',
       'fg_title': 'Géants du Football',
       'fg_subtitle': 'Parcourez les maillots vintage et rétro des plus grands clubs — Barcelone, Real Madrid, Bayern, Liverpool, Man United et plus',
       'no_shirts': 'Aucun maillot trouvé', 'no_shirts_sub': 'Essayez d\'ajuster vos filtres ou votre terme de recherche',
@@ -892,7 +892,7 @@ function _kfInitFirebase() {
       'search_placeholder': 'Cerca maglie (squadra, giocatore, marca…)',
       'search_btn': 'Cerca', 'search_by_photo': 'Cerca per foto',
       'landing_title_1': 'Trova qualsiasi', 'landing_title_2': 'maglia da calcio', 'landing_title_3': 'in un\'unica ricerca',
-      'landing_subtitle': 'Oltre 370.000 maglie vintage, retro e classiche in 200+ negozi specializzati',
+      'landing_subtitle': 'Oltre 320.000 maglie vintage, retro e classiche in 200+ negozi specializzati',
       'fg_title': 'Giganti del Calcio',
       'fg_subtitle': 'Esplora maglie vintage e retrò dei migliori club — Barcelona, Real Madrid, Bayern, Liverpool, Man United e altri',
       'no_shirts': 'Nessuna maglia trovata', 'no_shirts_sub': 'Prova ad aggiustare i filtri',
@@ -1234,7 +1234,7 @@ function _kfInitFirebase() {
     var translations = {
       es: {
         'info-why': {
-          body: '<p>Kit Finder es el primer <span class="highlight">motor de búsqueda exclusivo para camisetas de fútbol</span> del mundo. Una sola búsqueda. Más de 200 tiendas especializadas. Más de 370.000 camisetas vintage, retro y clásicas — en tiempo real.</p><h2 data-i18n="why_h2_photo">🔍 Buscar por Foto</h2><p>¿No sabes cómo se llama? Sube una foto. Nuestra <span class="highlight">IA identifica el equipo, la temporada y la versión</span> y encuentra todos los resultados en cuestión de segundos.</p><h2 data-i18n="why_h2_original">✅ 100% Original — Cero Falsificaciones</h2><p>Cada camiseta en Kit Finder es <span class="highlight">auténtica y genuina</span>. Solo trabajamos con tiendas especializadas. Sin réplicas, sin falsificaciones, nunca.</p><h2 data-i18n="why_h2_prices">💰 Mejores Precios, Garantizados</h2><p>La misma camiseta a distintos precios en más de 200 tiendas — <span class="highlight">las mostramos todas</span> para que siempre encuentres la mejor oferta. Filtra por club, liga, década, talla, marca y rango de precios.</p><h2 data-i18n="why_h2_global">🌍 Cobertura Global</h2><p>Tiendas en <span class="highlight">Europa, América, Asia y Oceanía</span>. Todas las divisas convertidas automáticamente. Además, miles de artículos de segunda mano de revendedores especializados en todo el mundo.</p><p style="text-align:center;margin-top:1.5rem;"><span class="highlight">Tu próxima camiseta de ensueño está a un solo clic.</span><br>— El equipo de Kit Finder</p>'
+          body: '<p>Kit Finder es el primer <span class="highlight">motor de búsqueda exclusivo para camisetas de fútbol</span> del mundo. Una sola búsqueda. Más de 200 tiendas especializadas. Más de 320.000 camisetas vintage, retro y clásicas — en tiempo real.</p><h2 data-i18n="why_h2_photo">🔍 Buscar por Foto</h2><p>¿No sabes cómo se llama? Sube una foto. Nuestra <span class="highlight">IA identifica el equipo, la temporada y la versión</span> y encuentra todos los resultados en cuestión de segundos.</p><h2 data-i18n="why_h2_original">✅ 100% Original — Cero Falsificaciones</h2><p>Cada camiseta en Kit Finder es <span class="highlight">auténtica y genuina</span>. Solo trabajamos con tiendas especializadas. Sin réplicas, sin falsificaciones, nunca.</p><h2 data-i18n="why_h2_prices">💰 Mejores Precios, Garantizados</h2><p>La misma camiseta a distintos precios en más de 200 tiendas — <span class="highlight">las mostramos todas</span> para que siempre encuentres la mejor oferta. Filtra por club, liga, década, talla, marca y rango de precios.</p><h2 data-i18n="why_h2_global">🌍 Cobertura Global</h2><p>Tiendas en <span class="highlight">Europa, América, Asia y Oceanía</span>. Todas las divisas convertidas automáticamente. Además, miles de artículos de segunda mano de revendedores especializados en todo el mundo.</p><p style="text-align:center;margin-top:1.5rem;"><span class="highlight">Tu próxima camiseta de ensueño está a un solo clic.</span><br>— El equipo de Kit Finder</p>'
         },
         'info-about': {
           body: '<p>Bienvenido a <span class="highlight">Kit Finder</span>, el destino definitivo para los <span class="highlight">coleccionistas de camisetas de fútbol</span> y aficionados de todo el mundo.</p><p>Nuestra <span class="highlight">misión</span> es sencilla: que encontrar tu camiseta de fútbol ideal sea lo más fácil posible. Tanto si buscas una <span class="highlight">camiseta vintage clásica</span> de los 90, una <span class="highlight">edición limitada</span> o la última equipación de tu club favorito, te tenemos cubierto.</p><p>Kit Finder es un <span class="highlight">motor de búsqueda</span> que agrega resultados de múltiples <span class="highlight">tiendas especializadas en camisetas</span> y marketplaces. No vendemos camisetas directamente — te ayudamos a <span class="highlight">descubrir</span>, <span class="highlight">comparar</span> y encontrar las <span class="highlight">mejores ofertas</span> en la web.</p><p>Somos <span class="highlight">coleccionistas apasionados</span> y construimos Kit Finder porque queríamos una forma mejor de buscar camisetas. Esperamos que te ayude a encontrar ese jersey especial que llevas tiempo persiguiendo.</p><h2>100% Auténtico — Cero Falsificaciones</h2><p>Cada camiseta en Kit Finder es <span class="highlight">100% original y genuina</span>. Nunca encontrarás una falsificación o réplica a través de Kit Finder.</p><h2>Buscar por Foto</h2><p>Kit Finder es el único buscador de camisetas con <span class="highlight">búsqueda por foto con IA</span>. Toca el icono de la cámara, sube una foto y nuestro sistema la identificará al instante.</p><h2>El Mejor Lugar para Encontrar Camisetas Vintage</h2><p>Con <span class="highlight">más de 200 tiendas especializadas</span> buscadas simultáneamente, Kit Finder es simplemente el mejor lugar para encontrar <span class="highlight">camisetas vintage y retro originales al mejor precio</span>.</p><p style="text-align:center;margin-top:1.5rem;"><span class="highlight">¡Buena caza!</span><br>— El equipo de Kit Finder</p>'
