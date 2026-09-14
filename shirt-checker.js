@@ -140,11 +140,27 @@ function loadTeamsOnce() {
       ALL_TEAMS = Array.isArray(data.teams) ? data.teams : [];
       teamsState = 'loaded';
       if (teamDropdownOpen) renderTeamDropdown(document.getElementById('teamSearchInput').value);
+      _initTeamFromUrl();
     })
     .catch(function () {
       teamsState = 'error';
       if (teamDropdownOpen) renderTeamDropdown(document.getElementById('teamSearchInput').value);
     });
+}
+
+// Deep-link entry point for the /teams/<slug>/ static pages' "Advanced
+// Search" button (?team=<teams.id>, e.g. cl_realmadrid) -- preselects the
+// team exactly like a manual dropdown pick, then runs the search
+// immediately so the link lands on real results, not just a prefilled
+// filter. Runs once, right after ALL_TEAMS is ready (loadTeamsOnce's own
+// resolution), since matching needs the id already loaded.
+function _initTeamFromUrl() {
+  var teamId = new URLSearchParams(window.location.search).get('team');
+  if (!teamId) return;
+  var team = ALL_TEAMS.find(function (t) { return t.id === teamId; });
+  if (!team) return;
+  selectTeam(team);
+  runSearch();
 }
 
 function matchesTeam(team, q) {
