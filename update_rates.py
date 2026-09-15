@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-# Actualiza el objeto RATES={...} dentro de app.js con tipos de cambio reales.
+# Actualiza el objeto RATES_TO_EUR={...} con tipos de cambio reales, en
+# app.js y en currency.js (copia usada por las paginas estaticas de
+# /teams, que no cargan app.js -- ver commit que anadio currency.js).
 # Base EUR. API gratuita sin clave: open.er-api.com
 import re, json, sys, urllib.request
 
-APP = "app.js"
+FILES = ["app.js", "currency.js"]
 API = "https://open.er-api.com/v6/latest/EUR"
 
 def fetch_rates():
@@ -23,15 +25,14 @@ def fmt(v):
         s = s.rstrip('0').rstrip('.')
     return s if s else "0"
 
-def main():
-    src = open(APP, encoding='utf-8').read()
+def update_file(path, api):
+    src = open(path, encoding='utf-8').read()
     m = re.search(r'\bRATES_TO_EUR=\{([^}]*)\}', src)
     if not m:
-        raise SystemExit("No encontré el objeto RATES_TO_EUR={...} en app.js")
+        raise SystemExit(f"No encontré el objeto RATES_TO_EUR={{...}} en {path}")
 
     # divisas actuales (mantenemos la misma lista y orden)
     pares = re.findall(r'([A-Z]{3}):[0-9.]+', m.group(1))
-    api = fetch_rates()
 
     nuevos = []
     cambiadas = 0
@@ -51,10 +52,15 @@ def main():
     out = src[:m.start()] + nuevo_obj + src[m.end():]
 
     if out == src:
-        print("Sin cambios (los tipos ya estaban iguales).")
+        print(f"{path}: sin cambios (los tipos ya estaban iguales).")
         return
-    open(APP, 'w', encoding='utf-8').write(out)
-    print(f"app.js actualizado: {cambiadas} divisas refrescadas.")
+    open(path, 'w', encoding='utf-8').write(out)
+    print(f"{path} actualizado: {cambiadas} divisas refrescadas.")
+
+def main():
+    api = fetch_rates()
+    for path in FILES:
+        update_file(path, api)
 
 if __name__ == "__main__":
     main()
