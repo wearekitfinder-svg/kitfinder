@@ -618,6 +618,38 @@ function escHtml(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+// ── Size shown on result cards ──────────────────────────────────────────────
+// D1's `sizes` column is not clean: besides real sizes it also holds "One size",
+// brand/team names, colours, poster formats, years... (audit in kitfinder-search:
+// SIZES_AUDIT.md). The home cards (buildCard() in app.js) only print values from
+// a fixed vocabulary and, when the array has none, fall back to a size found in
+// the product title. Advanced Search used to print the raw array, so the garbage
+// and "One size" leaked onto its cards. This mirrors the home behaviour.
+//
+// Vocabulary (Miguel, 2026-09-25): Kids, Woman, XXS, XS, S, M, L, XL, 2XL, 3XL,
+// 4XL, 5XL. Legacy XXL/XXXL are shown as 2XL/3XL.
+const SC_SIZE_VOCAB = ['Kids', 'Woman', 'XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL', '5XL'];
+const SC_SIZE_LEGACY = { XXL: '2XL', XXXL: '3XL' };
+
+// Verbatim copy of extractSizeFromText() from the main site's app.js (only the
+// name changes, this page doesn't load app.js). Keep both in sync.
+function scExtractSizeFromText(a,e){const n=a||"",r=e||"",t=[/\b(youth|junior|kids?|child|children|boys?|girls?|infant|toddler|baby)\b/i,/\bY(XS|S|M|L|XL)\b/i,/\bXYL\b|\bYL\b/i,/\b(age|aged?)\s*\d+/i,/\b\d+[-\/]\d+\s*(years?|yrs?|yr)\b/i,/\b(1[46][0-9]|1[78][0-9]|1[23][0-9])\s*cm\b/i,/\b(Y|youth)[-]?(S|M|L|XL|XS)\b/i,/\b(1[0-9]{2})\b(?=.*kit|.*shirt|.*jersey)/i];for(const a of t)if(n.match(a)||r.match(a))return"Kids";const w=[/\b(women'?s?|ladies|femme)\b/i];for(const a of w)if(n.match(a)||r.match(a))return"Woman";const o=[{pattern:/\bXXXXXL\s*=\s*EXTRA\s*EXTRA\s*EXTRA\s*EXTRA\s*EXTRA\s*LARGE\b/i,size:"5XL"},{pattern:/\bXXXXL\s*=\s*EXTRA\s*EXTRA\s*EXTRA\s*EXTRA\s*LARGE\b/i,size:"4XL"},{pattern:/\bXXXL\s*=\s*EXTRA\s*EXTRA\s*EXTRA\s*LARGE\b/i,size:"XXXL"},{pattern:/\bXXL\s*=\s*EXTRA\s*EXTRA\s*LARGE\b/i,size:"XXL"},{pattern:/\bXL\s*=\s*EXTRA\s*LARGE\b/i,size:"XL"},{pattern:/\bL\s*=\s*LARGE\b/i,size:"L"},{pattern:/\bM\s*=\s*MEDIUM\b/i,size:"M"},{pattern:/\bS\s*=\s*SMALL\b/i,size:"S"},{pattern:/\bXS\s*=\s*EXTRA\s*SMALL\b/i,size:"XS"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(XXXXXL|5XL)\b/i,size:"5XL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(XXXXL|4XL)\b/i,size:"4XL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(XXXL|3XL)\b/i,size:"XXXL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(XXL|2XL)\b/i,size:"XXL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*XL\b/i,size:"XL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*XS\b/i,size:"XS"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*L\b/i,size:"L"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*M\b/i,size:"M"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*S\b/i,size:"S"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:extra\s*extra\s*extra\s*extra\s*extra\s*large|xxxxxl|5xl)\b/i,size:"5XL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:extra\s*extra\s*extra\s*extra\s*large|xxxxl|4xl)\b/i,size:"4XL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:extra\s*extra\s*large|xxxl|3xl)\b/i,size:"XXXL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:extra\s*large|x-large|xxl|2xl)\b/i,size:"XXL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:x-large|extra\s*large|xl)\b/i,size:"XL"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:large|\bl\b)(?!\w)/i,size:"L"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:medium|\bm\b)(?!\w)/i,size:"M"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:small|\bs\b)(?!\w)/i,size:"S"},{pattern:/\b(?:size|taille|talla|größe|taglia)\s*:?\s*(?:extra\s*small|x-small|xs)\b/i,size:"XS"},{pattern:/[-|•·]\s*(XXXXXL|5XL)\s*[-|•·\n]/i,size:"5XL"},{pattern:/[-|•·]\s*(XXXXL|4XL)\s*[-|•·\n]/i,size:"4XL"},{pattern:/[-|•·]\s*(XXXL|3XL)\s*[-|•·\n]/i,size:"XXXL"},{pattern:/[-|•·]\s*(XXL|2XL)\s*[-|•·\n]/i,size:"XXL"},{pattern:/[-|•·]\s*XL\s*[-|•·\n]/i,size:"XL"},{pattern:/[-|•·]\s*XS\s*[-|•·\n]/i,size:"XS"},{pattern:/[-|•·]\s*(?<![A-Z])L(?![A-Z])\s*[-|•·\n]/i,size:"L"},{pattern:/[-|•·]\s*(?<![A-Z])M(?![A-Z])\s*[-|•·\n]/i,size:"M"},{pattern:/[-|•·]\s*(?<![A-Z])S(?![A-Z])\s*[-|•·\n]/i,size:"S"}];for(const{pattern:a,size:e}of o)if(r.match(a))return e;const i=[{pattern:/\bTAM\s+(XXXXXL|5XL)\b/i,size:"5XL"},{pattern:/\bTAM\s+(XXXXL|4XL)\b/i,size:"4XL"},{pattern:/\bTAM\s+(XXXL|3XL|EEG)\b/i,size:"XXXL"},{pattern:/\bTAM\s+(XXL|2XL|EG|GGG)\b/i,size:"XXL"},{pattern:/\bTAM\s+(XL|GG)\b/i,size:"XL"},{pattern:/\bTAM\s+(L|G)(?=\b|\s|$)/i,size:"L"},{pattern:/\bTAM\s+(M)(?=\b|\s|$)/i,size:"M"},{pattern:/\bTAM\s+(S|P)(?=\b|\s|$)/i,size:"S"},{pattern:/\bTAM\s+(XS)(?=\b|\s|$)/i,size:"XS"},{pattern:/\(XXXXXL\)|\(5XL\)|\[XXXXXL\]|\[5XL\]/i,size:"5XL"},{pattern:/\(XXXXL\)|\(4XL\)|\[XXXXL\]|\[4XL\]/i,size:"4XL"},{pattern:/\(XXXL\)|\(3XL\)|\[XXXL\]|\[3XL\]/i,size:"XXXL"},{pattern:/\(XXL\)|\(2XL\)|\[XXL\]|\[2XL\]/i,size:"XXL"},{pattern:/\(XL\)|\[XL\]/i,size:"XL"},{pattern:/\(XS\)|\[XS\]/i,size:"XS"},{pattern:/\(XXS\)|\[XXS\]/i,size:"XXS"},{pattern:/\(L\)|\[L\]/,size:"L"},{pattern:/\(M\)|\[M\]/,size:"M"},{pattern:/\(S\)|\[S\]/,size:"S"},{pattern:/\bXXXXXL\b|\b5XL\b/i,size:"5XL"},{pattern:/\bXXXXL\b|\b4XL\b/i,size:"4XL"},{pattern:/\bXXXL\b|\b3XL\b/i,size:"XXXL"},{pattern:/\bXXL\b|\b2XL\b/i,size:"XXL"},{pattern:/\bX-?Large\b|\bExtra\s*Large\b/i,size:"XL"},{pattern:/\bXL\b/,size:"XL"},{pattern:/\bLarge\b/i,size:"L"},{pattern:/\bMedium\b/i,size:"M"},{pattern:/\bSmall\b/i,size:"S"},{pattern:/\bX-?Small\b|\bExtra\s*Small\b/i,size:"XS"},{pattern:/\bXXS\b/i,size:"XXS"},{pattern:/[-\s](XXXXXL)\b/i,size:"5XL"},{pattern:/[-\s](XXXXL)\b/i,size:"4XL"},{pattern:/[-\s](XXXL)\b/i,size:"XXXL"},{pattern:/[-\s](XXL)\b/,size:"XXL"},{pattern:/[-\s](XL)\b/,size:"XL"},{pattern:/[-\s](XS)\b/,size:"XS"},{pattern:/[-\s#]([SMLX])\b(?!\w)/,size:null,group:1}],s={s:"S",m:"M",l:"L",x:"XL"};for(const{pattern:a,size:e,group:r}of i){const t=n.match(a);if(t){if(e)return e;if(r)return s[t[r].toLowerCase()]||t[r].toUpperCase()}}return null}
+
+function scDisplaySizes(p) {
+  const raw = Array.isArray(p.sizes) ? p.sizes : [];
+  let out = [];
+  raw.forEach(function (s) {
+    const v = SC_SIZE_LEGACY[s] || s;
+    if (SC_SIZE_VOCAB.indexOf(v) >= 0 && out.indexOf(v) < 0) out.push(v);
+  });
+  const t0 = scExtractSizeFromText(p.name || '', null);
+  const t = t0 ? (SC_SIZE_LEGACY[t0] || t0) : null;
+  const tOk = !!t && SC_SIZE_VOCAB.indexOf(t) >= 0;
+  if (out.length === 1 && out[0] === 'Kids' && tOk && t !== 'Kids') out = [t];
+  if (out.length === 0 && tOk) out = [t];
+  return out;
+}
+
 function runSearch() {
   const box = document.getElementById('resultsBox');
   const avgBox = document.getElementById('avgBox');
@@ -661,7 +693,7 @@ function renderResults(data) {
   // price/size meta-row and a "View in store" button — just smaller.
   box.classList.add('sc-results-grid');
   box.innerHTML = sorted.map(function (p) {
-    const size = Array.isArray(p.sizes) && p.sizes.length ? p.sizes.join(' · ') : '';
+    const size = scDisplaySizes(p).join(' · ');
     return '<div class="card">' +
       '<div class="card-img-wrap" style="background:#f4f5f7;position:relative;">' +
         '<img src="' + escHtml(p.image || '') + '" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-sm);" loading="lazy" onerror="this.onerror=null;this.src=\'/images/placeholder.png\';this.style.width=\'60%\';this.style.height=\'60%\';this.style.margin=\'auto\';"/>' +
