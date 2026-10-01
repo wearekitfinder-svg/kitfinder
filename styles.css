@@ -586,3 +586,14 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
   }
 }
 @media(max-width:768px){.card-arr{width:36px;height:36px;font-size:24px;opacity:1;}}
+
+/* ===== DRAG & DROP IMAGE SEARCH ===== */
+.search-box.kf-drag-over{
+  outline:3px dashed #3fcf8e;
+  outline-offset:2px;
+  background:rgba(63,207,142,.08);
+}
+#landingSearch.kf-drag-over{
+  outline:3px dashed #3fcf8e;
+  outline-offset:2px;
+}

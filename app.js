@@ -794,9 +794,11 @@ async function kfPhotoSearch(searchTerms){
   setTimeout(function(){hideLoading();_firstSearchDone=!0;},600);
 }
 async function kfSearchByImage(input){
-  var file=input.files[0];
+  // Acepta tanto un <input type="file"> (uso original, click-to-upload)
+  // como un File/Blob directo (uso nuevo, arrastrar y soltar).
+  var file=(input&&input.files)?input.files[0]:input;
   if(!file)return;
-  input.value="";
+  if(input&&input.files)input.value="";
 
   var _kfImgUrl=URL.createObjectURL(file);
   _kfShowAnalyzing(_kfImgUrl);
@@ -891,4 +893,84 @@ async function kfSearchByImage(input){
     _kfHideAnalyzing();
     alert("Image search failed: "+err.message);
   }
+}
+
+// ── Arrastrar y soltar imagen (desde otra pestaña/web) ───────────────────────
+
+function _kfDragUrlToFile(url){
+  // Fallback cuando el navegador no da un File real (solo una URL de imagen).
+  // Puede fallar por CORS según la web de origen — se gestiona en el caller.
+  return fetch(url).then(function(r){
+    if(!r.ok)throw new Error("fetch failed");
+    return r.blob();
+  }).then(function(blob){
+    var type=blob.type||"image/jpeg";
+    return new File([blob],"dropped-image."+(type.split("/")[1]||"jpg"),{type:type});
+  });
+}
+
+function _kfSetupImageDropZone(){
+  var zones=[document.getElementById("landingSearch"),document.querySelector(".search-box")].filter(Boolean);
+  if(!zones.length)return;
+  var dragDepth=0;
+  function onDragOver(e){
+    e.preventDefault();
+    if(e.dataTransfer)e.dataTransfer.dropEffect="copy";
+  }
+  function onDragEnter(e){
+    e.preventDefault();
+    dragDepth++;
+    zones.forEach(function(z){z.classList.add("kf-drag-over");});
+  }
+  function onDragLeave(e){
+    e.preventDefault();
+    dragDepth=Math.max(0,dragDepth-1);
+    if(dragDepth===0)zones.forEach(function(z){z.classList.remove("kf-drag-over");});
+  }
+  function onDrop(e){
+    e.preventDefault();
+    dragDepth=0;
+    zones.forEach(function(z){z.classList.remove("kf-drag-over");});
+
+    var dt=e.dataTransfer;
+    if(!dt)return;
+
+    // Caso 1: el navegador ya nos da un File real (arrastre entre pestañas/apps,
+    // o una imagen guardada localmente) — sin problemas de CORS.
+    if(dt.files&&dt.files.length){
+      var f=dt.files[0];
+      if(f&&f.type&&f.type.indexOf("image/")===0){
+        kfSearchByImage(f);
+        return;
+      }
+    }
+
+    // Caso 2: solo tenemos una URL (típico al arrastrar una <img> de otra web).
+    var uri=dt.getData("text/uri-list")||dt.getData("text/plain");
+    if(!uri){
+      var html=dt.getData("text/html");
+      if(html){
+        var m=html.match(/<img[^>]+src=["']([^"']+)["']/i);
+        if(m)uri=m[1];
+      }
+    }
+    if(uri&&/^https?:\/\//i.test(uri)){
+      _kfDragUrlToFile(uri).then(function(file){
+        kfSearchByImage(file);
+      }).catch(function(){
+        alert("Couldn't load that image from the other site (it may block cross-site access). Try saving it and uploading it instead.");
+      });
+    }
+  }
+  zones.forEach(function(z){
+    z.addEventListener("dragover",onDragOver);
+    z.addEventListener("dragenter",onDragEnter);
+    z.addEventListener("dragleave",onDragLeave);
+    z.addEventListener("drop",onDrop);
+  });
+}
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",_kfSetupImageDropZone);
+}else{
+  _kfSetupImageDropZone();
 }
