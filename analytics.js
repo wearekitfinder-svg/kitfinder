@@ -39,7 +39,7 @@
     ov.style.cssText = "position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.55);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;padding:16px;font-family:'Outfit',sans-serif;";
     ov.innerHTML = '<div style="width:min(440px,94vw);background:#0d1117;border-radius:16px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.7);">'
       + '<div style="position:relative;height:175px;overflow:hidden;">'
-        + '<img src="images/cookie-hero.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;filter:brightness(.72);">'
+        + '<img src="/images/cookie-hero.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;filter:brightness(.72);">'
         + '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,17,23,.05),rgba(13,17,23,.95));"></div>'
         + '<div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#fff;font-size:21px;font-weight:900;letter-spacing:-.5px;">Cookies</div>'
       + '</div>'
