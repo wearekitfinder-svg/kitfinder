@@ -2,6 +2,7 @@
 KF_TRANSLATIONS.nl = {
   "search_placeholder": "Zoek voetbalshirts (team, speler, merk…)",
   "globe_title": "Taal & valuta",
+  "res_back_to_top": "Terug naar boven",
   "globe_lang": "Taal",
   "globe_currency": "Valuta",
   "search_currency": "Valuta zoeken…",

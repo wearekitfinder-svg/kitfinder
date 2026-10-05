@@ -30,6 +30,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       // Search
       'search_placeholder': 'Search football shirts (team, player, brand…)',
       'globe_title': 'Language & currency',
+      'res_back_to_top': 'Back to top',
       'globe_lang': 'Language',
       'globe_currency': 'Currency',
       'search_currency': 'Search currency…',
@@ -434,7 +435,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '4';
+  var KF_LANG_VER = '5';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
@@ -584,7 +585,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   };
 
   // ── Globo de la cabecera: Idioma y Divisa (acordeón, solo uno abierto) ──────
-  // Puede haber varios globos (página 1 y página 2). Sin ids: todo va por clases
+  // Ahora solo está en la página 1, pero el código admite 0 o varios. Sin ids: todo va por clases
   // dentro de cada contenedor .kf-globe, y el HTML se genera aquí una sola vez.
   var _kfGlobeSection = null; // null | 'lang' | 'cur'
   var _kfGlobeOpen = null;    // el .kf-globe que tiene el panel abierto

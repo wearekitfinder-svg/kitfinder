@@ -2,6 +2,7 @@
 KF_TRANSLATIONS.de = {
   "search_placeholder": "Fußballtrikots suchen (Team, Spieler, Marke…)",
   "globe_title": "Sprache & Währung",
+  "res_back_to_top": "Nach oben",
   "globe_lang": "Sprache",
   "globe_currency": "Währung",
   "search_currency": "Währung suchen…",
