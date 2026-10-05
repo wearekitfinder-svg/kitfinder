@@ -32,6 +32,9 @@
     if (v === 'granted') loadGA();
   }
 
+  // Texto traducido si i18n.js está cargado (data-i18n lo vuelve a traducir cuando llega el idioma)
+  function t(key, fallback) { return (typeof kfT === 'function') ? kfT(key, fallback) : fallback; }
+
   function showBanner() {
     if (document.getElementById('kfCookieBanner')) return;
     var ov = document.createElement('div');
@@ -41,13 +44,13 @@
       + '<div style="position:relative;height:175px;overflow:hidden;">'
         + '<img src="/images/cookie-hero.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 38%;filter:brightness(.72);">'
         + '<div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,17,23,.05),rgba(13,17,23,.95));"></div>'
-        + '<div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#fff;font-size:21px;font-weight:900;letter-spacing:-.5px;">Cookies</div>'
+        + '<div style="position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#fff;font-size:21px;font-weight:900;letter-spacing:-.5px;" data-i18n="cookie_title">' + t('cookie_title', 'Cookies') + '</div>'
       + '</div>'
       + '<div style="padding:20px 24px 24px;color:#fff;text-align:center;">'
-        + '<p style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.8);margin:0 0 18px;">We use cookies to measure traffic and improve Kit Finder. Is that OK?</p>'
+        + '<p style="font-size:14px;line-height:1.55;color:rgba(255,255,255,.8);margin:0 0 18px;" data-i18n="cookie_text">' + t('cookie_text', 'We use cookies to measure traffic and improve Kit Finder. Is that OK?') + '</p>'
         + '<div style="display:flex;gap:10px;justify-content:center;">'
-          + '<button id="kfCookieReject" type="button" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:11px 20px;cursor:pointer;font-weight:600;font-size:14px;font-family:inherit;">Reject</button>'
-          + '<button id="kfCookieAccept" type="button" style="background:#2ecc71;color:#fff;border:0;border-radius:10px;padding:11px 24px;cursor:pointer;font-weight:700;font-size:14px;font-family:inherit;">Accept</button>'
+          + '<button id="kfCookieReject" type="button" style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:11px 20px;cursor:pointer;font-weight:600;font-size:14px;font-family:inherit;" data-i18n="cookie_reject">' + t('cookie_reject', 'Reject') + '</button>'
+          + '<button id="kfCookieAccept" type="button" style="background:#2ecc71;color:#fff;border:0;border-radius:10px;padding:11px 24px;cursor:pointer;font-weight:700;font-size:14px;font-family:inherit;" data-i18n="cookie_accept">' + t('cookie_accept', 'Accept') + '</button>'
         + '</div>'
       + '</div>'
     + '</div>';

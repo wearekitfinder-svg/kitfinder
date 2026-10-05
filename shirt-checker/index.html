@@ -111,7 +111,7 @@
   .sc-history-detail{font-size:13px;color:#5a6472;}
   .sc-history-price{font-weight:700;color:#1FAF6D;}
 </style>
-<script src="/analytics.js?v=1" defer></script>
+<script src="/analytics.js?v=2" defer></script>
 </head>
 <body style="font-family:'Outfit',sans-serif;">
 <div class="sc-bg"></div>
@@ -119,17 +119,17 @@
   <a class="sc-logo" href="/">
     <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
   </a>
-  <h1>Advanced Search</h1>
-  <p class="sc-sub">Pick a team or player to see how many shirts are listed and the average price.</p>
+  <h1 data-i18n="nav_advanced_search">Advanced Search</h1>
+  <p class="sc-sub" data-i18n="sc_sub">Pick a team or player to see how many shirts are listed and the average price.</p>
 
   <div class="sc-panel">
   <div class="sc-fields-row">
     <div class="sc-field">
-      <label class="sc-label" for="teamSearchInput">Team or player</label>
+      <label class="sc-label" for="teamSearchInput" data-i18n="sc_team_label">Team or player</label>
       <div class="sc-input-wrap">
-        <input class="sc-team-input" id="teamSearchInput" type="text" placeholder="Search team or player…" autocomplete="off"
+        <input class="sc-team-input" id="teamSearchInput" type="text" placeholder="Search team or player…" data-i18n-attr="placeholder:sc_team_ph" autocomplete="off"
           oninput="onTeamInput(this.value)" onfocus="onTeamFocus()" onblur="setTimeout(onTeamBlur,200)"/>
-        <button type="button" class="sc-field-clear-btn" id="teamFieldClear" onclick="clearTeamField(event)" aria-label="Clear team or player">
+        <button type="button" class="sc-field-clear-btn" id="teamFieldClear" onclick="clearTeamField(event)" aria-label="Clear team or player" data-i18n-attr="aria-label:sc_clear_team">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
@@ -137,13 +137,13 @@
     </div>
 
     <div class="sc-field">
-      <label class="sc-label">Size</label>
+      <label class="sc-label" data-i18n="filter_size">Size</label>
       <div class="sc-dd-wrap">
         <button type="button" class="sc-dd-trigger" id="sizeTrigger" onclick="toggleDd('size')">
           <span class="sc-dd-trigger-text" id="sizeTriggerText">Any size</span>
           <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        <button type="button" class="sc-field-clear-btn" id="sizeFieldClear" onclick="clearSizeField(event)" aria-label="Clear size">
+        <button type="button" class="sc-field-clear-btn" id="sizeFieldClear" onclick="clearSizeField(event)" aria-label="Clear size" data-i18n-attr="aria-label:sc_clear_size">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
@@ -159,20 +159,20 @@
           <div class="sc-dd-option" data-size="3XL" onclick="pickSize(this,event)">3XL</div>
           <div class="sc-dd-option" data-size="4XL" onclick="pickSize(this,event)">4XL</div>
           <div class="sc-dd-option" data-size="5XL" onclick="pickSize(this,event)">5XL</div>
-          <div class="sc-dd-option" data-size="Woman" onclick="pickSize(this,event)">Woman</div>
-          <div class="sc-dd-option" data-size="Kids" onclick="pickSize(this,event)">Kids</div>
+          <div class="sc-dd-option" data-size="Woman" onclick="pickSize(this,event)" data-i18n="size_woman">Woman</div>
+          <div class="sc-dd-option" data-size="Kids" onclick="pickSize(this,event)" data-i18n="size_kids">Kids</div>
         </div>
       </div>
     </div>
 
     <div class="sc-field">
-      <label class="sc-label">Season</label>
+      <label class="sc-label" data-i18n="sc_season">Season</label>
       <div class="sc-dd-wrap">
         <button type="button" class="sc-dd-trigger" id="seasonTrigger" onclick="toggleDd('season')">
           <span class="sc-dd-trigger-text" id="seasonTriggerText">Any season</span>
           <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        <button type="button" class="sc-field-clear-btn" id="seasonFieldClear" onclick="clearSeasonField(event)" aria-label="Clear season">
+        <button type="button" class="sc-field-clear-btn" id="seasonFieldClear" onclick="clearSeasonField(event)" aria-label="Clear season" data-i18n-attr="aria-label:sc_clear_season">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
@@ -182,50 +182,50 @@
     </div>
 
     <div class="sc-field">
-      <label class="sc-label">Version</label>
+      <label class="sc-label" data-i18n="filter_version">Version</label>
       <div class="sc-dd-wrap">
         <button type="button" class="sc-dd-trigger" id="versionTrigger" onclick="toggleDd('version')">
           <span class="sc-dd-trigger-text" id="versionTriggerText">Any version</span>
           <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        <button type="button" class="sc-field-clear-btn" id="versionFieldClear" onclick="clearVersionField(event)" aria-label="Clear version">
+        <button type="button" class="sc-field-clear-btn" id="versionFieldClear" onclick="clearVersionField(event)" aria-label="Clear version" data-i18n-attr="aria-label:sc_clear_version">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
       <div class="sc-dd-panel" id="versionPanel">
         <div class="sc-dd-list" id="versionList">
-          <div class="sc-dd-option" data-version="Local" onclick="pickVersion(this,event)">Home</div>
-          <div class="sc-dd-option" data-version="Visitante" onclick="pickVersion(this,event)">Away</div>
-          <div class="sc-dd-option" data-version="Tercera" onclick="pickVersion(this,event)">Third</div>
-          <div class="sc-dd-option" data-version="Cuarta" onclick="pickVersion(this,event)">Fourth</div>
-          <div class="sc-dd-option" data-version="Portero" onclick="pickVersion(this,event)">Goalkeeper</div>
-          <div class="sc-dd-option" data-version="Otro" onclick="pickVersion(this,event)">Other</div>
+          <div class="sc-dd-option" data-version="Local" onclick="pickVersion(this,event)" data-i18n="chip_home">Home</div>
+          <div class="sc-dd-option" data-version="Visitante" onclick="pickVersion(this,event)" data-i18n="chip_away">Away</div>
+          <div class="sc-dd-option" data-version="Tercera" onclick="pickVersion(this,event)" data-i18n="chip_third">Third</div>
+          <div class="sc-dd-option" data-version="Cuarta" onclick="pickVersion(this,event)" data-i18n="chip_fourth">Fourth</div>
+          <div class="sc-dd-option" data-version="Portero" onclick="pickVersion(this,event)" data-i18n="chip_goalkeeper">Goalkeeper</div>
+          <div class="sc-dd-option" data-version="Otro" onclick="pickVersion(this,event)" data-i18n="chip_other">Other</div>
         </div>
       </div>
     </div>
 
     <div class="sc-field">
-      <label class="sc-label">Sleeve</label>
+      <label class="sc-label" data-i18n="sc_sleeve">Sleeve</label>
       <div class="sc-dd-wrap">
         <button type="button" class="sc-dd-trigger" id="sleeveTrigger" onclick="toggleDd('sleeve')">
           <span class="sc-dd-trigger-text" id="sleeveTriggerText">Any sleeve</span>
           <svg class="sc-dd-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        <button type="button" class="sc-field-clear-btn" id="sleeveFieldClear" onclick="clearSleeveField(event)" aria-label="Clear sleeve">
+        <button type="button" class="sc-field-clear-btn" id="sleeveFieldClear" onclick="clearSleeveField(event)" aria-label="Clear sleeve" data-i18n-attr="aria-label:sc_clear_sleeve">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
       <div class="sc-dd-panel" id="sleevePanel">
         <div class="sc-dd-list" id="sleeveList">
-          <div class="sc-dd-option" data-sleeve="short" onclick="pickSleeve(this,event)">Short sleeve</div>
-          <div class="sc-dd-option" data-sleeve="long" onclick="pickSleeve(this,event)">Long sleeve</div>
+          <div class="sc-dd-option" data-sleeve="short" onclick="pickSleeve(this,event)" data-i18n="sc_short_sleeve">Short sleeve</div>
+          <div class="sc-dd-option" data-sleeve="long" onclick="pickSleeve(this,event)" data-i18n="sc_long_sleeve">Long sleeve</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="sc-clear-row">
-    <button class="sc-clear-btn" onclick="clearAllFilters()">Clear all</button>
+    <button class="sc-clear-btn" onclick="clearAllFilters()" data-i18n="js_clear_all">Clear all</button>
   </div>
 
   <div class="sc-count-box">
@@ -235,16 +235,17 @@
     </div>
   </div>
 
-  <button class="sc-search-btn" id="searchBtn" onclick="runSearch()">Search</button>
+  <button class="sc-search-btn" id="searchBtn" onclick="runSearch()" data-i18n="search_btn">Search</button>
 
   <div class="sc-avg-box" id="avgBox">
-    <div class="sc-avg-label">Average price</div>
+    <div class="sc-avg-label" data-i18n="sc_avg_price">Average price</div>
     <div class="sc-avg-value" id="avgValue">—</div>
   </div>
 
   <div class="sc-results" id="resultsBox"></div>
   </div>
 </div>
-<script src="/shirt-checker.js?v=3" defer></script>
+<script src="/i18n.js?v=4"></script>
+<script src="/shirt-checker.js?v=4" defer></script>
 </body>
 </html>

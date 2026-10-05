@@ -80,7 +80,8 @@
   .kf-players strong{color:var(--green,#1FAF6D);}
 
 </style>
-  <script src="/analytics.js?v=1" defer></script>
+  <script src="/analytics.js?v=2" defer></script>
+  <script src="/i18n.js?v=4" defer></script>
   <script src="/currency.js?v=1" defer></script>
 </head>
 <body style="background:#f4f5f7;font-family:'Outfit',sans-serif;">
@@ -88,12 +89,12 @@
   <a class="kf-lp-logo" href="/">
     <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
   </a>
-  <a class="kf-back-link" href="/teams">&larr; Back to all teams</a>
-  <h1>Derby County Vintage Shirts</h1>
-  <p class="kf-lp-sub">206 available right now, compared across 240+ specialist stores.</p>
+  <a class="kf-back-link" href="/teams" data-i18n="teams_back">&larr; Back to all teams</a>
+  <h1 data-i18n="teams_h1" data-i18n-vars="team=Derby County">Derby County Vintage Shirts</h1>
+  <p class="kf-lp-sub" data-i18n="teams_sub" data-i18n-vars="n=206">206 available right now, compared across 240+ specialist stores.</p>
   <a class="kf-lp-cta" href="/shirt-checker/?team=cl_derby">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    Search all Derby County shirts →
+    <span data-i18n="teams_cta" data-i18n-vars="team=Derby County">Search all Derby County shirts →</span>
   </a>
   <div class="kf-team-grid">
         <div class="card">
@@ -107,7 +108,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Classic Football Shirts" href="https://www.classicfootballshirts.co.uk/2025-26-derby-county-match-issue-home-shirt-nelson-35-derh25mw257.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -123,7 +124,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Get Your Shirt Together" href="https://getyourshirttogether.co.uk/products/umbro-derby-county-2018-19-home-football-shirt" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -139,7 +140,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Grannys Football Store" href="https://grannysfootballstore.com/products/umbro-derby-county-1991-93-third-shirt-xl" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -155,7 +156,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Retro Football Shirts" href="https://www.retrofootballshirts.com/products/derby-county-1993-away-kit-11oz-mug" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -171,7 +172,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="TopBinz Football Shirts" href="https://www.topbinzfootballshirts.co.uk/shop-all/derby-county-202223-home-shirt-m-nwt" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -187,7 +188,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="VintageSportsFashion" href="https://vintagesportsfashion.com/derby-county-2019-2020-away-shirt-10-lawrence-very-good-s-dera19002.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -203,7 +204,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Classic Football Shirts" href="https://www.classicfootballshirts.co.uk/2025-26-derby-county-match-issue-home-shirt-brewster-10-derh25mw258.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -219,7 +220,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Get Your Shirt Together" href="https://getyourshirttogether.co.uk/products/derby-county-2016-17-umbro-football-training-shirt" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -235,7 +236,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="TopBinz Football Shirts" href="https://www.topbinzfootballshirts.co.uk/shop-all/derby-county-200102-goalkeeper-shirt-l-very-good-1" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -251,7 +252,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="VintageSportsFashion" href="https://vintagesportsfashion.com/derby-county-2019-2020-match-issue-women-home-shirt-11-domingo-very-good-s-derh19001.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -267,7 +268,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Classic Football Shirts" href="https://www.classicfootballshirts.co.uk/2024-25-derby-county-home-shirt-goudmijn-17-710-s-derh24025478.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -283,7 +284,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="TopBinz Football Shirts" href="https://www.topbinzfootballshirts.co.uk/shop-all/derby-county-200001-away-shirt-l--excellent" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -299,7 +300,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="VintageSportsFashion" href="https://vintagesportsfashion.com/derby-county-2019-2020-third-shirt-very-good-s-dert19001.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -315,7 +316,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Classic Football Shirts" href="https://www.classicfootballshirts.co.uk/2024-25-derby-county-home-shirt-810-xxl-derh24874549.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -331,7 +332,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="TopBinz Football Shirts" href="https://www.topbinzfootballshirts.co.uk/shop-all/derby-county-200001-away-shirt-xl-very-good-1" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -347,7 +348,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="VintageSportsFashion" href="https://vintagesportsfashion.com/derby-county-2018-2019-match-issue-women-goalkeeper-shirt-1-very-good-s-dergk18001.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -363,7 +364,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Classic Football Shirts" href="https://www.classicfootballshirts.co.uk/2023-24-derby-county-gk-home-shorts98298u-kit.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -379,7 +380,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="TopBinz Football Shirts" href="https://www.topbinzfootballshirts.co.uk/shop-all/derby-county-199901-away-shirt---long-sleeve-m-excellent" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -395,7 +396,7 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="VintageSportsFashion" href="https://vintagesportsfashion.com/derby-county-2017-2018-away-shirt-very-good-s-dera17001.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
@@ -411,17 +412,17 @@
               <span class="card-size" style="margin-left:auto"></span>
             </div>
             <a class="card-btn" data-store="Classic Football Shirts" href="https://www.classicfootballshirts.co.uk/2023-24-derby-county-third-shirt-s-dert23916194.html" target="_blank" rel="noopener noreferrer">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg><span data-i18n="js_view_in_store">View in store</span>
             </a>
           </div>
         </div>
   </div>
   <div class="kf-related">
-    <h3>Also browse</h3>
-    <a href="/teams" class="kf-related-link">All teams A-Z</a>
-    <a href="/teams/as-monaco/" class="kf-related-link">AS Monaco shirts</a>
-    <a href="/teams/as-roma/" class="kf-related-link">AS Roma shirts</a>
-    <a href="/teams/az-alkmaar/" class="kf-related-link">AZ Alkmaar shirts</a>
+    <h3 data-i18n="teams_also_browse">Also browse</h3>
+    <a href="/teams" class="kf-related-link" data-i18n="teams_all_az">All teams A-Z</a>
+    <a href="/teams/as-monaco/" class="kf-related-link" data-i18n="teams_link" data-i18n-vars="team=AS Monaco">AS Monaco shirts</a>
+    <a href="/teams/as-roma/" class="kf-related-link" data-i18n="teams_link" data-i18n-vars="team=AS Roma">AS Roma shirts</a>
+    <a href="/teams/az-alkmaar/" class="kf-related-link" data-i18n="teams_link" data-i18n-vars="team=AZ Alkmaar">AZ Alkmaar shirts</a>
   </div>
 </div>
 </body>
