@@ -146,7 +146,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css?v=181">
-<link rel="stylesheet" href="auth.css?v=181">
+<link rel="stylesheet" href="auth.css?v=182">
 </head>
 <body>
 
@@ -237,13 +237,13 @@
     </div>
     <div class="marquee-track">
       <div class="marquee-content">
-        <span>THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
-        <span>THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
+        <span data-i18n="marquee_text">THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
+        <span data-i18n="marquee_text">THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
       </div>
     </div>
   </div>
   <nav class="main-nav" id="mainNav">
-    <button class="nav-mobile-toggle nav-mobile-left" id="navMobileToggle" onclick="toggleMobileNav()" aria-label="Open menu">
+    <button class="nav-mobile-toggle nav-mobile-left" id="navMobileToggle" onclick="toggleMobileNav()" aria-label="Open menu" data-i18n-attr="aria-label:aria_open_menu">
       <span></span><span></span><span></span>
     </button>
     <a class="nav-logo" href="#" onclick="goHome(event)">
@@ -417,11 +417,30 @@
       <a class="nav-link" href="#" onclick="navBlog(event)" data-i18n="nav_blog">La Grada</a>
     </div>
     <div class="nav-right">
-      <div style="position:relative;display:none;">
-        <button class="country-btn" id="countryBtn" onclick="toggleCountry()"><span id="countryFlag">🌍</span></button>
-        <div class="country-dropdown" id="countryDd"></div>
+      <!-- GLOBO: idioma + divisa (solo una sección abierta a la vez) -->
+      <div class="kf-globe" id="kfGlobe">
+        <button class="kf-globe-btn" id="kfGlobeBtn" type="button" onclick="kfToggleGlobe(event)" aria-haspopup="true" aria-expanded="false" aria-controls="kfGlobePanel" title="Language &amp; currency" aria-label="Language &amp; currency" data-i18n-attr="title:globe_title;aria-label:globe_title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </button>
+        <div class="kf-globe-panel" id="kfGlobePanel" role="menu">
+          <button class="kf-globe-row" id="kfGlobeLangRow" type="button" onclick="kfGlobeSection('lang')" aria-expanded="false">
+            <span class="kf-globe-row-label" data-i18n="settings_lang">Language</span>
+            <span class="kf-globe-val" id="kfGlobeLangVal">English</span>
+            <svg class="kf-globe-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="kf-globe-body" id="kfGlobeLangBody"><div class="kf-globe-list" id="kfGlobeLangList"></div></div>
+          <button class="kf-globe-row" id="kfGlobeCurRow" type="button" onclick="kfGlobeSection('cur')" aria-expanded="false">
+            <span class="kf-globe-row-label" data-i18n="settings_currency">Currency</span>
+            <span class="kf-globe-val" id="kfGlobeCurVal">EUR (€)</span>
+            <svg class="kf-globe-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="kf-globe-body" id="kfGlobeCurBody">
+            <input class="kf-globe-search" id="kfGlobeCurSearch" type="text" placeholder="Search currency…" data-i18n-attr="placeholder:search_currency" oninput="kfGlobeFilterCur(this.value)" autocomplete="off"/>
+            <div class="kf-globe-list" id="kfGlobeCurList"></div>
+          </div>
+        </div>
       </div>
-      <button class="kf-auth-topbtn" id="kfAuthBtn" onclick="kfOpenAuthModal('signin')" title="Sign in">
+      <button class="kf-auth-topbtn" id="kfAuthBtn" onclick="kfOpenAuthModal('signin')" title="Sign in" data-i18n-attr="title:auth_signin_title">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </button>
       <div class="kf-user-avatar" id="kfUserAvatar" style="display:none" onclick="kfToggleProfileMenu()">
@@ -454,26 +473,26 @@
       <div class="kf-auth-logo"><img src="images/logo_kitfinder.png" alt="Kit Finder" height="80"></div>
       <button class="kf-google-btn" onclick="kfSignInGoogle()">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Continue with Google
+        <span data-i18n="auth_google">Continue with Google</span>
       </button>
-      <div class="kf-auth-divider"><span>or</span></div>
+      <div class="kf-auth-divider"><span data-i18n="auth_or">or</span></div>
       <div class="kf-auth-tabs">
-        <button class="kf-auth-tab active" data-tab="signin" onclick="kfSwitchTab('signin')">Sign In</button>
-        <button class="kf-auth-tab" data-tab="signup" onclick="kfSwitchTab('signup')">Create Account</button>
+        <button class="kf-auth-tab active" data-tab="signin" onclick="kfSwitchTab('signin')" data-i18n="auth_sign_in">Sign In</button>
+        <button class="kf-auth-tab" data-tab="signup" onclick="kfSwitchTab('signup')" data-i18n="auth_create_account">Create Account</button>
       </div>
       <div class="kf-auth-panel" data-panel="signin">
-        <input class="kf-auth-input" id="kfEmailInput" type="email" placeholder="Email address" autocomplete="email">
-        <input class="kf-auth-input" id="kfPasswordInput" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')kfHandleSubmit()">
-        <div class="kf-forgot-wrap"><a href="#" class="kf-forgot-link" style="color:#1FAF6D" onclick="kfResetPassword(document.getElementById('kfEmailInput').value);event.preventDefault()">Forgot password?</a></div>
+        <input class="kf-auth-input" id="kfEmailInput" type="email" placeholder="Email address" autocomplete="email" data-i18n-attr="placeholder:auth_ph_email">
+        <input class="kf-auth-input" id="kfPasswordInput" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')kfHandleSubmit()" data-i18n-attr="placeholder:auth_ph_password">
+        <div class="kf-forgot-wrap"><a href="#" class="kf-forgot-link" style="color:#1FAF6D" onclick="kfResetPassword(document.getElementById('kfEmailInput').value);event.preventDefault()" data-i18n="auth_forgot">Forgot password?</a></div>
       </div>
       <div class="kf-auth-panel" data-panel="signup" style="display:none">
-        <input class="kf-auth-input" id="kfNameInput" type="text" placeholder="Your name (optional)" autocomplete="name">
-        <input class="kf-auth-input" id="kfEmailInputSU" type="email" placeholder="Email address" autocomplete="email" oninput="document.getElementById('kfEmailInput').value=this.value">
-        <input class="kf-auth-input" id="kfPasswordInputSU" type="password" placeholder="Password (min. 6 characters)" autocomplete="new-password" onkeydown="if(event.key==='Enter')kfHandleSubmit()" oninput="document.getElementById('kfPasswordInput').value=this.value">
+        <input class="kf-auth-input" id="kfNameInput" type="text" placeholder="Your name (optional)" autocomplete="name" data-i18n-attr="placeholder:auth_ph_name">
+        <input class="kf-auth-input" id="kfEmailInputSU" type="email" placeholder="Email address" autocomplete="email" oninput="document.getElementById('kfEmailInput').value=this.value" data-i18n-attr="placeholder:auth_ph_email">
+        <input class="kf-auth-input" id="kfPasswordInputSU" type="password" placeholder="Password (min. 6 characters)" autocomplete="new-password" onkeydown="if(event.key==='Enter')kfHandleSubmit()" oninput="document.getElementById('kfPasswordInput').value=this.value" data-i18n-attr="placeholder:auth_ph_password_min">
       </div>
       <div id="kfAuthError" style="display:none;font-size:13px;margin:6px 0 2px;text-align:center;"></div>
-      <button class="kf-auth-submit" id="kfAuthSubmitBtn" data-label="Sign In" onclick="kfHandleSubmit()">Sign In</button>
-      <p class="kf-auth-legal">By signing in you accept our <a href="#" onclick="showInfo('terms',event)" style="color:#1FAF6D">Terms of Use</a> and <a href="#" onclick="showInfo('privacy',event)" style="color:#1FAF6D">Privacy Policy</a>.</p>
+      <button class="kf-auth-submit" id="kfAuthSubmitBtn" data-label="Sign In" onclick="kfHandleSubmit()" data-i18n="auth_sign_in">Sign In</button>
+      <p class="kf-auth-legal"><span data-i18n="auth_legal_1">By signing in you accept our</span> <a href="#" onclick="showInfo('terms',event)" style="color:#1FAF6D" data-i18n="auth_terms">Terms of Use</a> <span data-i18n="auth_and">and</span> <a href="#" onclick="showInfo('privacy',event)" style="color:#1FAF6D" data-i18n="auth_privacy">Privacy Policy</a>.</p>
     </div>
   </div>
 
@@ -542,9 +561,9 @@
     <h1 class="landing-title"><span data-i18n="landing_title_1">Find any</span> <span class="kf-green" data-i18n="landing_title_2">football shirt</span><br><span data-i18n="landing_title_3">in one search</span></h1>
     <p class="landing-subtitle" data-i18n="landing_subtitle" style="color:rgba(255,255,255,0.55);font-size:15px;margin:-8px 0 18px;font-weight:400;text-align:center;">Search over 320,000 vintage, retro &amp; classic football shirts across 240+ specialist stores</p>
     <div class="search-box">
-      <input class="search-input" id="landingSearch" type="text" placeholder="Search football shirts (team, player, brand…)" autocomplete="off" onkeydown="if(event.key==='Enter')triggerSearch()"/>
+      <input class="search-input" id="landingSearch" type="text" placeholder="Search football shirts (team, player, brand…)" autocomplete="off" onkeydown="if(event.key==='Enter')triggerSearch()" data-i18n-attr="placeholder:search_placeholder"/>
       <input type="file" id="kfImgInput" accept="image/*" style="display:none" onchange="kfSearchByImage(this)"/>
-      <button class="search-camera-btn" onclick="document.getElementById('kfImgInput').click()" title="Search by photo">
+      <button class="search-camera-btn" onclick="document.getElementById('kfImgInput').click()" title="Search by photo" data-i18n-attr="title:search_by_photo">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
       </button>
       <button class="search-btn" onclick="triggerSearch()">
@@ -557,12 +576,12 @@
 
 <!-- ADVANCED SEARCH SECTION -->
 <div id="advancedSearch" class="wc-section">
-  <a class="wc-hero as-hero" href="/shirt-checker" aria-label="Advanced Search">
+  <a class="wc-hero as-hero" href="/shirt-checker" aria-label="Advanced Search" data-i18n-attr="aria-label:menu_advanced_search">
     <div class="wc-hero-overlay"></div>
     <div class="wc-hero-content">
       <h2 class="wc-hero-title">Advanced Search</h2>
-      <p class="wc-hero-sub">Filter shirts by team, size, season and version — see live stock counts and average prices</p>
-      <span class="wc-hero-cta">Try Advanced Search</span>
+      <p class="wc-hero-sub" data-i18n="as_hero_sub">Filter shirts by team, size, season and version — see live stock counts and average prices</p>
+      <span class="wc-hero-cta" data-i18n="as_hero_cta">Try Advanced Search</span>
     </div>
   </a>
 </div>
@@ -572,12 +591,12 @@
   <div class="hg-inner">
     <h2 class="hg-title" data-i18n="hg_title">Holy Grails</h2>
     <div class="hg-carousel-wrap">
-      <button class="hg-arrow hg-arrow-left" onclick="hgNav(-1)" aria-label="Previous">
+      <button class="hg-arrow hg-arrow-left" onclick="hgNav(-1)" aria-label="Previous" data-i18n-attr="aria-label:aria_prev">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <div class="hg-stage" id="hgStage">
             </div>
-      <button class="hg-arrow hg-arrow-right" onclick="hgNav(1)" aria-label="Next">
+      <button class="hg-arrow hg-arrow-right" onclick="hgNav(1)" aria-label="Next" data-i18n-attr="aria-label:aria_next">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
@@ -698,9 +717,9 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-center">
-        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;line-height:1.6;">Kit Finder is a football shirt search engine. We aggregate listings from specialist vintage, retro and classic football shirt stores so you can find any kit in one search. From Premier League to Serie A, from 1960s classics to the latest releases.</p>
-        <div class="footer-links"><a href="#" onclick="showInfo('about',event)" data-i18n="footer_about">About</a><a href="#" onclick="showInfo('privacy',event)" data-i18n="footer_privacy">Privacy policy</a><a href="#" onclick="showInfo('terms',event)" data-i18n="footer_terms">Terms of use</a><a href="#" onclick="showInfo('affiliate',event)" data-i18n="footer_affiliate">Affiliate disclosure</a><a href="/teams">Teams</a></div>
-        <p>© 2026 Kit Finder. We earn commissions from affiliate partner stores. All trademarks belong to their respective owners.</p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;line-height:1.6;" data-i18n="footer_blurb">Kit Finder is a football shirt search engine. We aggregate listings from specialist vintage, retro and classic football shirt stores so you can find any kit in one search. From Premier League to Serie A, from 1960s classics to the latest releases.</p>
+        <div class="footer-links"><a href="#" onclick="showInfo('about',event)" data-i18n="footer_about">About</a><a href="#" onclick="showInfo('privacy',event)" data-i18n="footer_privacy">Privacy policy</a><a href="#" onclick="showInfo('terms',event)" data-i18n="footer_terms">Terms of use</a><a href="#" onclick="showInfo('affiliate',event)" data-i18n="footer_affiliate">Affiliate disclosure</a><a href="/teams" data-i18n="footer_teams">Teams</a></div>
+        <p data-i18n="footer_copy">© 2026 Kit Finder. We earn commissions from affiliate partner stores. All trademarks belong to their respective owners.</p>
       </div>
       <div class="footer-socials">
         <a href="https://www.instagram.com/wearekitfinder/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -783,9 +802,9 @@
           <div class="fp-sub-body"><div class="fp-chip-list">
             <button class="fp-chip" data-value="nt-africa" onclick="pickLeague(this)">Africa</button>
             <button class="fp-chip" data-value="nt-america" onclick="pickLeague(this)">America</button>
-            <button class="fp-chip" data-value="nt-asia" onclick="pickLeague(this)">Asia</button>
+            <button class="fp-chip" data-value="nt-asia" onclick="pickLeague(this)" data-i18n="chip_asia">Asia</button>
             <button class="fp-chip" data-value="nt-europe" onclick="pickLeague(this)">Europe</button>
-            <button class="fp-chip" data-value="nt-oceania" onclick="pickLeague(this)">Oceania</button>
+            <button class="fp-chip" data-value="nt-oceania" onclick="pickLeague(this)" data-i18n="chip_oceania">Oceania</button>
           </div></div>
         </div>
       </div>
@@ -796,12 +815,12 @@
   <div class="fp-section">
     <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_version">Version</span><span class="fp-chevron">▼</span></button>
     <div class="fp-section-body"><div class="fp-white-body"><div class="fp-chip-list">
-      <button class="fp-chip" data-value="Home" onclick="pickVersion(this)">Home</button>
-      <button class="fp-chip" data-value="Away" onclick="pickVersion(this)">Away</button>
-      <button class="fp-chip" data-value="Third" onclick="pickVersion(this)">Third</button>
-      <button class="fp-chip" data-value="Fourth" onclick="pickVersion(this)">Fourth</button>
-      <button class="fp-chip" data-value="Goalkeeper" onclick="pickVersion(this)">Goalkeeper</button>
-      <button class="fp-chip" data-value="Other" onclick="pickVersion(this)">Other</button>
+      <button class="fp-chip" data-value="Home" onclick="pickVersion(this)" data-i18n="chip_home">Home</button>
+      <button class="fp-chip" data-value="Away" onclick="pickVersion(this)" data-i18n="chip_away">Away</button>
+      <button class="fp-chip" data-value="Third" onclick="pickVersion(this)" data-i18n="chip_third">Third</button>
+      <button class="fp-chip" data-value="Fourth" onclick="pickVersion(this)" data-i18n="chip_fourth">Fourth</button>
+      <button class="fp-chip" data-value="Goalkeeper" onclick="pickVersion(this)" data-i18n="chip_goalkeeper">Goalkeeper</button>
+      <button class="fp-chip" data-value="Other" onclick="pickVersion(this)" data-i18n="chip_other">Other</button>
     </div></div></div>
   </div>
 
@@ -809,7 +828,7 @@
   <div class="fp-section">
     <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_size">Size</span><span class="fp-chevron">▼</span></button>
     <div class="fp-section-body"><div class="fp-white-body"><div class="fp-size-grid">
-      <button class="fp-size-btn" data-size="Kids" onclick="this.classList.toggle('active');checkLandingFilters()">Kids</button>
+      <button class="fp-size-btn" data-size="Kids" onclick="this.classList.toggle('active');checkLandingFilters()" data-i18n="size_kids">Kids</button>
       <button class="fp-size-btn" data-size="XXS" onclick="this.classList.toggle('active');checkLandingFilters()">XXS</button>
       <button class="fp-size-btn" data-size="XS" onclick="this.classList.toggle('active');checkLandingFilters()">XS</button>
       <button class="fp-size-btn" data-size="S" onclick="this.classList.toggle('active');checkLandingFilters()">S</button>
@@ -820,7 +839,7 @@
       <button class="fp-size-btn" data-size="3XL" onclick="this.classList.toggle('active');checkLandingFilters()">3XL</button>
       <button class="fp-size-btn" data-size="4XL" onclick="this.classList.toggle('active');checkLandingFilters()">4XL</button>
       <button class="fp-size-btn" data-size="5XL" onclick="this.classList.toggle('active');checkLandingFilters()">5XL</button>
-      <button class="fp-size-btn" data-size="Woman" onclick="this.classList.toggle('active');checkLandingFilters()">Woman</button>
+      <button class="fp-size-btn" data-size="Woman" onclick="this.classList.toggle('active');checkLandingFilters()" data-i18n="size_woman">Woman</button>
     </div></div></div>
   </div>
 
@@ -843,7 +862,7 @@
     <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_brand">Brand</span><span class="fp-chevron">▼</span></button>
     <div class="fp-section-body"><div class="fp-white-body" style="padding:10px 12px;">
       <input class="fp-brand-input" id="fpBrandInput" type="text" placeholder="Search brand…" autocomplete="off"
-        oninput="filterFpBrands(this.value)" onfocus="filterFpBrands(this.value)" onblur="setTimeout(hideFpBrands,200)"/>
+        oninput="filterFpBrands(this.value)" onfocus="filterFpBrands(this.value)" onblur="setTimeout(hideFpBrands,200)" data-i18n-attr="placeholder:ph_brand"/>
       <div class="fp-brand-dd" id="fpBrandDd"></div>
       <div class="fp-brand-tags" id="fpBrandTags"></div>
     </div></div>
@@ -853,9 +872,9 @@
   <div class="fp-section">
     <button class="fp-section-header" onclick="toggleSec(this)"><span data-i18n="filter_price">Price range</span><span class="fp-chevron">▼</span></button>
     <div class="fp-section-body"><div class="fp-white-body"><div class="fp-price-row">
-      <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="fpMin" type="number" min="1" placeholder="Min" oninput="checkLandingFilters()"/></div>
+      <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="fpMin" type="number" min="1" placeholder="Min" oninput="checkLandingFilters()" data-i18n-attr="placeholder:ph_min"/></div>
       <span class="fp-price-sep">—</span>
-      <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="fpMax" type="number" min="1" placeholder="Max" oninput="checkLandingFilters()"/></div>
+      <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="fpMax" type="number" min="1" placeholder="Max" oninput="checkLandingFilters()" data-i18n-attr="placeholder:ph_max"/></div>
     </div></div></div>
   </div>
 
@@ -885,8 +904,8 @@
     </div>
     <div class="marquee-track">
       <div class="marquee-content">
-        <span>THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
-        <span>THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
+        <span data-i18n="marquee_text">THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
+        <span data-i18n="marquee_text">THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE &amp; RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA &amp; SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS</span>
       </div>
     </div>
   </div>
@@ -895,7 +914,7 @@
       <img src="images/logo_kitfinder.png" alt="Kit Finder" class="results-logo-img"/>
     </a>
     <div class="results-search-box">
-      <input class="results-search-input" id="resultsSearch" type="text" placeholder="Search shirts…" autocomplete="off"/>
+      <input class="results-search-input" id="resultsSearch" type="text" placeholder="Search shirts…" autocomplete="off" data-i18n-attr="placeholder:ph_search_shirts"/>
       <button class="results-search-btn" onclick="triggerSearch()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </button>
@@ -910,8 +929,8 @@
           <img src="images/logo_kitfinder.png" alt="Kit Finder" class="wc-results-logo-img"/>
         </a>
         <div class="wc-results-text">
-          <h1 class="wc-results-title">Long Sleeve Football Shirts Collection</h1>
-          <p class="wc-results-desc">Long sleeve football shirts have been a staple on cold winter nights and rainy pitches for decades, from classic 1990s long-sleeve club jerseys to today's technical long sleeve kits. Browse long sleeve shirts from clubs and national teams alike, spanning vintage retro gems to the latest releases. Whether you're after an L/S classic or a modern long sleeve kit, find it here.</p>
+          <h1 class="wc-results-title" data-i18n="lsc_title">Long Sleeve Football Shirts Collection</h1>
+          <p class="wc-results-desc" data-i18n="lsc_desc">Long sleeve football shirts have been a staple on cold winter nights and rainy pitches for decades, from classic 1990s long-sleeve club jerseys to today's technical long sleeve kits. Browse long sleeve shirts from clubs and national teams alike, spanning vintage retro gems to the latest releases. Whether you're after an L/S classic or a modern long sleeve kit, find it here.</p>
         </div>
       </div>
     </div>
@@ -920,15 +939,15 @@
     <div class="results-toolbar" style="display:flex;align-items:center;justify-content:space-between;width:100%;">
       <button class="filter-toggle-btn" id="filterToggleBtn" onclick="toggleResultsFilter()">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="9" y1="18" x2="15" y2="18"/></svg>
-        <span>Filters</span>
+        <span data-i18n="res_filters">Filters</span>
         <svg class="filter-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg>
       </button>
       <select class="sort-select" id="sortSelect" onchange="applyFilters()" style="margin-left:auto;">
-        <option value="relevant">Most relevant</option>
-        <option value="price_asc">Price: low to high</option>
-        <option value="price_desc">Price: high to low</option>
-        <option value="newest">Newest first</option>
-        <option value="oldest">Oldest first</option>
+        <option value="relevant" data-i18n="sort_relevant">Most relevant</option>
+        <option value="price_asc" data-i18n="sort_price_asc">Price: low to high</option>
+        <option value="price_desc" data-i18n="sort_price_desc">Price: high to low</option>
+        <option value="newest" data-i18n="sort_newest">Newest first</option>
+        <option value="oldest" data-i18n="sort_oldest">Oldest first</option>
       </select>
     </div>
     <p class="results-count" id="resultsCount"><strong>—</strong> shirts found</p>
@@ -936,14 +955,14 @@
     <div id="activeFilterBadges" style="display:none;flex-wrap:wrap;gap:8px;margin-bottom:1rem;align-items:center;"></div>
     <!-- Fav alerts banner — only shown in fav view -->
     <div id="kfFavAlertsBanner" style="display:none;background:var(--green-light,#e8f8f0);border:1.5px solid var(--green,#1FAF6D);border-radius:12px;padding:14px 18px;margin-bottom:1.1rem;font-size:.9rem;color:var(--text,#1e2530);">
-      <strong style="color:var(--green,#1FAF6D);">Price &amp; restock alerts</strong><br>
-      Sign in and we&#39;ll email you when a shirt in your favourites drops in price or shows up in another store. Alerts are free and you can cancel any time.
+      <strong style="color:var(--green,#1FAF6D);" data-i18n="fav_alerts_title">Price &amp; restock alerts</strong><br>
+      <span data-i18n="fav_alerts_text">Sign in and we'll email you when a shirt in your favourites drops in price or shows up in another store. Alerts are free and you can cancel any time.</span>
     </div>
 
     <div class="results-content">
       <div class="results-filter-panel" id="resultsFilterPanel">
         <aside class="sidebar" id="sidebar">
-          <div class="filter-close-btn"><button onclick="toggleResultsFilter()" style="background:rgba(255,255,255,.15);border:0;color:#fff;font-size:13px;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Outfit',sans-serif;">✕ Close filters</button></div>
+          <div class="filter-close-btn"><button onclick="toggleResultsFilter()" style="background:rgba(255,255,255,.15);border:0;color:#fff;font-size:13px;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Outfit',sans-serif;" data-i18n="filter_close">✕ Close filters</button></div>
           <!-- Decade -->
           <div class="fp-section">
             <button class="fp-section-header" onclick="toggleSec(this)"><span>Decade</span><span class="fp-chevron">▼</span></button>
@@ -955,19 +974,19 @@
           <div class="fp-section">
             <button class="fp-section-header" onclick="toggleSec(this)"><span>Version</span><span class="fp-chevron">▼</span></button>
             <div class="fp-section-body"><div class="fp-white-body"><div class="fp-chip-list">
-              <button class="fp-chip" data-version="Home" onclick="pickSidebarVersion(this)">Home</button>
-              <button class="fp-chip" data-version="Away" onclick="pickSidebarVersion(this)">Away</button>
-              <button class="fp-chip" data-version="Third" onclick="pickSidebarVersion(this)">Third</button>
-              <button class="fp-chip" data-version="Fourth" onclick="pickSidebarVersion(this)">Fourth</button>
-              <button class="fp-chip" data-version="Goalkeeper" onclick="pickSidebarVersion(this)">Goalkeeper</button>
-              <button class="fp-chip" data-version="Other" onclick="pickSidebarVersion(this)">Other</button>
+              <button class="fp-chip" data-version="Home" onclick="pickSidebarVersion(this)" data-i18n="chip_home">Home</button>
+              <button class="fp-chip" data-version="Away" onclick="pickSidebarVersion(this)" data-i18n="chip_away">Away</button>
+              <button class="fp-chip" data-version="Third" onclick="pickSidebarVersion(this)" data-i18n="chip_third">Third</button>
+              <button class="fp-chip" data-version="Fourth" onclick="pickSidebarVersion(this)" data-i18n="chip_fourth">Fourth</button>
+              <button class="fp-chip" data-version="Goalkeeper" onclick="pickSidebarVersion(this)" data-i18n="chip_goalkeeper">Goalkeeper</button>
+              <button class="fp-chip" data-version="Other" onclick="pickSidebarVersion(this)" data-i18n="chip_other">Other</button>
             </div></div></div>
           </div>
           <!-- Size -->
           <div class="fp-section">
             <button class="fp-section-header" onclick="toggleSec(this)"><span>Size</span><span class="fp-chevron">▼</span></button>
             <div class="fp-section-body"><div class="fp-white-body"><div class="fp-chip-list">
-              <button class="fp-chip" data-size="Kids" onclick="pickSidebarSize(this)">Kids</button>
+              <button class="fp-chip" data-size="Kids" onclick="pickSidebarSize(this)" data-i18n="size_kids">Kids</button>
               <button class="fp-chip" data-size="XXS" onclick="pickSidebarSize(this)">XXS</button>
               <button class="fp-chip" data-size="XS" onclick="pickSidebarSize(this)">XS</button>
               <button class="fp-chip" data-size="S" onclick="pickSidebarSize(this)">S</button>
@@ -978,7 +997,7 @@
               <button class="fp-chip" data-size="3XL" onclick="pickSidebarSize(this)">3XL</button>
               <button class="fp-chip" data-size="4XL" onclick="pickSidebarSize(this)">4XL</button>
               <button class="fp-chip" data-size="5XL" onclick="pickSidebarSize(this)">5XL</button>
-              <button class="fp-chip" data-size="Woman" onclick="pickSidebarSize(this)">Woman</button>
+              <button class="fp-chip" data-size="Woman" onclick="pickSidebarSize(this)" data-i18n="size_woman">Woman</button>
             </div></div></div>
           </div>
           <!-- Brand -->
@@ -986,7 +1005,7 @@
             <button class="fp-section-header" onclick="toggleSec(this)"><span>Brand</span><span class="fp-chevron">▼</span></button>
             <div class="fp-section-body"><div class="fp-white-body" style="padding:10px 12px;position:relative;">
               <input class="fp-brand-input" id="brandSearch" type="text" placeholder="Search brand…" autocomplete="off"
-                oninput="sidebarBrandInput(this.value)" onfocus="sidebarBrandFocus()" onblur="setTimeout(sidebarBrandBlur,200)"/>
+                oninput="sidebarBrandInput(this.value)" onfocus="sidebarBrandFocus()" onblur="setTimeout(sidebarBrandBlur,200)" data-i18n-attr="placeholder:ph_brand"/>
               <div class="fp-brand-dd" id="sidebarBrandDd"></div>
               <div class="fp-brand-tags" id="brandTags"></div>
             </div></div>
@@ -997,7 +1016,7 @@
             <div class="fp-section-body"><div class="fp-white-body"><div class="fp-price-row">
               <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="priceMinInput" type="number" min="0" placeholder="0" oninput="updateRangeFromInputs()"/></div>
               <span class="fp-price-sep">—</span>
-              <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="priceMaxInput" type="number" min="0" placeholder="Max" oninput="clampAndApply()"/></div>
+              <div class="fp-price-field"><span class="fp-price-sym">€</span><input class="fp-price-input" id="priceMaxInput" type="number" min="0" placeholder="Max" oninput="clampAndApply()" data-i18n-attr="placeholder:ph_max"/></div>
             </div></div></div>
           </div>
           <!-- Clear -->
@@ -1021,9 +1040,9 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-center">
-        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;line-height:1.6;">Kit Finder is a football shirt search engine. We aggregate listings from specialist vintage, retro and classic football shirt stores so you can find any kit in one search. From Premier League to Serie A, from 1960s classics to the latest releases.</p>
-        <div class="footer-links"><a href="#" onclick="showInfo('about',event)">About</a><a href="#" onclick="showInfo('privacy',event)">Privacy policy</a><a href="#" onclick="showInfo('terms',event)">Terms of use</a><a href="#" onclick="showInfo('affiliate',event)">Affiliate disclosure</a><a href="/teams">Teams</a></div>
-        <p>© 2026 Kit Finder. We earn commissions from affiliate partner stores. All trademarks belong to their respective owners.</p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:10px;line-height:1.6;" data-i18n="footer_blurb">Kit Finder is a football shirt search engine. We aggregate listings from specialist vintage, retro and classic football shirt stores so you can find any kit in one search. From Premier League to Serie A, from 1960s classics to the latest releases.</p>
+        <div class="footer-links"><a href="#" onclick="showInfo('about',event)">About</a><a href="#" onclick="showInfo('privacy',event)">Privacy policy</a><a href="#" onclick="showInfo('terms',event)">Terms of use</a><a href="#" onclick="showInfo('affiliate',event)">Affiliate disclosure</a><a href="/teams" data-i18n="footer_teams">Teams</a></div>
+        <p data-i18n="footer_copy">© 2026 Kit Finder. We earn commissions from affiliate partner stores. All trademarks belong to their respective owners.</p>
       </div>
       <div class="footer-socials">
         <a href="https://www.instagram.com/wearekitfinder/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
@@ -1048,7 +1067,7 @@
     <button class="fav-panel-close" onclick="closeFavs()">×</button>
   </div>
   <div class="fav-panel-body" id="favBody"></div>
-  <button class="fav-clear-btn" id="favClearBtn" onclick="clearFavs()" style="display:none">Remove all</button>
+  <button class="fav-clear-btn" id="favClearBtn" onclick="clearFavs()" style="display:none" data-i18n="fav_remove_all">Remove all</button>
 </div>
 
 <!-- LOADING SCREEN -->
@@ -1076,7 +1095,8 @@
 </div>
 
 <script src="info.js?v=161" defer></script>
-<script src="auth.js?v=196"></script>
+<script src="i18n.js?v=1"></script>
+<script src="auth.js?v=197"></script>
 <!-- INFO PAGE (about / privacy / terms) -->
 <div id="info-page">
   <div class="content-card">
@@ -1200,14 +1220,14 @@
         <div id="kfCropControls" style="display:none;margin-bottom:8px;">
           <p style="font-size:11px;color:#9aa3ad;margin-bottom:6px;" data-i18n="profile_drag">Drag to reposition · Pinch to zoom</p>
           <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;">
-            <button class="kf-crop-btn" onclick="kfZoomPhoto(-10)" title="Zoom out">−</button>
-            <button class="kf-crop-btn" onclick="kfZoomPhoto(10)" title="Zoom in">+</button>
+            <button class="kf-crop-btn" onclick="kfZoomPhoto(-10)" title="Zoom out" data-i18n-attr="title:zoom_out">−</button>
+            <button class="kf-crop-btn" onclick="kfZoomPhoto(10)" title="Zoom in" data-i18n-attr="title:zoom_in">+</button>
           </div>
         </div>
         <p style="font-size:12px;color:#9aa3ad;" data-i18n="profile_tap_photo">Tap the camera to change photo</p>
       </div>
       <label style="display:block;font-size:13px;font-weight:600;color:#5a6472;margin-bottom:6px;">Nickname</label>
-      <input class="kf-auth-input" id="kfNicknameInput" type="text" placeholder="How should we call you?" maxlength="30" autocomplete="off" style="margin-bottom:1.2rem;"/>
+      <input class="kf-auth-input" id="kfNicknameInput" type="text" placeholder="How should we call you?" maxlength="30" autocomplete="off" style="margin-bottom:1.2rem;" data-i18n-attr="placeholder:ph_nickname"/>
       <div id="kfProfileError" style="display:none;font-size:13px;color:#e63946;margin-bottom:8px;text-align:center;"></div>
       <button class="kf-auth-submit" onclick="kfSaveProfile()" style="width:100%;margin-bottom:.8rem;">Save changes</button>
     </div>
@@ -1262,9 +1282,9 @@
     <img src="/blog/header-la-grada.jpg" alt="La Grada" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(.65);">
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.1) 0%,rgba(13,17,23,.9) 100%);"></div>
     <div style="position:absolute;bottom:0;left:0;right:0;padding:18px 28px 22px;text-align:center;">
-      <div style="font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:8px;">KIT FINDER BLOG</div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:8px;" data-i18n="nl_kicker">KIT FINDER BLOG</div>
       <div style="font-size:52px;font-weight:900;line-height:1;letter-spacing:-1px;text-transform:uppercase;"><span style="color:#fff;">LA </span><span style="color:#1FAF6D;">GRADA</span></div>
-      <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:10px;line-height:1.55;">The history, culture and stories behind football shirts.<br>From iconic kits to forgotten gems.</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:10px;line-height:1.55;"><span data-i18n="nl_sub_1">The history, culture and stories behind football shirts.</span><br><span data-i18n="nl_sub_2">From iconic kits to forgotten gems.</span></div>
     </div>
     <button onclick="kfLgDismiss()" style="position:absolute;top:12px;right:14px;background:rgba(0,0,0,.5);border:0;color:#fff;border-radius:50%;width:30px;height:30px;font-size:18px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;">&times;</button>
   </div>
@@ -1274,14 +1294,14 @@
       <input id="kfLgEmail" type="email" placeholder="your@email.com"
         style="flex:1;min-width:160px;padding:12px 16px;border:1.5px solid rgba(255,255,255,.18);border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:rgba(255,255,255,.07);color:#fff;"
         onfocus="this.style.borderColor='#1FAF6D'" onblur="this.style.borderColor='rgba(255,255,255,.18)'"
-        onkeydown="if(event.key==='Enter')kfLgSubscribe()">
+        onkeydown="if(event.key==='Enter')kfLgSubscribe()" data-i18n-attr="placeholder:ph_email_nl">
       <button onclick="kfLgSubscribe()"
-        style="background:#1FAF6D;color:#fff;border:0;border-radius:10px;padding:12px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;">
+        style="background:#1FAF6D;color:#fff;border:0;border-radius:10px;padding:12px 22px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;" data-i18n="nl_subscribe">
         Subscribe
       </button>
     </div>
     <div id="kfLgMsg" style="display:none;margin-top:10px;font-size:13px;font-weight:600;color:#1FAF6D;"></div>
-    <p style="font-size:11px;color:rgba(255,255,255,.3);margin:14px 0 0;text-align:center;letter-spacing:.3px;">No spam. Unsubscribe any time.</p>
+    <p style="font-size:11px;color:rgba(255,255,255,.3);margin:14px 0 0;text-align:center;letter-spacing:.3px;" data-i18n="nl_nospam">No spam. Unsubscribe any time.</p>
   </div>
 </div>
 
