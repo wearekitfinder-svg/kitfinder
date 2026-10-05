@@ -390,7 +390,11 @@ KF_TRANSLATIONS.de = {
   "teams_all_az": "Alle Teams A–Z",
   "teams_link": "{team}-Trikots",
   "teams_hub_title": "Fußballtrikots nach Team",
-  "teams_see_collection": "Kollektion ansehen"
+  "teams_see_collection": "Kollektion ansehen",
+  "cookie_title": "Cookies",
+  "cookie_text": "Wir verwenden Cookies, um den Traffic zu messen und Kit Finder zu verbessern. Ist das okay?",
+  "cookie_reject": "Ablehnen",
+  "cookie_accept": "Akzeptieren"
 };
 KF_INFO_PAGES.de = {
  "info-why": {

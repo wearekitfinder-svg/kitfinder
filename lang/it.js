@@ -390,7 +390,11 @@ KF_TRANSLATIONS.it = {
   "teams_all_az": "Tutte le squadre A-Z",
   "teams_link": "Maglie {team}",
   "teams_hub_title": "Maglie da calcio per squadra",
-  "teams_see_collection": "Vedi collezione"
+  "teams_see_collection": "Vedi collezione",
+  "cookie_title": "Cookie",
+  "cookie_text": "Usiamo i cookie per misurare il traffico e migliorare Kit Finder. Va bene?",
+  "cookie_reject": "Rifiuta",
+  "cookie_accept": "Accetta"
 };
 KF_INFO_PAGES.it = {
  "info-why": {

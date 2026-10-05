@@ -390,7 +390,11 @@ KF_TRANSLATIONS.nl = {
   "teams_all_az": "Alle teams A-Z",
   "teams_link": "{team}-shirts",
   "teams_hub_title": "Voetbalshirts per team",
-  "teams_see_collection": "Bekijk collectie"
+  "teams_see_collection": "Bekijk collectie",
+  "cookie_title": "Cookies",
+  "cookie_text": "We gebruiken cookies om verkeer te meten en Kit Finder te verbeteren. Is dat oké?",
+  "cookie_reject": "Weigeren",
+  "cookie_accept": "Accepteren"
 };
 KF_INFO_PAGES.nl = {
  "info-why": {

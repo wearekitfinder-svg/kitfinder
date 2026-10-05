@@ -390,7 +390,11 @@ KF_TRANSLATIONS.es = {
   "teams_all_az": "Todos los equipos A-Z",
   "teams_link": "Camisetas de {team}",
   "teams_hub_title": "Camisetas de fútbol por equipo",
-  "teams_see_collection": "Ver colección"
+  "teams_see_collection": "Ver colección",
+  "cookie_title": "Cookies",
+  "cookie_text": "Usamos cookies para medir el tráfico y mejorar Kit Finder. ¿Te parece bien?",
+  "cookie_reject": "Rechazar",
+  "cookie_accept": "Aceptar"
 };
 KF_INFO_PAGES.es = {
  "info-why": {

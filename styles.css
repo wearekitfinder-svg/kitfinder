@@ -597,3 +597,9 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
   outline:3px dashed #3fcf8e;
   outline-offset:2px;
 }
+
+/* ===== FOOTER LINKS: wrap on phones (longer translations, e.g. es/de, overflowed) ===== */
+@media (max-width:600px){
+  .footer-links,.landing-footer .footer-links{flex-wrap:wrap;white-space:normal;row-gap:6px;}
+  .footer-links a,.landing-footer .footer-links a{white-space:nowrap;}
+}

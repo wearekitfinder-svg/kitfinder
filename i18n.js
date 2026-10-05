@@ -127,6 +127,10 @@ var KF_LANGUAGES = [
       "js_shop_by_country": "Shop by Country",
       "js_continent_asia_oceania": "Asia & Oceania",
       "js_shirt_found": "<strong>{n}</strong> shirt found",
+      "cookie_title": "Cookies",
+      "cookie_text": "We use cookies to measure traffic and improve Kit Finder. Is that OK?",
+      "cookie_reject": "Reject",
+      "cookie_accept": "Accept",
       "club_austrian": "Austrian clubs",
       "club_belgian": "Belgian clubs",
       "club_croatian": "Croatian clubs",
@@ -422,7 +426,7 @@ var KF_LANGUAGES = [
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '2';
+  var KF_LANG_VER = '3';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
