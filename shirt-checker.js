@@ -2,6 +2,16 @@
 const TEAMS_API = 'https://kitfinder-search.wearekitfinder.workers.dev/teams';
 const SHIRT_CHECK_API = 'https://kitfinder-search.wearekitfinder.workers.dev/shirt-check';
 
+// Translated text (kfT comes from /i18n.js; falls back to English if it didn't load)
+function scT(key, fallback, vars) {
+  if (typeof kfT === 'function') return kfT(key, fallback, vars);
+  let out = fallback;
+  if (vars) Object.keys(vars).forEach(function (k) { out = out.split('{' + k + '}').join(vars[k]); });
+  return out;
+}
+function scLocale() { return document.documentElement.lang || 'en'; }
+function scSizeLabel(v) { return v === 'Kids' ? scT('size_kids', 'Kids') : v === 'Woman' ? scT('size_woman', 'Woman') : v; }
+
 let ALL_TEAMS = [];
 let teamsState = 'idle'; // 'idle' | 'loading' | 'loaded' | 'error'
 let selectedTeam = null;
@@ -188,7 +198,7 @@ function renderTeamDropdown(query) {
   if (q === '') {
     const d = document.createElement('div');
     d.className = 'sc-team-empty';
-    d.textContent = 'Start typing a team or player…';
+    d.textContent = scT('sc_start_typing', 'Start typing a team or player…');
     dd.appendChild(d);
     return;
   }
@@ -199,9 +209,9 @@ function renderTeamDropdown(query) {
   let teamMatches = [];
   let teamStatusMsg = null;
   if (teamsState === 'loading' || teamsState === 'idle') {
-    teamStatusMsg = 'Loading teams…';
+    teamStatusMsg = scT('sc_loading_teams', 'Loading teams…');
   } else if (teamsState === 'error') {
-    teamStatusMsg = 'Could not load teams. Try again.';
+    teamStatusMsg = scT('sc_teams_failed', 'Could not load teams. Try again.');
   } else {
     teamMatches = ALL_TEAMS.filter(function (t) { return matchesTeam(t, q); })
       .map(function (t) { return Object.assign({ type: 'team' }, t); });
@@ -212,7 +222,7 @@ function renderTeamDropdown(query) {
   if (results.length === 0) {
     const d = document.createElement('div');
     d.className = 'sc-team-empty';
-    d.textContent = teamStatusMsg || 'No teams or players found';
+    d.textContent = teamStatusMsg || scT('sc_no_teams', 'No teams or players found');
     dd.appendChild(d);
     return;
   }
@@ -221,7 +231,7 @@ function renderTeamDropdown(query) {
     const opt = document.createElement('div');
     opt.className = 'sc-team-opt';
     if (item.type === 'player') {
-      opt.innerHTML = '<span>' + item.name + '</span><span class="sc-team-country">Player</span>';
+      opt.innerHTML = '<span>' + item.name + '</span><span class="sc-team-country">' + scT('sc_player', 'Player') + '</span>';
       opt.addEventListener('mousedown', function (e) {
         e.preventDefault();
         selectPlayer(item.name);
@@ -337,7 +347,7 @@ function pickSize(el, e) {
     selectedSizes.add(value);
     el.classList.add('active');
   }
-  document.getElementById('sizeTriggerText').textContent = selectedSizes.size ? Array.from(selectedSizes).join(', ') : 'Any size';
+  document.getElementById('sizeTriggerText').textContent = selectedSizes.size ? Array.from(selectedSizes).map(scSizeLabel).join(', ') : scT('sc_any_size', 'Any size');
   onFiltersChanged();
 }
 
@@ -348,7 +358,7 @@ function pickVersion(el, e) {
   document.querySelectorAll('#versionList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
   if (alreadyActive) {
     selectedVersion = '';
-    document.getElementById('versionTriggerText').textContent = 'Any version';
+    document.getElementById('versionTriggerText').textContent = scT('sc_any_version', 'Any version');
   } else {
     el.classList.add('active');
     selectedVersion = value;
@@ -365,7 +375,7 @@ function pickSleeve(el, e) {
   document.querySelectorAll('#sleeveList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
   if (alreadyActive) {
     selectedSleeve = '';
-    document.getElementById('sleeveTriggerText').textContent = 'Any sleeve';
+    document.getElementById('sleeveTriggerText').textContent = scT('sc_any_sleeve', 'Any sleeve');
   } else {
     el.classList.add('active');
     selectedSleeve = value;
@@ -424,7 +434,7 @@ function toggleDecade(decade) {
 function pickSeasonPair(year) {
   selectedSeason = (selectedSeason === String(year)) ? '' : String(year);
   renderSeasonList();
-  document.getElementById('seasonTriggerText').textContent = selectedSeason ? (selectedSeason + '/' + (year + 1)) : 'Any season';
+  document.getElementById('seasonTriggerText').textContent = selectedSeason ? (selectedSeason + '/' + (year + 1)) : scT('sc_any_season', 'Any season');
   closeAllDd();
   onFiltersChanged();
 }
@@ -440,20 +450,20 @@ function clearAllFilters() {
 
   selectedSizes.clear();
   document.querySelectorAll('#sizeList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
-  document.getElementById('sizeTriggerText').textContent = 'Any size';
+  document.getElementById('sizeTriggerText').textContent = scT('sc_any_size', 'Any size');
 
   selectedDecade = null;
   selectedSeason = '';
   renderSeasonList();
-  document.getElementById('seasonTriggerText').textContent = 'Any season';
+  document.getElementById('seasonTriggerText').textContent = scT('sc_any_season', 'Any season');
 
   selectedVersion = '';
   document.querySelectorAll('#versionList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
-  document.getElementById('versionTriggerText').textContent = 'Any version';
+  document.getElementById('versionTriggerText').textContent = scT('sc_any_version', 'Any version');
 
   selectedSleeve = '';
   document.querySelectorAll('#sleeveList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
-  document.getElementById('sleeveTriggerText').textContent = 'Any sleeve';
+  document.getElementById('sleeveTriggerText').textContent = scT('sc_any_sleeve', 'Any sleeve');
 
   closeAllDd();
   document.getElementById('avgBox').style.display = 'none';
@@ -532,11 +542,9 @@ function updateLiveCount() {
     .then(function (data) {
       if (requestId !== liveCountRequestId) return;
       const count = data.count || 0;
-      const storeCount = data.storeCount || 0;
       animateCountTo(count);
-      document.getElementById('countLabel').textContent = count === 1 ? 'shirt available' : 'shirts available';
-      document.getElementById('storeCountLabel').textContent =
-        'across ' + storeCount.toLocaleString('en-US') + (storeCount === 1 ? ' store' : ' stores');
+      lastCountData = { count: count, storeCount: data.storeCount || 0 };
+      renderCountLabels();
       numEl.classList.remove('sc-count-loading');
     })
     .catch(function () {
@@ -548,6 +556,33 @@ function updateLiveCount() {
       numEl.classList.remove('sc-count-loading');
     });
 }
+
+// Text next to the live count ("shirts available across N stores")
+let lastCountData = null;
+function renderCountLabels() {
+  const label = document.getElementById('countLabel');
+  const stores = document.getElementById('storeCountLabel');
+  const count = lastCountData ? lastCountData.count : 0;
+  label.textContent = count === 1 ? scT('sc_shirt_available', 'shirt available') : scT('sc_shirts_available', 'shirts available');
+  if (!lastCountData) return;
+  const n = lastCountData.storeCount.toLocaleString(scLocale());
+  stores.textContent = ' ' + (lastCountData.storeCount === 1
+    ? scT('sc_across_store', 'across {n} store', { n: n })
+    : scT('sc_across_stores', 'across {n} stores', { n: n }));
+}
+
+// Re-draw the texts this file writes itself (i18n.js only handles data-i18n)
+function scRefreshTexts() {
+  document.getElementById('sizeTriggerText').textContent = selectedSizes.size
+    ? Array.from(selectedSizes).map(scSizeLabel).join(', ') : scT('sc_any_size', 'Any size');
+  const v = document.querySelector('#versionList .sc-dd-option.active');
+  document.getElementById('versionTriggerText').textContent = v ? v.textContent : scT('sc_any_version', 'Any version');
+  const sl = document.querySelector('#sleeveList .sc-dd-option.active');
+  document.getElementById('sleeveTriggerText').textContent = sl ? sl.textContent : scT('sc_any_sleeve', 'Any sleeve');
+  if (!selectedSeason) document.getElementById('seasonTriggerText').textContent = scT('sc_any_season', 'Any season');
+  renderCountLabels();
+}
+window.kfOnLanguageChange = scRefreshTexts;
 
 function onFiltersChanged() {
   updateLiveCount();
@@ -582,7 +617,7 @@ function clearSizeField(e) {
   if (e) e.stopPropagation();
   selectedSizes.clear();
   document.querySelectorAll('#sizeList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
-  document.getElementById('sizeTriggerText').textContent = 'Any size';
+  document.getElementById('sizeTriggerText').textContent = scT('sc_any_size', 'Any size');
   onFiltersChanged();
 }
 
@@ -591,7 +626,7 @@ function clearSeasonField(e) {
   selectedDecade = null;
   selectedSeason = '';
   renderSeasonList();
-  document.getElementById('seasonTriggerText').textContent = 'Any season';
+  document.getElementById('seasonTriggerText').textContent = scT('sc_any_season', 'Any season');
   onFiltersChanged();
 }
 
@@ -599,7 +634,7 @@ function clearVersionField(e) {
   if (e) e.stopPropagation();
   selectedVersion = '';
   document.querySelectorAll('#versionList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
-  document.getElementById('versionTriggerText').textContent = 'Any version';
+  document.getElementById('versionTriggerText').textContent = scT('sc_any_version', 'Any version');
   onFiltersChanged();
 }
 
@@ -607,7 +642,7 @@ function clearSleeveField(e) {
   if (e) e.stopPropagation();
   selectedSleeve = '';
   document.querySelectorAll('#sleeveList .sc-dd-option').forEach(function (p) { p.classList.remove('active'); });
-  document.getElementById('sleeveTriggerText').textContent = 'Any sleeve';
+  document.getElementById('sleeveTriggerText').textContent = scT('sc_any_sleeve', 'Any sleeve');
   onFiltersChanged();
 }
 
@@ -655,7 +690,7 @@ function runSearch() {
   const avgBox = document.getElementById('avgBox');
   avgBox.style.display = 'none';
   box.classList.remove('sc-results-grid');
-  box.innerHTML = '<div class="sc-results-loading">Searching…</div>';
+  box.innerHTML = '<div class="sc-results-loading">' + scT('sc_searching', 'Searching…') + '</div>';
 
   fetch(SHIRT_CHECK_API + '?' + buildShirtCheckParams('list').toString())
     .then(function (r) { if (!r.ok) throw new Error('bad status'); return r.json(); })
@@ -663,7 +698,7 @@ function runSearch() {
       renderResults(data);
     })
     .catch(function () {
-      box.innerHTML = '<div class="sc-results-empty">Something went wrong. Try again.</div>';
+      box.innerHTML = '<div class="sc-results-empty">' + scT('js_something_wrong', 'Something went wrong. Try again.') + '</div>';
     });
 }
 
@@ -674,7 +709,7 @@ function renderResults(data) {
   if (!data.total) {
     avgBox.style.display = 'none';
     box.classList.remove('sc-results-grid');
-    box.innerHTML = '<div class="sc-results-loading">Checking history…</div>';
+    box.innerHTML = '<div class="sc-results-loading">' + scT('sc_checking_history', 'Checking history…') + '</div>';
     fetchHistoryFallback();
     return;
   }
@@ -698,7 +733,7 @@ function renderResults(data) {
       '<div class="card-img-wrap" style="background:#f4f5f7;position:relative;">' +
         '<img src="' + escHtml(p.image || '') + '" alt="" style="width:100%;height:100%;object-fit:contain;border-radius:var(--radius-sm);" loading="lazy" onerror="this.onerror=null;this.src=\'/images/placeholder.png\';this.style.width=\'60%\';this.style.height=\'60%\';this.style.margin=\'auto\';"/>' +
         '<span class="badge-store" style="background:var(--green);color:#fff;">' + escHtml(p.store) + '</span>' +
-        '<button class="card-fav-btn' + (isFavourited(p.id) ? ' active' : '') + '" data-fav-id="' + escHtml(p.id) + '" onclick="toggleFavourite(event,this)" aria-label="Save to favourites"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>' +
+        '<button class="card-fav-btn' + (isFavourited(p.id) ? ' active' : '') + '" data-fav-id="' + escHtml(p.id) + '" onclick="toggleFavourite(event,this)" aria-label="' + escHtml(scT('js_save_to_favourites', 'Save to favourites')) + '"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>' +
       '</div>' +
       '<div class="card-body">' +
         '<div class="card-meta-row">' +
@@ -706,7 +741,7 @@ function renderResults(data) {
           (size ? '<span class="card-size" style="margin-left:auto">' + escHtml(size) + '</span>' : '') +
         '</div>' +
         '<a class="card-btn" href="' + escHtml(p.url) + '" target="_blank" rel="noopener noreferrer">' +
-          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>View in store' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' + scT('js_view_in_store', 'View in store') +
         '</a>' +
       '</div>' +
     '</div>';
@@ -727,21 +762,21 @@ function fetchHistoryFallback() {
       renderHistoryFallback(data.lastSeen);
     })
     .catch(function () {
-      box.innerHTML = '<div class="sc-results-empty">No shirts currently listed for these filters.</div>';
+      box.innerHTML = '<div class="sc-results-empty">' + scT('sc_no_listed', 'No shirts currently listed for these filters.') + '</div>';
     });
 }
 
 function renderHistoryFallback(lastSeen) {
   const box = document.getElementById('resultsBox');
   if (!lastSeen) {
-    box.innerHTML = '<div class="sc-results-empty">No shirts currently listed for these filters.</div>';
+    box.innerHTML = '<div class="sc-results-empty">' + scT('sc_no_listed', 'No shirts currently listed for these filters.') + '</div>';
     return;
   }
   const dateStr = formatHistoryDate(lastSeen.removed_at);
   box.innerHTML =
     '<div class="sc-history-box">' +
       '<div class="sc-history-name">' + escHtml(lastSeen.name) + '</div>' +
-      '<div class="sc-history-detail">Last seen: ' + escHtml(lastSeen.store) + ', ' +
+      '<div class="sc-history-detail">' + scT('sc_last_seen', 'Last seen:') + ' ' + escHtml(lastSeen.store) + ', ' +
         '<span class="sc-history-price">' + escHtml(fmtPriceFromEUR(lastSeen.priceEUR)) + '</span>, ' +
         escHtml(dateStr) +
       '</div>' +
@@ -751,12 +786,13 @@ function renderHistoryFallback(lastSeen) {
 function formatHistoryDate(isoDate) {
   const d = new Date(isoDate + 'T00:00:00');
   if (isNaN(d.getTime())) return isoDate;
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  return d.toLocaleDateString(scLocale() === 'en' ? 'en-GB' : scLocale(), { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   loadTeamsOnce();
   loadExchangeRates();
   renderSeasonList();
+  scRefreshTexts();
   updateLiveCount();
 });

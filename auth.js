@@ -67,6 +67,27 @@ function _kfInitFirebase() {
     if (btn) btn.disabled = on;
   }
 
+  // Mensajes de error de Firebase traducidos (cada código → una clave de kfT)
+  var KF_AUTH_ERRORS = {
+    'auth/invalid-email': ['auth_err_invalid_email', 'That email address is not valid.'],
+    'auth/missing-email': ['auth_err_invalid_email', 'That email address is not valid.'],
+    'auth/user-disabled': ['auth_err_user_disabled', 'This account has been disabled.'],
+    'auth/user-not-found': ['auth_err_wrong_credentials', 'Wrong email or password.'],
+    'auth/wrong-password': ['auth_err_wrong_credentials', 'Wrong email or password.'],
+    'auth/invalid-credential': ['auth_err_wrong_credentials', 'Wrong email or password.'],
+    'auth/invalid-login-credentials': ['auth_err_wrong_credentials', 'Wrong email or password.'],
+    'auth/missing-password': ['auth_err_fill_all', 'Please fill in all fields.'],
+    'auth/email-already-in-use': ['auth_err_email_in_use', 'An account with this email already exists. Try signing in.'],
+    'auth/weak-password': ['auth_err_weak_password', 'Password must be at least 6 characters.'],
+    'auth/too-many-requests': ['auth_err_too_many', 'Too many attempts. Please wait a few minutes and try again.'],
+    'auth/network-request-failed': ['auth_err_network', 'Network error. Check your connection and try again.']
+  };
+  function kfAuthErrorMsg(e) {
+    var m = e && KF_AUTH_ERRORS[e.code];
+    if (m) return kfT(m[0], m[1]);
+    return kfT('auth_err_generic', 'Something went wrong. Please try again.');
+  }
+
   // ── Google Sign In ───────────────────────────────────────────────────────────
   window.kfSignInGoogle = function() {
     kfSetError('');
@@ -89,7 +110,7 @@ function _kfInitFirebase() {
         kfSetError(kfT('auth_err_popup_blocked','Popup blocked. Trying redirect login...'));
         setTimeout(function() {
           auth.signInWithRedirect(provider).catch(function(e2) {
-            kfSetError(e2.message.replace('Firebase: ', '').replace(/\s*\(.*\)\.?$/, ''));
+            kfSetError(kfAuthErrorMsg(e2));
           });
         }, 1000);
       } else if (e.code === 'auth/cancelled-popup-request' || e.code === 'auth/popup-closed-by-user') {
@@ -97,7 +118,7 @@ function _kfInitFirebase() {
       } else if (e.code === 'auth/operation-not-allowed') {
         kfSetError(kfT('auth_err_google_disabled','Google sign-in is not enabled. Enable it in Firebase Console → Authentication → Sign-in method.'));
       } else {
-        kfSetError(e.message.replace('Firebase: ', '').replace(/\s*\(.*\)\.?$/, ''));
+        kfSetError(kfAuthErrorMsg(e));
       }
     });
     // Capturar resultado de redirect si venimos de uno
@@ -129,7 +150,7 @@ function _kfInitFirebase() {
     }).then(function() {
       window.kfCloseAuthModal();
     }).catch(function(e) {
-      kfSetError(e.message.replace('Firebase: ', '').replace(/\s*\(.*\)\.?$/, ''));
+      kfSetError(kfAuthErrorMsg(e));
     }).finally(function() {
       kfSetLoading(false);
     });
@@ -141,7 +162,7 @@ function _kfInitFirebase() {
     auth.sendPasswordResetEmail(email.trim()).then(function() {
       kfSetError(kfT('auth_reset_sent','Reset email sent! Check your inbox.'));
     }).catch(function(e) {
-      kfSetError(e.message.replace('Firebase: ', ''));
+      kfSetError(kfAuthErrorMsg(e));
     });
   };
 
