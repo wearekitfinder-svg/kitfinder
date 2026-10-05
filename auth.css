@@ -393,9 +393,3 @@
   .kf-globe-panel { position: fixed; top: 64px; right: 12px; left: 12px; width: auto; max-width: none; }
   .kf-globe-list { max-height: 50vh; }
 }
-/* Globo en la cabecera de resultados (página 2): fondo claro, icono oscuro */
-.kf-globe-results { margin-left: auto; flex-shrink: 0; }
-.kf-globe-results .kf-globe-btn { color: #1e2530; }
-@media (max-width: 600px) {
-  .kf-globe-results .kf-globe-panel { top: 120px; }
-}

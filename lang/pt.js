@@ -2,6 +2,7 @@
 KF_TRANSLATIONS.pt = {
   "search_placeholder": "Pesquisar camisolas (equipa, jogador, marca…)",
   "globe_title": "Idioma e moeda",
+  "res_back_to_top": "Voltar ao topo",
   "search_currency": "Pesquisar moeda…",
   "auth_forgot": "Esqueceste-te da palavra-passe?",
   "res_filters": "Filtros",

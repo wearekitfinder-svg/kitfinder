@@ -986,3 +986,21 @@ if(document.readyState==="loading"){
 }else{
   _kfSetupImageDropZone();
 }
+
+/* Back to top (results page). The button lives inside #results, so it is hidden with it on page 1 and info pages. */
+(function(){
+  var SHOW_AFTER=800,ticking=false;
+  function update(){
+    ticking=false;
+    var b=document.getElementById('kfBackToTop');if(!b)return;
+    var r=document.getElementById('results');
+    var on=!!r&&r.style.display!=='none'&&r.offsetParent!==null&&(window.scrollY||document.documentElement.scrollTop)>SHOW_AFTER;
+    b.classList.toggle('visible',on);
+  }
+  window.addEventListener('scroll',function(){if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
+  window.addEventListener('resize',update);
+  window.kfBackToTop=function(){
+    var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+  };
+})();

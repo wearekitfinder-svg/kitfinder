@@ -2,6 +2,7 @@
 KF_TRANSLATIONS.pl = {
   "search_placeholder": "Szukaj koszulek piłkarskich (drużyna, zawodnik, marka…)",
   "globe_title": "Język i waluta",
+  "res_back_to_top": "Do góry",
   "search_currency": "Szukaj waluty…",
   "auth_forgot": "Nie pamiętasz hasła?",
   "res_filters": "Filtry",
