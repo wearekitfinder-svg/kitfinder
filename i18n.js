@@ -356,9 +356,9 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       'profile_tap_photo': 'Tap the camera to change photo',
       // Settings
       'settings_title': 'Settings',
-      'settings_currency': '💱 Currency',
+      'settings_currency': 'Currency',
       'settings_currency_desc': 'Prices across all stores will be shown in your selected currency.',
-      'settings_lang': '🌐 Language',
+      'settings_lang': 'Language',
       'settings_lang_desc': 'Choose your preferred language for the interface.',
       'settings_save': 'Save settings',
       'settings_saved': '✓ Saved!',
@@ -435,7 +435,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '5';
+  var KF_LANG_VER = '6';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
