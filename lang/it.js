@@ -2,6 +2,8 @@
 KF_TRANSLATIONS.it = {
   "search_placeholder": "Cerca maglie (squadra, giocatore, marca…)",
   "globe_title": "Lingua e valuta",
+  "globe_lang": "Lingua",
+  "globe_currency": "Valuta",
   "search_currency": "Cerca valuta…",
   "auth_forgot": "Password dimenticata?",
   "res_filters": "Filtri",

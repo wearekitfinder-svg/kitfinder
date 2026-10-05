@@ -30,6 +30,8 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       // Search
       'search_placeholder': 'Search football shirts (team, player, brand…)',
       'globe_title': 'Language & currency',
+      'globe_lang': 'Language',
+      'globe_currency': 'Currency',
       'search_currency': 'Search currency…',
       "auth_forgot": "Forgot password?",
       "res_filters": "Filters",
@@ -432,7 +434,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '3';
+  var KF_LANG_VER = '4';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
@@ -596,12 +598,12 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       '</button>' +
       '<div class="kf-globe-panel" role="menu">' +
         '<button class="kf-globe-row" data-sec="lang" type="button" aria-expanded="false">' +
-          '<span class="kf-globe-row-label" data-i18n="settings_lang">Language</span>' +
+          '<span class="kf-globe-row-label" data-i18n="globe_lang">Language</span>' +
           '<span class="kf-globe-val" data-sec="lang">English</span>' + _CHEV +
         '</button>' +
         '<div class="kf-globe-body" data-sec="lang"><div class="kf-globe-list" data-sec="lang"></div></div>' +
         '<button class="kf-globe-row" data-sec="cur" type="button" aria-expanded="false">' +
-          '<span class="kf-globe-row-label" data-i18n="settings_currency">Currency</span>' +
+          '<span class="kf-globe-row-label" data-i18n="globe_currency">Currency</span>' +
           '<span class="kf-globe-val" data-sec="cur">EUR (€)</span>' + _CHEV +
         '</button>' +
         '<div class="kf-globe-body" data-sec="cur">' +

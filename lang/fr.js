@@ -2,6 +2,8 @@
 KF_TRANSLATIONS.fr = {
   "search_placeholder": "Rechercher des maillots (équipe, joueur, marque…)",
   "globe_title": "Langue et devise",
+  "globe_lang": "Langue",
+  "globe_currency": "Devise",
   "search_currency": "Rechercher une devise…",
   "auth_forgot": "Mot de passe oublié ?",
   "res_filters": "Filtres",

@@ -2,6 +2,8 @@
 KF_TRANSLATIONS.es = {
   "search_placeholder": "Busca camisetas de fútbol (equipo, jugador, marca…)",
   "globe_title": "Idioma y divisa",
+  "globe_lang": "Idioma",
+  "globe_currency": "Divisa",
   "search_currency": "Buscar divisa…",
   "auth_forgot": "¿Has olvidado la contraseña?",
   "res_filters": "Filtros",
