@@ -15,6 +15,12 @@ var KF_LANGUAGES = [
   { code:'pl', label:'Polski' }
 ];
 
+// Legal/info page bodies (Why, About, Privacy, Terms, Affiliate), their section headings and the
+// cookie banner stay in English until a human/lawyer reviews the translations in lang/*.js.
+// Set to true to turn those translations back on. Page titles, menus and links are always translated.
+var KF_TRANSLATE_LEGAL = false;
+function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|priv|terms|aff)_h2_)/.test(key); }
+
   // ── Language translations system ─────────────────────────────────────────────
   // Approach: store language preference and reload page to apply translations
   // This avoids the bug where switching between languages gets stuck
@@ -446,7 +452,7 @@ var KF_LANGUAGES = [
   // Texto traducido para cosas que genera app.js. {n} se sustituye con vars.n
   function kfT(key, fallback, vars) {
     var code = localStorage.getItem('kf_lang') || 'en';
-    var d = KF_TRANSLATIONS[code];
+    var d = _kfLegalKey(key) ? null : KF_TRANSLATIONS[code];
     var out = (d && d[key]) || KF_TRANSLATIONS.en[key] || fallback || key;
     if (vars) Object.keys(vars).forEach(function(k) { out = out.split('{' + k + '}').join(vars[k]); });
     return out;
@@ -460,6 +466,7 @@ var KF_LANGUAGES = [
   function _kfApplyNow(code) {
     var en = KF_TRANSLATIONS.en;
     var dict = KF_TRANSLATIONS[code] || en;
+    var dictLang = dict;
 
     // Guardamos el idioma elegido (inglés = sin preferencia guardada)
     if (code !== 'en') localStorage.setItem('kf_lang', code); else localStorage.removeItem('kf_lang');
@@ -472,6 +479,7 @@ var KF_LANGUAGES = [
     //    original de la página (guardado en data-kf-orig), así nunca se queda nada a medias.
     document.querySelectorAll('[data-i18n]').forEach(function(el) {
       var key = el.getAttribute('data-i18n');
+      var dict = _kfLegalKey(key) ? en : dictLang;
       var isField = el.tagName === 'INPUT' || el.tagName === 'TEXTAREA';
       var cur = isField ? el.placeholder : el.textContent;
       if (el.getAttribute('data-kf-orig') === null) el.setAttribute('data-kf-orig', cur);
@@ -517,7 +525,7 @@ var KF_LANGUAGES = [
   var _kfInfoOrig = {};
   var KF_INFO_IDS = ['info-why', 'info-about', 'info-privacy', 'info-terms', 'info-affiliate'];
   function _kfTranslateInfoPages(code) {
-    var pages = KF_INFO_PAGES[code] || {};
+    var pages = KF_TRANSLATE_LEGAL ? (KF_INFO_PAGES[code] || {}) : {};
     KF_INFO_IDS.forEach(function(id) {
       var section = document.getElementById(id);
       if (!section) return;
