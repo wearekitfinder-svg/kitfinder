@@ -402,23 +402,55 @@ var KF_LANGUAGES = [
   };
 
   // ── Globo de la cabecera: Idioma y Divisa (acordeón, solo uno abierto) ──────
+  // Puede haber varios globos (página 1 y página 2). Sin ids: todo va por clases
+  // dentro de cada contenedor .kf-globe, y el HTML se genera aquí una sola vez.
   var _kfGlobeSection = null; // null | 'lang' | 'cur'
+  var _kfGlobeOpen = null;    // el .kf-globe que tiene el panel abierto
   function _g(id) { return document.getElementById(id); }
+  function _q(root, sel) { return root ? root.querySelector(sel) : null; }
+
+  var _CHEV = '<svg class="kf-globe-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
+  function _kfGlobeHtml() {
+    return '<button class="kf-globe-btn" type="button" aria-haspopup="true" aria-expanded="false" title="Language &amp; currency" aria-label="Language &amp; currency" data-i18n-attr="title:globe_title;aria-label:globe_title">' +
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' +
+      '</button>' +
+      '<div class="kf-globe-panel" role="menu">' +
+        '<button class="kf-globe-row" data-sec="lang" type="button" aria-expanded="false">' +
+          '<span class="kf-globe-row-label" data-i18n="settings_lang">Language</span>' +
+          '<span class="kf-globe-val" data-sec="lang">English</span>' + _CHEV +
+        '</button>' +
+        '<div class="kf-globe-body" data-sec="lang"><div class="kf-globe-list" data-sec="lang"></div></div>' +
+        '<button class="kf-globe-row" data-sec="cur" type="button" aria-expanded="false">' +
+          '<span class="kf-globe-row-label" data-i18n="settings_currency">Currency</span>' +
+          '<span class="kf-globe-val" data-sec="cur">EUR (€)</span>' + _CHEV +
+        '</button>' +
+        '<div class="kf-globe-body" data-sec="cur">' +
+          '<input class="kf-globe-search" type="text" placeholder="Search currency…" data-i18n-attr="placeholder:search_currency" autocomplete="off"/>' +
+          '<div class="kf-globe-list" data-sec="cur"></div>' +
+        '</div>' +
+      '</div>';
+  }
+  function _kfGlobeMount() {
+    document.querySelectorAll('.kf-globe').forEach(function(root) {
+      if (!root.querySelector('.kf-globe-btn')) root.innerHTML = _kfGlobeHtml();
+    });
+  }
 
   function _kfGlobeRefresh() {
+    _kfGlobeMount();
     var code = localStorage.getItem('kf_lang') || 'en';
     var lang = KF_LANGUAGES.find(function(l) { return l.code === code; }) || KF_LANGUAGES[0];
-    var lv = _g('kfGlobeLangVal'); if (lv) lv.textContent = lang.label;
     var cur = (typeof currentCountry !== 'undefined' && currentCountry) ? currentCountry : { currency: 'EUR', symbol: '€' };
-    var cv = _g('kfGlobeCurVal'); if (cv) cv.textContent = cur.currency + ' (' + cur.symbol + ')';
-    if (_kfGlobeSection === 'lang') _kfGlobeBuildLang();
-    if (_kfGlobeSection === 'cur') _kfGlobeBuildCur((_g('kfGlobeCurSearch') || {}).value || '');
+    document.querySelectorAll('.kf-globe-val[data-sec="lang"]').forEach(function(el) { el.textContent = lang.label; });
+    document.querySelectorAll('.kf-globe-val[data-sec="cur"]').forEach(function(el) { el.textContent = cur.currency + ' (' + cur.symbol + ')'; });
+    if (_kfGlobeOpen && _kfGlobeSection === 'lang') _kfGlobeBuildLang(_kfGlobeOpen);
+    if (_kfGlobeOpen && _kfGlobeSection === 'cur') _kfGlobeBuildCur(_kfGlobeOpen, (_q(_kfGlobeOpen, '.kf-globe-search') || {}).value || '');
   }
 
   var _CHECK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
 
-  function _kfGlobeBuildLang() {
-    var list = _g('kfGlobeLangList'); if (!list) return;
+  function _kfGlobeBuildLang(root) {
+    var list = _q(root, '.kf-globe-list[data-sec="lang"]'); if (!list) return;
     var cur = localStorage.getItem('kf_lang') || 'en';
     list.innerHTML = '';
     KF_LANGUAGES.forEach(function(l) {
@@ -428,13 +460,13 @@ var KF_LANGUAGES = [
       o.setAttribute('lang', l.code);
       var name = document.createElement('span'); name.textContent = l.label; o.appendChild(name);
       if (l.code === cur) { var ck = document.createElement('span'); ck.innerHTML = _CHECK; o.appendChild(ck); }
-      o.onclick = function() { window.kfSetLanguage(l.code); _kfGlobeClose(); };
+      o.onclick = function() { _kfGlobeClose(); window.kfSetLanguage(l.code); };
       list.appendChild(o);
     });
   }
 
-  function _kfGlobeBuildCur(filter) {
-    var list = _g('kfGlobeCurList'); if (!list) return;
+  function _kfGlobeBuildCur(root, filter) {
+    var list = _q(root, '.kf-globe-list[data-sec="cur"]'); if (!list) return;
     var cur = (typeof currentCountry !== 'undefined' && currentCountry) ? currentCountry.currency : 'EUR';
     var f = (filter || '').toLowerCase();
     list.innerHTML = '';
@@ -453,51 +485,66 @@ var KF_LANGUAGES = [
       var sym = document.createElement('span'); sym.className = 'kf-globe-sym';
       if (c.currency === cur) sym.innerHTML = _CHECK; else sym.textContent = c.symbol;
       o.appendChild(name); o.appendChild(sym);
-      o.onclick = function() { window.kfSelectCurrency(c); _kfGlobeClose(); };
+      o.onclick = function() { _kfGlobeClose(); window.kfSelectCurrency(c); };
       list.appendChild(o);
     });
   }
 
-  function _kfGlobeSet(sec) {
+  function _kfGlobeSet(root, sec) {
     _kfGlobeSection = sec;
-    [['lang', 'kfGlobeLangRow', 'kfGlobeLangBody'], ['cur', 'kfGlobeCurRow', 'kfGlobeCurBody']].forEach(function(r) {
-      var row = _g(r[1]), body = _g(r[2]); if (!row || !body) return;
-      var open = sec === r[0];
+    if (!root) return;
+    ['lang', 'cur'].forEach(function(s) {
+      var row = _q(root, '.kf-globe-row[data-sec="' + s + '"]'), body = _q(root, '.kf-globe-body[data-sec="' + s + '"]');
+      if (!row || !body) return;
+      var open = sec === s;
       row.classList.toggle('open', open);
       row.setAttribute('aria-expanded', open ? 'true' : 'false');
       body.style.display = open ? 'block' : 'none';
     });
-    if (sec === 'lang') _kfGlobeBuildLang();
+    if (sec === 'lang') _kfGlobeBuildLang(root);
     if (sec === 'cur') {
-      var s = _g('kfGlobeCurSearch'); if (s) s.value = '';
-      _kfGlobeBuildCur('');
+      var s = _q(root, '.kf-globe-search'); if (s) s.value = '';
+      _kfGlobeBuildCur(root, '');
       if (s && window.matchMedia && window.matchMedia('(hover: hover)').matches) setTimeout(function() { s.focus(); }, 30);
     }
   }
-  window.kfGlobeSection = function(sec) { _kfGlobeSet(_kfGlobeSection === sec ? null : sec); };
-  window.kfGlobeFilterCur = function(v) { _kfGlobeBuildCur(v); };
 
   function _kfGlobeClose() {
-    var p = _g('kfGlobePanel'), b = _g('kfGlobeBtn');
+    var root = _kfGlobeOpen; _kfGlobeOpen = null;
+    if (!root) { _kfGlobeSection = null; return; }
+    var p = _q(root, '.kf-globe-panel'), b = _q(root, '.kf-globe-btn');
     if (p) p.classList.remove('open');
     if (b) b.setAttribute('aria-expanded', 'false');
-    _kfGlobeSet(null);
+    _kfGlobeSet(root, null);
   }
-  window.kfToggleGlobe = function(ev) {
-    if (ev) ev.stopPropagation();
-    var p = _g('kfGlobePanel'), b = _g('kfGlobeBtn'); if (!p) return;
-    var open = !p.classList.contains('open');
-    if (!open) { _kfGlobeClose(); return; }
-    var pm = _g('kfProfileMenu'); if (pm) pm.classList.remove('open');
-    p.classList.add('open');
-    if (b) b.setAttribute('aria-expanded', 'true');
-    _kfGlobeRefresh();
-  };
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest || e.target.closest('#kfGlobe')) return;
+  function _kfGlobeToggle(root) {
+    var p = _q(root, '.kf-globe-panel'); if (!p) return;
+    var wasOpen = _kfGlobeOpen === root;
     _kfGlobeClose();
+    if (wasOpen) return;
+    var pm = _g('kfProfileMenu'); if (pm) pm.classList.remove('open');
+    _kfGlobeOpen = root;
+    p.classList.add('open');
+    var b = _q(root, '.kf-globe-btn'); if (b) b.setAttribute('aria-expanded', 'true');
+    _kfGlobeRefresh();
+  }
+
+  // Un solo listener para todos los globos (delegación de eventos)
+  document.addEventListener('click', function(e) {
+    var t = e.target;
+    var root = t.closest ? t.closest('.kf-globe') : null;
+    if (!root) { _kfGlobeClose(); return; }
+    if (t.closest('.kf-globe-btn')) { e.stopPropagation(); _kfGlobeToggle(root); return; }
+    var row = t.closest('.kf-globe-row');
+    if (row) { var sec = row.getAttribute('data-sec'); _kfGlobeSet(root, _kfGlobeSection === sec ? null : sec); }
+  });
+  document.addEventListener('input', function(e) {
+    if (e.target.classList && e.target.classList.contains('kf-globe-search')) {
+      _kfGlobeBuildCur(e.target.closest('.kf-globe'), e.target.value);
+    }
   });
   document.addEventListener('keydown', function(e) { if (e.key === 'Escape') _kfGlobeClose(); });
+  _kfGlobeMount();
 
   // ── Aplicar el idioma guardado al cargar ─────────────────────────────────────
   (function() {

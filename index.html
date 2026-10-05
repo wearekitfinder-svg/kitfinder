@@ -146,7 +146,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css?v=181">
-<link rel="stylesheet" href="auth.css?v=182">
+<link rel="stylesheet" href="auth.css?v=183">
 </head>
 <body>
 
@@ -418,28 +418,7 @@
     </div>
     <div class="nav-right">
       <!-- GLOBO: idioma + divisa (solo una sección abierta a la vez) -->
-      <div class="kf-globe" id="kfGlobe">
-        <button class="kf-globe-btn" id="kfGlobeBtn" type="button" onclick="kfToggleGlobe(event)" aria-haspopup="true" aria-expanded="false" aria-controls="kfGlobePanel" title="Language &amp; currency" aria-label="Language &amp; currency" data-i18n-attr="title:globe_title;aria-label:globe_title">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </button>
-        <div class="kf-globe-panel" id="kfGlobePanel" role="menu">
-          <button class="kf-globe-row" id="kfGlobeLangRow" type="button" onclick="kfGlobeSection('lang')" aria-expanded="false">
-            <span class="kf-globe-row-label" data-i18n="settings_lang">Language</span>
-            <span class="kf-globe-val" id="kfGlobeLangVal">English</span>
-            <svg class="kf-globe-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="kf-globe-body" id="kfGlobeLangBody"><div class="kf-globe-list" id="kfGlobeLangList"></div></div>
-          <button class="kf-globe-row" id="kfGlobeCurRow" type="button" onclick="kfGlobeSection('cur')" aria-expanded="false">
-            <span class="kf-globe-row-label" data-i18n="settings_currency">Currency</span>
-            <span class="kf-globe-val" id="kfGlobeCurVal">EUR (€)</span>
-            <svg class="kf-globe-chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="kf-globe-body" id="kfGlobeCurBody">
-            <input class="kf-globe-search" id="kfGlobeCurSearch" type="text" placeholder="Search currency…" data-i18n-attr="placeholder:search_currency" oninput="kfGlobeFilterCur(this.value)" autocomplete="off"/>
-            <div class="kf-globe-list" id="kfGlobeCurList"></div>
-          </div>
-        </div>
-      </div>
+      <div class="kf-globe"></div>
       <button class="kf-auth-topbtn" id="kfAuthBtn" onclick="kfOpenAuthModal('signin')" title="Sign in" data-i18n-attr="title:auth_signin_title">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       </button>
@@ -919,6 +898,8 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </button>
     </div>
+    <!-- GLOBO (página 2): mismo componente, lo rellena i18n.js -->
+    <div class="kf-globe kf-globe-results"></div>
   </div>
   <!-- Long Sleeve Results Header -->
   <div id="wcResultsHeader" class="wc-results-header" style="display:none;">
@@ -1095,7 +1076,7 @@
 </div>
 
 <script src="info.js?v=161" defer></script>
-<script src="i18n.js?v=1"></script>
+<script src="i18n.js?v=2"></script>
 <script src="auth.js?v=197"></script>
 <!-- INFO PAGE (about / privacy / terms) -->
 <div id="info-page">

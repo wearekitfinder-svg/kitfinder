@@ -347,7 +347,7 @@
 /* ── Globo de la cabecera: idioma + divisa ──────────────────────────────── */
 .kf-globe { position: relative; display: flex; align-items: center; }
 .kf-globe-btn {
-  display: flex; align-items: center; background: none; border: none;
+  display: flex; align-items: center; background: none; border: none; color: #fff;
   padding: 6px; cursor: pointer; border-radius: 50%;
 }
 .kf-globe-btn:hover svg, .kf-globe-btn[aria-expanded="true"] svg { stroke: #3fcf8e; }
@@ -392,4 +392,10 @@
 @media (max-width: 600px) {
   .kf-globe-panel { position: fixed; top: 64px; right: 12px; left: 12px; width: auto; max-width: none; }
   .kf-globe-list { max-height: 50vh; }
+}
+/* Globo en la cabecera de resultados (página 2): fondo claro, icono oscuro */
+.kf-globe-results { margin-left: auto; flex-shrink: 0; }
+.kf-globe-results .kf-globe-btn { color: #1e2530; }
+@media (max-width: 600px) {
+  .kf-globe-results .kf-globe-panel { top: 120px; }
 }
