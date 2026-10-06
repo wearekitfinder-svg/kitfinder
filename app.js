@@ -533,7 +533,7 @@ triggerCountrySearch=function(country){_origTriggerCountrySearch.apply(this,[cou
   } else if(path==='/profile'||path==='/profile/'){
     setTimeout(function(){if(typeof kfOpenProfile==='function')kfOpenProfile();else showInfo('profile',{preventDefault:function(){}});},300);
   } else if(path==='/settings'||path==='/settings/'){
-    setTimeout(function(){if(typeof kfOpenSettings==='function')kfOpenSettings();else showInfo('settings',{preventDefault:function(){}});},300);
+    /* Settings was removed (language and currency live in the globe menu): old links just show the landing page */
   } else if(path==='/long-sleeve-kits'||path==='/long-sleeve-kits/'){
     setTimeout(function(){_origSearchLongSleeve();},120);
   } else if(path.startsWith('/league/')){
