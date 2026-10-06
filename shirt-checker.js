@@ -158,7 +158,7 @@ function loadTeamsOnce() {
     });
 }
 
-// Deep-link entry point for the /teams/<slug>/ static pages' "Advanced
+// Deep-link entry point for the /teams/<slug> static pages' "Advanced
 // Search" button (?team=<teams.id>, e.g. cl_realmadrid) -- preselects the
 // team exactly like a manual dropdown pick, then runs the search
 // immediately so the link lands on real results, not just a prefilled

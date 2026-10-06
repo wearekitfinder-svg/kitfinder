@@ -9,20 +9,23 @@ HOY = datetime.date.today().isoformat()
 
 # (1) Rutas que viven dentro del index.html (la SPA las dibuja con JS).
 #     No son archivos: hay que listarlas a mano.
-SPA_ROUTES = ["/", "/results", "/match-worn", "/about", "/long-sleeve-kits", "/why"]
+#     /about, /results y /match-worn NO van: sirven la home y su canonical
+#     apunta a "/", asi que Google las marca como "pagina alternativa".
+SPA_ROUTES = ["/", "/long-sleeve-kits", "/why"]
 
 def prioridad(ruta):
     if ruta == "/": return ("daily", "1.0")
-    if ruta in ("/results", "/match-worn", "/long-sleeve-kits"): return ("daily", "0.9")
+    if ruta == "/long-sleeve-kits": return ("daily", "0.9")
     if ruta.startswith(("/clubs/", "/national/", "/leagues/")): return ("weekly", "0.8")
     if ruta.startswith("/blog"): return ("weekly", "0.7")
-    if ruta in ("/about", "/why", "/valuation"): return ("monthly", "0.5")
+    if ruta == "/why": return ("monthly", "0.5")
     return ("weekly", "0.7")
 
 def descubrir_carpetas(repo="."):
     rutas = set()
     for root, dirs, files in os.walk(repo):
-        if "/.git" in root or root.startswith("./.git"): continue
+        # Carpetas ocultas (.git, .claude, .wrangler...) no son paginas del sitio.
+        dirs[:] = [d for d in dirs if not d.startswith(".")]
         rel = os.path.relpath(root, repo)
         if "index.html" in files and rel != ".":
             rutas.add("/" + rel.replace(os.sep, "/"))
