@@ -47,6 +47,10 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "nl_nospam": "No spam. Unsubscribe any time.",
       "nl_subscribe": "Subscribe",
       "footer_teams": "Teams",
+      "footer_browse_by": "Browse by",
+      "footer_clubs": "Clubs",
+      "footer_national": "National teams",
+      "footer_leagues": "Leagues",
       "chip_asia": "Asia",
       "chip_oceania": "Oceania",
       "chip_home": "Home",
@@ -427,7 +431,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '7';
+  var KF_LANG_VER = '8';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
