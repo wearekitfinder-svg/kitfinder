@@ -13,6 +13,9 @@ HOY = datetime.date.today().isoformat()
 #     apunta a "/", asi que Google las marca como "pagina alternativa".
 SPA_ROUTES = ["/", "/long-sleeve-kits", "/why"]
 
+# Carpetas reales que NO deben ir al sitemap (paginas internas con noindex).
+EXCLUDE = {"/dashboard"}
+
 def prioridad(ruta):
     if ruta == "/": return ("daily", "1.0")
     if ruta == "/long-sleeve-kits": return ("daily", "0.9")
@@ -32,7 +35,7 @@ def descubrir_carpetas(repo="."):
     return rutas
 
 def main():
-    rutas = set(SPA_ROUTES) | descubrir_carpetas(".")
+    rutas = (set(SPA_ROUTES) | descubrir_carpetas(".")) - EXCLUDE
     orden = sorted(rutas, key=lambda r: (r != "/", r))
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
