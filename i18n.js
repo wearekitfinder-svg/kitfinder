@@ -308,7 +308,6 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "auth_err_enter_email": "Enter your email first.",
       "auth_reset_sent": "Reset email sent! Check your inbox.",
       "auth_default_user": "Kit Finder User",
-      "menu_settings": "Settings",
       "menu_signout": "Sign out",
       "nav_blog": "La Grada",
       'search_btn': 'Search',
@@ -347,7 +346,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       // Nav
       'nav_new_in': 'New In', 'nav_blog': 'La Grada',
       // Profile
-      'menu_profile': 'Profile', 'menu_settings': 'Settings',
+      'menu_profile': 'Profile',
       'menu_favs': 'My favourites', 'menu_signout': 'Sign out',
       'profile_title': 'Edit Profile', 'profile_nickname': 'Nickname',
       'profile_placeholder': 'How should we call you?',
@@ -355,13 +354,6 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       'profile_drag': 'Drag to reposition · Pinch to zoom',
       'profile_tap_photo': 'Tap the camera to change photo',
       // Settings
-      'settings_title': 'Settings',
-      'settings_currency': 'Currency',
-      'settings_currency_desc': 'Prices across all stores will be shown in your selected currency.',
-      'settings_lang': 'Language',
-      'settings_lang_desc': 'Choose your preferred language for the interface.',
-      'settings_save': 'Save settings',
-      'settings_saved': '✓ Saved!',
       // Favs
       'favs_empty': 'No saved shirts yet.',
       'favs_empty_sub': 'Tap the heart on any shirt to save it here.',
@@ -435,7 +427,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '6';
+  var KF_LANG_VER = '7';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
@@ -548,7 +540,6 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   function _kfAfterLanguage(code) {
     document.documentElement.setAttribute('lang', code);
     var lang = KF_LANGUAGES.find(function(l) { return l.code === code; }) || KF_LANGUAGES[0];
-    var lbl = document.getElementById('kfLangLabel'); if (lbl) lbl.textContent = lang.label;
     _kfGlobeRefresh();
     // Para que app.js vuelva a pintar lo que genera él (contador de resultados, tarjetas, etc.)
     if (typeof window.kfOnLanguageChange === 'function') { try { window.kfOnLanguageChange(code); } catch (e) {} }
@@ -577,7 +568,6 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
     currentCountry = c;
     localStorage.setItem('kf_country', JSON.stringify(c));
     ['countryFlag', 'countryFlag2'].forEach(function(id) { var el = document.getElementById(id); if (el) el.textContent = c.currency; });
-    var lbl = document.getElementById('kfCurrencyLabel'); if (lbl) lbl.textContent = c.currency + ' - ' + _kfCurrencyName(c.currency);
     if (typeof updatePriceSymbols === 'function') updatePriceSymbols();
     if (typeof applyFilters === 'function') applyFilters();
     if (typeof updateHGPrices === 'function') updateHGPrices();

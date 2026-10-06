@@ -299,41 +299,6 @@
 .kf-menu-signout { color: #e63946 !important; }
 .kf-menu-signout:hover { background: #fff0f0 !important; }
 
-/* ── Settings select + dropdown ─────────────────────────────────────────── */
-.kf-settings-select {
-  display: flex; align-items: center; justify-content: space-between;
-  width: 100%; padding: 11px 14px;
-  background: #fff; border: 1.5px solid #e2e6ea; border-radius: 10px;
-  font-size: 14px; font-family: "Outfit", sans-serif; font-weight: 500;
-  color: #1e2530; cursor: pointer; transition: border-color .13s;
-  gap: 8px;
-}
-.kf-settings-select:hover { border-color: #1FAF6D; }
-.kf-settings-dd {
-  display: none;
-  position: absolute; top: calc(100% + 4px); left: 0; right: 0;
-  background: #fff; border: 1.5px solid #1FAF6D;
-  border-radius: 10px; z-index: 200;
-  box-shadow: 0 8px 24px rgba(0,0,0,.12); overflow: hidden;
-}
-.kf-settings-dd-search {
-  width: 100%; padding: 10px 14px;
-  border: none; border-bottom: 1px solid #e2e6ea;
-  font-size: 13px; font-family: "Outfit", sans-serif; outline: none;
-  background: #f8f9fa;
-}
-.kf-settings-dd-list {
-  max-height: 220px; overflow-y: auto;
-}
-.kf-settings-dd-opt {
-  padding: 10px 14px; font-size: 13px; font-family: "Outfit", sans-serif;
-  color: #1e2530; cursor: pointer; border-bottom: .5px solid #f0f2f4;
-  transition: background .1s;
-}
-.kf-settings-dd-opt:hover { background: #f4f5f7; }
-.kf-settings-dd-opt:last-child { border-bottom: none; }
-.kf-settings-dd-opt.active { color: #1FAF6D; font-weight: 700; background: #e8f8f0; }
-
 /* ── Crop buttons ─────────────────────────────────────────────────────────── */
 .kf-crop-btn {
   background: #fff; border: 1.5px solid #e2e6ea; border-radius: 8px;

@@ -146,7 +146,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="styles.css?v=183">
-<link rel="stylesheet" href="auth.css?v=184">
+<link rel="stylesheet" href="auth.css?v=185">
 </head>
 <body>
 
@@ -434,13 +434,12 @@
           </div>
           <hr class="kf-menu-divider"/>
           <button class="kf-menu-item" onclick="kfOpenProfile();kfToggleProfileMenu()"><span data-i18n="menu_profile">Profile</span></button>
-          <button class="kf-menu-item" onclick="kfOpenSettings();kfToggleProfileMenu()"><span data-i18n="menu_settings">Settings</span></button>
           <button class="kf-menu-item" onclick="openFavs();kfToggleProfileMenu()"><span data-i18n="menu_favs">My favourites</span> <span id="kfMenuFavBadge" class="kf-menu-badge"></span></button>
           <hr class="kf-menu-divider"/>
           <button class="kf-menu-item kf-menu-signout" onclick="kfSignOut()"><span data-i18n="menu_signout">Sign out</span></button>
         </div>
       </div>
-      <!-- inputs ocultos para profile (usados por las páginas info-profile/info-settings) -->
+      <!-- inputs ocultos para profile (usados por la página info-profile) -->
       <input type="file" id="kfAvatarUpload" accept="image/*" style="display:none" onchange="kfPreviewAvatar(this)"/>
     </div>
   </nav>
@@ -1078,8 +1077,8 @@
 </div>
 
 <script src="info.js?v=161" defer></script>
-<script src="i18n.js?v=7"></script>
-<script src="auth.js?v=198"></script>
+<script src="i18n.js?v=8"></script>
+<script src="auth.js?v=199"></script>
 <!-- INFO PAGE (about / privacy / terms) -->
 <div id="info-page">
   <div class="content-card">
@@ -1214,37 +1213,6 @@
       <div id="kfProfileError" style="display:none;font-size:13px;color:#e63946;margin-bottom:8px;text-align:center;"></div>
       <button class="kf-auth-submit" onclick="kfSaveProfile()" style="width:100%;margin-bottom:.8rem;">Save changes</button>
     </div>
-    <!-- SETTINGS PAGE -->
-    <div class="info-section" id="info-settings">
-      <h1 data-i18n="settings_title">Settings</h1>
-      <!-- CURRENCY DROPDOWN -->
-      <h2 data-i18n="settings_currency">Currency</h2>
-      <p style="font-size:13px;color:#5a6472;margin-bottom:.8rem;" data-i18n="settings_currency_desc">Prices across all stores will be shown in your selected currency.</p>
-      <div style="position:relative;margin-bottom:1.5rem;">
-        <button id="kfCurrencyDropBtn" class="kf-settings-select" onclick="kfToggleCurrencyDd()">
-          <span id="kfCurrencyLabel">EUR - Euro</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div id="kfCurrencyDd" class="kf-settings-dd">
-          <input id="kfCurrencySearch" class="kf-settings-dd-search" placeholder="Search currency…" oninput="kfFilterCurrencyDd(this.value)"/>
-          <div id="kfCurrencyDdList" class="kf-settings-dd-list"></div>
-        </div>
-      </div>
-      <!-- LANGUAGE DROPDOWN -->
-      <h2 data-i18n="settings_lang">Language</h2>
-      <p style="font-size:13px;color:#5a6472;margin-bottom:.8rem;" data-i18n="settings_lang_desc">Choose your preferred language for the interface.</p>
-      <div style="position:relative;margin-bottom:1.5rem;">
-        <button id="kfLangDropBtn" class="kf-settings-select" onclick="kfToggleLangDd()">
-          <span id="kfLangLabel">English</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div id="kfLangDd" class="kf-settings-dd">
-          <div id="kfLangDdList" class="kf-settings-dd-list"></div>
-        </div>
-      </div>
-      <div id="kfSettingsSaveMsg" style="display:none;text-align:center;color:#1FAF6D;font-size:14px;font-weight:600;margin-bottom:10px;">✓ Saved!</div>
-      <button class="kf-auth-submit" onclick="kfSaveSettings()" style="width:100%;margin-bottom:.8rem;" data-i18n="settings_save">Save settings</button>
-    </div>
     <!-- BACK BUTTON (shared) -->
     <div style="text-align:center;">
       <button class="back-link" onclick="closeInfo()">← Back to Kit Finder</button>
@@ -1252,7 +1220,7 @@
   </div>
 </div>
 
-<script src="app.js?v=221" defer></script>
+<script src="app.js?v=222" defer></script>
 
 <!-- ── La Grada Newsletter Pop-up ───────────────────────────── -->
 <!-- Overlay (fondo oscuro) -->
