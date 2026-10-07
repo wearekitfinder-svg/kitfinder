@@ -269,7 +269,8 @@ def s_overview(rng, team, d):
     else:
         out = [(rng.choice(["kfd_ov_a", "kfd_ov_b", "kfd_ov_c", "kfd_ov_d"]), v)]
     if d["n"] >= 10:
-        out.append((rng.choice(["kfd_px_a", "kfd_px_b", "kfd_px_c"]),
+        # con 0 por encima de 200 € solo vale la frase que no lo menciona
+        out.append((rng.choice(["kfd_px_a", "kfd_px_b", "kfd_px_c"] if d["over200"] else ["kfd_px_c"]),
                     {"p50": pct(d["under50"], d["n"]), "p200": pct(d["over200"], d["n"]),
                      "c50": num(d["under50"]), "c200": num(d["over200"])}))
     return out
