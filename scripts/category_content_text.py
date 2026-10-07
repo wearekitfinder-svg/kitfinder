@@ -511,6 +511,22 @@ T = {
                  "pt": "Neste momento não há camisolas do {team} no Kit Finder. Todos os dias entra stock novo."},
     "kfd_related": {"en": "Related", "es": "Relacionados", "fr": "À voir aussi", "de": "Ähnliche Seiten", "it": "Correlati",
                     "nl": "Gerelateerd", "pl": "Powiązane", "pt": "Relacionados"},
+
+    # ── Indice /teams ──────────────────────────────────────────────────
+    "kfd_hub_intro": {"en": "Kit Finder lists {n} football shirts from {s} stores across these {k} clubs and national teams. The middle price is {median}. Each row shows the shirts in stock, the number of stores and the typical (median) price.",
+                      "es": "Kit Finder tiene {n} camisetas de {s} tiendas para estos {k} clubes y selecciones. El precio mediano es {median}. Cada fila muestra las camisetas disponibles, el número de tiendas y el precio típico (mediano).",
+                      "fr": "Kit Finder répertorie {n} maillots provenant de {s} boutiques pour ces {k} clubs et sélections. Le prix médian est de {median}. Chaque ligne indique les maillots en stock, le nombre de boutiques et le prix typique (médian).",
+                      "de": "Kit Finder listet {n} Trikots aus {s} Shops für diese {k} Klubs und Nationalteams. Der mittlere Preis liegt bei {median}. Jede Zeile zeigt die verfügbaren Trikots, die Zahl der Shops und den typischen Preis (Median).",
+                      "it": "Kit Finder elenca {n} maglie di {s} negozi per questi {k} club e nazionali. Il prezzo mediano è {median}. Ogni riga mostra le maglie disponibili, il numero di negozi e il prezzo tipico (mediano).",
+                      "nl": "Kit Finder toont {n} shirts van {s} winkels voor deze {k} clubs en nationale teams. De middelste prijs is {median}. Elke rij toont de shirts op voorraad, het aantal winkels en de typische prijs (mediaan).",
+                      "pl": "Kit Finder ma {n} koszulek z {s} sklepów dla tych {k} klubów i reprezentacji. Cena środkowa to {median}. Każdy wiersz pokazuje dostępne koszulki, liczbę sklepów i typową cenę (medianę).",
+                      "pt": "O Kit Finder lista {n} camisolas de {s} lojas para estes {k} clubes e seleções. O preço mediano é {median}. Cada linha mostra as camisolas disponíveis, o número de lojas e o preço típico (mediano)."},
+    "kfd_row": {"en": "{s} stores · typical {p}", "es": "{s} tiendas · típico {p}", "fr": "{s} boutiques · typique {p}",
+                "de": "{s} Shops · typisch {p}", "it": "{s} negozi · tipico {p}", "nl": "{s} winkels · typisch {p}",
+                "pl": "{s} sklepów · typowo {p}", "pt": "{s} lojas · típico {p}"},
+    "kfd_row1": {"en": "1 store · typical {p}", "es": "1 tienda · típico {p}", "fr": "1 boutique · typique {p}",
+                 "de": "1 Shop · typisch {p}", "it": "1 negozio · tipico {p}", "nl": "1 winkel · typisch {p}",
+                 "pl": "1 sklep · typowo {p}", "pt": "1 loja · típico {p}"},
 }
 
 LANGS = ["en", "es", "fr", "de", "it", "nl", "pl", "pt"]
