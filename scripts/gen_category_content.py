@@ -267,7 +267,8 @@ def s_overview(rng, team, d):
     if d["n_stores"] == 1:
         out = [("kfd_ov_1s", dict(v, store=d["stores"][0][0]))]
     else:
-        out = [(rng.choice(["kfd_ov_a", "kfd_ov_b", "kfd_ov_c", "kfd_ov_d"]), v)]
+        out = [(rng.choice(["kfd_ov_a", "kfd_ov_b", "kfd_ov_c", "kfd_ov_d"]
+                           if d["min"] != d["max"] else ["kfd_ov_c"]), v)]
     if d["n"] >= 10:
         # con 0 por encima de 200 € solo vale la frase que no lo menciona
         out.append((rng.choice(["kfd_px_a", "kfd_px_b", "kfd_px_c"] if d["over200"] else ["kfd_px_c"]),
@@ -328,7 +329,7 @@ def s_brands_stores(rng, team, d):
 
 
 def s_extremes(rng, team, d):
-    if d["n"] < 2 or not d["lo"] or not d["hi"]:
+    if d["n"] < 2 or not d["lo"] or not d["hi"] or d["min"] == d["max"]:
         return []
     return [(rng.choice(["kfd_ex_a", "kfd_ex_b", "kfd_ex_c"]), {"lo": listing(d["lo"]), "hi": listing(d["hi"])})]
 
@@ -350,6 +351,7 @@ def faq(rng, team, d):
         else:
             a = ("kfd_a_n1", {"team": team, "n": num(d["n"]), "store": d["stores"][0][0]})
         qa.append(((rng.choice(["kfd_q_n_a", "kfd_q_n_b"]), {"team": team}), a))
+    if d["n"] >= 2 and d["min"] != d["max"]:
         qa.append(((rng.choice(["kfd_q_p_a", "kfd_q_p_b"]), {"team": team}),
                    ("kfd_a_p", {"min": eur(d["min"]), "max": eur(d["max"]),
                                 "median": eur(d["median"]), "avg": eur(d["avg"])})))
@@ -395,7 +397,7 @@ def render_block(page, team, d, kind, members=None):
 
     rows = [("kfd_t_n", num(d["n"])), ("kfd_t_s", num(d["n_stores"]))]
     tail = []
-    if d["n"] >= 2:
+    if d["n"] >= 2 and d["min"] != d["max"]:
         tail += [("kfd_t_range", f"{eur(d['min'])} – {eur(d['max'])}"),
                  ("kfd_t_avg", eur(d["avg"])), ("kfd_t_med", eur(d["median"]))]
     if d["oldest"]:
@@ -474,6 +476,9 @@ def rounded(n):
 
 def new_title(old, kind, team, n):
     old = html.unescape(old)
+    if n < 10:   # "— 2 Vintage Kits" queda raro: sin cifra en el titulo
+        return re.sub(r"— [\d,]+\+? (available|Vintage)", lambda m: "— " + (
+            "Vintage" if m.group(1) == "Vintage" else "available"), old)
     count = rounded(n)
     if kind == "team":   # "Celtic Vintage Shirts — 2,000+ available | Kit Finder"
         return re.sub(r"— [\d,]+\+? available", f"— {count} available", old)
@@ -642,11 +647,71 @@ def related_links(page, pages, url_of, league_of, country_of, tipo_of, S):
     return [(nm, u) for u, nm in pick][:8]
 
 
+HUB_CSS = """<style id="kf-hub-css">
+  .kf-team-name{display:flex;flex-direction:column;gap:1px;}
+  .kf-team-meta{font-size:12px;color:#9aa3ad;font-weight:500;}
+</style>"""
+
+
+def apply_teams_index(S, pages):
+    """/teams (indice A-Z): cifra de camisetas, tiendas y precio tipico de cada
+    fila + frase de totales, con los mismos datos que las paginas de equipo."""
+    path = os.path.join(REPO, "teams", "index.html")
+    t = open(path, encoding="utf-8", newline="").read()
+    nl = "\r\n" if "\r\n" in t else "\n"
+    t = t.replace("\r\n", "\n")
+    all_d1, rows = set(), 0
+
+    def row(m):
+        nonlocal rows
+        href, name = m.group(1), html.unescape(m.group(2))
+        d1s = pages.get(href.strip("/"), (None, [], None))[1]
+        all_d1.update(d1s)
+        d = summary(merge([S[x] for x in d1s if x in S]))
+        rows += 1
+        if not d["n"]:
+            return (f'<a href="{href}" class="kf-team-row"><span>{esc(name)}</span>'
+                    f'<span class="kf-team-count" data-i18n="teams_see_collection">See collection</span></a>')
+        key, v = ("kfd_row", {"s": num(d["n_stores"]), "p": eur(d["median"])}) if d["n_stores"] > 1 \
+            else ("kfd_row1", {"p": eur(d["median"])})
+        return (f'<a href="{href}" class="kf-team-row"><span class="kf-team-name">{esc(name)}'
+                f'{span(key, v, "small", "kf-team-meta")}</span>'
+                f'<span class="kf-team-count">{num(d["n"])}</span></a>')
+
+    t = re.sub(r'<a href="([^"]+)" class="kf-team-row"><span(?: class="kf-team-name")?>([^<]*)'
+               r'(?:<small[^>]*>[^<]*</small>)?</span><span class="kf-team-count"[^>]*>[^<]*</span></a>', row, t)
+    tot = summary(merge([S[x] for x in all_d1 if x in S]))
+    intro = span("kfd_hub_intro", {"n": num(tot["n"]), "s": num(tot["n_stores"]), "k": num(rows),
+                                    "median": eur(tot["median"])}, "p", "kf-hub-intro")
+    if 'class="kf-hub-intro"' in t:
+        t = re.sub(r'<p class="kf-hub-intro".*?</p>', lambda m: intro, t, count=1, flags=re.S)
+    else:
+        t = t.replace('  <div class="kf-team-list">', f"  {intro}\n  <div class=\"kf-team-list\">", 1)
+    desc = (f"Browse {rounded(tot['n'])} vintage and retro football shirts across {rows} clubs and "
+            f"national teams from {rounded(tot['n_stores'])} stores. Compare prices on Kit Finder.")
+    for a in ('name="description"', 'property="og:description"', 'name="twitter:description"'):
+        t = re.sub(rf'<meta {a} content="[^"]*"', lambda m: f'<meta {a} content="{attr(desc)}"', t, count=1)
+    t = re.sub(r'("@type": "CollectionPage",\s*"name": "[^"]*",\s*"description": )"[^"]*"',
+               lambda m: m.group(1) + json.dumps(desc), t, count=1)
+    if 'id="kf-hub-css"' in t:
+        t = re.sub(r'<style id="kf-hub-css">.*?</style>', lambda m: HUB_CSS, t, flags=re.S)
+    else:
+        t = t.replace("</head>", HUB_CSS + "\n</head>", 1)
+    t = t.replace("/i18n.js?v=5", "/i18n.js?v=6")
+    open(path, "w", encoding="utf-8", newline="").write(t.replace("\n", nl))
+    print(f"  OK teams (indice): {rows} filas, {tot['n']} camisetas, {tot['n_stores']} tiendas")
+
+
 def main():
     only = [a.strip("/") for a in sys.argv[1:]]
     sync_translations()
     S, teams_tbl = load_stats()
     pages, url_of, league_of, country_of, tipo_of = build_registry(S, teams_tbl, load_league_teams())
+    if not only or "teams" in only:
+        apply_teams_index(S, pages)
+        only = [p for p in only if p != "teams"] if only else only
+        if not only and sys.argv[1:]:
+            return
     for page in only or sorted(pages):
         if page not in pages:
             print(f"  SKIP {page}: sin datos/registro")

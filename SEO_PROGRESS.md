@@ -217,6 +217,13 @@ Contexto: Search Console mostraba 8-12 páginas indexadas de ~210-234. Causas pr
 En una rama nueva: `python scripts/refresh_seo_content.py` (descarga datos, regenera páginas, comprueba el 60 %, regenera el sitemap; se para si algo falla). Después: commit, PR y fusión según CLAUDE.md.
 
 ### Pendiente / a revisar
-- `/clubs/nacional-uruguay`: 0 camisetas tras el filtro; muestra "no hay camisetas ahora mismo" y conserva su título original.
+- `/clubs/nacional-uruguay`: resuelto en el PR siguiente (ver abajo).
 - Algunas tiendas etiquetan mal el equipo (p. ej. "Brasil de Pelotas" como Brazil): afecta poco a los totales, pero conviene corregirlo en origen.
-- El hub `/teams` (índice A-Z) sigue mostrando las cifras antiguas de `gen_teams.py`.
+- ~~El hub `/teams` (índice A-Z) sigue mostrando las cifras antiguas de `gen_teams.py`.~~ Resuelto abajo.
+
+### Corrección del filtro de camisetas + índice /teams (7 oct 2026)
+- **Fallo del filtro de la fase 2**: `page_stats.py` buscaba trozos de palabra, así que "ball" descartaba todo "Football Shirt" y "rain" todo "Training Shirt" (~38.000 camisetas reales fuera). Ahora compara palabras completas: prendas que nunca son camiseta (shorts, chaqueta, polo…) fuera siempre; accesorios (parche, banderín, sponsor…) fuera salvo que el nombre diga "shirt/jersey/maglia…". Total: 173.098 → ~211.000 camisetas. Se regeneraron las 196 páginas con el comando mensual (regla del 60 %: peor par 73 % distinto).
+- La consulta usa `WITH t AS MATERIALIZED (...)`: sin ello D1 corta por tiempo de CPU (error 7429).
+- **Índice `/teams`**: cada fila muestra camisetas, nº de tiendas y precio típico (mediana), más una frase con los totales; traducido (claves `kfd_hub_intro`, `kfd_row`). Lo genera `gen_category_content.py` (`python scripts/gen_category_content.py teams` para solo el índice).
+- Con menos de 10 camisetas el `<title>` no lleva cifra; si todas cuestan lo mismo no salen rango, "más barata/más cara" ni la pregunta de precio.
+- **`/clubs/nacional-uruguay` se queda en el sitemap**: con el filtro corregido tiene 2 camisetas, devuelve 200, su canonical es ella misma y tiene ~300 palabras propias. Sacarla del sitemap no la quitaría de Google y daría señales contradictorias. Mejora pendiente en datos (D1, requiere OK del owner): hay 5 anuncios de Nacional mal etiquetados (3 como selección "Uruguay", 2 sin equipo).

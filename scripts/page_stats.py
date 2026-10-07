@@ -23,31 +23,55 @@ STATS_PATH = os.path.join(os.path.dirname(REPO), "kitfinder-automation", "page_s
 
 
 # is_shirt solo esta relleno en ~1% de productos. Para no contar bufandas,
-# llaveros o chaquetas como "camisetas", un producto sin is_shirt cuenta
-# solo si su nombre (name_en o name) dice que es camiseta (SHIRT_WORDS) o
-# que es una equipacion (KIT_WORDS: home/away/...), y nunca si contiene
-# una palabra de NOT_SHIRT. Comprobado a mano con muestras aleatorias.
-SHIRT_WORDS = ["shirt", "jersey", "maglia", "camiseta", "camisa", "maillot", "trikot",
-               "koszulka", "tricou", "drakt", "tr_je", "tr_ja", "matchworn", "match worn",
-               "match-worn", "match issue", "player issue"]
-KIT_WORDS = ["home", "away", "third", "fourth", "goalkeeper", "heim", "ausw_rts", "local",
-             "visitante", "domicile", "ext_rieur", "trasferta", "uit", "thuis"]
-NOT_SHIRT = ["short", "sock", "scarf", "jacket", "tracksuit", "trouser", "pants", "hoodie", "hooded",
-             "sweat", "drill top", "track top", "training top", "trainingtop", "1/4 zip", "half zip",
-             "zip top", "rain", "polo", "t-shirt", "tee ", " tee", "programme", "poster", "keyring",
-             "key ring", "porte", "mug", "boot", "beanie", "hat ", "flag", "fanion", "pennant",
-             "coaster", "patch", "name set", "nameset", "armband", "fascia", "bundle", "sticker",
-             "frame", "photo", "ticket", "book", "magazine", "towel", "cushion", "bag ", "ball ",
-             "figure", "badge", "pin ", "lanyard", "sponsor", "number set", "numeros", "numbers", "gloves", "glove", "bib", "vest", "gilet",
-             "pantal", "calcet", "calze", "bufanda", "sciarpa", "chaqueta", "giacca", "chandal",
-             "tuta ", "felpa", "sudadera", "giubbotto", "bandiera", "gagliardetto"]
+# llaveros o chaquetas como "camisetas", un producto sin is_shirt se decide
+# por su nombre (name_en + name), comparando PALABRAS COMPLETAS (columna nm:
+# minusculas, signos -> espacios, con espacio delante y detras). Antes se
+# buscaban trozos y "ball" casaba con "footBALL shirt" y "rain" con
+# "tRAINing shirt": se perdian ~46.500 camisetas reales (octubre 2026).
+#   - GARMENT: prendas que nunca son camiseta -> fuera siempre.
+#   - ACCESSORY: objetos sueltos -> fuera salvo que el nombre diga claramente
+#     que es una camiseta (SHIRT_WORDS): "framed signed shirt" si cuenta.
+#   - Cuenta si dice que es camiseta (SHIRT_WORDS) o una equipacion (KIT_WORDS).
+SHIRT_STEMS = ["trikot", "maglia", "camiseta", "camisa", "maillot", "jersey", "koszulk",
+               "tricou", "drakt"]   # trozo: valen compuestos (heimtrikot)
+SHIRT_WORDS = ["shirt", "shirts", "tr_je", "tr_ja"]
+# "match worn"/"player issue" valen como home/away: un accesorio les gana
+# ("Player Issue Patch" es un parche, no una camiseta).
+KIT_WORDS = ["home", "away", "third", "fourth", "goalkeeper", "gk", "heim", "ausw_rts", "local",
+             "visitante", "domicile", "ext_rieur", "trasferta", "uit", "thuis", "primeira",
+             "terceira", "segunda", "kit", "match worn", "matchworn", "match issue", "player issue"]
+GARMENT = ["shorts", "short pants", "socks", "sock", "scarf", "jacket", "tracksuit", "trousers",
+           "pants", "hoodie", "hooded", "sweatshirt", "sweater", "jumper", "polo", "tee", "t shirt",
+           "tshirt", "drill top", "track top", "training top", "trainingtop", "zip top", "half zip",
+           "quarter zip", "1 4 zip", "beanie", "gilet", "vest", "gloves", "cap", "hat", "mug",
+           "keyring", "key ring", "coaster", "poster", "magnet", "cushion", "towel", "sticker",
+           "mini kit", "miniature", "pantalon", "pantalones", "pantaloncini", "calcetines",
+           "calzettoni", "calze", "bufanda", "sciarpa", "chaqueta", "giacca", "giubbotto", "chandal",
+           "tuta", "felpa", "sudadera", "jacke", "schal", "trainingsanzug",
+           "numeros", "numbers", "number set", "name set", "nameset"]
+ACCESSORY = ["programme", "magazine", "book", "ticket", "photo", "frame", "framed", "flag",
+             "fanion", "pennant", "gagliardetto", "bandiera", "patch", "patches", "badge",
+             "sponsor", "armband",
+             "fascia", "bundle", "figure", "pin", "lanyard", "ball", "boots", "bag", "porte",
+             "fan kit"]
+PUNCT = "()-/,.|:[]\"'*#+!?&;"
+
+
+def name_words():
+    """Expresion SQL: nombre en minusculas, signos -> espacio, con espacios a los lados."""
+    e = "lower(COALESCE(name_en, '') || ' ' || name)"
+    for ch in PUNCT:
+        e = f"REPLACE({e}, '{ch * 2 if ch == chr(39) else ch}', ' ')"
+    return f"(' ' || {e} || ' ')"
 
 
 def shirt_filter():
-    nm = "(' ' || lower(COALESCE(name_en, '') || ' ' || name) || ' ')"
-    like = lambda ws: " OR ".join(f"{nm} LIKE '%{w}%'" for w in ws)
-    return (f"(is_shirt = 1 OR (is_shirt IS NULL AND ({like(SHIRT_WORDS + KIT_WORDS)}) "
-            f"AND NOT ({like(NOT_SHIRT)})))")
+    """Condicion sobre la columna nm (ver name_words)."""
+    word = lambda ws: " OR ".join(f"nm LIKE '% {w} %'" for w in ws)
+    stem = " OR ".join(f"nm LIKE '%{w}%'" for w in SHIRT_STEMS)
+    strong = f"({word(SHIRT_WORDS)} OR {stem})"
+    return (f"(is_shirt = 1 OR (is_shirt IS NULL AND NOT ({word(GARMENT)}) AND "
+            f"({strong} OR (({word(KIT_WORDS)}) AND NOT ({word(ACCESSORY)})))))")
 
 
 def rates_to_eur():
@@ -74,17 +98,21 @@ def main():
     rates = rates_to_eur()
     eur = "price * CASE currency " + " ".join(
         f"WHEN '{c}' THEN {r}" for c, r in rates.items()) + " END"
-    base = (f"FROM products WHERE team IS NOT NULL AND team != '' "
-            f"AND price > 0 AND currency IN ({','.join(repr(c) for c in rates)}) "
-            f"AND {shirt_filter()} ")
+    # MATERIALIZED: nm se calcula una vez por producto. Sin esto SQLite repite
+    # la limpieza del nombre en cada LIKE y D1 corta por tiempo de CPU (7429).
+    cte = (f"WITH t AS MATERIALIZED (SELECT id, team, name, store, brand, version, sleeve, season, "
+           f"price, currency, is_shirt, {name_words()} AS nm FROM products "
+           f"WHERE team IS NOT NULL AND team != '' AND price > 0 "
+           f"AND currency IN ({','.join(repr(c) for c in rates)})) ")
+    base = f"FROM t WHERE {shirt_filter()} "
     q = {
-        "prices": f"SELECT team, CAST(ROUND({eur}) AS INTEGER) eur, COUNT(*) n {base} GROUP BY team, eur",
-        "stores": f"SELECT team, store, COUNT(*) n {base} GROUP BY team, store",
-        "brands": f"SELECT team, brand, COUNT(*) n {base} GROUP BY team, brand",
-        "versions": f"SELECT team, version, COUNT(*) n {base} GROUP BY team, version",
-        "sleeves": f"SELECT team, sleeve, COUNT(*) n {base} AND sleeve IS NOT NULL GROUP BY team, sleeve",
-        "seasons": f"SELECT team, season, COUNT(*) n {base} GROUP BY team, season",
-        "extremes": (f"SELECT team, name, store, price, currency, eur, lo, hi FROM ("
+        "prices": f"{cte}SELECT team, CAST(ROUND({eur}) AS INTEGER) eur, COUNT(*) n {base} GROUP BY team, eur",
+        "stores": f"{cte}SELECT team, store, COUNT(*) n {base} GROUP BY team, store",
+        "brands": f"{cte}SELECT team, brand, COUNT(*) n {base} GROUP BY team, brand",
+        "versions": f"{cte}SELECT team, version, COUNT(*) n {base} GROUP BY team, version",
+        "sleeves": f"{cte}SELECT team, sleeve, COUNT(*) n {base} AND sleeve IS NOT NULL GROUP BY team, sleeve",
+        "seasons": f"{cte}SELECT team, season, COUNT(*) n {base} GROUP BY team, season",
+        "extremes": (f"{cte}SELECT team, name, store, price, currency, eur, lo, hi FROM ("
                      f"SELECT team, name, store, price, currency, ROUND({eur}, 2) eur, "
                      f"ROW_NUMBER() OVER (PARTITION BY team ORDER BY {eur} ASC, id) lo, "
                      f"ROW_NUMBER() OVER (PARTITION BY team ORDER BY {eur} DESC, id) hi {base}"
