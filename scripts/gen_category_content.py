@@ -371,8 +371,9 @@ def render_block(page, team, d, kind, members=None):
     if not d["n"]:
         return heading + "\n  " + span("kfd_none", {"team": team}, "p"), []
 
-    groups = [s_eras(rng, team, d), s_kits(rng, team, d), s_brands_stores(rng, team, d),
-              s_extremes(rng, team, d)]
+    groups = [s_eras(rng, team, d), s_kits(rng, team, d), s_brands_stores(rng, team, d)]
+    if kind != "national":   # en selecciones hay anuncios mal etiquetados (decision del owner)
+        groups.append(s_extremes(rng, team, d))
     if kind == "league":
         groups.insert(0, s_league(rng, team, members))
     groups = [g for g in groups if g]
@@ -462,26 +463,36 @@ def set_head(t, title, desc):
     return t
 
 
+def rounded(n):
+    """Cifra para <title>/description que envejece bien: 3,412 -> "3,400+", 137 -> "130+",
+    49 -> "40+". Por debajo de 20 se deja exacta."""
+    if n < 20:
+        return num(n)
+    step = 10 ** max(1, len(str(n)) - 2)
+    return f"{num(n // step * step)}+"
+
+
 def new_title(old, kind, team, n):
     old = html.unescape(old)
-    count = num(n)
-    if kind == "team":   # "Celtic Vintage Shirts — 1,325 available | Kit Finder"
-        return re.sub(r"— [\d,]+ available", f"— {count} available", old)
-    # "Chelsea Football Shirts — Vintage, Retro & Classic Kits | Kit Finder"
-    new = re.sub(r"— (?:[\d,]+ )?Vintage", f"— {count} Vintage", old, count=1)
+    count = rounded(n)
+    if kind == "team":   # "Celtic Vintage Shirts — 2,000+ available | Kit Finder"
+        return re.sub(r"— [\d,]+\+? available", f"— {count} available", old)
+    # "Chelsea Football Shirts — 3,400+ Vintage, Retro & Classic Kits | Kit Finder"
+    new = re.sub(r"— (?:[\d,]+\+? )?Vintage", f"— {count} Vintage", old, count=1)
     return new if count in new else f"{team} Football Shirts — {count} Vintage & Retro Kits | Kit Finder"
 
 
 def new_desc(rng, team, d, kind):
+    """Sin precios ni fechas (cambian cada mes); cifras redondeadas."""
     if not d["n"]:
         return f"Vintage and retro {team} football shirts on Kit Finder. Compare listings from specialist stores."
     noun = "football shirts" if kind != "league" else "shirts"
-    stores = f"{d['n_stores']} stores" if d["n_stores"] > 1 else d["stores"][0][0]
+    stores = f"{rounded(d['n_stores'])} stores" if d["n_stores"] > 1 else d["stores"][0][0]
     return rng.choice([
-        f"Compare {num(d['n'])} vintage and retro {team} {noun} from {stores}. "
-        f"Prices from {eur(d['min'])}, middle price {eur(d['median'])}. Updated {DATE_EN}.",
-        f"{num(d['n'])} original {team} {noun} in stock from {stores}, "
-        f"from {eur(d['min'])}. See prices, seasons and brands on Kit Finder."])
+        f"Compare {rounded(d['n'])} vintage and retro {team} {noun} from {stores}. "
+        f"See prices, seasons, brands and kit types on Kit Finder.",
+        f"{rounded(d['n'])} original {team} {noun} in stock from {stores}. "
+        f"Price range, seasons and top stores, updated monthly on Kit Finder."])
 
 
 def related_html(links, hub):

@@ -2,7 +2,7 @@
 # Genera sitemap.xml para Kit Finder.
 # Combina: (1) rutas-vista de la SPA (fijas) + (2) paginas reales (carpetas con index.html).
 # Asi nunca pierde una pagina existente y suma sola las nuevas (blog, clubes, etc.).
-import os, datetime
+import os, datetime, subprocess
 
 BASE = "https://wearekitfinder.com"
 HOY = datetime.date.today().isoformat()
@@ -34,6 +34,16 @@ def descubrir_carpetas(repo="."):
             rutas.add("/" + rel.replace(os.sep, "/"))
     return rutas
 
+def lastmod(ruta):
+    """Fecha real del ultimo cambio de la pagina: la de hoy si tiene cambios
+    sin commitear, si no la del ultimo commit que la toco (git). Las rutas SPA
+    usan index.html. Asi <lastmod> solo cambia cuando la pagina cambia."""
+    f = "index.html" if ruta in SPA_ROUTES else ruta.lstrip("/") + "/index.html"
+    git = lambda *a: subprocess.run(["git", *a, "--", f], capture_output=True, text=True).stdout.strip()
+    if git("status", "--porcelain"):
+        return HOY
+    return git("log", "-1", "--format=%cs") or HOY
+
 def main():
     rutas = (set(SPA_ROUTES) | descubrir_carpetas(".")) - EXCLUDE
     orden = sorted(rutas, key=lambda r: (r != "/", r))
@@ -43,13 +53,13 @@ def main():
         cf, pr = prioridad(r)
         out += ["  <url>",
                 f"    <loc>{BASE}{r}</loc>",
-                f"    <lastmod>{HOY}</lastmod>",
+                f"    <lastmod>{lastmod(r)}</lastmod>",
                 f"    <changefreq>{cf}</changefreq>",
                 f"    <priority>{pr}</priority>",
                 "  </url>"]
     out.append("</urlset>")
     open("sitemap.xml", "w", encoding="utf-8").write("\n".join(out) + "\n")
-    print(f"sitemap.xml generado con {len(orden)} paginas (fecha {HOY}).")
+    print(f"sitemap.xml generado con {len(orden)} paginas.")
 
 if __name__ == "__main__":
     main()
