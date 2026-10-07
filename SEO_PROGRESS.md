@@ -191,3 +191,32 @@ Esta fase de trabajo SEO queda cerrada con el merge de `add-england-national` a 
 3. **`add-england-national`** (ronda 5) — cierre de ese hallazgo: página de Inglaterra creada con el mismo rigor factual que el resto del contenido histórico del sitio, sin necesidad de tocar las Functions ya existentes.
 
 **Todo lo pedido en esta fase está completado.** No queda ningún hallazgo abierto de las auditorías de agosto. Próximos temas de SEO, si surgen, empiezan una fase nueva y un documento (o sección) nuevo.
+
+---
+
+## Fase octubre 2026 — limpieza técnica + contenido basado en datos
+
+Contexto: Search Console mostraba 8-12 páginas indexadas de ~210-234. Causas principales: enlaces internos con redirección y páginas /teams casi iguales entre sí ("Discovered/Crawled - currently not indexed").
+
+1. **PR #12** — 795 enlaces internos con barra final (`/teams/<slug>/`, `/shirt-checker/?team=`) pasados a la forma canónica sin barra; sitemap sin `/about`, `/results`, `/match-worn`; bloque "Browse by" en el footer (8 idiomas); cada club/selección/liga enlaza a su hub.
+2. **PR #13** — `/dashboard` fuera del sitemap (noindex); enlace rastreable a `/why` en el footer; `/valuation` y `/valuation/` → 301 a `/` en `_redirects`.
+3. **PR #14** — contenido único basado en datos en las 196 páginas de `/clubs`, `/national`, `/leagues` y `/teams`:
+   - Bloque `<!-- kf-data:start -->…<!-- kf-data:end -->` (2-3 párrafos de 80-150 palabras, tabla, listas, FAQ) con datos de D1 únicamente: nº de camisetas, tiendas, precios en EUR, temporadas/décadas, local/visitante/tercera, marcas, tiendas principales y anuncio más barato/más caro (este último **no** en `/national/*`, por anuncios mal etiquetados en origen).
+   - `<title>` y meta description con la cifra redondeada ("3,400+"); FAQPage JSON-LD; bloque "Related" con 6-8 enlaces (misma liga/país).
+   - Frases en 8 idiomas (claves `kfd_` en `i18n.js` y `lang/*.js`); las páginas /teams se traducen solas.
+   - Solo cuentan camisetas: filtro por nombre en `page_stats.py` (`is_shirt` está relleno en ~1 % de productos). Por eso las cifras bajan respecto a las antiguas.
+   - Regla del 60 %: todas las páginas ≥ 72 % distintas de su página más parecida (antes, en /teams, hasta solo un 42 %).
+   - `gen_sitemap.py` pone en `<lastmod>` la fecha real del último cambio de cada página (git), no la de hoy para todas.
+
+### Generador de contenido (IMPORTANTE)
+- **`scripts/gen_category_content.py` es ahora el generador de contenido** de estas 196 páginas (datos: `scripts/page_stats.py`; frases: `scripts/category_content_text.py`; medición: `scripts/check_similarity.py`).
+- **`gen_teams.py` (kitfinder-automation, fuera de git) está OBSOLETO**: las páginas /teams se cambiaron después a mano (traducciones, "240+", currency.js) y volver a ejecutarlo desharía esos cambios. No usarlo.
+- Las páginas de `/clubs`, `/national` y `/leagues` son HTML escrito a mano; el texto histórico original se mantiene, solo se añade el bloque de datos.
+
+### Actualización mensual
+En una rama nueva: `python scripts/refresh_seo_content.py` (descarga datos, regenera páginas, comprueba el 60 %, regenera el sitemap; se para si algo falla). Después: commit, PR y fusión según CLAUDE.md.
+
+### Pendiente / a revisar
+- `/clubs/nacional-uruguay`: 0 camisetas tras el filtro; muestra "no hay camisetas ahora mismo" y conserva su título original.
+- Algunas tiendas etiquetan mal el equipo (p. ej. "Brasil de Pelotas" como Brazil): afecta poco a los totales, pero conviene corregirlo en origen.
+- El hub `/teams` (índice A-Z) sigue mostrando las cifras antiguas de `gen_teams.py`.
