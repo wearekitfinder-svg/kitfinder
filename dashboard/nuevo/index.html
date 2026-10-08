@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Panel KitFinder</title>
+<link rel="icon" href="/images/favicon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/dashboard/nuevo/panel.css?v=1"/>
+</head>
+<body>
+
+<!-- Login de Google (Firebase). Es lo que de verdad protege los datos, junto
+     con la comprobación del token en el Worker. -->
+<div id="gate" hidden>
+  <div class="lk-logo"><img src="/dashboard/nuevo/img/kitfinder.png" alt="KitFinder"></div>
+  <div class="gt-title">Acceso restringido</div>
+  <p class="gt-msg" id="gateMsg">Inicia sesión con la cuenta autorizada para ver el panel.</p>
+  <button class="gt-btn" id="gateSignIn" type="button">
+    <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h11.8c-.5 2.7-2 4.9-4.3 6.5v5.4h7C42.5 37 45.1 31.3 45.1 24.5z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-7-5.4c-2 1.3-4.5 2.1-7.5 2.1-5.8 0-10.6-3.9-12.4-9.1H4.3v5.6C7.9 41.1 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.6 28.3c-.5-1.3-.7-2.8-.7-4.3s.3-3 .7-4.3v-5.6H4.3C2.8 17 2 20.4 2 24s.8 7 2.3 10l7.3-5.7z"/><path fill="#EA4335" d="M24 10.7c3.2 0 6.1 1.1 8.4 3.3l6.2-6.2C34.9 4.2 29.9 2 24 2 15.4 2 7.9 6.9 4.3 14l7.3 5.7c1.8-5.2 6.6-9 12.4-9z"/></svg>
+    Iniciar sesión con Google
+  </button>
+  <button class="gt-btn" id="gateSignOut" type="button" hidden>Usar otra cuenta</button>
+  <div class="gt-err" id="gateErr"></div>
+</div>
+
+<!-- Pantalla de bloqueo con PIN: solo cosmética (se hace en el navegador, el
+     PIN está en el código y los datos siguen cargados en la página). -->
+<div id="lock" hidden>
+  <img class="lk-wm" src="/dashboard/nuevo/img/lock-bg.jpg" alt="" aria-hidden="true">
+    <div class="lk-clock"><div class="lk-time" id="lockTime">--:--</div><div class="lk-date" id="lockDate">—</div></div>
+  <div class="lk-pins" id="lkPins"><i></i><i></i><i></i><i></i></div>
+  <div class="lk-hint">Introduce el PIN</div>
+  <input id="pinInput" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="PIN">
+</div>
+<div id="app" hidden>
+<div class="wrap">
+
+<div class="row r1">
+  <section class="card hi rise" style="--i:0">
+    <div class="top"><span class="lab">Usuarios</span><a class="go" href="https://analytics.google.com/analytics/web/?authuser=4#/a391893487p540384905/reports/intelligenthome" target="_blank" rel="noopener">Abrir Analytics →</a></div>
+    <div class="ukp">
+      <div class="k main sel" data-p="30" role="button" tabindex="0"><div class="l"><span>Hoy</span></div><div class="num empty">—</div></div>
+      <div class="k" data-p="mes" role="button" tabindex="0"><div class="l"><span>Este mes</span></div><div class="num empty">—</div></div>
+      <div class="k" data-p="anio" role="button" tabindex="0"><div class="l"><span>Este año</span></div><div class="num empty">—</div></div>
+    </div>
+    <div class="seg" id="seg" role="tablist" aria-label="Periodo">
+      <span class="pill" id="pill"></span>
+      <button class="on" data-p="30">Últimos 30 días</button><button data-p="mes">Este mes</button><button data-p="anio">Este año</button>
+    </div>
+    <div class="chart" id="ch"><svg class="cv" id="sv" viewBox="0 0 560 220" role="img" aria-label="Usuarios por periodo"></svg><div class="tip" id="tip"></div></div>
+  </section>
+
+  <section class="card rise" style="--i:1">
+    <div class="top"><span class="lab">Catálogo</span><a class="go" href="https://airtable.com/appGcgDoPibH5GSoJ/tblZ4tsLxbU0JCOdk/viwAiS9KELIElSFNA" target="_blank" rel="noopener">Airtable →</a></div>
+    <a class="stats" href="https://airtable.com/appGcgDoPibH5GSoJ/tblZ4tsLxbU0JCOdk/viwAiS9KELIElSFNA" target="_blank" rel="noopener">
+      <div class="cat">
+        <div class="big"><span class="num empty" id="catStores">—</span><span class="note">tiendas</span></div>
+        <div class="big"><span class="num empty" id="catProducts">—</span><span class="note">productos</span></div>
+      </div>
+      <div class="meters">
+        <div class="meter"><span>Con talla</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
+        <div class="meter"><span>Con equipo</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
+        <div class="meter"><span>Con año</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
+        <div class="meter"><span>Con marca</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
+        <div class="meter"><span>Con manga larga</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
+      </div>
+    </a>
+  </section>
+</div>
+
+<div class="row r2">
+  <section class="card rise" style="--i:2">
+    <div class="top"><span class="lab">Tareas · Todoist</span><a class="go" href="https://app.todoist.com/app/project/kit-finder-6hF7mJRxVQ7MCvrX" target="_blank" rel="noopener">Abrir Todoist →</a></div>
+    <ul class="tasks">
+      <li class="empty"><span class="chk" aria-hidden="true"></span><span class="tx">Sin datos todavía</span></li>
+    </ul>
+  </section>
+
+  <section class="card rise" style="--i:3">
+    <div class="top"><span class="lab">Notificaciones</span></div>
+    <div class="apps">
+      <a class="app" href="https://www.reddit.com/user/kit-finder/m/camis_v2/new/" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/nuevo/img/reddit.png" alt="Reddit"></span><span class="an">Reddit</span></a>
+      <a class="app" href="https://www.instagram.com/wearekitfinder/" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/nuevo/img/instagram.png" alt="Instagram"></span><span class="an">Instagram</span></a>
+      <a class="app" href="https://x.com/wearekitfinder" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/nuevo/img/x.png" alt="X (Twitter)"></span><span class="an">X (Twitter)</span></a>
+      <a class="app" href="https://mail.google.com/mail/u/4/#inbox" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/nuevo/img/gmail.png" alt="Gmail"></span><span class="an">Gmail</span></a>
+      <a class="app" href="https://search.google.com/u/4/search-console?resource_id=https%3A%2F%2Fwearekitfinder.com%2F" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/nuevo/img/search-console.png" alt="Search Console"></span><span class="an">Search Console</span></a>
+      <a class="app" href="https://github.com/wearekitfinder-svg" target="_blank" rel="noopener"><span class="ic"><img class="lt" src="/dashboard/nuevo/img/github.png" alt="GitHub"></span><span class="an">GitHub</span></a>
+      <a class="app" href="https://wearekitfinder.com" target="_blank" rel="noopener"><span class="ic"><img class="kfi" src="/dashboard/nuevo/img/kitfinder.png" alt="KitFinder"></span><span class="an">KitFinder</span></a>
+      <a class="app" href="https://dash.cloudflare.com/5b3794f96c7c75b21e05626650f28513/home" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/nuevo/img/cloudflare.png" alt="Cloudflare"></span><span class="an">Cloudflare</span></a>
+    </div>
+  </section>
+</div>
+
+<section class="card hi rise" style="--i:4">
+  <div class="top"><span class="lab">Afiliados · Solo tiendas con acuerdo cerrado</span></div>
+  <div class="akp">
+    <div class="kk c1"><div class="num empty" id="afClicks">—</div><span class="l">Clics (30 días)</span></div>
+    <div class="kk c2"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="num empty">—</div></div><span class="l">Conversiones (ventas)</span></div>
+    <div class="kk c3"><div class="num empty">—</div><span class="l">Comisión de este mes</span></div>
+    <div class="kk c4"><div class="num empty">—</div><span class="l">Comisión total acumulada</span></div>
+  </div>
+  <div class="chart" id="ch2"><svg class="cv" id="sv2" viewBox="0 0 720 230" role="img" aria-label="Clics y conversiones de afiliados por semana"></svg><div class="tip" id="tip2"></div></div>
+  <div class="legend"><em><span class="sq"></span>Clics a tiendas afiliadas</em><em><span class="ci"></span>Conversiones (ventas)</em></div>
+
+  <div class="sub">Por tienda</div>
+  <div class="tw"><table>
+    <thead><tr><th>Tienda</th><th>Clics</th><th>Ventas</th><th>Comisión mes</th><th>Comisión total</th></tr></thead>
+    <tbody>
+      <tr><td><a class="pl" href="https://partner.ebay.com/secure/mediapartner/home/pview.ihtml" target="_blank" rel="noopener">eBay ↗</a></td><td data-af="ebay"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr><td><a class="pl" href="https://www.classicfootballcollectibles.com" target="_blank" rel="noopener">CF Collectives ↗</a></td><td data-af="cfc"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr><td><a class="pl" href="https://kitplug.goaffpro.com/" target="_blank" rel="noopener">Kit Plug ↗</a></td><td data-af="kitplug"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr><td><a class="pl" href="https://classicfootballshirts.tapfiliate.com/p/new/dashboard/" target="_blank" rel="noopener">Classic Football Shirts ↗</a></td><td data-af="cfs"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr><td><a class="pl" href="https://af.uppromote.com/soccer-archive-dev/dashboard" target="_blank" rel="noopener">The Soccer Archive ↗</a></td><td data-af="tsa"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr class="tot"><td>Total</td><td id="afTotal">—</td><td>—</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="card rise" style="--i:5">
+  <div class="top"><span class="lab">Accesos rápidos</span></div>
+  <div class="chips">
+    <a class="chipl" href="https://github.com/wearekitfinder-svg/kitfinder" target="_blank" rel="noopener">kitfinder ↗</a>
+    <a class="chipl" href="https://github.com/wearekitfinder-svg/kitfinder-automation" target="_blank" rel="noopener">kitfinder-automation ↗</a>
+    <a class="chipl" href="https://github.com/wearekitfinder-svg/kitfinder-search" target="_blank" rel="noopener">kitfinder-search ↗</a>
+    <a class="chipl" href="https://developer.ebay.com/" target="_blank" rel="noopener">eBay Developer ↗</a>
+    <a class="chipl" href="https://goaffpro.com/affiliate/stores" target="_blank" rel="noopener">GoAffPro (todas las tiendas) ↗</a>
+    <a class="chipl" href="https://af.uppromote.com/soccer-archive-dev/dashboard" target="_blank" rel="noopener">UpPromote · Soccer Archive ↗</a>
+    <a class="chipl" href="https://platform.webgains.io/publisher/1424564/dashboard/" target="_blank" rel="noopener">Webgains ↗</a>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="/dashboard/nuevo/panel.js?v=1"></script>
+<script src="/dashboard/nuevo/lock.js?v=1"></script>
+<script src="/dashboard/nuevo/auth.js?v=1"></script>
+</body>
+</html>
