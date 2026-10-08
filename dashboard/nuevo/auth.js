@@ -67,25 +67,40 @@ auth.onAuthStateChanged(function (user) {
 });
 
 // ── Datos ────────────────────────────────────────────────────────────────
-// El Worker exige el token de Firebase; getIdToken() lo renueva solo si ha
-// caducado (dura una hora). Si algo falla, el panel se queda en "—".
-function fetchAnalytics(type, limit) {
+// El Worker exige el token de Firebase en /analytics y /admin/*;
+// getIdToken() lo renueva solo si ha caducado (dura una hora). Si algo
+// falla, el panel se queda en "—".
+function fetchAdmin(pathAndQuery) {
   var user = auth.currentUser;
-  if (!user) return Promise.resolve([]);
+  if (!user) return Promise.reject(new Error('sin sesión'));
   return user.getIdToken()
     .then(function (token) {
-      return fetch(API_BASE + '/analytics?type=' + type + '&limit=' + limit, {
+      return fetch(API_BASE + pathAndQuery, {
         headers: { 'Authorization': 'Bearer ' + token }
       });
     })
     .then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
-    })
+    });
+}
+
+function fetchAnalytics(type, limit) {
+  return fetchAdmin('/analytics?type=' + type + '&limit=' + limit)
     .then(function (d) { return (d && d.snapshots) || []; })
     .catch(function (e) {
       console.warn('[panel] /analytics ' + type + ':', e.message);
       return [];
+    });
+}
+
+// Tiendas, productos y % del catálogo (kitfinder-search/src/catalog_stats.ts).
+// El Worker lo guarda 6 horas, así que puede ir algo por detrás del catálogo.
+function fetchCatalogStats() {
+  return fetchAdmin('/admin/catalog-stats')
+    .catch(function (e) {
+      console.warn('[panel] /admin/catalog-stats:', e.message);
+      return null;
     });
 }
 
@@ -95,5 +110,8 @@ function loadData() {
     fetchAnalytics('month', 24)
   ]).then(function (res) {
     window.kfRender(res[0], res[1]);
+  });
+  fetchCatalogStats().then(function (stats) {
+    if (stats) window.kfRenderCatalog(stats);
   });
 }
