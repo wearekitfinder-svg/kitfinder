@@ -19,7 +19,9 @@ function countUp(node){
     node.textContent=money_?money(v):fmt(v);if(p<1)requestAnimationFrame(f)}
   requestAnimationFrame(f);
 }
+var started=false;
 window.kfStart=function(){
+started=true;
 document.querySelectorAll('[data-count]').forEach(function(n,i){setTimeout(function(){countUp(n)},250+i*60)});
 document.querySelectorAll('.meter i').forEach(function(i){i.style.width=0;setTimeout(function(){i.style.width=i.dataset.w+'%'},500)});
 if(window.__kfInit)window.__kfInit();
@@ -131,6 +133,29 @@ function renderAffiliates(r){
   document.getElementById('afTotal').textContent=fmt(total);
   var c=document.getElementById('afClicks');c.textContent=fmt(total);c.classList.remove('empty');
 }
+
+/* ---------- catálogo (de /admin/catalog-stats) ----------
+   Rellena data-count / data-w y deja que la animación del prototipo (kfStart)
+   cuente y llene las barras; si el panel ya está abierto, la lanza aquí. */
+function pctTxt(v){return v.toFixed(1).replace('.',',')+' %'}
+window.kfRenderCatalog=function(s){
+  if(!s)return;
+  var nodes=[];
+  [['catStores',s.stores],['catProducts',s.products]].forEach(function(a){
+    var n=document.getElementById(a[0]);
+    if(typeof a[1]!=='number')return;
+    n.dataset.count=a[1];n.classList.remove('empty');n.textContent=fmt(0);nodes.push(n);
+  });
+  var meters=[];
+  document.querySelectorAll('.meter[data-k]').forEach(function(m){
+    var v=s.pct?s.pct[m.dataset.k]:null;
+    if(typeof v!=='number')return;
+    var i=m.querySelector('i');i.dataset.w=v;m.querySelector('b').textContent=pctTxt(v);meters.push(i);
+  });
+  if(!started)return;
+  nodes.forEach(function(n,i){setTimeout(function(){countUp(n)},250+i*60)});
+  meters.forEach(function(i){i.style.width=i.dataset.w+'%'});
+};
 
 /* ---------- entrada de datos (llamada desde auth.js) ----------
    rolling: snapshots 'rolling30d'; monthly: snapshots 'month' (ambos de /analytics). */
