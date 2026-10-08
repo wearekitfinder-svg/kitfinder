@@ -2,3 +2,6 @@
 /country/*          /index.html  200
 /valuation   /   301
 /valuation/  /   301
+/dashboard/nuevo    /dashboard/  301
+/dashboard/nuevo/   /dashboard/  301
+/dashboard/nuevo/*  /dashboard/  301
