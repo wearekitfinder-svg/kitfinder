@@ -3,141 +3,143 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Dashboard interno | Kit Finder</title>
 <meta name="robots" content="noindex, nofollow"/>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="/styles.css?v=171"/>
+<title>Panel KitFinder</title>
 <link rel="icon" href="/images/favicon.png"/>
-<style>
-  body{background:#f4f5f7;font-family:'Outfit',sans-serif;color:#1e2530;}
-  .db-wrap{max-width:1120px;margin:0 auto;padding:1.6rem 1.5rem 4rem;}
-  .db-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.8rem;gap:12px;flex-wrap:wrap;}
-  .db-logo{display:flex;align-items:center;text-decoration:none;}
-  .db-logo img{height:44px;}
-  .db-title{font-size:13px;font-weight:600;color:#5a6472;text-transform:uppercase;letter-spacing:.6px;margin-left:14px;padding-left:14px;border-left:1px solid #e2e6ea;}
-  .db-user{display:flex;align-items:center;gap:10px;font-size:13px;color:#5a6472;}
-  .db-user img{width:28px;height:28px;border-radius:50%;}
-  .db-signout{background:none;border:1px solid #e2e6ea;border-radius:8px;padding:6px 12px;font-size:13px;font-family:inherit;font-weight:600;color:#5a6472;cursor:pointer;}
-  .db-signout:hover{border-color:#c7ccd2;}
-
-  /* ── Gate (sign-in / acceso denegado) ─────────────────────────── */
-  .db-gate{max-width:380px;margin:8vh auto;background:#fff;border:1px solid #e2e6ea;border-radius:16px;padding:2.2rem 2rem;text-align:center;}
-  .db-gate img{height:48px;margin-bottom:1.2rem;}
-  .db-gate h1{font-size:1.3rem;margin:0 0 .5rem;}
-  .db-gate p{font-size:14px;color:#5a6472;line-height:1.5;margin:0 0 1.4rem;}
-  .db-gate-btn{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #e2e6ea;border-radius:10px;padding:11px 20px;font-size:14px;font-weight:600;font-family:inherit;color:#1e2530;cursor:pointer;}
-  .db-gate-btn:hover{border-color:#1FAF6D;}
-  .db-gate-error{font-size:13px;color:#e0483e;margin-top:1rem;min-height:1em;}
-
-  /* ── Dashboard ─────────────────────────────────────────────────── */
-  #kfDashboard{display:none;}
-  .db-updated{font-size:12px;color:#9aa3ad;margin-bottom:1.4rem;}
-
-  .db-kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:1.8rem;}
-  @media (max-width:760px){.db-kpi-row{grid-template-columns:repeat(2,1fr);}}
-  .db-kpi{background:#fff;border:1px solid #e2e6ea;border-radius:14px;padding:1.2rem 1.3rem;}
-  .db-kpi-label{font-size:12px;color:#5a6472;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
-  .db-kpi-value{font-family:"Bebas Neue",sans-serif;font-size:2.1rem;color:#1e2530;line-height:1;}
-  .db-kpi-delta{font-size:12px;font-weight:600;margin-top:6px;display:inline-block;}
-  .db-kpi-delta.up{color:#1FAF6D;}
-  .db-kpi-delta.down{color:#e0483e;}
-  .db-kpi-delta.flat{color:#9aa3ad;}
-
-  .db-card{background:#fff;border:1px solid #e2e6ea;border-radius:14px;padding:1.4rem 1.5rem;margin-bottom:1.4rem;}
-  .db-card h2{font-size:15px;margin:0 0 .3rem;}
-  .db-card .db-card-sub{font-size:12.5px;color:#9aa3ad;margin:0 0 1rem;line-height:1.4;}
-  .db-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
-  @media (max-width:760px){.db-grid-2{grid-template-columns:1fr;}}
-
-  .db-empty{font-size:13px;color:#9aa3ad;text-align:center;padding:1.5rem 0;}
-
-  table.db-table{width:100%;border-collapse:collapse;font-size:13.5px;}
-  table.db-table th{text-align:left;color:#9aa3ad;font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px;padding:6px 8px;border-bottom:1px solid #e2e6ea;}
-  table.db-table td{padding:8px;border-bottom:1px solid #f4f5f7;}
-  table.db-table td.num{text-align:right;font-variant-numeric:tabular-nums;}
-  table.db-table tr:last-child td{border-bottom:none;}
-
-  canvas{max-width:100%;}
-</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/dashboard/panel.css?v=3"/>
 </head>
 <body>
-<div class="db-wrap">
-  <div class="db-topbar">
-    <div style="display:flex;align-items:center;">
-      <a class="db-logo" href="/"><img src="/images/logo_kitfinder.png" alt="Kit Finder"/></a>
-      <span class="db-title">Dashboard interno</span>
+
+<!-- Login de Google (Firebase). Es lo que de verdad protege los datos, junto
+     con la comprobación del token en el Worker. -->
+<div id="gate" hidden>
+  <div class="lk-logo"><img src="/dashboard/img/kitfinder.png" alt="KitFinder"></div>
+  <div class="gt-title">Acceso restringido</div>
+  <p class="gt-msg" id="gateMsg">Inicia sesión con la cuenta autorizada para ver el panel.</p>
+  <button class="gt-btn" id="gateSignIn" type="button">
+    <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h11.8c-.5 2.7-2 4.9-4.3 6.5v5.4h7C42.5 37 45.1 31.3 45.1 24.5z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-7-5.4c-2 1.3-4.5 2.1-7.5 2.1-5.8 0-10.6-3.9-12.4-9.1H4.3v5.6C7.9 41.1 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.6 28.3c-.5-1.3-.7-2.8-.7-4.3s.3-3 .7-4.3v-5.6H4.3C2.8 17 2 20.4 2 24s.8 7 2.3 10l7.3-5.7z"/><path fill="#EA4335" d="M24 10.7c3.2 0 6.1 1.1 8.4 3.3l6.2-6.2C34.9 4.2 29.9 2 24 2 15.4 2 7.9 6.9 4.3 14l7.3 5.7c1.8-5.2 6.6-9 12.4-9z"/></svg>
+    Iniciar sesión con Google
+  </button>
+  <button class="gt-btn" id="gateSignOut" type="button" hidden>Usar otra cuenta</button>
+  <div class="gt-err" id="gateErr"></div>
+</div>
+
+<!-- Pantalla de bloqueo con PIN: solo cosmética (se hace en el navegador, el
+     PIN está en el código y los datos siguen cargados en la página). -->
+<div id="lock" hidden>
+  <img class="lk-wm" src="/dashboard/img/lock-bg.jpg" alt="" aria-hidden="true">
+    <div class="lk-clock"><div class="lk-time" id="lockTime">--:--</div><div class="lk-date" id="lockDate">—</div></div>
+  <div class="lk-pins" id="lkPins"><i></i><i></i><i></i><i></i></div>
+  <div class="lk-hint">Introduce el PIN</div>
+  <input id="pinInput" type="tel" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="PIN">
+</div>
+<div id="app" hidden>
+<div class="wrap">
+
+<div class="row r1">
+  <section class="card hi rise" style="--i:0">
+    <div class="top"><span class="lab">Usuarios</span><a class="go" href="https://analytics.google.com/analytics/web/?authuser=4#/a391893487p540384905/reports/intelligenthome" target="_blank" rel="noopener">Abrir Analytics →</a></div>
+    <div class="ukp">
+      <div class="k main sel" data-p="30" role="button" tabindex="0"><div class="l"><span>Hoy</span></div><div class="num empty">—</div></div>
+      <div class="k" data-p="mes" role="button" tabindex="0"><div class="l"><span>Este mes</span></div><div class="num empty">—</div></div>
+      <div class="k" data-p="anio" role="button" tabindex="0"><div class="l"><span>Este año</span></div><div class="num empty">—</div></div>
     </div>
-    <div class="db-user" id="dbUserBox" style="display:none;">
-      <img id="dbUserAvatar" src="" alt=""/>
-      <span id="dbUserEmail"></span>
-      <button class="db-signout" id="dbSignOutBtn">Cerrar sesión</button>
+    <div class="seg" id="seg" role="tablist" aria-label="Periodo">
+      <span class="pill" id="pill"></span>
+      <button class="on" data-p="30">Últimos 30 días</button><button data-p="mes">Este mes</button><button data-p="anio">Este año</button>
     </div>
-  </div>
+    <div class="chart" id="ch"><svg class="cv" id="sv" viewBox="0 0 560 220" role="img" aria-label="Usuarios por periodo"></svg><div class="tip" id="tip"></div></div>
+  </section>
 
-  <div class="db-gate" id="dbGate">
-    <img src="/images/logo_kitfinder.png" alt="Kit Finder"/>
-    <h1>Acceso restringido</h1>
-    <p id="dbGateMsg">Inicia sesión con la cuenta autorizada para ver el dashboard de analytics.</p>
-    <button class="db-gate-btn" id="dbSignInBtn">
-      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h11.8c-.5 2.7-2 4.9-4.3 6.5v5.4h7C42.5 37 45.1 31.3 45.1 24.5z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-7-5.4c-2 1.3-4.5 2.1-7.5 2.1-5.8 0-10.6-3.9-12.4-9.1H4.3v5.6C7.9 41.1 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.6 28.3c-.5-1.3-.7-2.8-.7-4.3s.3-3 .7-4.3v-5.6H4.3C2.8 17 2 20.4 2 24s.8 7 2.3 10l7.3-5.7z"/><path fill="#EA4335" d="M24 10.7c3.2 0 6.1 1.1 8.4 3.3l6.2-6.2C34.9 4.2 29.9 2 24 2 15.4 2 7.9 6.9 4.3 14l7.3 5.7c1.8-5.2 6.6-9 12.4-9z"/></svg>
-      Iniciar sesión con Google
-    </button>
-    <div class="db-gate-error" id="dbGateError"></div>
-  </div>
-
-  <div id="kfDashboard">
-    <div class="db-updated" id="dbUpdated"></div>
-
-    <div class="db-kpi-row" id="dbKpiRow"></div>
-
-    <div class="db-card">
-      <h2>Usuarios activos</h2>
-      <p class="db-card-sub">Ventana móvil de 30 días — cada punto es el total de los 30 días previos a esa fecha, no usuarios de ese día en concreto.</p>
-      <canvas id="dbChartActive" height="80"></canvas>
-    </div>
-
-    <div class="db-card">
-      <h2>Eventos totales</h2>
-      <p class="db-card-sub">Misma ventana móvil de 30 días.</p>
-      <canvas id="dbChartEvents" height="80"></canvas>
-    </div>
-
-    <div class="db-grid-2">
-      <div class="db-card">
-        <h2>Top tiendas por clics</h2>
-        <p class="db-card-sub">Últimos 30 días. % sobre el total de store_click.</p>
-        <canvas id="dbChartStores" height="220"></canvas>
+  <section class="card rise" style="--i:1">
+    <div class="top"><span class="lab">Catálogo</span><a class="go" href="https://airtable.com/appGcgDoPibH5GSoJ/tblZ4tsLxbU0JCOdk/viwAiS9KELIElSFNA" target="_blank" rel="noopener">Airtable →</a></div>
+    <a class="stats" href="https://airtable.com/appGcgDoPibH5GSoJ/tblZ4tsLxbU0JCOdk/viwAiS9KELIElSFNA" target="_blank" rel="noopener">
+      <div class="cat">
+        <div class="big"><span class="num empty" id="catStores">—</span><span class="note">tiendas</span></div>
+        <div class="big"><span class="num empty" id="catProducts">—</span><span class="note">productos</span></div>
       </div>
-      <div class="db-card">
-        <h2>Top países</h2>
-        <p class="db-card-sub">Por usuarios activos, últimos 30 días.</p>
-        <canvas id="dbChartCountries" height="220"></canvas>
+      <div class="meters">
+        <div class="meter" data-k="size"><span>Con talla</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
+        <div class="meter" data-k="team"><span>Con equipo</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
+        <div class="meter" data-k="season"><span>Con año</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
+        <div class="meter" data-k="brand"><span>Con marca</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
+        <div class="meter" data-k="long_sleeve"><span>Manga larga detectada</span><div class="tr"><i data-w="0"></i></div><b>—</b></div>
       </div>
-    </div>
+    </a>
+  </section>
+</div>
 
-    <div class="db-card">
-      <h2>Top ciudades</h2>
-      <p class="db-card-sub">Por usuarios activos, últimos 30 días.</p>
-      <div id="dbCitiesTable"></div>
-    </div>
+<div class="row r2">
+  <section class="card rise" style="--i:2">
+    <div class="top"><span class="lab">Tareas · Todoist</span><a class="go" href="https://app.todoist.com/app/project/kit-finder-6hF7mJRxVQ7MCvrX" target="_blank" rel="noopener">Abrir Todoist →</a></div>
+    <ul class="tasks">
+      <li class="empty"><span class="chk" aria-hidden="true"></span><span class="tx">Sin datos todavía</span></li>
+    </ul>
+  </section>
 
-    <div class="db-card">
-      <h2>Histórico mensual</h2>
-      <p class="db-card-sub">Un snapshot por mes cerrado.</p>
-      <div id="dbMonthlyTable"></div>
+  <section class="card rise" style="--i:3">
+    <div class="top"><span class="lab">Notificaciones</span></div>
+    <div class="apps">
+      <a class="app" href="https://www.reddit.com/user/kit-finder/m/camis_v2/new/" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/img/reddit.png" alt="Reddit"></span><span class="an">Reddit</span></a>
+      <a class="app" href="https://www.instagram.com/wearekitfinder/" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/img/instagram.png" alt="Instagram"></span><span class="an">Instagram</span></a>
+      <a class="app" href="https://x.com/wearekitfinder" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/img/x.png" alt="X (Twitter)"></span><span class="an">X (Twitter)</span></a>
+      <a class="app" href="https://mail.google.com/mail/u/4/#inbox" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/img/gmail.png" alt="Gmail"></span><span class="an">Gmail</span></a>
+      <a class="app" href="https://search.google.com/u/4/search-console?resource_id=https%3A%2F%2Fwearekitfinder.com%2F" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/img/search-console.png" alt="Search Console"></span><span class="an">Search Console</span></a>
+      <a class="app" href="https://github.com/wearekitfinder-svg" target="_blank" rel="noopener"><span class="ic"><img class="lt" src="/dashboard/img/github.png" alt="GitHub"></span><span class="an">GitHub</span></a>
+      <a class="app" href="https://wearekitfinder.com" target="_blank" rel="noopener"><span class="ic"><img class="kfi" src="/dashboard/img/kitfinder.png" alt="KitFinder"></span><span class="an">KitFinder</span></a>
+      <a class="app" href="https://dash.cloudflare.com/5b3794f96c7c75b21e05626650f28513/home" target="_blank" rel="noopener"><span class="ic"><img src="/dashboard/img/cloudflare.png" alt="Cloudflare"></span><span class="an">Cloudflare</span></a>
     </div>
+  </section>
+</div>
 
-    <div class="db-card">
-      <h2>Top fuentes de tráfico</h2>
-      <p class="db-card-sub">Del último mes cerrado (source / medium de GA4).</p>
-      <div id="dbSourcesTable"></div>
-    </div>
+<section class="card hi rise" style="--i:4">
+  <div class="top"><span class="lab">Afiliados · Solo tiendas con acuerdo cerrado</span></div>
+  <div class="akp">
+    <div class="kk c1"><div class="num empty" id="afClicks">—</div><span class="l">Clics (30 días)</span></div>
+    <div class="kk c2"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="num empty">—</div></div><span class="l">Conversiones (ventas)</span></div>
+    <div class="kk c3"><div class="num empty">—</div><span class="l">Comisión de este mes</span></div>
+    <div class="kk c4"><div class="num empty">—</div><span class="l">Comisión total acumulada</span></div>
   </div>
+  <div class="chart" id="ch2"><svg class="cv" id="sv2" viewBox="0 0 720 230" role="img" aria-label="Clics y conversiones de afiliados por semana"></svg><div class="tip" id="tip2"></div></div>
+  <div class="legend"><em><span class="sq"></span>Clics a tiendas afiliadas</em><em><span class="ci"></span>Conversiones (ventas)</em></div>
+
+  <div class="sub">Por tienda</div>
+  <div class="tw"><table>
+    <thead><tr><th>Tienda</th><th>Clics</th><th>Ventas</th><th>Comisión mes</th><th>Comisión total</th></tr></thead>
+    <tbody>
+      <tr><td><a class="pl" href="https://partner.ebay.com/secure/mediapartner/home/pview.ihtml" target="_blank" rel="noopener">eBay ↗</a></td><td data-af="ebay"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr><td><a class="pl" href="https://www.classicfootballcollectibles.com" target="_blank" rel="noopener">CF Collectives ↗</a></td><td data-af="cfc"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr><td><a class="pl" href="https://kitplug.goaffpro.com/" target="_blank" rel="noopener">Kit Plug ↗</a></td><td data-af="kitplug"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr><td><a class="pl" href="https://classicfootballshirts.tapfiliate.com/p/new/dashboard/" target="_blank" rel="noopener">Classic Football Shirts ↗</a></td><td data-af="cfs"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr><td><a class="pl" href="https://af.uppromote.com/soccer-archive-dev/dashboard" target="_blank" rel="noopener">The Soccer Archive ↗</a></td><td data-af="tsa"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr class="tot"><td>Total</td><td id="afTotal">—</td><td>—</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section class="card rise" style="--i:5">
+  <div class="top"><span class="lab">Accesos rápidos</span></div>
+  <div class="chips">
+    <a class="chipl" href="https://github.com/wearekitfinder-svg/kitfinder" target="_blank" rel="noopener">kitfinder ↗</a>
+    <a class="chipl" href="https://github.com/wearekitfinder-svg/kitfinder-automation" target="_blank" rel="noopener">kitfinder-automation ↗</a>
+    <a class="chipl" href="https://github.com/wearekitfinder-svg/kitfinder-search" target="_blank" rel="noopener">kitfinder-search ↗</a>
+    <a class="chipl" href="https://developer.ebay.com/" target="_blank" rel="noopener">eBay Developer ↗</a>
+    <a class="chipl" href="https://goaffpro.com/affiliate/stores" target="_blank" rel="noopener">GoAffPro (todas las tiendas) ↗</a>
+    <a class="chipl" href="https://af.uppromote.com/soccer-archive-dev/dashboard" target="_blank" rel="noopener">UpPromote · Soccer Archive ↗</a>
+    <a class="chipl" href="https://platform.webgains.io/publisher/1424564/dashboard/" target="_blank" rel="noopener">Webgains ↗</a>
+  </div>
+</section>
+
+</div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-<script src="/dashboard.js?v=1" defer></script>
+<script src="/dashboard/panel.js?v=3"></script>
+<script src="/dashboard/lock.js?v=3"></script>
+<script src="/dashboard/auth.js?v=3"></script>
 </body>
 </html>

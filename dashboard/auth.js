@@ -1,8 +1,8 @@
 /* Panel KitFinder — login de Google (Firebase) + datos de /analytics.
-   Mismo gate que el dashboard viejo (/dashboard.js): ADMIN_EMAILS en el
-   navegador, y el Worker kitfinder-search vuelve a comprobar el token de
-   Firebase (Authorization: Bearer) contra su propio ADMIN_EMAILS. La apiKey de
-   Firebase no es secreta: es el identificador público que ya usa /auth.js. */
+   ADMIN_EMAILS se comprueba en el navegador, y el Worker kitfinder-search
+   vuelve a comprobar el token de Firebase (Authorization: Bearer) contra su
+   propio ADMIN_EMAILS. La apiKey de Firebase no es secreta: es el
+   identificador público que ya usa /auth.js. */
 
 var API_BASE = 'https://kitfinder-search.wearekitfinder.workers.dev';
 var ADMIN_EMAILS = ['miguelsasaiz@gmail.com'];

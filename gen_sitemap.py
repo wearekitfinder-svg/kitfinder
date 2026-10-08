@@ -46,6 +46,8 @@ def lastmod(ruta):
 
 def main():
     rutas = (set(SPA_ROUTES) | descubrir_carpetas(".")) - EXCLUDE
+    # Nada bajo /dashboard (panel interno, noindex) entra en el sitemap.
+    rutas = {r for r in rutas if not any(r.startswith(e + "/") for e in EXCLUDE)}
     orden = sorted(rutas, key=lambda r: (r != "/", r))
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
