@@ -221,3 +221,8 @@ td.e,.cl.em{color:var(--dim)!important;font-weight:400!important}
 .gt-btn:hover{border-color:rgba(46,229,157,.45);background:rgba(46,229,157,.09);transform:translateY(-2px);box-shadow:0 10px 22px -12px rgba(46,229,157,.5)}
 .gt-err{color:var(--coral);font-size:13px;min-height:1em}
 .tasks li.empty .tx{color:var(--dim)}
+.tasks li button.chk{cursor:pointer}
+.tasks li button.chk:disabled{cursor:progress;opacity:.55}
+.tasks li .tgs{flex:none;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px}
+@media(max-width:560px){.tasks li{flex-wrap:wrap}.tasks li .tgs{flex-basis:100%;justify-content:flex-start;padding-left:35px}}
+.tasks .retry{background:none;font-family:inherit;cursor:pointer;margin-left:auto;border-color:rgba(46,229,157,.3)}

@@ -70,17 +70,22 @@ auth.onAuthStateChanged(function (user) {
 // El Worker exige el token de Firebase en /analytics y /admin/*;
 // getIdToken() lo renueva solo si ha caducado (dura una hora). Si algo
 // falla, el panel se queda en "—".
-function fetchAdmin(pathAndQuery) {
+function fetchAdmin(pathAndQuery, method) {
   var user = auth.currentUser;
   if (!user) return Promise.reject(new Error('sin sesión'));
   return user.getIdToken()
     .then(function (token) {
       return fetch(API_BASE + pathAndQuery, {
+        method: method || 'GET',
         headers: { 'Authorization': 'Bearer ' + token }
       });
     })
     .then(function (r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
+      if (!r.ok) {
+        var err = new Error('HTTP ' + r.status);
+        err.status = r.status;
+        throw err;
+      }
       return r.json();
     });
 }
@@ -104,6 +109,15 @@ function fetchCatalogStats() {
     });
 }
 
+// Tareas de Todoist (kitfinder-search/src/todoist.ts). Sin caché en el
+// Worker; aquí tampoco se guarda nada en el navegador. panel.js pinta la
+// lista y llama a estas funciones; los errores llevan .status (409, 502...).
+window.kfTodoist = {
+  list: function () { return fetchAdmin('/admin/todoist/tasks'); },
+  close: function (id) { return fetchAdmin('/admin/todoist/tasks/' + encodeURIComponent(id) + '/close', 'POST'); },
+  reopen: function (id) { return fetchAdmin('/admin/todoist/tasks/' + encodeURIComponent(id) + '/reopen', 'POST'); }
+};
+
 function loadData() {
   Promise.all([
     fetchAnalytics('rolling30d', 1),
@@ -114,4 +128,10 @@ function loadData() {
   fetchCatalogStats().then(function (stats) {
     if (stats) window.kfRenderCatalog(stats);
   });
+  window.kfTasksLoad();
 }
+
+// Al volver a la pestaña se vuelven a pedir las tareas (sin polling).
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'visible' && currentUid) window.kfTasksLoad();
+});
