@@ -157,6 +157,118 @@ window.kfRenderCatalog=function(s){
   meters.forEach(function(i){i.style.width=i.dataset.w+'%'});
 };
 
+/* ---------- tareas de Todoist (de /admin/todoist/tasks, ver auth.js) ----------
+   Orden: primero las "en curso", luego por fecha; sin fecha, al final. El
+   círculo cierra la tarea en Todoist; la fila solo se quita cuando el Worker
+   responde ok, y el aviso de abajo permite deshacer durante 8 segundos. Todo
+   el texto que viene de Todoist se pinta con textContent, nunca como HTML. */
+var taskList=document.getElementById('taskList'),toast=document.getElementById('toast'),
+    toastMsg=document.getElementById('toastMsg'),toastUndo=document.getElementById('toastUndo');
+var pendingClose={},tasksLoading=false,tasksAgain=false,toastTimer=null,undoTask=null;
+var CLOSE_ERR={409:'Esta tarea tiene subtareas; ciérrala en Todoist',403:'No se pudo cerrar esta tarea',404:'No se pudo cerrar esta tarea',502:'Todoist no responde, inténtalo de nuevo'};
+
+function taskRow(cls,text){
+  var li=document.createElement('li');li.className=cls;
+  var c=document.createElement('span');c.className='chk';c.setAttribute('aria-hidden','true');
+  var t=document.createElement('span');t.className='tx';t.textContent=text;
+  li.appendChild(c);li.appendChild(t);return li;
+}
+function tasksMessage(text,withRetry){
+  taskList.innerHTML='';
+  var li=taskRow('empty',text);
+  if(withRetry){
+    var b=document.createElement('button');b.type='button';b.className='go retry';b.textContent='Reintentar';
+    b.addEventListener('click',function(){tasksMessage('Cargando…');window.kfTasksLoad()});
+    li.appendChild(b);
+  }
+  taskList.appendChild(li);
+}
+function dueKey(d){return d?d.slice(0,10):'9999-99-99'}
+function dueTxt(d){
+  var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(d||'');if(!m)return '';
+  var txt=(+m[3])+' '+MES[+m[2]-1];
+  return +m[1]===new Date().getFullYear()?txt:txt+' '+m[1];
+}
+function tag(text,cls){var e=document.createElement('em');e.className='tg'+(cls?' '+cls:'');e.textContent=text;return e}
+
+function renderTasks(tasks){
+  tasks=tasks.slice().sort(function(a,b){
+    if(!!a.in_progress!==!!b.in_progress)return a.in_progress?-1:1;
+    var da=dueKey(a.due),db=dueKey(b.due);return da<db?-1:da>db?1:0;
+  });
+  taskList.innerHTML='';
+  if(!tasks.length){tasksMessage('Sin tareas pendientes');return}
+  tasks.forEach(function(t){
+    var li=document.createElement('li');li.className=t.in_progress?'prog':'';li.dataset.id=t.id;
+    var b=document.createElement('button');b.type='button';b.className='chk';
+    b.setAttribute('aria-label','Cerrar tarea: '+t.content);
+    b.disabled=!!pendingClose[t.id];
+    b.addEventListener('click',function(){closeTask(t)});
+    var tx=document.createElement('span');tx.className='tx';tx.textContent=t.content;
+    var tg=document.createElement('span');tg.className='tgs';
+    if(t.in_progress)tg.appendChild(tag('En curso','c'));
+    if(t.due)tg.appendChild(tag(dueTxt(t.due)));
+    (t.labels||[]).forEach(function(l){tg.appendChild(tag(l))});
+    li.appendChild(b);li.appendChild(tx);if(tg.children.length)li.appendChild(tg);
+    taskList.appendChild(li);
+  });
+}
+
+/* Una carga a la vez; si se pide otra mientras tanto, se repite al acabar. */
+window.kfTasksLoad=function(){
+  if(!window.kfTodoist)return;
+  if(tasksLoading){tasksAgain=true;return}
+  tasksLoading=true;
+  window.kfTodoist.list()
+    .then(function(d){renderTasks((d&&d.tasks)||[])})
+    .catch(function(e){console.warn('[panel] /admin/todoist/tasks:',e.message);tasksMessage('Sin datos todavía',true)})
+    .then(function(){tasksLoading=false;if(tasksAgain){tasksAgain=false;window.kfTasksLoad()}});
+};
+
+function showToast(text,task){
+  clearTimeout(toastTimer);
+  toastMsg.textContent=text;undoTask=task||null;toastUndo.hidden=!task;
+  toast.classList.add('show');
+  toastTimer=setTimeout(function(){toast.classList.remove('show');undoTask=null},task?8000:5000);
+}
+/* La lista puede repintarse mientras la petición está en curso (al volver
+   a la pestaña), así que la fila se busca por id al llegar la respuesta. */
+function rowOf(id){
+  var rows=taskList.querySelectorAll('li[data-id]');
+  for(var i=0;i<rows.length;i++)if(rows[i].dataset.id===String(id))return rows[i];
+  return null;
+}
+function setBusy(id,busy){
+  var li=rowOf(id),b=li&&li.querySelector('button.chk');if(b)b.disabled=busy;
+}
+function closeTask(t){
+  if(pendingClose[t.id])return;
+  pendingClose[t.id]=true;setBusy(t.id,true);
+  window.kfTodoist.close(t.id)
+    .then(function(){
+      var li=rowOf(t.id);
+      delete pendingClose[t.id];
+      if(li)li.classList.add('done');
+      setTimeout(function(){if(li&&li.parentNode)li.parentNode.removeChild(li);if(!taskList.children.length)tasksMessage('Sin tareas pendientes')},350);
+      showToast('Cerrada: '+t.content,t);
+    })
+    .catch(function(e){
+      console.warn('[panel] cerrar tarea:',e.message);
+      delete pendingClose[t.id];setBusy(t.id,false);
+      showToast(CLOSE_ERR[e.status]||'No se pudo cerrar esta tarea');
+    });
+}
+toastUndo.addEventListener('click',function(){
+  var t=undoTask;if(!t)return;
+  undoTask=null;toastUndo.hidden=true;clearTimeout(toastTimer);toastMsg.textContent='Reabriendo…';
+  window.kfTodoist.reopen(t.id)
+    .then(function(){toast.classList.remove('show');window.kfTasksLoad()})
+    .catch(function(e){
+      console.warn('[panel] reabrir tarea:',e.message);
+      showToast(e.status===502?'Todoist no responde, inténtalo de nuevo':'No se pudo deshacer; reábrela en Todoist');
+    });
+});
+
 /* ---------- entrada de datos (llamada desde auth.js) ----------
    rolling: snapshots 'rolling30d'; monthly: snapshots 'month' (ambos de /analytics). */
 window.kfRender=function(rolling,monthly){
