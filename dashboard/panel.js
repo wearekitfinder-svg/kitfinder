@@ -155,10 +155,18 @@ function paintEbayConversion(){
   el.textContent=(ebaySales30!=null&&ebayClicks)?pctTxt(ebaySales30/ebayClicks*100):'—';
 }
 function setCell(id,txt){var td=document.getElementById(id);td.textContent=txt;td.classList.remove('e')}
-window.kfRenderEbay=function(d,errStatus){
+/* En un 502, upstreamStatus es el código que devolvió eBay (0 = no se pudo
+   conectar). Si no llegó en el cuerpo, se deja el mensaje genérico. */
+window.kfRenderEbay=function(d,errStatus,upstreamStatus){
   var box=document.getElementById('ebayDetail');
   if(!d||!d.last30||!d.month){
-    box.innerHTML='<span class="note">Sin datos de eBay ahora'+(errStatus===502?' (eBay no responde)':'')+'.</span>';
+    var why='';
+    if(errStatus===502){
+      if(typeof upstreamStatus==='number'&&isFinite(upstreamStatus)){
+        why=upstreamStatus===0?' (no se pudo conectar con eBay)':' (eBay respondió con el código '+Math.trunc(upstreamStatus)+')';
+      }else why=' (eBay no responde)';
+    }
+    box.innerHTML='<span class="note">Sin datos de eBay ahora'+why+'.</span>';
     return;
   }
   var L=d.last30,M=d.month,cL=L.commission_cents||{},cM=M.commission_cents||{};

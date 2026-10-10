@@ -84,7 +84,14 @@ function fetchAdmin(pathAndQuery, method) {
       if (!r.ok) {
         var err = new Error('HTTP ' + r.status);
         err.status = r.status;
-        throw err;
+        // Del cuerpo del error solo se guarda upstream_status (número), que el
+        // Worker manda en los 502 de /admin/affiliates/ebay; nada más.
+        return r.json().catch(function () { return null; }).then(function (body) {
+          if (body && typeof body.upstream_status === 'number' && isFinite(body.upstream_status)) {
+            err.upstreamStatus = body.upstream_status;
+          }
+          throw err;
+        });
       }
       return r.json();
     });
@@ -135,7 +142,7 @@ function loadData() {
     .then(function (d) { window.kfRenderEbay(d, null); })
     .catch(function (e) {
       console.warn('[panel] /admin/affiliates/ebay:', e.message);
-      window.kfRenderEbay(null, e.status || 0);
+      window.kfRenderEbay(null, e.status || 0, e.upstreamStatus);
     });
 }
 
