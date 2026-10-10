@@ -129,6 +129,14 @@ function loadData() {
     if (stats) window.kfRenderCatalog(stats);
   });
   window.kfTasksLoad();
+  // eBay Partner Network (kitfinder-search/src/ebay_affiliate.ts). Una sola
+  // petición por carga del panel; el Worker ya la guarda 1 hora.
+  fetchAdmin('/admin/affiliates/ebay')
+    .then(function (d) { window.kfRenderEbay(d, null); })
+    .catch(function (e) {
+      console.warn('[panel] /admin/affiliates/ebay:', e.message);
+      window.kfRenderEbay(null, e.status || 0);
+    });
 }
 
 // Al volver a la pestaña se vuelven a pedir las tareas (sin polling).
