@@ -141,7 +141,8 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "size_kids": "Kids",
       "size_woman": "Woman",
       "footer_blurb": "Kit Finder is a football shirt search engine. We aggregate listings from specialist vintage, retro and classic football shirt stores so you can find any kit in one search. From Premier League to Serie A, from 1960s classics to the latest releases.",
-      "footer_copy": "© 2026 Kit Finder. We earn commissions from affiliate partner stores. All trademarks belong to their respective owners.",
+      "footer_copy": "© 2026 Kit Finder. Kit Finder may earn a commission if you buy through our links. This doesn’t change the price you pay. All trademarks belong to their respective owners.",
+      "footer_aff_notice": "Kit Finder may earn a commission if you buy through our links. This doesn’t change the price you pay.",
       "marquee_text": "THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE & RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA & SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS",
       "lsc_desc": "Long sleeve football shirts have been a staple on cold winter nights and rainy pitches for decades, from classic 1990s long-sleeve club jerseys to today's technical long sleeve kits. Browse long sleeve shirts from clubs and national teams alike, spanning vintage retro gems to the latest releases. Whether you're after an L/S classic or a modern long sleeve kit, find it here.",
       "fav_alerts_text": "Sign in and we'll email you when a shirt in your favourites drops in price or shows up in another store. Alerts are free and you can cancel any time.",
@@ -510,7 +511,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '9';
+  var KF_LANG_VER = '10';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
