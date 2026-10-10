@@ -154,6 +154,7 @@ function paintEbayConversion(){
   var el=document.getElementById('ebayConv');if(!el)return;
   el.textContent=(ebaySales30!=null&&ebayClicks)?pctTxt(ebaySales30/ebayClicks*100):'—';
 }
+function setKpi(id,tagId,txt){var n=document.getElementById(id);n.textContent=txt;n.classList.remove('empty');document.getElementById(tagId).hidden=false}
 function setCell(id,txt){var td=document.getElementById(id);td.textContent=txt;td.classList.remove('e')}
 /* En un 502, upstreamStatus es el código que devolvió eBay (0 = no se pudo
    conectar). Si no llegó en el cuerpo, se deja el mensaje genérico. */
@@ -173,6 +174,11 @@ window.kfRenderEbay=function(d,errStatus,upstreamStatus){
   ebaySales30=salesOf(L);
   setCell('ebaySales',fmt(ebaySales30));
   setCell('ebayMonth',centsTxt(sumCents(cM.pending,cM.approved)));
+  // Tarjetas de arriba: de momento solo hay datos de eBay, con su etiqueta
+  // para que no parezcan el total de todas las tiendas. Conversiones = ventas
+  // de 30 días no revertidas; comisión del mes = pendiente + aprobada.
+  setKpi('afConv','afConvTag',fmt(ebaySales30));
+  setKpi('afCommMonth','afCommTag',centsTxt(sumCents(cM.pending,cM.approved)));
   var flags='';
   if(d.stale)flags+='<span class="chip gd" title="eBay no respondió; se muestra el último dato guardado">dato antiguo</span>';
   if(d.truncated||d.ignored>0)flags+='<span class="chip" style="background:rgba(255,255,255,.07);color:var(--mut)" title="Faltan páginas o hay acciones que no se pudieron leer">puede estar incompleto</span>';

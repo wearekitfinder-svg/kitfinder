@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/dashboard/panel.css?v=5"/>
+<link rel="stylesheet" href="/dashboard/panel.css?v=6"/>
 </head>
 <body>
 
@@ -99,8 +99,8 @@
   <div class="top"><span class="lab">Afiliados · Solo tiendas con acuerdo cerrado</span></div>
   <div class="akp">
     <div class="kk c1"><div class="num empty" id="afClicks">—</div><span class="l">Clics (30 días)</span></div>
-    <div class="kk c2"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="num empty">—</div></div><span class="l">Conversiones (ventas)</span></div>
-    <div class="kk c3"><div class="num empty">—</div><span class="l">Comisión de este mes</span></div>
+    <div class="kk c2"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="num empty" id="afConv">—</div><span class="chip eb" id="afConvTag" hidden>solo eBay por ahora</span></div><span class="l">Conversiones (ventas)</span></div>
+    <div class="kk c3"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="num empty" id="afCommMonth">—</div><span class="chip eb" id="afCommTag" hidden>solo eBay por ahora</span></div><span class="l">Comisión de este mes</span></div>
     <div class="kk c4"><div class="num empty">—</div><span class="l">Comisión total acumulada</span></div>
   </div>
   <div class="chart" id="ch2"><svg class="cv" id="sv2" viewBox="0 0 720 230" role="img" aria-label="Clics y conversiones de afiliados por semana"></svg><div class="tip" id="tip2"></div></div>
@@ -140,7 +140,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="/dashboard/panel.js?v=6"></script>
+<script src="/dashboard/panel.js?v=7"></script>
 <script src="/dashboard/lock.js?v=3"></script>
 <script src="/dashboard/auth.js?v=6"></script>
 </body>
