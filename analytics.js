@@ -59,7 +59,39 @@
     document.getElementById('kfCookieReject').addEventListener('click', function () { setConsent('denied'); });
   }
 
+  // Aviso de afiliados en todas las páginas. Va aquí porque analytics.js es
+  // el único script que cargan todas (también si se rechazan las cookies:
+  // solo Google Analytics depende del consentimiento). Las 2 copias del
+  // footer de index.html ya lo dicen en su frase final (footer_copy), así
+  // que ahí no se añade nada. En los footers del blog va dentro; en las
+  // páginas sin footer (/clubs, /teams, /shirt-checker...) como franja al
+  // final. Se traduce con i18n.js (data-i18n) donde esa página lo carga.
+  // Arreglo provisional: lo definitivo es un footer real en el HTML (y en
+  // gen_teams.py de kitfinder-automation).
+  function addAffiliateNotice() {
+    if (document.querySelector('.kf-aff-notice, [data-i18n="footer_copy"]')) return;
+    var p = document.createElement('p');
+    p.className = 'kf-aff-notice';
+    p.innerHTML = '<span data-i18n="footer_aff_notice">Kit Finder may earn a commission if you buy through our links. This doesn’t change the price you pay.</span> '
+      + '<a href="/affiliate" data-i18n="footer_affiliate">Affiliate disclosure</a>';
+    var footer = document.querySelector('footer');
+    if (footer) {
+      p.style.cssText = 'margin:8px 0 0;font-size:12px;line-height:1.5;';
+      footer.appendChild(p);
+      return;
+    }
+    var strip = document.createElement('div');
+    strip.className = 'kf-aff-strip';
+    strip.style.cssText = "background:#1e2530;color:rgba(255,255,255,.65);text-align:center;padding:14px 16px;font:12px/1.5 'Outfit',sans-serif;";
+    p.style.cssText = 'margin:0 auto;max-width:900px;';
+    var a = p.querySelector('a');
+    a.style.cssText = 'color:rgba(255,255,255,.85);text-decoration:underline;white-space:nowrap;';
+    strip.appendChild(p);
+    document.body.appendChild(strip);
+  }
+
   function init() {
+    addAffiliateNotice();
     var c = null;
     try { c = localStorage.getItem(CONSENT_KEY); } catch (e) {}
     if (c === 'granted') loadGA();
