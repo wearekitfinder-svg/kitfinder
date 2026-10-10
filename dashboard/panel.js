@@ -130,9 +130,53 @@ function renderAffiliates(r){
     var w=max?Math.round(counts[k]/max*100):0;
     td.innerHTML='<span class="cl"><i><s style="--w:'+w+'%"></s></i>'+fmt(counts[k])+'</span>';
   });
+  ebayClicks=counts.ebay;paintEbayConversion();
   document.getElementById('afTotal').textContent=fmt(total);
   var c=document.getElementById('afClicks');c.textContent=fmt(total);c.classList.remove('empty');
 }
+
+/* ---------- eBay Partner Network (de /admin/affiliates/ebay) ----------
+   Importes en céntimos por moneda: se pasan a euros solo al pintar; otra
+   moneda distinta de EUR se enseña tal cual, sin convertir. Ventas = acciones
+   no revertidas (pendientes + aprobadas); la comisión revertida va aparte y
+   no se suma. Conversión = ventas de 30 días / clics de eBay en GA4 (30 días). */
+var ebayClicks=null,ebaySales30=null;
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function centsTxt(m){
+  m=m||{};
+  var cur=Object.keys(m).filter(function(c){return m[c]}).sort(function(a,b){return a==='EUR'?-1:b==='EUR'?1:a<b?-1:1});
+  if(!cur.length)return money(0);
+  return cur.map(function(c){var v=m[c]/100;return c==='EUR'?money(v):v.toFixed(2).replace('.',',')+' '+esc(c)}).join(' + ');
+}
+function sumCents(a,b){var o={};[a||{},b||{}].forEach(function(m){Object.keys(m).forEach(function(c){o[c]=(o[c]||0)+m[c]})});return o}
+function salesOf(b){var s=(b&&b.actions_by_state)||{};return (s.pending||0)+(s.approved||0)}
+function paintEbayConversion(){
+  var el=document.getElementById('ebayConv');if(!el)return;
+  el.textContent=(ebaySales30!=null&&ebayClicks)?pctTxt(ebaySales30/ebayClicks*100):'—';
+}
+function setCell(id,txt){var td=document.getElementById(id);td.textContent=txt;td.classList.remove('e')}
+window.kfRenderEbay=function(d,errStatus){
+  var box=document.getElementById('ebayDetail');
+  if(!d||!d.last30||!d.month){
+    box.innerHTML='<span class="note">Sin datos de eBay ahora'+(errStatus===502?' (eBay no responde)':'')+'.</span>';
+    return;
+  }
+  var L=d.last30,M=d.month,cL=L.commission_cents||{},cM=M.commission_cents||{};
+  ebaySales30=salesOf(L);
+  setCell('ebaySales',fmt(ebaySales30));
+  setCell('ebayMonth',centsTxt(sumCents(cM.pending,cM.approved)));
+  var flags='';
+  if(d.stale)flags+='<span class="chip gd" title="eBay no respondió; se muestra el último dato guardado">dato antiguo</span>';
+  if(d.truncated||d.ignored>0)flags+='<span class="chip" style="background:rgba(255,255,255,.07);color:var(--mut)" title="Faltan páginas o hay acciones que no se pudieron leer">puede estar incompleto</span>';
+  box.innerHTML=
+    '<div><b>Últimos 30 días:</b> '+fmt(ebaySales30)+(ebaySales30===1?' venta':' ventas')+' · '+centsTxt(L.sale_cents)+' vendido'+
+    ' · comisión '+centsTxt(cL.pending)+' pendiente, '+centsTxt(cL.approved)+' aprobada'+
+    ' · conversión <span id="ebayConv">—</span>'+
+    ' · <span title="No se suma a la comisión">revertida aparte: '+centsTxt(cL.reversed)+'</span>'+flags+'</div>'+
+    '<div><b>Mes en curso:</b> '+fmt(salesOf(M))+(salesOf(M)===1?' venta':' ventas')+
+    ' · comisión '+centsTxt(cM.pending)+' pendiente, '+centsTxt(cM.approved)+' aprobada</div>';
+  paintEbayConversion();
+};
 
 /* ---------- catálogo (de /admin/catalog-stats) ----------
    Rellena data-count / data-w y deja que la animación del prototipo (kfStart)

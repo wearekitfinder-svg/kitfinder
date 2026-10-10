@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/dashboard/panel.css?v=4"/>
+<link rel="stylesheet" href="/dashboard/panel.css?v=5"/>
 </head>
 <body>
 
@@ -110,7 +110,8 @@
   <div class="tw"><table>
     <thead><tr><th>Tienda</th><th>Clics</th><th>Ventas</th><th>Comisión mes</th><th>Comisión total</th></tr></thead>
     <tbody>
-      <tr><td><a class="pl" href="https://partner.ebay.com/secure/mediapartner/home/pview.ihtml" target="_blank" rel="noopener">eBay ↗</a></td><td data-af="ebay"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
+      <tr><td><a class="pl" href="https://partner.ebay.com/secure/mediapartner/home/pview.ihtml" target="_blank" rel="noopener">eBay ↗</a></td><td data-af="ebay"><span class="cl em">—</span></td><td class="m e" id="ebaySales">—</td><td class="m e" id="ebayMonth">—</td><td class="m e">—</td></tr>
+      <tr class="afd"><td colspan="5" id="ebayDetail"><span class="note">Cargando datos de eBay…</span></td></tr>
       <tr><td><a class="pl" href="https://www.classicfootballcollectibles.com" target="_blank" rel="noopener">CF Collectives ↗</a></td><td data-af="cfc"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
       <tr><td><a class="pl" href="https://kitplug.goaffpro.com/" target="_blank" rel="noopener">Kit Plug ↗</a></td><td data-af="kitplug"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
       <tr><td><a class="pl" href="https://classicfootballshirts.tapfiliate.com/p/new/dashboard/" target="_blank" rel="noopener">Classic Football Shirts ↗</a></td><td data-af="cfs"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
@@ -139,8 +140,8 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="/dashboard/panel.js?v=4"></script>
+<script src="/dashboard/panel.js?v=5"></script>
 <script src="/dashboard/lock.js?v=3"></script>
-<script src="/dashboard/auth.js?v=4"></script>
+<script src="/dashboard/auth.js?v=5"></script>
 </body>
 </html>
