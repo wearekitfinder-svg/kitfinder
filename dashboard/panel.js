@@ -96,11 +96,44 @@ draw('30');
 if(document.fonts&&document.fonts.ready){document.fonts.ready.then(init)}
 init();window.__kfInit=init;window.addEventListener('resize',init);
 
-/* ---------- gráfico afiliados ---------- */
-var sv2=document.getElementById('sv2');
-(function(){var W2=720,H2=230,L2=40,R2=40,T2=18,B2=30;
+/* ---------- gráfico afiliados (semanal) ----------
+   Conversiones = suma de orders de affiliate_daily por semana (lunes a domingo),
+   desde la semana del 1 jun 2026. Una semana sin ninguna fila es «sin dato» y no
+   se pinta (no es un cero). Las filas de «pico atípico» no entran. Los clics
+   necesitan store_clicks_daily, que el panel aún no puede leer (falta una ruta
+   en kitfinder-search), así que esa serie se queda en «sin datos». */
+var sv2=document.getElementById('sv2'),ch2=document.getElementById('ch2'),tip2=document.getElementById('tip2');
+var W2=720,H2=230,L2=40,R2=40,T2=18,B2=30;
+function drawWeekly(weeks){
+  sv2.innerHTML='';tip2.classList.remove('show');
   [0,.5,1].forEach(function(f){var y=T2+(H2-T2-B2)*f;el('line',{x1:L2,x2:W2-R2,y1:y,y2:y,class:'gl','stroke-dasharray':'3 5'},sv2)});
-  var t=el('text',{x:W2/2,y:H2/2,'text-anchor':'middle',style:'font:500 15px "DM Sans",sans-serif;fill:#5b7468'},sv2);t.textContent='Sin datos todavía';})();
+  var have=weeks?weeks.filter(function(w){return w.orders!==null}):[];
+  if(!have.length){
+    var t=el('text',{x:W2/2,y:H2/2,'text-anchor':'middle',style:'font:500 15px "DM Sans",sans-serif;fill:#5b7468'},sv2);t.textContent='Sin datos todavía';
+    return;
+  }
+  var mx=Math.max(1,Math.max.apply(null,have.map(function(w){return w.orders}))),slot=(W2-L2-R2)/weeks.length;
+  var X=function(i){return L2+slot*(i+.5)},Y=function(v){return H2-B2-(H2-T2-B2)*v/mx};
+  [[1,T2],[.5,T2+(H2-T2-B2)/2],[0,H2-B2]].forEach(function(a){var t=el('text',{x:L2-8,y:a[1]+3.5,'text-anchor':'end',class:'ax'},sv2);t.textContent=fmt(mx*a[0])});
+  weeks.forEach(function(w,i){if(i%2===0||weeks.length<=8){var t=el('text',{x:X(i),y:H2-B2+16,'text-anchor':'middle',class:'ax'},sv2);t.textContent=w.label}});
+  // línea solo entre semanas consecutivas con dato
+  for(var i=1;i<weeks.length;i++){
+    if(weeks[i].orders!==null&&weeks[i-1].orders!==null)
+      el('line',{x1:X(i-1),y1:Y(weeks[i-1].orders),x2:X(i),y2:Y(weeks[i].orders),stroke:'#f4bb4c','stroke-width':2,'stroke-linecap':'round',opacity:.7},sv2);
+  }
+  weeks.forEach(function(w,i){
+    if(w.orders===null)return;
+    var c=el('circle',{cx:X(i),cy:Y(w.orders),r:5,fill:'#f4bb4c',class:'dot',style:'animation-delay:'+(i*50)+'ms'},sv2);
+    function show(){
+      var sr=sv2.getBoundingClientRect(),cr=ch2.getBoundingClientRect(),k=sr.width/W2;
+      tip2.innerHTML='<b>'+fmt(w.orders)+'</b><span>'+(w.orders===1?'conversión':'conversiones')+' · semana del '+w.label+'</span>';
+      tip2.style.left=(sr.left-cr.left+X(i)*k)+'px';tip2.style.top=(sr.top-cr.top+Y(w.orders)*k)+'px';tip2.classList.add('show');
+    }
+    c.addEventListener('mouseenter',show);c.addEventListener('touchstart',show,{passive:true});
+    c.addEventListener('mouseleave',function(){tip2.classList.remove('show')});
+  });
+}
+drawWeekly(null);
 
 /* ---------- afiliados: clics por tienda ----------
    store_clicks llega por nombre de tienda o, si GA4 no tenía la dimensión,
@@ -199,6 +232,177 @@ window.kfRenderEbay=function(d,errStatus,upstreamStatus){
   ebayNotice(flags);
   paintEbayConversion();
 };
+
+/* ---------- affiliate_daily (de /admin/affiliates/daily) ----------
+   Importes en unidades de cada moneda; aquí se suman en céntimos y se pintan
+   por moneda, sin convertir divisas. Comisión acumulada = pendiente + aprobada
+   (la revertida no se suma). eBay sale de aquí solo cuando la tarea diaria del
+   Worker escribe sus filas: la fila de eBay de la tabla de arriba es otra
+   fuente (/admin/affiliates/ebay) y no se suma a esto.
+   program_clicks NULL = el programa no da ese dato: no se pinta ni se suma
+   como 0. Las filas cuya nota dice «pico atípico» (posible tráfico no humano)
+   no entran en el gráfico ni en ninguna tasa de conversión. */
+var CUR_SYM={EUR:'€ ',GBP:'£ '};
+function c2(v){var n=Number(v);return isFinite(n)?Math.round(n*100):0}
+function curAmt(cents,cur){var v=(cents/100).toFixed(2).replace('.',',');return CUR_SYM[cur]?CUR_SYM[cur]+v:v+' '+cur}
+function curOrder(a,b){return a==='EUR'?-1:b==='EUR'?1:a==='GBP'?-1:b==='GBP'?1:a<b?-1:1}
+/* m = {moneda: céntimos}; cada moneda por separado («€ 5,00 + £ 94,27»). */
+function multiAmt(m,curs){
+  curs=(curs||Object.keys(m||{})).slice().sort(curOrder);
+  if(!curs.length)return '—';
+  return curs.map(function(c){return curAmt((m&&m[c])||0,c)}).join(' + ');
+}
+function isAtypical(r){
+  return String(r&&r.note||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().indexOf('pico atipico')!==-1;
+}
+function utcDay(s){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(s||'');return m?Date.UTC(+m[1],+m[2]-1,+m[3]):NaN}
+function weeklyOrders(rows){
+  var DAY=864e5,now=new Date(),today=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
+  var from=utcDay(window.KF_AFFILIATE_FROM||'2026-06-01');
+  var first=from-((new Date(from).getUTCDay()+6)%7)*DAY;
+  var weeks=[];
+  for(var t=first;t<=today;t+=7*DAY){var d=new Date(t);weeks.push({start:t,label:d.getUTCDate()+' '+MES[d.getUTCMonth()],orders:null})}
+  (rows||[]).forEach(function(r){
+    if(isAtypical(r))return;
+    if(r.orders===null||r.orders===undefined)return;
+    var t=utcDay(r.day);if(isNaN(t)||t<first||t>today)return;
+    var w=weeks[Math.floor((t-first)/(7*DAY))];if(!w)return;
+    w.orders=(w.orders||0)+(Number(r.orders)||0);
+  });
+  return weeks;
+}
+function updatedTxt(iso){
+  var d=new Date(iso||'');if(isNaN(d))return '—';
+  return d.getDate()+' '+MES[d.getMonth()]+(d.getFullYear()!==new Date().getFullYear()?' '+d.getFullYear():'')+', '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+}
+function td(text,cls){var e=document.createElement('td');if(cls)e.className=cls;e.textContent=text;return e}
+function dailyMessage(text){
+  var body=document.getElementById('afDailyBody');body.innerHTML='';
+  var tr=document.createElement('tr'),c=td(text,'e afmsg');c.colSpan=6;tr.appendChild(c);body.appendChild(tr);
+}
+/* Una fila por tienda + programa. Todo el texto que viene de D1 va con
+   textContent. */
+function renderDailyTable(rows){
+  var g={};
+  rows.forEach(function(r){
+    var k=r.store+'\u0000'+r.program,x=g[k];
+    if(!x)x=g[k]={store:r.store,program:r.program,curs:{},clicks:0,clickDays:0,nullDays:0,atyp:0,orders:0,ordersKnown:0,amtKnown:0,sales:{},pend:{},appr:{},updated:''};
+    var c=r.currency;x.curs[c]=1;
+    if(r.program_clicks===null||r.program_clicks===undefined)x.nullDays++;
+    else{x.clicks+=Number(r.program_clicks)||0;x.clickDays++;if(isAtypical(r))x.atyp+=Number(r.program_clicks)||0}
+    if(r.orders!==null&&r.orders!==undefined){x.orders+=Number(r.orders)||0;x.ordersKnown++}
+    if(r.sales_amount!=null||r.commission_pending!=null||r.commission_approved!=null)x.amtKnown++;
+    x.sales[c]=(x.sales[c]||0)+c2(r.sales_amount);
+    x.pend[c]=(x.pend[c]||0)+c2(r.commission_pending);
+    x.appr[c]=(x.appr[c]||0)+c2(r.commission_approved);
+    if(String(r.updated_at||'')>x.updated)x.updated=String(r.updated_at||'');
+  });
+  var list=Object.keys(g).map(function(k){return g[k]}).sort(function(a,b){return a.store<b.store?-1:a.store>b.store?1:a.program<b.program?-1:1});
+  var body=document.getElementById('afDailyBody');body.innerHTML='';
+  if(!list.length){dailyMessage('Sin datos todavía');return}
+  list.forEach(function(x){
+    var tr=document.createElement('tr'),curs=Object.keys(x.curs);
+    tr.appendChild(td(x.store+' · '+x.program));
+    var cc;
+    if(!x.clickDays){cc=td('sin dato','e');cc.title='El programa no da clics para estas fechas';}
+    else{
+      cc=td(fmt(x.clicks),'m');
+      var t=[];if(x.nullDays)t.push(plural(x.nullDays,'día','días')+' sin dato (no cuentan como 0)');
+      if(x.atyp)t.push(fmt(x.atyp)+' clics del pico atípico (posible tráfico no humano)');
+      if(t.length){
+        cc.title=t.join('\n');
+        var n=document.createElement('span');n.className='note afcell';
+        n.textContent=x.atyp?'incl. '+fmt(x.atyp)+' de pico atípico':plural(x.nullDays,'día','días')+' sin dato';
+        cc.appendChild(n);
+      }
+    }
+    tr.appendChild(cc);
+    tr.appendChild(x.ordersKnown?td(fmt(x.orders),'m'):td('—','e'));
+    if(x.amtKnown){
+      tr.appendChild(td(multiAmt(x.sales,curs),'m'));
+      tr.appendChild(td(multiAmt(x.pend,curs)+' / '+multiAmt(x.appr,curs),'m'));
+    }else{tr.appendChild(td('—','e'));tr.appendChild(td('—','e'))}
+    var u=td(updatedTxt(x.updated));u.title=x.updated;tr.appendChild(u);
+    body.appendChild(tr);
+  });
+}
+/* Nota bajo el gráfico: qué días se han dejado fuera y por qué. */
+function renderAtypicalNote(rows){
+  var box=document.getElementById('afAtypical'),a=rows.filter(isAtypical);
+  if(!a.length){box.hidden=true;return}
+  var clicks=a.reduce(function(s,r){return s+(Number(r.program_clicks)||0)},0),days=a.map(function(r){return r.day}).sort();
+  var d0=new Date(utcDay(days[0])),d1=new Date(utcDay(days[days.length-1]));
+  var span=days.length===1?d0.getUTCDate()+' '+MES[d0.getUTCMonth()]:
+    d0.getUTCDate()+(d0.getUTCMonth()===d1.getUTCMonth()?'':' '+MES[d0.getUTCMonth()])+'–'+d1.getUTCDate()+' '+MES[d1.getUTCMonth()];
+  box.textContent='Fuera del gráfico y de las tasas de conversión: '+span+' ('+fmt(clicks)+' clics sin ventas, «pico atípico», posible tráfico no humano).';
+  box.hidden=false;
+}
+window.kfRenderDaily=function(d,errStatus){
+  var n=document.getElementById('afCommTotal'),split=document.getElementById('afCommTotalSplit');
+  var rows=d&&Array.isArray(d.rows)?d.rows:null,by=d&&d.totals&&d.totals.by_currency;
+  if(!rows){
+    n.textContent='—';n.classList.add('empty');split.hidden=true;
+    dailyMessage('No se pudieron cargar los datos diarios'+(errStatus?' (error '+errStatus+')':'')+'. El resto del panel sigue al día.');
+    document.getElementById('afAtypical').hidden=true;
+    drawWeekly(null);
+    return;
+  }
+  if(!by||!Object.keys(by).length){
+    n.textContent='—';n.classList.add('empty');split.hidden=true;
+  }else{
+    var pend={},appr={},tot={},curs=Object.keys(by);
+    curs.forEach(function(c){
+      var p=c2(by[c].commission_pending),a=c2(by[c].commission_approved);
+      pend[c]=p;appr[c]=a;tot[c]=p+a;
+    });
+    n.textContent=multiAmt(tot,curs);n.classList.remove('empty');n.classList.toggle('multi',curs.length>1);
+    split.textContent='pendiente '+multiAmt(pend,curs)+' / aprobada '+multiAmt(appr,curs);split.hidden=false;
+  }
+  renderDailyTable(rows);
+  renderAtypicalNote(rows);
+  drawWeekly(weeklyOrders(rows));
+};
+
+/* ---------- añadir mes a mano (POST /admin/affiliates/manual) ----------
+   Pedidos = orders; ventas (importe vendido) = sales_amount. El programa sale
+   de una lista sin 'epn': eBay entra solo desde su API y el Worker lo rechaza. */
+(function(){
+  var form=document.getElementById('afManualForm'),msg=document.getElementById('afManualMsg');
+  if(!form)return;
+  var PROGRAMS=['tapfiliate','goaffpro','uppromote','opencart','webgains'];
+  function say(t,err){msg.textContent=t;msg.classList.toggle('err',!!err)}
+  var ERR={401:'Tu sesión ha caducado; vuelve a entrar.',403:'Esta cuenta no tiene permiso para guardar.',404:'El Worker no tiene esta ruta; no se ha guardado nada.',409:'Ya hay una fila automática (de la API) para esa tienda, programa y mes; no se ha cambiado nada.'};
+  function twoDec(v){return Math.abs(v*100-Math.round(v*100))<1e-6}
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=form.elements,num=function(k){var v=String(f[k].value).trim().replace(',','.');return v===''?NaN:Number(v)};
+    var row={month:f.month.value,store:f.store.value.trim(),program:f.program.value,
+      orders:num('orders'),sales_amount:num('sales_amount'),commission_pending:num('commission_pending'),
+      commission_approved:num('commission_approved'),commission_reversed:num('commission_reversed'),
+      currency:f.currency.value.trim().toUpperCase(),note:f.note.value.trim()};
+    if(!/^\d{4}-\d{2}$/.test(row.month)||!row.store)return say('Falta la tienda o el mes.',true);
+    if(PROGRAMS.indexOf(row.program)===-1)return say('Elige un programa de la lista (eBay entra solo, no se añade a mano).',true);
+    if(!/^[A-Z]{3}$/.test(row.currency))return say('La moneda debe tener 3 letras (p. ej. EUR o GBP).',true);
+    if(!isFinite(row.orders)||row.orders<0||row.orders%1)return say('Pedidos debe ser un número entero, 0 o más.',true);
+    var amounts=['sales_amount','commission_pending','commission_approved','commission_reversed'];
+    if(amounts.some(function(k){return !isFinite(row[k])||row[k]<0||!twoDec(row[k])}))return say('Revisa los importes: no pueden estar vacíos ni ser negativos, y llevan como mucho 2 decimales.',true);
+    var cur=row.currency;
+    var ok=window.confirm('¿Guardar este mes?\n\n'+row.store+' · '+row.program+' · '+row.month+'\n'+
+      'Pedidos: '+row.orders+' · Ventas (importe vendido): '+curAmt(c2(row.sales_amount),cur)+'\n'+
+      'Comisión pendiente '+curAmt(c2(row.commission_pending),cur)+' / aprobada '+curAmt(c2(row.commission_approved),cur)+' / revertida '+curAmt(c2(row.commission_reversed),cur)+
+      (row.note?'\nNota: '+row.note:''));
+    if(!ok)return say('No se ha enviado nada.');
+    var btn=form.querySelector('button[type=submit]');btn.disabled=true;say('Guardando…');
+    window.kfAffiliates.manual(row)
+      .then(function(){say('Guardado. Actualizando datos…');window.kfLoadDaily()})
+      .catch(function(e){
+        console.warn('[panel] /admin/affiliates/manual:',e.message);
+        if(e.status===400)return say('El servidor no lo ha aceptado'+(e.serverMessage?': '+e.serverMessage:'')+'. No se ha guardado nada.',true);
+        say(ERR[e.status]||('No se pudo guardar'+(e.status?' (error '+e.status+')':'')+'. Inténtalo de nuevo.'),true);
+      })
+      .then(function(){btn.disabled=false});
+  });
+})();
 
 /* ---------- catálogo (de /admin/catalog-stats) ----------
    Rellena data-count / data-w y deja que la animación del prototipo (kfStart)

@@ -70,14 +70,17 @@ auth.onAuthStateChanged(function (user) {
 // El Worker exige el token de Firebase en /analytics y /admin/*;
 // getIdToken() lo renueva solo si ha caducado (dura una hora). Si algo
 // falla, el panel se queda en "—".
-function fetchAdmin(pathAndQuery, method) {
+function fetchAdmin(pathAndQuery, method, body) {
   var user = auth.currentUser;
   if (!user) return Promise.reject(new Error('sin sesión'));
   return user.getIdToken()
     .then(function (token) {
+      var headers = { 'Authorization': 'Bearer ' + token };
+      if (body !== undefined) headers['Content-Type'] = 'application/json';
       return fetch(API_BASE + pathAndQuery, {
         method: method || 'GET',
-        headers: { 'Authorization': 'Bearer ' + token }
+        headers: headers,
+        body: body !== undefined ? JSON.stringify(body) : undefined
       });
     })
     .then(function (r) {
@@ -85,10 +88,14 @@ function fetchAdmin(pathAndQuery, method) {
         var err = new Error('HTTP ' + r.status);
         err.status = r.status;
         // Del cuerpo del error solo se guarda upstream_status (número), que el
-        // Worker manda en los 502 de /admin/affiliates/ebay; nada más.
+        // Worker manda en los 502 de /admin/affiliates/ebay, y, en los 400, el
+        // texto de validación de nuestro propio Worker (se pinta como texto).
         return r.json().catch(function () { return null; }).then(function (body) {
           if (body && typeof body.upstream_status === 'number' && isFinite(body.upstream_status)) {
             err.upstreamStatus = body.upstream_status;
+          }
+          if (r.status === 400 && body && typeof body.error === 'string') {
+            err.serverMessage = body.error.slice(0, 200);
           }
           throw err;
         });
@@ -144,7 +151,26 @@ function loadData() {
       console.warn('[panel] /admin/affiliates/ebay:', e.message);
       window.kfRenderEbay(null, e.status || 0, e.upstreamStatus);
     });
+  window.kfLoadDaily();
 }
+
+// Afiliados día a día (tabla affiliate_daily del Worker): una petición desde
+// AFFILIATE_FROM hasta hoy, de la que salen la comisión acumulada, la tabla por
+// programa y el gráfico semanal. Si la ruta falla, esas partes dicen «sin datos».
+var AFFILIATE_FROM = '2026-06-01';
+window.KF_AFFILIATE_FROM = AFFILIATE_FROM;
+function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+window.kfLoadDaily = function () {
+  fetchAdmin('/admin/affiliates/daily?from=' + AFFILIATE_FROM + '&to=' + ymd(new Date()))
+    .then(function (d) { window.kfRenderDaily(d, null); })
+    .catch(function (e) {
+      console.warn('[panel] /admin/affiliates/daily:', e.message);
+      window.kfRenderDaily(null, e.status || 0);
+    });
+};
+window.kfAffiliates = {
+  manual: function (row) { return fetchAdmin('/admin/affiliates/manual', 'POST', row); }
+};
 
 // Al volver a la pestaña se vuelven a pedir las tareas (sin polling).
 document.addEventListener('visibilitychange', function () {
