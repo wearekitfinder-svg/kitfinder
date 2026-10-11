@@ -847,7 +847,7 @@ async function kfSearchByImage(input){
     if(!response.ok||data.error){throw new Error(data.error||"Vision error");}
     var parsed=data;
 
-    _kfUpdateAnalyzing(kfT('js_match_found','Match found!'),kfT('js_searching_stores','Searching across 240+ stores'));
+    _kfUpdateAnalyzing(kfT('js_match_found','Match found!'),kfT('js_searching_stores','Searching across 250+ stores'));
 
     // Construir query principal
     var parts=[];

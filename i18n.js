@@ -143,7 +143,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "footer_blurb": "Kit Finder is a football shirt search engine. We aggregate listings from specialist vintage, retro and classic football shirt stores so you can find any kit in one search. From Premier League to Serie A, from 1960s classics to the latest releases.",
       "footer_copy": "© 2026 Kit Finder. Kit Finder may earn a commission if you buy through our links. This doesn’t change the price you pay. All trademarks belong to their respective owners.",
       "footer_aff_notice": "Kit Finder may earn a commission if you buy through our links. This doesn’t change the price you pay.",
-      "marquee_text": "THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE & RETRO KITS — 240+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA & SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS",
+      "marquee_text": "THE ULTIMATE FOOTBALL SHIRT SEARCH ENGINE — 100% ORIGINAL VINTAGE & RETRO KITS — 250+ SPECIALIST STORES — SEARCH BY PHOTO WITH AI — COMPARE PRICES ACROSS EVERY CLUB, ERA & SIZE — NO FAKES, NO REPLICAS — FREE TO USE, ALWAYS",
       "lsc_desc": "Long sleeve football shirts have been a staple on cold winter nights and rainy pitches for decades, from classic 1990s long-sleeve club jerseys to today's technical long sleeve kits. Browse long sleeve shirts from clubs and national teams alike, spanning vintage retro gems to the latest releases. Whether you're after an L/S classic or a modern long sleeve kit, find it here.",
       "fav_alerts_text": "Sign in and we'll email you when a shirt in your favourites drops in price or shows up in another store. Alerts are free and you can cancel any time.",
       "nl_sub_1": "The history, culture and stories behind football shirts.",
@@ -209,7 +209,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "js_identifying_shirt": "Identifying shirt...",
       "js_analysing_team": "Analysing team, season & version",
       "js_match_found": "Match found!",
-      "js_searching_stores": "Searching across 240+ stores",
+      "js_searching_stores": "Searching across 250+ stores",
       "js_could_not_identify": "Could not identify the shirt. Try a clearer photo showing the front of the shirt.",
       "js_image_search_failed": "Image search failed: {msg}",
       "js_image_load_failed": "Couldn't load that image from the other site (it may block cross-site access). Try saving it and uploading it instead.",
@@ -376,7 +376,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "sc_last_seen": "Last seen:",
       "teams_back": "← Back to all teams",
       "teams_h1": "{team} Vintage Shirts",
-      "teams_sub": "{n} available right now, compared across 240+ specialist stores.",
+      "teams_sub": "{n} available right now, compared across 250+ specialist stores.",
       "teams_cta": "Search all {team} shirts →",
       "teams_famous_players": "Famous players available:",
       "teams_also_browse": "Also browse",
@@ -400,7 +400,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       'landing_title_1': 'Find any',
       'landing_title_2': 'football shirt',
       'landing_title_3': 'in one search',
-      'landing_subtitle': 'Search over 320,000 vintage, retro & classic football shirts across 240+ specialist stores',
+      'landing_subtitle': 'Search over 350,000 vintage, retro & classic football shirts across 250+ specialist stores',
       // Football Giants
       'fg_title': 'Football Giants',
       'fg_subtitle': 'Browse vintage & retro football shirts from the world\'s greatest clubs — Barcelona, Real Madrid, Bayern Munich, Liverpool, Man United and more',
@@ -467,7 +467,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "wc_hero_title": "Long Sleeve Football Shirts",
       "wc_hero_sub": "Browse long sleeve kits from every era — from iconic vintage long sleeve jerseys to the latest releases",
       "wc_hero_cta": "Explore long sleeve kits",
-      "loading_text": "Searching across 240+ stores",
+      "loading_text": "Searching across 250+ stores",
       "clear_all_filters": "Clear all filters",
       "load_more_shirts": "Load more shirts",
       "search_shirts": "Search shirts",
@@ -511,7 +511,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '10';
+  var KF_LANG_VER = '11';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
