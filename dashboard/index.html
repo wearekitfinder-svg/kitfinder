@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/dashboard/panel.css?v=8"/>
+<link rel="stylesheet" href="/dashboard/panel.css?v=9"/>
 </head>
 <body>
 
@@ -101,10 +101,11 @@
     <div class="kk c1"><div class="num empty" id="afClicks">—</div><span class="l">Clics (30 días)</span></div>
     <div class="kk c2"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="num empty" id="afConv">—</div><span class="chip eb" id="afConvTag" hidden>solo eBay por ahora</span></div><span class="l">Conversiones (ventas)</span></div>
     <div class="kk c3"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="num empty" id="afCommMonth">—</div><span class="chip eb" id="afCommTag" hidden>solo eBay por ahora</span></div><span class="l">Comisión de este mes</span></div>
-    <div class="kk c4"><div class="num empty" id="afCommTotal">—</div><span class="l">Comisión total acumulada</span><span class="l afsplit" id="afCommTotalSplit" hidden></span></div>
+    <div class="kk c4"><div class="num empty" id="afCommTotal">—</div><span class="l" title="Pendiente + aprobada, por moneda y sin convertir. Desde el 1 jun 2026 (tabla affiliate_daily).">Comisión total acumulada</span><span class="l afsplit" id="afCommTotalSplit" hidden></span></div>
   </div>
   <div class="chart" id="ch2"><svg class="cv" id="sv2" viewBox="0 0 720 230" role="img" aria-label="Clics y conversiones de afiliados por semana"></svg><div class="tip" id="tip2"></div></div>
-  <div class="legend"><em><span class="sq"></span>Clics a tiendas afiliadas (sin datos todavía)</em><em><span class="ci"></span>Conversiones (ventas)</em></div>
+  <div class="legend"><em><span class="sq"></span>Clics a tiendas afiliadas (sin datos todavía)</em><em><span class="ci"></span>Conversiones (pedidos)</em></div>
+  <p class="note afx" id="afAtypical" hidden></p>
 
   <div class="sub">Por tienda</div>
   <div class="tw"><table>
@@ -120,22 +121,36 @@
     </tbody>
   </table></div>
 
+  <div class="sub">Por programa · datos diarios desde 1 jun 2026</div>
+  <div class="tw"><table>
+    <thead><tr><th>Tienda · programa</th><th>Clics del programa</th><th>Pedidos</th><th>Ventas</th><th>Comisión pendiente / aprobada</th><th>Actualizado</th></tr></thead>
+    <tbody id="afDailyBody"><tr><td colspan="6" class="e afmsg">Cargando…</td></tr></tbody>
+  </table></div>
+
   <details class="afm" id="afManual">
     <summary>Añadir mes a mano</summary>
     <form id="afManualForm" class="afm-grid" novalidate>
       <label>Tienda<input name="store" list="afStores" required maxlength="80"></label>
-      <label>Programa<input name="program" required maxlength="80" placeholder="p. ej. Tapfiliate"></label>
+      <label>Programa<select name="program" required>
+        <option value="">Elige…</option>
+        <option value="tapfiliate">Tapfiliate</option>
+        <option value="goaffpro">GoAffPro</option>
+        <option value="uppromote">UpPromote</option>
+        <option value="opencart">OpenCart</option>
+        <option value="webgains">Webgains</option>
+      </select></label>
       <label>Mes<input name="month" type="month" required></label>
-      <label>Ventas<input name="orders" type="number" min="0" step="1" required value="0"></label>
-      <label>Importe vendido<input name="sales_amount" type="number" min="0" step="0.01" required value="0"></label>
+      <label>Pedidos<input name="orders" type="number" min="0" step="1" required value="0"></label>
+      <label>Ventas (importe vendido)<input name="sales_amount" type="number" min="0" step="0.01" required value="0"></label>
       <label>Comisión pendiente<input name="commission_pending" type="number" min="0" step="0.01" required value="0"></label>
       <label>Comisión aprobada<input name="commission_approved" type="number" min="0" step="0.01" required value="0"></label>
       <label>Comisión revertida<input name="commission_reversed" type="number" min="0" step="0.01" required value="0"></label>
       <label>Moneda<input name="currency" required maxlength="3" value="EUR"></label>
       <label class="afm-wide">Nota<input name="note" maxlength="200"></label>
+      <p class="afm-wide note">eBay no se añade a mano: entra solo cada día desde su API.</p>
       <div class="afm-wide afm-actions"><button type="submit" class="go">Guardar mes</button><span class="note" id="afManualMsg"></span></div>
     </form>
-    <datalist id="afStores"><option value="eBay"><option value="CF Collectives"><option value="Kit Plug"><option value="Classic Football Shirts"><option value="The Soccer Archive"></datalist>
+    <datalist id="afStores"><option value="CF Collectives"><option value="Kit Plug"><option value="Classic Football Shirts"><option value="The Soccer Archive"></datalist>
   </details>
 </section>
 
@@ -158,8 +173,8 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="/dashboard/panel.js?v=9"></script>
+<script src="/dashboard/panel.js?v=10"></script>
 <script src="/dashboard/lock.js?v=3"></script>
-<script src="/dashboard/auth.js?v=7"></script>
+<script src="/dashboard/auth.js?v=8"></script>
 </body>
 </html>

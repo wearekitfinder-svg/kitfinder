@@ -88,10 +88,14 @@ function fetchAdmin(pathAndQuery, method, body) {
         var err = new Error('HTTP ' + r.status);
         err.status = r.status;
         // Del cuerpo del error solo se guarda upstream_status (número), que el
-        // Worker manda en los 502 de /admin/affiliates/ebay; nada más.
+        // Worker manda en los 502 de /admin/affiliates/ebay, y, en los 400, el
+        // texto de validación de nuestro propio Worker (se pinta como texto).
         return r.json().catch(function () { return null; }).then(function (body) {
           if (body && typeof body.upstream_status === 'number' && isFinite(body.upstream_status)) {
             err.upstreamStatus = body.upstream_status;
+          }
+          if (r.status === 400 && body && typeof body.error === 'string') {
+            err.serverMessage = body.error.slice(0, 200);
           }
           throw err;
         });
@@ -150,12 +154,14 @@ function loadData() {
   window.kfLoadDaily();
 }
 
-// Afiliados día a día (tabla affiliate_daily del Worker): una petición con todo
-// el histórico, de la que salen la comisión acumulada y el gráfico semanal.
-// Si la ruta aún no existe o falla, esas partes se quedan en «sin datos».
+// Afiliados día a día (tabla affiliate_daily del Worker): una petición desde
+// AFFILIATE_FROM hasta hoy, de la que salen la comisión acumulada, la tabla por
+// programa y el gráfico semanal. Si la ruta falla, esas partes dicen «sin datos».
+var AFFILIATE_FROM = '2026-06-01';
+window.KF_AFFILIATE_FROM = AFFILIATE_FROM;
 function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
 window.kfLoadDaily = function () {
-  fetchAdmin('/admin/affiliates/daily?from=2020-01-01&to=' + ymd(new Date()))
+  fetchAdmin('/admin/affiliates/daily?from=' + AFFILIATE_FROM + '&to=' + ymd(new Date()))
     .then(function (d) { window.kfRenderDaily(d, null); })
     .catch(function (e) {
       console.warn('[panel] /admin/affiliates/daily:', e.message);
