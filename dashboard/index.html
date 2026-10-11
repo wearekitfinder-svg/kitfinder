@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/dashboard/panel.css?v=9"/>
+<link rel="stylesheet" href="/dashboard/panel.css?v=10"/>
 </head>
 <body>
 
@@ -97,35 +97,45 @@
 
 <section class="card hi rise" style="--i:4">
   <div class="top"><span class="lab">Afiliados · Solo tiendas con acuerdo cerrado</span></div>
-  <div class="akp">
-    <div class="kk c1"><div class="num empty" id="afClicks">—</div><span class="l">Clics (30 días)</span></div>
-    <div class="kk c2"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="num empty" id="afConv">—</div><span class="chip eb" id="afConvTag" hidden>solo eBay por ahora</span></div><span class="l">Conversiones (ventas)</span></div>
-    <div class="kk c3"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><div class="num empty" id="afCommMonth">—</div><span class="chip eb" id="afCommTag" hidden>solo eBay por ahora</span></div><span class="l">Comisión de este mes</span></div>
-    <div class="kk c4"><div class="num empty" id="afCommTotal">—</div><span class="l" title="Pendiente + aprobada, por moneda y sin convertir. Desde el 1 jun 2026 (tabla affiliate_daily).">Comisión total acumulada</span><span class="l afsplit" id="afCommTotalSplit" hidden></span></div>
+  <div class="kk c4 aftot">
+    <div class="afth"><span class="l">Comisión total acumulada</span><span class="chip eb" title="Esta cifra no cambia con el selector de periodo">no depende del periodo</span></div>
+    <div class="num empty" id="afCommTotal">—</div>
+    <span class="l afsplit" id="afCommTotalSplit" hidden></span>
+    <span class="l afsplit">Desde el 1 jun 2026 hasta hoy · pendiente + aprobada, por moneda y sin convertir</span>
   </div>
-  <div class="chart" id="ch2"><svg class="cv" id="sv2" viewBox="0 0 720 230" role="img" aria-label="Clics y conversiones de afiliados por semana"></svg><div class="tip" id="tip2"></div></div>
-  <div class="legend"><em><span class="sq"></span>Clics a tiendas afiliadas (sin datos todavía)</em><em><span class="ci"></span>Conversiones (pedidos)</em></div>
+  <div class="afp">
+    <div class="seg" id="afSeg" role="group" aria-label="Periodo de afiliados"><span class="pill" id="afPill"></span><button type="button" data-m="month" class="on">Mes</button><button type="button" data-m="ytd">Lo que va de año</button><button type="button" data-m="year">Año natural</button></div>
+    <select class="afsel" id="afMonthSel" aria-label="Mes"></select>
+    <select class="afsel" id="afYearSel" aria-label="Año" hidden></select>
+    <span class="note afload" id="afLoading" hidden>Cargando…</span>
+  </div>
+  <p class="note afx" id="afPeriodNote" hidden></p>
+  <div id="afBody">
+  <div class="akp ak5">
+    <div class="kk c1"><div class="num empty" id="afPClicks">—</div><span class="l">Clics Kit Finder (GA4) · todas las tiendas</span></div>
+    <div class="kk c3"><div class="num empty" id="afPProg">—</div><span class="l">Clics del programa</span><span class="l afsplit" id="afPProgNote" hidden></span></div>
+    <div class="kk c2"><div class="num empty" id="afPOrders">—</div><span class="l">Pedidos</span></div>
+    <div class="kk c1"><div class="num empty" id="afPSales">—</div><span class="l">Ventas (importe vendido)</span></div>
+    <div class="kk c2"><div class="num empty" id="afPComm">—</div><span class="l">Comisión del periodo</span><span class="l afsplit" id="afPCommSplit" hidden></span></div>
+  </div>
+  <div class="chart" id="ch2"><svg class="cv" id="sv2" viewBox="0 0 720 230" role="img" aria-label="Clics de Kit Finder y conversiones de afiliados en el periodo"></svg><div class="tip" id="tip2"></div></div>
+  <div class="legend"><em><span class="sq"></span>Clics Kit Finder (GA4), todas las tiendas</em><em><span class="ci"></span>Conversiones (pedidos)</em></div>
   <p class="note afx" id="afAtypical" hidden></p>
 
-  <div class="sub">Por tienda</div>
+  <div class="sub" id="afStoreSub">Por tienda</div>
   <div class="tw"><table>
-    <thead><tr><th>Tienda</th><th>Clics</th><th>Ventas</th><th>Comisión mes</th><th>Comisión total</th></tr></thead>
-    <tbody>
-      <tr><td><a class="pl" href="https://partner.ebay.com/secure/mediapartner/home/pview.ihtml" target="_blank" rel="noopener">eBay ↗</a></td><td data-af="ebay"><span class="cl em">—</span></td><td class="m e" id="ebaySales">—</td><td class="m e" id="ebayMonth">—</td><td class="m e">—</td></tr>
-      <tr class="afd" hidden><td colspan="5" id="ebayDetail"></td></tr>
-      <tr><td><a class="pl" href="https://www.classicfootballcollectibles.com" target="_blank" rel="noopener">CF Collectives ↗</a></td><td data-af="cfc"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
-      <tr><td><a class="pl" href="https://kitplug.goaffpro.com/" target="_blank" rel="noopener">Kit Plug ↗</a></td><td data-af="kitplug"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
-      <tr><td><a class="pl" href="https://classicfootballshirts.tapfiliate.com/p/new/dashboard/" target="_blank" rel="noopener">Classic Football Shirts ↗</a></td><td data-af="cfs"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
-      <tr><td><a class="pl" href="https://af.uppromote.com/soccer-archive-dev/dashboard" target="_blank" rel="noopener">The Soccer Archive ↗</a></td><td data-af="tsa"><span class="cl em">—</span></td><td class="m e">—</td><td class="m e">—</td><td class="m e">—</td></tr>
-      <tr class="tot"><td>Total</td><td id="afTotal">—</td><td>—</td><td>—</td><td>—</td></tr>
+    <thead><tr><th>Tienda</th><th>Clics Kit Finder (GA4)</th><th>Clics del programa</th><th>Pedidos</th><th>Ventas</th><th>Comisión (pend. + aprob.)</th></tr></thead>
+    <tbody id="afStoreBody">
+      <tr data-store="eBay" data-af="ebay"><td><a class="pl" href="https://partner.ebay.com/secure/mediapartner/home/pview.ihtml" target="_blank" rel="noopener">eBay ↗</a><span class="note afcell" id="ebayApi" hidden></span></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr class="afd" hidden><td colspan="6" id="ebayDetail"></td></tr>
+      <tr data-store="CF Collectives" data-af="cfc"><td><a class="pl" href="https://www.classicfootballcollectibles.com" target="_blank" rel="noopener">CF Collectives ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr data-store="Kit Plug" data-af="kitplug"><td><a class="pl" href="https://kitplug.goaffpro.com/" target="_blank" rel="noopener">Kit Plug ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr data-store="Classic Football Shirts" data-af="cfs"><td><a class="pl" href="https://classicfootballshirts.tapfiliate.com/p/new/dashboard/" target="_blank" rel="noopener">Classic Football Shirts ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr data-store="The Soccer Archive" data-af="tsa"><td><a class="pl" href="https://af.uppromote.com/soccer-archive-dev/dashboard" target="_blank" rel="noopener">The Soccer Archive ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr class="tot"><td>Total</td><td id="afTotGa4">—</td><td class="m afa">—</td><td class="m afa">—</td><td class="m afa">—</td><td class="m afa">—</td></tr>
     </tbody>
   </table></div>
-
-  <div class="sub">Por programa · datos diarios desde 1 jun 2026</div>
-  <div class="tw"><table>
-    <thead><tr><th>Tienda · programa</th><th>Clics del programa</th><th>Pedidos</th><th>Ventas</th><th>Comisión pendiente / aprobada</th><th>Actualizado</th></tr></thead>
-    <tbody id="afDailyBody"><tr><td colspan="6" class="e afmsg">Cargando…</td></tr></tbody>
-  </table></div>
+  </div>
 
   <details class="afm" id="afManual">
     <summary>Añadir mes a mano</summary>
@@ -173,8 +183,8 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="/dashboard/panel.js?v=10"></script>
+<script src="/dashboard/panel.js?v=11"></script>
 <script src="/dashboard/lock.js?v=3"></script>
-<script src="/dashboard/auth.js?v=8"></script>
+<script src="/dashboard/auth.js?v=9"></script>
 </body>
 </html>

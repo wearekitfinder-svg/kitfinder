@@ -154,22 +154,27 @@ function loadData() {
   window.kfLoadDaily();
 }
 
-// Afiliados día a día (tabla affiliate_daily del Worker): una petición desde
-// AFFILIATE_FROM hasta hoy, de la que salen la comisión acumulada, la tabla por
-// programa y el gráfico semanal. Si la ruta falla, esas partes dicen «sin datos».
+// Afiliados día a día (tabla affiliate_daily del Worker) y clics de Kit Finder
+// por tienda y día (store_clicks_daily). La comisión acumulada se pide siempre
+// desde AFFILIATE_FROM hasta hoy (no sigue el selector); el periodo elegido lo
+// pide panel.js (kfAfLoad) con daily() y storeClicks(), solo con ese rango.
+// Si una ruta falla, esa parte dice «sin datos» y el resto sigue.
 var AFFILIATE_FROM = '2026-06-01';
 window.KF_AFFILIATE_FROM = AFFILIATE_FROM;
 function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
 window.kfLoadDaily = function () {
   fetchAdmin('/admin/affiliates/daily?from=' + AFFILIATE_FROM + '&to=' + ymd(new Date()))
-    .then(function (d) { window.kfRenderDaily(d, null); })
+    .then(function (d) { window.kfRenderTotal(d); })
     .catch(function (e) {
-      console.warn('[panel] /admin/affiliates/daily:', e.message);
-      window.kfRenderDaily(null, e.status || 0);
+      console.warn('[panel] /admin/affiliates/daily (acumulada):', e.message);
+      window.kfRenderTotal(null);
     });
+  window.kfAfStart();
 };
 window.kfAffiliates = {
-  manual: function (row) { return fetchAdmin('/admin/affiliates/manual', 'POST', row); }
+  manual: function (row) { return fetchAdmin('/admin/affiliates/manual', 'POST', row); },
+  daily: function (from, to) { return fetchAdmin('/admin/affiliates/daily?from=' + from + '&to=' + to); },
+  storeClicks: function (from, to) { return fetchAdmin('/admin/store-clicks/daily?from=' + from + '&to=' + to); }
 };
 
 // Al volver a la pestaña se vuelven a pedir las tareas (sin polling).
