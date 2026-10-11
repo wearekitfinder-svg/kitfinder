@@ -96,11 +96,42 @@ draw('30');
 if(document.fonts&&document.fonts.ready){document.fonts.ready.then(init)}
 init();window.__kfInit=init;window.addEventListener('resize',init);
 
-/* ---------- gráfico afiliados ---------- */
-var sv2=document.getElementById('sv2');
-(function(){var W2=720,H2=230,L2=40,R2=40,T2=18,B2=30;
+/* ---------- gráfico afiliados (semanal) ----------
+   Conversiones = suma de orders de affiliate_daily por semana (lunes a domingo).
+   Una semana sin ninguna fila es «sin dato» y no se pinta (no es un cero). Los
+   clics necesitan store_clicks_daily, que el panel aún no puede leer. */
+var sv2=document.getElementById('sv2'),ch2=document.getElementById('ch2'),tip2=document.getElementById('tip2');
+var W2=720,H2=230,L2=40,R2=40,T2=18,B2=30,WEEKS=12;
+function drawWeekly(weeks){
+  sv2.innerHTML='';tip2.classList.remove('show');
   [0,.5,1].forEach(function(f){var y=T2+(H2-T2-B2)*f;el('line',{x1:L2,x2:W2-R2,y1:y,y2:y,class:'gl','stroke-dasharray':'3 5'},sv2)});
-  var t=el('text',{x:W2/2,y:H2/2,'text-anchor':'middle',style:'font:500 15px "DM Sans",sans-serif;fill:#5b7468'},sv2);t.textContent='Sin datos todavía';})();
+  var have=weeks?weeks.filter(function(w){return w.orders!==null}):[];
+  if(!have.length){
+    var t=el('text',{x:W2/2,y:H2/2,'text-anchor':'middle',style:'font:500 15px "DM Sans",sans-serif;fill:#5b7468'},sv2);t.textContent='Sin datos todavía';
+    return;
+  }
+  var mx=Math.max(1,Math.max.apply(null,have.map(function(w){return w.orders}))),slot=(W2-L2-R2)/weeks.length;
+  var X=function(i){return L2+slot*(i+.5)},Y=function(v){return H2-B2-(H2-T2-B2)*v/mx};
+  [[1,T2],[.5,T2+(H2-T2-B2)/2],[0,H2-B2]].forEach(function(a){var t=el('text',{x:L2-8,y:a[1]+3.5,'text-anchor':'end',class:'ax'},sv2);t.textContent=fmt(mx*a[0])});
+  weeks.forEach(function(w,i){if(i%2===0||weeks.length<=8){var t=el('text',{x:X(i),y:H2-B2+16,'text-anchor':'middle',class:'ax'},sv2);t.textContent=w.label}});
+  // línea solo entre semanas consecutivas con dato
+  for(var i=1;i<weeks.length;i++){
+    if(weeks[i].orders!==null&&weeks[i-1].orders!==null)
+      el('line',{x1:X(i-1),y1:Y(weeks[i-1].orders),x2:X(i),y2:Y(weeks[i].orders),stroke:'#f4bb4c','stroke-width':2,'stroke-linecap':'round',opacity:.7},sv2);
+  }
+  weeks.forEach(function(w,i){
+    if(w.orders===null)return;
+    var c=el('circle',{cx:X(i),cy:Y(w.orders),r:5,fill:'#f4bb4c',class:'dot',style:'animation-delay:'+(i*50)+'ms'},sv2);
+    function show(){
+      var sr=sv2.getBoundingClientRect(),cr=ch2.getBoundingClientRect(),k=sr.width/W2;
+      tip2.innerHTML='<b>'+fmt(w.orders)+'</b><span>'+(w.orders===1?'conversión':'conversiones')+' · semana del '+w.label+'</span>';
+      tip2.style.left=(sr.left-cr.left+X(i)*k)+'px';tip2.style.top=(sr.top-cr.top+Y(w.orders)*k)+'px';tip2.classList.add('show');
+    }
+    c.addEventListener('mouseenter',show);c.addEventListener('touchstart',show,{passive:true});
+    c.addEventListener('mouseleave',function(){tip2.classList.remove('show')});
+  });
+}
+drawWeekly(null);
 
 /* ---------- afiliados: clics por tienda ----------
    store_clicks llega por nombre de tienda o, si GA4 no tenía la dimensión,
@@ -199,6 +230,75 @@ window.kfRenderEbay=function(d,errStatus,upstreamStatus){
   ebayNotice(flags);
   paintEbayConversion();
 };
+
+/* ---------- affiliate_daily (de /admin/affiliates/daily) ----------
+   Importes por moneda tal como llegan (en unidades de la moneda, sin convertir
+   divisas). Comisión acumulada = pendiente + aprobada; la revertida no se suma. */
+function amtTxt(m){
+  m=m||{};
+  var cur=Object.keys(m).filter(function(c){return m[c]}).sort(function(a,b){return a==='EUR'?-1:b==='EUR'?1:a<b?-1:1});
+  if(!cur.length)return money(0);
+  return cur.map(function(c){var v=Number(m[c])||0;return c==='EUR'?money(v):v.toFixed(2).replace('.',',')+' '+esc(c)}).join(' + ');
+}
+function utcDay(s){var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(s||'');return m?Date.UTC(+m[1],+m[2]-1,+m[3]):NaN}
+function weeklyOrders(rows){
+  var DAY=864e5,now=new Date(),today=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate());
+  var monday=today-((new Date(today).getUTCDay()+6)%7)*DAY,first=monday-(WEEKS-1)*7*DAY;
+  var weeks=[];
+  for(var i=0;i<WEEKS;i++){var d=new Date(first+i*7*DAY);weeks.push({start:first+i*7*DAY,label:d.getUTCDate()+' '+MES[d.getUTCMonth()],orders:null})}
+  (rows||[]).forEach(function(r){
+    var t=utcDay(r.day);if(isNaN(t)||t<first||t>today)return;
+    var w=weeks[Math.floor((t-first)/(7*DAY))];if(!w)return;
+    w.orders=(w.orders||0)+(Number(r.orders)||0);
+  });
+  return weeks;
+}
+window.kfRenderDaily=function(d){
+  var n=document.getElementById('afCommTotal'),split=document.getElementById('afCommTotalSplit');
+  var by=d&&d.totals&&d.totals.by_currency;
+  if(!by||!Object.keys(by).length){
+    n.textContent='—';n.classList.add('empty');split.hidden=true;
+  }else{
+    var pend={},appr={},tot={};
+    Object.keys(by).forEach(function(c){
+      var p=Number(by[c].commission_pending)||0,a=Number(by[c].commission_approved)||0;
+      pend[c]=p;appr[c]=a;tot[c]=p+a;
+    });
+    n.textContent=amtTxt(tot);n.classList.remove('empty');n.classList.toggle('multi',Object.keys(tot).filter(function(c){return tot[c]}).length>1);
+    split.textContent='pendiente '+amtTxt(pend)+' / aprobada '+amtTxt(appr);split.hidden=false;
+  }
+  drawWeekly(d&&Array.isArray(d.rows)?weeklyOrders(d.rows):null);
+};
+
+/* ---------- añadir mes a mano (POST /admin/affiliates/manual) ---------- */
+(function(){
+  var form=document.getElementById('afManualForm'),msg=document.getElementById('afManualMsg');
+  if(!form)return;
+  function say(t,err){msg.textContent=t;msg.classList.toggle('err',!!err)}
+  var ERR={400:'Los datos no son válidos; revisa los campos.',401:'Tu sesión ha caducado; vuelve a entrar.',403:'Esta cuenta no tiene permiso para guardar.',404:'El Worker todavía no tiene esta ruta; no se ha guardado nada.',409:'Ya hay un dato para esa tienda, programa y mes.'};
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=form.elements,num=function(k){var v=String(f[k].value).trim().replace(',','.');return v===''?NaN:Number(v)};
+    var row={month:f.month.value,store:f.store.value.trim(),program:f.program.value.trim(),
+      orders:num('orders'),sales_amount:num('sales_amount'),commission_pending:num('commission_pending'),
+      commission_approved:num('commission_approved'),commission_reversed:num('commission_reversed'),
+      currency:f.currency.value.trim().toUpperCase(),note:f.note.value.trim()};
+    if(!/^\d{4}-\d{2}$/.test(row.month)||!row.store||!row.program)return say('Falta la tienda, el programa o el mes.',true);
+    if(!/^[A-Z]{3}$/.test(row.currency))return say('La moneda debe tener 3 letras (p. ej. EUR).',true);
+    var nums=['orders','sales_amount','commission_pending','commission_approved','commission_reversed'];
+    if(nums.some(function(k){return !isFinite(row[k])||row[k]<0})||row.orders%1)return say('Revisa los números: no pueden estar vacíos ni ser negativos, y las ventas deben ser un número entero.',true);
+    var ok=window.confirm('¿Guardar este mes?\n\n'+row.store+' · '+row.program+' · '+row.month+'\n'+
+      'Ventas: '+row.orders+' · Importe: '+row.sales_amount+' '+row.currency+'\n'+
+      'Comisión pendiente '+row.commission_pending+' / aprobada '+row.commission_approved+' / revertida '+row.commission_reversed+' '+row.currency+
+      (row.note?'\nNota: '+row.note:''));
+    if(!ok)return say('No se ha enviado nada.');
+    var btn=form.querySelector('button[type=submit]');btn.disabled=true;say('Guardando…');
+    window.kfAffiliates.manual(row)
+      .then(function(){say('Guardado. Actualizando datos…');window.kfLoadDaily()})
+      .catch(function(e){console.warn('[panel] /admin/affiliates/manual:',e.message);say(ERR[e.status]||('No se pudo guardar'+(e.status?' (error '+e.status+')':'')+'. Inténtalo de nuevo.'),true)})
+      .then(function(){btn.disabled=false});
+  });
+})();
 
 /* ---------- catálogo (de /admin/catalog-stats) ----------
    Rellena data-count / data-w y deja que la animación del prototipo (kfStart)

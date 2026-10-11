@@ -70,14 +70,17 @@ auth.onAuthStateChanged(function (user) {
 // El Worker exige el token de Firebase en /analytics y /admin/*;
 // getIdToken() lo renueva solo si ha caducado (dura una hora). Si algo
 // falla, el panel se queda en "—".
-function fetchAdmin(pathAndQuery, method) {
+function fetchAdmin(pathAndQuery, method, body) {
   var user = auth.currentUser;
   if (!user) return Promise.reject(new Error('sin sesión'));
   return user.getIdToken()
     .then(function (token) {
+      var headers = { 'Authorization': 'Bearer ' + token };
+      if (body !== undefined) headers['Content-Type'] = 'application/json';
       return fetch(API_BASE + pathAndQuery, {
         method: method || 'GET',
-        headers: { 'Authorization': 'Bearer ' + token }
+        headers: headers,
+        body: body !== undefined ? JSON.stringify(body) : undefined
       });
     })
     .then(function (r) {
@@ -144,7 +147,24 @@ function loadData() {
       console.warn('[panel] /admin/affiliates/ebay:', e.message);
       window.kfRenderEbay(null, e.status || 0, e.upstreamStatus);
     });
+  window.kfLoadDaily();
 }
+
+// Afiliados día a día (tabla affiliate_daily del Worker): una petición con todo
+// el histórico, de la que salen la comisión acumulada y el gráfico semanal.
+// Si la ruta aún no existe o falla, esas partes se quedan en «sin datos».
+function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+window.kfLoadDaily = function () {
+  fetchAdmin('/admin/affiliates/daily?from=2020-01-01&to=' + ymd(new Date()))
+    .then(function (d) { window.kfRenderDaily(d, null); })
+    .catch(function (e) {
+      console.warn('[panel] /admin/affiliates/daily:', e.message);
+      window.kfRenderDaily(null, e.status || 0);
+    });
+};
+window.kfAffiliates = {
+  manual: function (row) { return fetchAdmin('/admin/affiliates/manual', 'POST', row); }
+};
 
 // Al volver a la pestaña se vuelven a pedir las tareas (sin polling).
 document.addEventListener('visibilitychange', function () {
