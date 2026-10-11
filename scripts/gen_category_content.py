@@ -64,8 +64,8 @@ DISPLAY = {"Atletico Madrid": "Atlético Madrid", "Club Nacional de Football": "
            "Penarol": "Peñarol", "Tottenham Hotspur": "Tottenham"}
 LEAGUES = {"leagues/premier-league": "Premier League", "leagues/la-liga": "La Liga",
            "leagues/serie-a": "Serie A", "leagues/bundesliga": "Bundesliga"}
-HUBS = {"clubs": ("/clubs", "All clubs", None), "national": ("/national", "All national teams", None),
-        "leagues": ("/leagues", "All leagues", None), "teams": ("/teams", "All teams A-Z", "teams_all_az")}
+HUBS = {"clubs": ("/clubs", "All clubs", "hub_all_clubs"), "national": ("/national", "All national teams", "hub_all_national"),
+        "leagues": ("/leagues", "All leagues", "hub_all_leagues"), "teams": ("/teams", "All teams A-Z", "teams_all_az")}
 
 VERSION_EN = {"Local": "home", "Visitante": "away", "Tercera": "third",
               "Cuarta": "fourth", "Portero": "goalkeeper"}

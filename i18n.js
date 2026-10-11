@@ -381,6 +381,9 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "teams_famous_players": "Famous players available:",
       "teams_also_browse": "Also browse",
       "teams_all_az": "All teams A-Z",
+      "hub_all_clubs": "All clubs",
+      "hub_all_national": "All national teams",
+      "hub_all_leagues": "All leagues",
       "teams_link": "{team} shirts",
       "teams_hub_title": "Football Shirts by Team",
       "teams_see_collection": "See collection",
@@ -511,7 +514,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '11';
+  var KF_LANG_VER = '12';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
@@ -537,9 +540,23 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
     return out;
   }
 
+  // Textos extra de algunas secciones (p. ej. el texto editorial de /clubs, /national y
+  // /leagues) en lang/<extra>-<codigo>.js, para no engordar lang/<codigo>.js en todo el
+  // sitio. La página lo pide con <html data-kf-lang-extra="seo">; se carga después del
+  // archivo principal del idioma y añade sus claves a KF_TRANSLATIONS[codigo].
+  var _kfExtraLoaded = {};
+  function kfLoadExtra(code, cb) {
+    var extra = document.documentElement.getAttribute('data-kf-lang-extra');
+    if (code === 'en' || !extra || !/^[a-z]+$/.test(extra) || _kfExtraLoaded[extra + code]) { cb(); return; }
+    var s = document.createElement('script');
+    s.src = '/lang/' + extra + '-' + code + '.js?v=' + KF_LANG_VER;
+    s.onload = s.onerror = function() { _kfExtraLoaded[extra + code] = true; cb(); };
+    document.head.appendChild(s);
+  }
+
   function _kfApplyLanguage(code) {
     code = code || 'en';
-    kfLoadLanguage(code, function() { _kfApplyNow(code); });
+    kfLoadLanguage(code, function() { kfLoadExtra(code, function() { _kfApplyNow(code); }); });
   }
 
   function _kfApplyNow(code) {
@@ -575,6 +592,15 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       // Si tiene hijos con su propio data-i18n, no tocarlo (se traducen ellos)
       if (el.querySelector && el.querySelector('[data-i18n]')) return;
       el.textContent = val;
+    });
+
+    // 2b) Textos con marcado dentro (<strong>, <span class="kf-highlight">…): data-i18n-html.
+    //     La traducción es HTML de nuestros propios archivos lang/; sin traducción se
+    //     restaura el HTML original en inglés.
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-html');
+      if (el._kfOrigHtml === undefined) el._kfOrigHtml = el.innerHTML;
+      el.innerHTML = (code !== 'en' && dictLang[key]) || el._kfOrigHtml;
     });
 
     // 3) Atributos: data-i18n-attr="placeholder:clave;title:clave;aria-label:clave"
