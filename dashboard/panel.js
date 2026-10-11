@@ -150,16 +150,25 @@ function centsTxt(m){
 }
 function sumCents(a,b){var o={};[a||{},b||{}].forEach(function(m){Object.keys(m).forEach(function(c){o[c]=(o[c]||0)+m[c]})});return o}
 function salesOf(b){var s=(b&&b.actions_by_state)||{};return (s.pending||0)+(s.approved||0)}
+/* El detalle (importe vendido, conversión, pendiente / aprobada / revertida y
+   mes en curso) ya no ocupa una fila: va como texto al pasar el ratón por las
+   celdas Ventas y Comisión mes. La fila de debajo solo sale si hay un aviso. */
+var ebayTitle30=null;
 function paintEbayConversion(){
-  var el=document.getElementById('ebayConv');if(!el)return;
-  el.textContent=(ebaySales30!=null&&ebayClicks)?pctTxt(ebaySales30/ebayClicks*100):'—';
+  if(ebayTitle30===null)return;
+  var conv=(ebaySales30!=null&&ebayClicks)?pctTxt(ebaySales30/ebayClicks*100):'—';
+  document.getElementById('ebaySales').title=ebayTitle30.replace('{conv}',conv);
 }
 function setKpi(id,tagId,txt){var n=document.getElementById(id);n.textContent=txt;n.classList.remove('empty');document.getElementById(tagId).hidden=false}
 function setCell(id,txt){var td=document.getElementById(id);td.textContent=txt;td.classList.remove('e')}
+function ebayNotice(html){
+  var box=document.getElementById('ebayDetail');
+  box.innerHTML=html;box.parentNode.hidden=!html;
+}
+function plural(n,one,many){return fmt(n)+' '+(n===1?one:many)}
 /* En un 502, upstreamStatus es el código que devolvió eBay (0 = no se pudo
    conectar). Si no llegó en el cuerpo, se deja el mensaje genérico. */
 window.kfRenderEbay=function(d,errStatus,upstreamStatus){
-  var box=document.getElementById('ebayDetail');
   if(!d||!d.last30||!d.month){
     var why='';
     if(errStatus===502){
@@ -167,13 +176,18 @@ window.kfRenderEbay=function(d,errStatus,upstreamStatus){
         why=upstreamStatus===0?' (no se pudo conectar con eBay)':' (eBay respondió con el código '+Math.trunc(upstreamStatus)+')';
       }else why=' (eBay no responde)';
     }
-    box.innerHTML='<span class="note">Sin datos de eBay ahora'+why+'.</span>';
+    ebayNotice('<span class="note">Sin datos de eBay ahora'+why+'.</span>');
     return;
   }
   var L=d.last30,M=d.month,cL=L.commission_cents||{},cM=M.commission_cents||{};
   ebaySales30=salesOf(L);
   setCell('ebaySales',fmt(ebaySales30));
   setCell('ebayMonth',centsTxt(sumCents(cM.pending,cM.approved)));
+  ebayTitle30='Últimos 30 días: '+plural(ebaySales30,'venta','ventas')+' · '+centsTxt(L.sale_cents)+' vendido · conversión {conv}\n'+
+    'Comisión: '+centsTxt(cL.pending)+' pendiente, '+centsTxt(cL.approved)+' aprobada\n'+
+    'Revertida (no se suma): '+centsTxt(cL.reversed);
+  document.getElementById('ebayMonth').title='Mes en curso: '+plural(salesOf(M),'venta','ventas')+'\n'+
+    'Comisión: '+centsTxt(cM.pending)+' pendiente, '+centsTxt(cM.approved)+' aprobada';
   // Tarjetas de arriba: de momento solo hay datos de eBay, con su etiqueta
   // para que no parezcan el total de todas las tiendas. Conversiones = ventas
   // de 30 días no revertidas; comisión del mes = pendiente + aprobada.
@@ -181,14 +195,8 @@ window.kfRenderEbay=function(d,errStatus,upstreamStatus){
   setKpi('afCommMonth','afCommTag',centsTxt(sumCents(cM.pending,cM.approved)));
   var flags='';
   if(d.stale)flags+='<span class="chip gd" title="eBay no respondió; se muestra el último dato guardado">dato antiguo</span>';
-  if(d.truncated||d.ignored>0)flags+='<span class="chip" style="background:rgba(255,255,255,.07);color:var(--mut)" title="Faltan páginas o hay acciones que no se pudieron leer">puede estar incompleto</span>';
-  box.innerHTML=
-    '<div><b>Últimos 30 días:</b> '+fmt(ebaySales30)+(ebaySales30===1?' venta':' ventas')+' · '+centsTxt(L.sale_cents)+' vendido'+
-    ' · comisión '+centsTxt(cL.pending)+' pendiente, '+centsTxt(cL.approved)+' aprobada'+
-    ' · conversión <span id="ebayConv">—</span>'+
-    ' · <span title="No se suma a la comisión">revertida aparte: '+centsTxt(cL.reversed)+'</span>'+flags+'</div>'+
-    '<div><b>Mes en curso:</b> '+fmt(salesOf(M))+(salesOf(M)===1?' venta':' ventas')+
-    ' · comisión '+centsTxt(cM.pending)+' pendiente, '+centsTxt(cM.approved)+' aprobada</div>';
+  if(d.truncated||d.ignored>0)flags+='<span class="chip eb" title="Faltan páginas o hay acciones que no se pudieron leer">puede estar incompleto</span>';
+  ebayNotice(flags);
   paintEbayConversion();
 };
 
