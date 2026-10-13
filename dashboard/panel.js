@@ -10,7 +10,7 @@ function money(n){return '€ '+n.toFixed(2).replace('.',',')}
 var MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
 /* ---------- datos en directo (los rellena kfRender) ---------- */
-var DATA={loaded:false,last30:null,year:[]};
+var DATA={loaded:false,last30:null,year:[],days:null,daysErr:false};
 
 /* ---------- count-up ---------- */
 function countUp(node){
@@ -27,32 +27,83 @@ document.querySelectorAll('.meter i').forEach(function(i){i.style.width=0;setTim
 if(window.__kfInit)window.__kfInit();
 };
 
-/* ---------- gráfico usuarios ---------- */
+/* ---------- tarjeta Usuarios ----------
+   Dos fuentes de GA4 que NO dan la misma cifra:
+   - /analytics (instantáneas que guarda kitfinder-automation): usuarios
+     ÚNICOS (personas distintas) de los últimos 30 días ('rolling30d') y de
+     cada mes cerrado ('month').
+   - /admin/ga4/daily (tabla ga4_daily): usuarios activos de CADA DÍA. Sumar
+     días da la «suma diaria» (quien entra 3 días cuenta 3), que nunca se
+     presenta como «usuarios» a secas ni se mezcla con los únicos.
+   Los datos de un día llegan cuando corre el proceso diario, así que «Hoy»
+   enseña el último día con datos y dice de qué fecha es. */
 var sv=document.getElementById('sv'),ch=document.getElementById('ch'),tip=document.getElementById('tip');
-var W=560,H=220,L=36,R=14,T=16,B=28,cur='30';
+var W=560,H=220,L=36,R=14,T=16,B=28,cur='30',TU=16;
 function emptyText(svg,x,y,txt){var t=el('text',{x:x,y:y,'text-anchor':'middle',style:'font:500 15px "DM Sans",sans-serif;fill:#5b7468'},svg);t.textContent=txt}
+function ymdUTC(t){var d=new Date(t);return d.getUTCFullYear()+'-'+pad2(d.getUTCMonth()+1)+'-'+pad2(d.getUTCDate())}
+function dayRange(from,to){
+  var DAY=864e5,out=[],by={};
+  (DATA.days||[]).forEach(function(r){by[r.day]=r});
+  for(var t=utcDay(from);t<=utcDay(to);t+=DAY){var k=ymdUTC(t),r=by[k];out.push({k:k,d:new Date(t),v:r?Number(r.active_users)||0:null})}
+  return out;
+}
+function headline(big,small){
+  document.getElementById('uHeadNum').textContent=big||'';
+  document.getElementById('uHeadTxt').textContent=small||'';
+}
+/* Barras de usuarios activos por día debajo del titular. */
+function drawDays(days){
+  var top=TU,bot=H-B,n=days.length;
+  if(DATA.days===null){emptyText(sv,W/2,(top+bot)/2,DATA.daysErr?'Usuarios por día: no se pudieron cargar':'Cargando…');return}
+  var have=days.filter(function(x){return x.v!==null});
+  if(!have.length){emptyText(sv,W/2,(top+bot)/2,'Usuarios por día: sin datos en estas fechas');return}
+  var mx=Math.max(1,Math.max.apply(null,have.map(function(x){return x.v})));
+  var slot=(W-L-R)/n,X=function(i){return L+slot*(i+.5)},Y=function(v){return bot-(bot-top)*v/mx};
+  [[1,top],[.5,(top+bot)/2]].forEach(function(a){var t=el('text',{x:L-8,y:a[1]+3.5,'text-anchor':'end',class:'ax'},sv);t.textContent=fmt(mx*a[0])});
+  var step=Math.max(1,Math.ceil(n/7));
+  days.forEach(function(x,i){if(i%step===0){var t=el('text',{x:X(i),y:bot+16,'text-anchor':'middle',class:'ax'},sv);t.textContent=x.d.getUTCDate()+' '+MES[x.d.getUTCMonth()]}});
+  var df=el('defs',{},sv),lg=el('linearGradient',{id:'gbarU',x1:0,y1:0,x2:0,y2:1},df);
+  el('stop',{offset:'0%','stop-color':'#46f0ad'},lg);el('stop',{offset:'100%','stop-color':'#17b985'},lg);
+  var bw=Math.max(2,Math.min(slot*.66,14));
+  days.forEach(function(x,i){
+    if(x.v!==null){var y=Y(x.v);el('rect',{x:X(i)-bw/2,y:y,width:bw,height:Math.max(bot-y,1),rx:Math.min(4,bw/3),fill:'url(#gbarU)',class:'bar',style:'animation-delay:'+Math.min(i*15,450)+'ms'},sv)}
+    var hit=el('rect',{x:X(i)-slot/2,y:top,width:slot,height:bot-top,fill:'transparent'},sv);
+    function show(){
+      var sr=sv.getBoundingClientRect(),cr=ch.getBoundingClientRect(),k=sr.width/W;
+      tip.innerHTML='<b>'+(x.v===null?'sin dato':fmt(x.v))+'</b><span>usuarios activos ese día · '+x.d.getUTCDate()+' '+MES[x.d.getUTCMonth()]+'</span>';
+      tip.style.left=(sr.left-cr.left+X(i)*k)+'px';tip.style.top=(sr.top-cr.top+(x.v===null?bot:Y(x.v))*k)+'px';tip.classList.add('show');
+    }
+    hit.addEventListener('mouseenter',show);hit.addEventListener('touchstart',show,{passive:true});
+    hit.addEventListener('mouseleave',function(){tip.classList.remove('show')});
+  });
+}
 function draw(key){
   cur=key;
   sv.innerHTML='';tip.classList.remove('show');
-  [0,.5,1].forEach(function(f){var y=T+(H-T-B)*f;el('line',{x1:L,x2:W-R,y1:y,y2:y,class:'gl','stroke-dasharray':'3 5'},sv)});
-  if(!DATA.loaded){emptyText(sv,W/2,H/2+4,'Cargando…');return}
+  [0,.5,1].forEach(function(f){var y=(key==='anio'?T:TU)+(H-(key==='anio'?T:TU)-B)*f;el('line',{x1:L,x2:W-R,y1:y,y2:y,class:'gl','stroke-dasharray':'3 5'},sv)});
+  if(key==='anio'){
+    headline('','usuarios únicos de cada mes cerrado');
+    if(!DATA.loaded)emptyText(sv,W/2,H/2+4,'Cargando…');
+    else if(DATA.year.length)drawYear();
+    else emptyText(sv,W/2,H/2+4,'Sin datos todavía');
+    return;
+  }
+  var t=todayYmd();
   if(key==='30'){
-    var r=DATA.last30;
-    if(r&&r.users_active!=null){
-      var t1=el('text',{x:W/2,y:H/2-6,'text-anchor':'middle',style:'font:700 54px Outfit,sans-serif;fill:#ecf4ef;letter-spacing:-2px'},sv);t1.textContent=fmt(r.users_active);
-      var t2=el('text',{x:W/2,y:H/2+22,'text-anchor':'middle',style:'font:500 14px "DM Sans",sans-serif;fill:#8ca598'},sv);t2.textContent='usuarios activos · '+(r.users_new!=null?fmt(r.users_new):'—')+' nuevos (últimos 30 días)';
-    }else{
-      emptyText(sv,W/2,H/2+4,'Sin datos todavía');
-    }
-    var t4=el('text',{x:W/2,y:H-B+16,'text-anchor':'middle',class:'ax'},sv);t4.textContent='Usuarios por día: sin datos todavía';
-  }else if(key==='anio'&&DATA.year.length){
-    drawYear();
+    var r=DATA.last30,ok=r&&r.users_active!=null;
+    headline(ok?fmt(r.users_active):'—',ok?'usuarios únicos · '+(r.users_new!=null?fmt(r.users_new):'—')+' nuevos (30 días'+(r.range_end?' hasta '+dayTxt(r.range_end):'')+')':(DATA.loaded?'Sin datos de los últimos 30 días':'Cargando…'));
+    var to=ok&&r.range_end?r.range_end.slice(0,10):t,from=ok&&r.range_start?r.range_start.slice(0,10):ymdUTC(utcDay(t)-29*864e5);
+    drawDays(dayRange(from,to));
   }else{
-    emptyText(sv,W/2,H/2+4,'Sin datos todavía');
+    var m=t.slice(0,7),last=new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7),0)).getUTCDate();
+    var days=dayRange(m+'-01',m+'-'+pad2(last)),have=days.filter(function(x){return x.v!==null});
+    var sum=have.reduce(function(s,x){return s+x.v},0);
+    headline(DATA.days&&have.length?fmt(sum):'—','usuarios activos (suma diaria) · '+MESL[+m.slice(5,7)-1]+(have.length?' (1–'+have[have.length-1].d.getUTCDate()+')':''));
+    drawDays(days);
   }
 }
-/* Este año: usuarios de cada mes cerrado (snapshots 'month'). El mes en curso
-   no tiene snapshot todavía, así que no lleva barra. */
+/* Este año: usuarios únicos de cada mes cerrado (instantáneas 'month'). El
+   mes en curso no tiene instantánea todavía, así que no lleva barra. */
 function drawYear(){
   var rows=DATA.year,last=rows[rows.length-1].m,n=last+1;
   var mx=Math.max.apply(null,rows.map(function(r){return r.v}))||1;
@@ -66,7 +117,7 @@ function drawYear(){
     var b=el('rect',{x:x,y:y,width:bw,height:Math.max(h,1),rx:6,fill:'url(#gbar)',class:'bar',style:'animation-delay:'+(i*60)+'ms'},sv);
     function show(){
       var sr=sv.getBoundingClientRect(),cr=ch.getBoundingClientRect(),k=sr.width/W;
-      tip.innerHTML='<b>'+fmt(r.v)+'</b><span>usuarios en el mes · '+MES[r.m]+' '+r.y+'</span>';
+      tip.innerHTML='<b>'+fmt(r.v)+'</b><span>usuarios únicos en el mes · '+MES[r.m]+' '+r.y+'</span>';
       tip.style.left=(sr.left-cr.left+(x+bw/2)*k)+'px';tip.style.top=(sr.top-cr.top+y*k)+'px';
       tip.classList.add('show');
     }
@@ -74,6 +125,34 @@ function drawYear(){
     b.addEventListener('mouseleave',function(){tip.classList.remove('show')});
   });
 }
+/* Cajas Hoy / Este mes / Este año (de /admin/ga4/daily, año en curso). */
+function setBox(id,num,sub,lab){
+  var n=document.getElementById(id);n.textContent=num;n.classList.toggle('empty',num==='—');
+  document.getElementById(id+'Sub').textContent=sub||'';
+  if(lab!==undefined)document.getElementById(id+'Lab').textContent=lab;
+}
+function paintUserBoxes(){
+  if(DATA.days===null){
+    var why=DATA.daysErr?'no se pudo cargar':'';
+    setBox('uDay','—',why,'Hoy');setBox('uMonth','—',why);setBox('uYear','—',why);return;
+  }
+  var rows=DATA.days,t=todayYmd(),m=t.slice(0,7);
+  if(!rows.length){setBox('uDay','—','sin datos este año','Hoy');setBox('uMonth','—','');setBox('uYear','—','');return}
+  var last=rows[rows.length-1],yest=ymdUTC(utcDay(t)-864e5);
+  var lab=last.day===t?'Hoy':last.day===yest?'Ayer · '+dayTxt(last.day):dayTxt(last.day);
+  setBox('uDay',fmt(Number(last.active_users)||0),'usuarios activos ese día'+(last.day===t?'':' (último día con datos)'),lab);
+  var mr=rows.filter(function(r){return r.day.slice(0,7)===m});
+  var ms=mr.reduce(function(s,r){return s+(Number(r.active_users)||0)},0);
+  setBox('uMonth',mr.length?fmt(ms):'—',mr.length?'suma diaria · '+dayTxt(mr[0].day)+'–'+dayTxt(mr[mr.length-1].day):'sin datos este mes');
+  var ys=rows.reduce(function(s,r){return s+(Number(r.active_users)||0)},0);
+  setBox('uYear',fmt(ys),'suma diaria · '+dayTxt(rows[0].day)+'–'+dayTxt(last.day));
+}
+window.kfRenderUsersDaily=function(d,err){
+  DATA.days=d&&Array.isArray(d.rows)?d.rows.slice().sort(function(a,b){return a.day<b.day?-1:1}):null;
+  DATA.daysErr=!!err||!DATA.days;
+  paintUserBoxes();
+  draw(cur);
+};
 /* segmented con indicador deslizante */
 var seg=document.getElementById('seg'),pill=document.getElementById('pill'),btns=seg.querySelectorAll('button');
 function movePill(b){pill.style.width=b.offsetWidth+'px';pill.style.transform='translateX('+(b.offsetLeft-4)+'px)'}
@@ -549,7 +628,7 @@ var GA={seq:0,ready:false};
 var sv3=document.getElementById('sv3'),ch3=document.getElementById('ch3'),tip3=document.getElementById('tip3');
 var W3=720,H3=200,L3=40,R3=14,T3=14,B3=28;
 var CHANNEL_ES={'Direct':'Directo','Organic Search':'Búsqueda orgánica','Referral':'Otras webs (enlaces)','Organic Social':'Redes sociales','Paid Search':'Búsqueda de pago','Paid Social':'Redes sociales de pago','Email':'Email','AI Assistant':'Asistentes de IA','Unassigned':'Sin asignar','Organic Video':'Vídeo','Display':'Display (anuncios)','Affiliates':'Afiliados','Cross-network':'Varias redes'};
-function gaSet(id,txt,empty){var n=document.getElementById(id);n.textContent=txt;n.classList.toggle('empty',!!empty)}
+function gaSet(id,txt,empty){var n=document.getElementById(id);if(!n)return;n.textContent=txt;n.classList.toggle('empty',!!empty)}
 function gaChartMsg(txt){
   sv3.innerHTML='';tip3.classList.remove('show');
   [0,.5,1].forEach(function(f){var y=T3+(H3-T3-B3)*f;el('line',{x1:L3,x2:W3-R3,y1:y,y2:y,class:'gl','stroke-dasharray':'3 5'},sv3)});
@@ -599,7 +678,7 @@ function gaList(id,items,emptyTxt){
   });
 }
 function gaClear(){
-  ['gaSessions','gaNew','gaEngaged','gaAud'].forEach(function(i){gaSet(i,'—',true)});
+  ['gaSessions','gaEngaged'].forEach(function(i){gaSet(i,'—',true)});
   setSmall('gaEngagedPct','');
   ['gaCountries','gaChannels','gaPages'].forEach(function(i){gaList(i,[])});
 }
@@ -618,10 +697,9 @@ function gaRender(p,r,d){
     return;
   }
   gaMessage('');
-  gaSet('gaSessions',fmt(t.sessions||0));gaSet('gaNew',fmt(t.new_users||0));
+  gaSet('gaSessions',fmt(t.sessions||0));
   gaSet('gaEngaged',fmt(t.engaged_sessions||0));
   setSmall('gaEngagedPct',t.sessions?pctTxt((t.engaged_sessions||0)/t.sessions*100)+' de las sesiones':'');
-  gaSet('gaAud',fmt(t.active_user_days||0));
   gaChart(r,rows);
   gaList('gaCountries',(d.countries||[]).map(function(c){return {name:c.country,value:Number(c.active_user_days)||0,pct:c.pct}}),'Sin datos de países');
   gaList('gaChannels',(d.channels||[]).map(function(c){return {name:CHANNEL_ES[c.channel]||c.channel,title:c.channel,value:Number(c.sessions)||0,pct:c.pct}}),'Sin datos de canales');
