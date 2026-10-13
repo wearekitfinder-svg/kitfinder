@@ -98,6 +98,8 @@ KF_TRANSLATIONS.de = {
   "nl_nospam": "Kein Spam. Jederzeit abbestellbar.",
   "nl_subscribe": "Abonnieren",
   "footer_teams": "Teams",
+  "crumb_home": "Startseite",
+  "kfh_league_teams": "{league}-Teams auf Kit Finder",
   "footer_browse_by": "Stöbern nach",
   "footer_clubs": "Vereine",
   "footer_national": "Nationalteams",

@@ -17,7 +17,7 @@ Despues: revisar `git diff --stat`, commit, pull request y fusion segun CLAUDE.m
 import os, subprocess, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STEPS = [["scripts/page_stats.py"], ["scripts/gen_category_content.py"],
+STEPS = [["scripts/page_stats.py"], ["scripts/gen_category_content.py"], ["scripts/gen_hierarchy.py"],
          ["scripts/check_similarity.py"], ["gen_sitemap.py"]]
 
 for step in STEPS:
