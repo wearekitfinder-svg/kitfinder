@@ -294,3 +294,10 @@ td.afmsg{text-align:left;white-space:normal}
 .uhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:-6px}
 .uhead b{font:700 clamp(28px,4vw,36px)/1 var(--disp);letter-spacing:-.02em;color:var(--fg);font-variant-numeric:tabular-nums}
 .uhead span{font-size:13px;color:var(--mut)}
+/* tarjeta Usuarios: selector + desplegable de meses */
+.useg{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.useg .seg{flex:none;max-width:100%}
+.useg .afsel{min-width:0}
+.go.utraffic{align-self:flex-start;background:none;border:1px solid var(--line-2);cursor:pointer;margin-top:-6px}
+.go.utraffic:hover{border-color:rgba(46,229,157,.5)}
+.go.utraffic{white-space:normal;text-align:left;max-width:100%}
