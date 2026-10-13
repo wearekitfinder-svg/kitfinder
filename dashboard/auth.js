@@ -153,6 +153,15 @@ function loadData() {
     });
   window.kfLoadDaily();
   window.kfGaStart();
+  // Tarjeta Usuarios: días del año en curso (cajas Hoy / Este mes / Este año
+  // y barras por día). Independiente del selector de periodo de más abajo.
+  var now = new Date();
+  window.kfGa4.daily(now.getFullYear() + '-01-01', ymd(now))
+    .then(function (d) { window.kfRenderUsersDaily(d, null); })
+    .catch(function (e) {
+      console.warn('[panel] /admin/ga4/daily (tarjeta Usuarios):', e.message);
+      window.kfRenderUsersDaily(null, e.status || 'error');
+    });
 }
 
 // Afiliados día a día (tabla affiliate_daily del Worker) y clics de Kit Finder
