@@ -466,6 +466,16 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "footer_privacy": "Privacy policy",
       "footer_terms": "Terms of use",
       "footer_affiliate": "Affiliate disclosure",
+      "footer_contact": "Contact",
+      "contact_title": "Contact",
+      "contact_intro": "Questions, ideas or something that isn’t working? Write to us — we read every message.",
+      "contact_email_label": "Our email:",
+      "contact_h2_why": "What you can write to us about",
+      "contact_li_questions": "Questions about Kit Finder or how the search works.",
+      "contact_li_stores": "Stores that would like their shirts to appear on Kit Finder.",
+      "contact_li_errors": "Errors you spot: a wrong price, a broken link, a shirt under the wrong team…",
+      "contact_li_press": "Press and collaborations.",
+      "contact_note": "If you are reporting an error, please include the link to the page or the shirt: it helps us fix it faster.",
       "hg_title": "Holy Grails",
       "wc_hero_title": "Long Sleeve Football Shirts",
       "wc_hero_sub": "Browse long sleeve kits from every era — from iconic vintage long sleeve jerseys to the latest releases",
@@ -514,7 +524,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '13';
+  var KF_LANG_VER = '14';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
