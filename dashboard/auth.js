@@ -153,10 +153,13 @@ function loadData() {
     });
   window.kfLoadDaily();
   window.kfGaStart();
-  // Tarjeta Usuarios: días del año en curso (cajas Hoy / Este mes / Este año
-  // y barras por día). Independiente del selector de periodo de más abajo.
-  var now = new Date();
-  window.kfGa4.daily(now.getFullYear() + '-01-01', ymd(now))
+  // Tarjeta Usuarios: todos los días con datos (ga4_daily empieza el
+  // 2026-08-05; la ruta admite como mucho 400 días por petición) para las
+  // cajas, el desplegable de meses y las barras por día. Independiente del
+  // selector de periodo de más abajo.
+  var now = new Date(), from = new Date(now.getTime() - 399 * 864e5);
+  var fromStr = ymd(from) < '2026-08-01' ? '2026-08-01' : ymd(from);
+  window.kfGa4.daily(fromStr, ymd(now))
     .then(function (d) { window.kfRenderUsersDaily(d, null); })
     .catch(function (e) {
       console.warn('[panel] /admin/ga4/daily (tarjeta Usuarios):', e.message);

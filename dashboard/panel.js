@@ -10,7 +10,7 @@ function money(n){return '€ '+n.toFixed(2).replace('.',',')}
 var MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
 /* ---------- datos en directo (los rellena kfRender) ---------- */
-var DATA={loaded:false,last30:null,year:[],days:null,daysErr:false};
+var DATA={loaded:false,last30:null,year:[],days:null,daysErr:false,monthsU:{}};
 
 /* ---------- count-up ---------- */
 function countUp(node){
@@ -79,6 +79,7 @@ function drawDays(days){
 }
 function draw(key){
   cur=key;
+  document.getElementById('uToTraffic').hidden=true;
   sv.innerHTML='';tip.classList.remove('show');
   [0,.5,1].forEach(function(f){var y=(key==='anio'?T:TU)+(H-(key==='anio'?T:TU)-B)*f;el('line',{x1:L,x2:W-R,y1:y,y2:y,class:'gl','stroke-dasharray':'3 5'},sv)});
   if(key==='anio'){
@@ -95,12 +96,48 @@ function draw(key){
     var to=ok&&r.range_end?r.range_end.slice(0,10):t,from=ok&&r.range_start?r.range_start.slice(0,10):ymdUTC(utcDay(t)-29*864e5);
     drawDays(dayRange(from,to));
   }else{
-    var m=t.slice(0,7),last=new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7),0)).getUTCDate();
-    var days=dayRange(m+'-01',m+'-'+pad2(last)),have=days.filter(function(x){return x.v!==null});
-    var sum=have.reduce(function(s,x){return s+x.v},0);
-    headline(DATA.days&&have.length?fmt(sum):'—','usuarios activos (suma diaria) · '+MESL[+m.slice(5,7)-1]+(have.length?' (1–'+have[have.length-1].d.getUTCDate()+')':''));
-    drawDays(days);
+    drawMonth(UM);
   }
+}
+/* Mes elegido en el desplegable de la tarjeta. Cada cifra dice de dónde sale:
+   «suma diaria» (ga4_daily, desde el 5 ago 2026) o «usuarios únicos» (informe
+   mensual de analytics_history, solo meses cerrados). No se mezclan en una
+   misma cifra, y antes del 5 ago no hay barras por día (no se inventan). */
+var GA_DAILY_FROM='2026-08-05',UM=todayYmd().slice(0,7);
+function monthName(m){return ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][+m.slice(5,7)-1]}
+function monthRows(m){return (DATA.days||[]).filter(function(r){return r.day.slice(0,7)===m})}
+function drawMonth(m){
+  var last=new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7),0)).getUTCDate();
+  var days=dayRange(m+'-01',m+'-'+pad2(last)),have=days.filter(function(x){return x.v!==null});
+  var sum=have.reduce(function(s,x){return s+x.v},0),u=DATA.monthsU[m],name=monthName(m),big='—',parts=[];
+  if(have.length){
+    big=fmt(sum);
+    parts.push('usuarios activos (suma diaria) · '+name+' ('+have[0].d.getUTCDate()+'–'+have[have.length-1].d.getUTCDate()+')');
+    if(u)parts.push(fmt(u.active)+' usuarios únicos en el mes entero (informe mensual)');
+  }else if(u){
+    big=fmt(u.active);
+    parts.push('usuarios únicos en '+name+' (informe mensual) · '+(u.new!=null?fmt(u.new):'—')+' nuevos');
+  }else parts.push(DATA.days===null?(DATA.daysErr?'No se pudieron cargar los datos por día':'Cargando…'):'Sin datos de '+name);
+  var gm=GA_DAILY_FROM.slice(0,7);
+  if(m<gm)parts.push('sin datos por día: empiezan el 5 ago 2026');
+  else if(m===gm)parts.push('datos por día desde el 5 ago (antes también hubo visitas)');
+  headline(big,parts.join(' · '));
+  if(m<gm)emptyText(sv,W/2,(TU+H-B)/2,'Sin datos por día antes del 5 ago 2026');
+  else drawDays(days);
+  var go=document.getElementById('uToTraffic');
+  go.hidden=!have.length;go.textContent='Ver sesiones, países y páginas de '+name+' ↓';
+}
+function userMonths(){
+  var set={};set[todayYmd().slice(0,7)]=1;
+  Object.keys(DATA.monthsU).forEach(function(k){set[k]=1});
+  (DATA.days||[]).forEach(function(r){set[r.day.slice(0,7)]=1});
+  return Object.keys(set).sort().reverse();
+}
+function fillUserMonths(){
+  var sel=document.getElementById('uMonthSel'),list=userMonths();
+  if(list.indexOf(UM)===-1)UM=list[0];
+  sel.innerHTML='';
+  list.forEach(function(k){var o=document.createElement('option');o.value=k;var n=monthName(k);o.textContent=n.charAt(0).toUpperCase()+n.slice(1)+' '+k.slice(0,4);if(k===UM)o.selected=true;sel.appendChild(o)});
 }
 /* Este año: usuarios únicos de cada mes cerrado (instantáneas 'month'). El
    mes en curso no tiene instantánea todavía, así que no lleva barra. */
@@ -134,22 +171,39 @@ function setBox(id,num,sub,lab){
 function paintUserBoxes(){
   if(DATA.days===null){
     var why=DATA.daysErr?'no se pudo cargar':'';
-    setBox('uDay','—',why,'Hoy');setBox('uMonth','—',why);setBox('uYear','—',why);return;
+    setBox('uDay','—',why,'Hoy');paintMonthBox();setBox('uYear','—',why);return;
   }
   var rows=DATA.days,t=todayYmd(),m=t.slice(0,7);
-  if(!rows.length){setBox('uDay','—','sin datos este año','Hoy');setBox('uMonth','—','');setBox('uYear','—','');return}
+  if(!rows.length){setBox('uDay','—','sin datos todavía','Hoy');paintMonthBox();setBox('uYear','—','');return}
   var last=rows[rows.length-1],yest=ymdUTC(utcDay(t)-864e5);
   var lab=last.day===t?'Hoy':last.day===yest?'Ayer · '+dayTxt(last.day):dayTxt(last.day);
   setBox('uDay',fmt(Number(last.active_users)||0),'usuarios activos ese día'+(last.day===t?'':' (último día con datos)'),lab);
-  var mr=rows.filter(function(r){return r.day.slice(0,7)===m});
+  paintMonthBox();
+  var yr=rows.filter(function(r){return r.day.slice(0,4)===t.slice(0,4)});
+  var ys=yr.reduce(function(s,r){return s+(Number(r.active_users)||0)},0);
+  setBox('uYear',yr.length?fmt(ys):'—',yr.length?'suma diaria · '+dayTxt(yr[0].day)+'–'+dayTxt(yr[yr.length-1].day):'sin datos este año');
+}
+/* Caja del mes elegido: suma diaria si hay días; si no, usuarios únicos del
+   informe mensual (p. ej. julio), siempre con su etiqueta. */
+function paintMonthBox(){
+  var m=UM,name=monthName(m),cap=name.charAt(0).toUpperCase()+name.slice(1);
+  document.getElementById('uMonthLab').textContent=m===todayYmd().slice(0,7)?'Este mes':cap+(m.slice(0,4)!==todayYmd().slice(0,4)?' '+m.slice(0,4):'');
+  var mr=monthRows(m),u=DATA.monthsU[m],extra=document.getElementById('uMonthSub2');
   var ms=mr.reduce(function(s,r){return s+(Number(r.active_users)||0)},0);
-  setBox('uMonth',mr.length?fmt(ms):'—',mr.length?'suma diaria · '+dayTxt(mr[0].day)+'–'+dayTxt(mr[mr.length-1].day):'sin datos este mes');
-  var ys=rows.reduce(function(s,r){return s+(Number(r.active_users)||0)},0);
-  setBox('uYear',fmt(ys),'suma diaria · '+dayTxt(rows[0].day)+'–'+dayTxt(last.day));
+  if(mr.length){
+    setBox('uMonth',fmt(ms),'suma diaria · '+dayTxt(mr[0].day)+'–'+dayTxt(mr[mr.length-1].day)+(m===GA_DAILY_FROM.slice(0,7)?' (datos desde el 5 ago)':''));
+    extra.textContent=u?'usuarios únicos del mes: '+fmt(u.active):'';
+  }else if(u){
+    setBox('uMonth',fmt(u.active),'usuarios únicos (informe mensual)');
+    extra.textContent=m<GA_DAILY_FROM.slice(0,7)?'sin suma diaria: los datos por día empiezan el 5 ago 2026':'';
+  }else{
+    setBox('uMonth','—',DATA.days===null?(DATA.daysErr?'no se pudo cargar':''):'sin datos de '+name);extra.textContent='';
+  }
 }
 window.kfRenderUsersDaily=function(d,err){
   DATA.days=d&&Array.isArray(d.rows)?d.rows.slice().sort(function(a,b){return a.day<b.day?-1:1}):null;
   DATA.daysErr=!!err||!DATA.days;
+  fillUserMonths();
   paintUserBoxes();
   draw(cur);
 };
@@ -169,6 +223,16 @@ btns.forEach(function(b){b.addEventListener('click',function(){setPeriod(b.datas
 document.querySelectorAll('.k').forEach(function(k){
   k.addEventListener('click',function(){setPeriod(k.dataset.p)});
   k.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();setPeriod(k.dataset.p)}});
+});
+document.getElementById('uMonthSel').addEventListener('change',function(e){
+  UM=e.target.value;paintMonthBox();
+  if(cur==='mes')draw('mes');else setPeriod('mes');
+});
+/* Enlace opcional: lleva el mes elegido al selector compartido de abajo
+   (Tráfico web y afiliados), solo si se pulsa. */
+document.getElementById('uToTraffic').addEventListener('click',function(){
+  if(monthOptions().indexOf(UM)!==-1){AFP.mode='month';AFP.month=UM;periodChanged()}
+  document.getElementById('gaCard').scrollIntoView({behavior:'smooth',block:'start'});
 });
 function init(){movePill(seg.querySelector('.on'));movePills()}
 draw('30');
@@ -912,7 +976,10 @@ window.kfRender=function(rolling,monthly){
   var yr=new Date().getFullYear();
   DATA.year=monthly.filter(function(m){return /^\d{4}-\d{2}$/.test(m.period_key)&&+m.period_key.slice(0,4)===yr&&m.users_active!=null})
     .map(function(m){return {y:yr,m:+m.period_key.slice(5,7)-1,v:m.users_active}});
+  DATA.monthsU={};
+  monthly.forEach(function(m){if(/^\d{4}-\d{2}$/.test(m.period_key)&&m.users_active!=null)DATA.monthsU[m.period_key]={active:m.users_active,new:m.users_new}});
   DATA.loaded=true;
+  fillUserMonths();paintMonthBox();
   draw(cur);
   renderAffiliates(DATA.last30);
 };
