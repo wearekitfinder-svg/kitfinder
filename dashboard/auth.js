@@ -152,6 +152,7 @@ function loadData() {
       window.kfRenderEbay(null, e.status || 0, e.upstreamStatus);
     });
   window.kfLoadDaily();
+  window.kfGaStart();
 }
 
 // Afiliados día a día (tabla affiliate_daily del Worker) y clics de Kit Finder
@@ -175,6 +176,11 @@ window.kfAffiliates = {
   manual: function (row) { return fetchAdmin('/admin/affiliates/manual', 'POST', row); },
   daily: function (from, to) { return fetchAdmin('/admin/affiliates/daily?from=' + from + '&to=' + to); },
   storeClicks: function (from, to) { return fetchAdmin('/admin/store-clicks/daily?from=' + from + '&to=' + to); }
+};
+// Tráfico web de GA4 (kitfinder-search/src/ga4_daily.ts), con el mismo
+// periodo que afiliados; panel.js (kfGaLoad) pide solo el rango elegido.
+window.kfGa4 = {
+  daily: function (from, to) { return fetchAdmin('/admin/ga4/daily?from=' + from + '&to=' + to); }
 };
 
 // Al volver a la pestaña se vuelven a pedir las tareas (sin polling).

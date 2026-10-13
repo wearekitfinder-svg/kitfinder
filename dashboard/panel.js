@@ -91,7 +91,7 @@ document.querySelectorAll('.k').forEach(function(k){
   k.addEventListener('click',function(){setPeriod(k.dataset.p)});
   k.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();setPeriod(k.dataset.p)}});
 });
-function init(){movePill(seg.querySelector('.on'))}
+function init(){movePill(seg.querySelector('.on'));movePills()}
 draw('30');
 if(document.fonts&&document.fonts.ready){document.fonts.ready.then(init)}
 init();window.__kfInit=init;window.addEventListener('resize',init);
@@ -299,30 +299,47 @@ function periodLabel(p){
   return MESL[+p.month.slice(5,7)-1]+' '+p.month.slice(0,4);
 }
 
-/* ----- selector ----- */
-var afSeg=document.getElementById('afSeg'),afPill=document.getElementById('afPill'),
-    afMonthSel=document.getElementById('afMonthSel'),afYearSel=document.getElementById('afYearSel');
+/* ----- selector de periodo ----- 
+   Hay uno en cada sección que lo usa (afiliados «af», tráfico web «ga»),
+   pero todos comparten el mismo periodo: cambiar uno cambia los demás y
+   recarga todas las secciones. */
 function fillSelect(sel,vals,txt,cur){
   sel.innerHTML='';
   vals.forEach(function(v){var o=document.createElement('option');o.value=v;o.textContent=txt(v);if(String(v)===String(cur))o.selected=true;sel.appendChild(o)});
 }
-fillSelect(afMonthSel,monthOptions(),function(k){var s=MESL[+k.slice(5,7)-1]+' '+k.slice(0,4);return s.charAt(0).toUpperCase()+s.slice(1)},AFP.month);
-fillSelect(afYearSel,yearOptions(),String,AFP.year);
-function moveAfPill(){var b=afSeg.querySelector('.on');if(!b||!b.offsetWidth)return;afPill.style.width=b.offsetWidth+'px';afPill.style.transform='translateX('+(b.offsetLeft-4)+'px)'}
-afPill.style.left='4px';
-function syncSelector(){
-  afSeg.querySelectorAll('button').forEach(function(b){var on=b.dataset.m===AFP.mode;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
-  afMonthSel.hidden=AFP.mode!=='month';afYearSel.hidden=AFP.mode!=='year';
-  moveAfPill();
+var PERIOD_UI=[];
+function periodChanged(){
+  savePeriod();syncSelector();
+  window.kfAfLoad();if(window.kfGaLoad)window.kfGaLoad();
 }
-afSeg.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){
-  if(AFP.mode===b.dataset.m)return;AFP.mode=b.dataset.m;savePeriod();syncSelector();window.kfAfLoad();
-})});
-afMonthSel.addEventListener('change',function(){AFP.month=afMonthSel.value;savePeriod();window.kfAfLoad()});
-afYearSel.addEventListener('change',function(){AFP.year=+afYearSel.value;savePeriod();window.kfAfLoad()});
+function bindPeriod(prefix){
+  var seg=document.getElementById(prefix+'Seg');if(!seg)return;
+  var ui={seg:seg,pill:document.getElementById(prefix+'Pill'),ms:document.getElementById(prefix+'MonthSel'),ys:document.getElementById(prefix+'YearSel')};
+  fillSelect(ui.ms,monthOptions(),function(k){var s=MESL[+k.slice(5,7)-1]+' '+k.slice(0,4);return s.charAt(0).toUpperCase()+s.slice(1)},AFP.month);
+  fillSelect(ui.ys,yearOptions(),String,AFP.year);
+  ui.pill.style.left='4px';
+  seg.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){
+    if(AFP.mode===b.dataset.m)return;AFP.mode=b.dataset.m;periodChanged();
+  })});
+  ui.ms.addEventListener('change',function(){AFP.month=ui.ms.value;periodChanged()});
+  ui.ys.addEventListener('change',function(){AFP.year=+ui.ys.value;periodChanged()});
+  PERIOD_UI.push(ui);
+}
+function movePills(){
+  (PERIOD_UI||[]).forEach(function(ui){var b=ui.seg.querySelector('.on');if(!b||!b.offsetWidth)return;ui.pill.style.width=b.offsetWidth+'px';ui.pill.style.transform='translateX('+(b.offsetLeft-4)+'px)'});
+}
+function syncSelector(){
+  PERIOD_UI.forEach(function(ui){
+    ui.seg.querySelectorAll('button').forEach(function(b){var on=b.dataset.m===AFP.mode;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+    ui.ms.value=AFP.month;ui.ys.value=String(AFP.year);
+    ui.ms.hidden=AFP.mode!=='month';ui.ys.hidden=AFP.mode!=='year';
+  });
+  movePills();
+}
+bindPeriod('af');bindPeriod('ga');
 syncSelector();
-window.addEventListener('resize',moveAfPill);
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(moveAfPill);
+window.addEventListener('resize',movePills);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(movePills);
 
 /* ----- carga: una petición a cada ruta con el rango del periodo. Si se
    cambia de periodo mientras carga, la respuesta vieja se descarta. ----- */
@@ -518,6 +535,119 @@ window.kfRenderTotal=function(d){
 };
 /* auth.js llama a esto al entrar: a partir de aquí el selector ya pide datos. */
 window.kfAfStart=function(){AF.ready=true;window.kfAfLoad()};
+
+/* ---------- tráfico web (de /admin/ga4/daily) ----------
+   Mismo periodo que afiliados. «Usuarios activos (suma diaria)» es la suma
+   de los usuarios activos de cada día (active_user_days): quien entra tres
+   días cuenta tres veces, así que NO son personas distintas y nunca se
+   llama «usuarios». Lo mismo vale para la cifra de cada país, que además no
+   cuadra exactamente con el total (GA4 puede poner a una persona en dos
+   países el mismo día). Las páginas no llevan %: el Worker solo guarda las 50
+   más vistas de cada día, así que no hay un total completo. Todo el texto que
+   viene de GA4 se pinta con textContent. */
+var GA={seq:0,ready:false};
+var sv3=document.getElementById('sv3'),ch3=document.getElementById('ch3'),tip3=document.getElementById('tip3');
+var W3=720,H3=200,L3=40,R3=14,T3=14,B3=28;
+var CHANNEL_ES={'Direct':'Directo','Organic Search':'Búsqueda orgánica','Referral':'Otras webs (enlaces)','Organic Social':'Redes sociales','Paid Search':'Búsqueda de pago','Paid Social':'Redes sociales de pago','Email':'Email','AI Assistant':'Asistentes de IA','Unassigned':'Sin asignar','Organic Video':'Vídeo','Display':'Display (anuncios)','Affiliates':'Afiliados','Cross-network':'Varias redes'};
+function gaSet(id,txt,empty){var n=document.getElementById(id);n.textContent=txt;n.classList.toggle('empty',!!empty)}
+function gaChartMsg(txt){
+  sv3.innerHTML='';tip3.classList.remove('show');
+  [0,.5,1].forEach(function(f){var y=T3+(H3-T3-B3)*f;el('line',{x1:L3,x2:W3-R3,y1:y,y2:y,class:'gl','stroke-dasharray':'3 5'},sv3)});
+  var t=el('text',{x:W3/2,y:H3/2,'text-anchor':'middle',style:'font:500 15px "DM Sans",sans-serif;fill:#5b7468'},sv3);t.textContent=txt;
+}
+/* Sesiones por día en todo el periodo; un día sin fila queda en blanco. */
+function gaChart(r,rows){
+  var DAY=864e5,from=utcDay(r.from),to=utcDay(r.to),n=Math.round((to-from)/DAY)+1,by={};
+  rows.forEach(function(x){by[x.day]=Number(x.sessions)||0});
+  var days=[];for(var i=0;i<n;i++){var d=new Date(from+i*DAY),k=d.getUTCFullYear()+'-'+pad2(d.getUTCMonth()+1)+'-'+pad2(d.getUTCDate());days.push({k:k,d:d,v:by.hasOwnProperty(k)?by[k]:null})}
+  gaChartMsg('');sv3.lastChild.remove();
+  var mx=Math.max(1,Math.max.apply(null,days.map(function(x){return x.v||0})));
+  var slot=(W3-L3-R3)/n,X=function(i){return L3+slot*(i+.5)},Y=function(v){return H3-B3-(H3-T3-B3)*v/mx};
+  [[1,T3],[.5,T3+(H3-T3-B3)/2],[0,H3-B3]].forEach(function(a){var t=el('text',{x:L3-8,y:a[1]+3.5,'text-anchor':'end',class:'ax'},sv3);t.textContent=fmt(mx*a[0])});
+  var step=Math.max(1,Math.ceil(n/8));
+  days.forEach(function(x,i){if(i%step===0){var t=el('text',{x:X(i),y:H3-B3+16,'text-anchor':'middle',class:'ax'},sv3);t.textContent=x.d.getUTCDate()+' '+MES[x.d.getUTCMonth()]}});
+  var df=el('defs',{},sv3),lg=el('linearGradient',{id:'gbar3',x1:0,y1:0,x2:0,y2:1},df);
+  el('stop',{offset:'0%','stop-color':'#5fe3f0'},lg);el('stop',{offset:'100%','stop-color':'#1fa9bd'},lg);
+  var bw=Math.max(1,Math.min(slot*.7,16));
+  days.forEach(function(x,i){
+    if(x.v===null)return;
+    var y=Y(x.v);
+    el('rect',{x:X(i)-bw/2,y:y,width:bw,height:Math.max(H3-B3-y,1),rx:Math.min(3,bw/3),fill:'url(#gbar3)',class:'bar',style:'animation-delay:'+Math.min(i*12,500)+'ms'},sv3);
+  });
+  days.forEach(function(x,i){
+    var hit=el('rect',{x:X(i)-slot/2,y:T3,width:slot,height:H3-T3-B3,fill:'transparent'},sv3);
+    function show(){
+      var sr=sv3.getBoundingClientRect(),cr=ch3.getBoundingClientRect(),k=sr.width/W3;
+      tip3.innerHTML='<b>'+(x.v===null?'sin dato':fmt(x.v))+'</b><span>'+(x.v===1?'sesión':'sesiones')+' · '+x.d.getUTCDate()+' '+MES[x.d.getUTCMonth()]+' '+x.d.getUTCFullYear()+'</span>';
+      tip3.style.left=(sr.left-cr.left+X(i)*k)+'px';tip3.style.top=(sr.top-cr.top+(x.v===null?H3-B3:Y(x.v))*k)+'px';tip3.classList.add('show');
+    }
+    hit.addEventListener('mouseenter',show);hit.addEventListener('touchstart',show,{passive:true});
+    hit.addEventListener('mouseleave',function(){tip3.classList.remove('show')});
+  });
+}
+/* Lista con barra: items = [{name, title, value, pct|null}] */
+function gaList(id,items,emptyTxt){
+  var ul=document.getElementById(id);ul.innerHTML='';
+  if(!items.length){var li=document.createElement('li');li.className='gaempty';li.textContent=emptyTxt||'—';ul.appendChild(li);return}
+  var max=Math.max.apply(null,items.map(function(x){return x.value}))||1;
+  items.forEach(function(x){
+    var li=document.createElement('li');
+    var nm=document.createElement('span');nm.className='gan';nm.textContent=x.name;if(x.title)nm.title=x.title;
+    var v=document.createElement('span');v.className='gav';v.textContent=fmt(x.value)+(x.pct!=null?' · '+String(x.pct).replace('.',',')+' %':'');
+    var bar=document.createElement('i');bar.className='gab';var s=document.createElement('s');s.style.width=Math.max(2,Math.round(x.value/max*100))+'%';bar.appendChild(s);
+    li.appendChild(nm);li.appendChild(v);li.appendChild(bar);ul.appendChild(li);
+  });
+}
+function gaClear(){
+  ['gaSessions','gaNew','gaEngaged','gaAud'].forEach(function(i){gaSet(i,'—',true)});
+  setSmall('gaEngagedPct','');
+  ['gaCountries','gaChannels','gaPages'].forEach(function(i){gaList(i,[])});
+}
+function gaMessage(txt,retry){
+  var box=document.getElementById('gaMsg');box.innerHTML='';box.hidden=!txt;if(!txt)return;
+  var s=document.createElement('span');s.textContent=txt;box.appendChild(s);
+  if(retry){var b=document.createElement('button');b.type='button';b.className='go retry';b.textContent='Reintentar';b.addEventListener('click',function(){window.kfGaLoad()});box.appendChild(b)}
+}
+function gaRender(p,r,d){
+  var t=d.totals||{},rows=Array.isArray(d.rows)?d.rows:[];
+  document.getElementById('gaSub').textContent='Tráfico web (GA4) · '+periodLabel(p);
+  setSmall('gaNote',r.from<GA4_FROM?'Datos de GA4 disponibles desde el 5 ago 2026.':'');
+  if(!rows.length||!t.days){
+    gaClear();gaChartMsg('Sin datos en '+periodLabel(p));
+    gaMessage('No hay datos de tráfico web en '+periodLabel(p)+'. Los datos de GA4 empiezan el 5 ago 2026 y se cargan cada día con un día de retraso.');
+    return;
+  }
+  gaMessage('');
+  gaSet('gaSessions',fmt(t.sessions||0));gaSet('gaNew',fmt(t.new_users||0));
+  gaSet('gaEngaged',fmt(t.engaged_sessions||0));
+  setSmall('gaEngagedPct',t.sessions?pctTxt((t.engaged_sessions||0)/t.sessions*100)+' de las sesiones':'');
+  gaSet('gaAud',fmt(t.active_user_days||0));
+  gaChart(r,rows);
+  gaList('gaCountries',(d.countries||[]).map(function(c){return {name:c.country,value:Number(c.active_user_days)||0,pct:c.pct}}),'Sin datos de países');
+  gaList('gaChannels',(d.channels||[]).map(function(c){return {name:CHANNEL_ES[c.channel]||c.channel,title:c.channel,value:Number(c.sessions)||0,pct:c.pct}}),'Sin datos de canales');
+  gaList('gaPages',(d.pages||[]).map(function(x){return {name:x.page,title:x.page,value:Number(x.views)||0,pct:null}}),'Sin datos de páginas');
+}
+window.kfGaLoad=function(){
+  if(!window.kfGa4||!GA.ready)return;
+  var seq=++GA.seq,p={mode:AFP.mode,month:AFP.month,year:AFP.year},r=periodRange(p);
+  var body=document.getElementById('gaBody');body.classList.add('loading');document.getElementById('gaLoading').hidden=false;
+  window.kfGa4.daily(r.from,r.to)
+    .then(function(d){if(seq!==GA.seq)return;gaRender(p,r,d||{})},
+      function(e){
+        if(seq!==GA.seq)return;
+        console.warn('[panel] /admin/ga4/daily:',e.message);
+        gaClear();gaChartMsg('Sin datos (error)');
+        var s=e.status||0;
+        gaMessage(s===401||s===403?'Tu sesión ha caducado o no tiene permiso. Recarga la página y vuelve a entrar.':
+          s===0?'No se pudo conectar con el servidor (¿sin conexión?). El resto del panel sigue funcionando.':
+          'El servidor no pudo dar los datos de tráfico (error '+s+'). El resto del panel sigue funcionando.',true);
+      })
+    .catch(function(e){console.error('[panel] tráfico web:',e)})
+    .then(function(){if(seq!==GA.seq)return;body.classList.remove('loading');document.getElementById('gaLoading').hidden=true});
+};
+/* auth.js llama a esto al entrar. */
+window.kfGaStart=function(){GA.ready=true;window.kfGaLoad()};
+gaChartMsg('Cargando…');
 
 /* ---------- añadir mes a mano (POST /admin/affiliates/manual) ----------
    Pedidos = orders; ventas (importe vendido) = sales_amount. El programa sale

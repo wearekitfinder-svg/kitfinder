@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/dashboard/panel.css?v=10"/>
+<link rel="stylesheet" href="/dashboard/panel.css?v=11"/>
 </head>
 <body>
 
@@ -94,6 +94,33 @@
     </div>
   </section>
 </div>
+
+<section class="card rise" style="--i:4" id="gaCard">
+  <div class="top"><span class="lab" id="gaSub">Tráfico web (GA4)</span><a class="go" href="https://analytics.google.com/analytics/web/?authuser=4#/a391893487p540384905/reports/intelligenthome" target="_blank" rel="noopener">Abrir Analytics →</a></div>
+  <div class="afp">
+    <div class="seg" id="gaSeg" role="group" aria-label="Periodo (el mismo que afiliados)"><span class="pill" id="gaPill"></span><button type="button" data-m="month" class="on">Mes</button><button type="button" data-m="ytd">Lo que va de año</button><button type="button" data-m="year">Año natural</button></div>
+    <select class="afsel" id="gaMonthSel" aria-label="Mes"></select>
+    <select class="afsel" id="gaYearSel" aria-label="Año" hidden></select>
+    <span class="note afload" id="gaLoading" hidden>Cargando…</span>
+  </div>
+  <p class="note afx" id="gaNote" hidden></p>
+  <p class="note gamsg" id="gaMsg" hidden></p>
+  <div id="gaBody">
+  <div class="akp">
+    <div class="kk c3"><div class="num empty" id="gaSessions">—</div><span class="l">Sesiones</span></div>
+    <div class="kk c1"><div class="num empty" id="gaNew">—</div><span class="l">Usuarios nuevos</span></div>
+    <div class="kk c2"><div class="num empty" id="gaEngaged">—</div><span class="l">Sesiones con interacción</span><span class="l afsplit" id="gaEngagedPct" hidden></span></div>
+    <div class="kk c1"><div class="num empty" id="gaAud">—</div><span class="l">Usuarios activos (suma diaria)</span><span class="l afsplit">Suma de los usuarios de cada día: quien entra 3 días cuenta 3 veces. No son personas distintas.</span></div>
+  </div>
+  <div class="chart" id="ch3"><svg class="cv" id="sv3" viewBox="0 0 720 200" role="img" aria-label="Sesiones por día"></svg><div class="tip" id="tip3"></div></div>
+  <div class="legend"><em><span class="sq ga"></span>Sesiones por día</em></div>
+  <div class="ga3">
+    <div><div class="sub">Países · top 10</div><ul class="galist" id="gaCountries"></ul><p class="note afx">Suma de usuarios activos de cada día por país, con su % sobre todos los países. No cuadra exactamente con «usuarios activos (suma diaria)»: GA4 puede contar a una persona en dos países el mismo día.</p></div>
+    <div><div class="sub">Canales</div><ul class="galist" id="gaChannels"></ul><p class="note afx">Sesiones por canal (de dónde llega la visita) y su %.</p></div>
+    <div><div class="sub">Páginas más vistas · top 10</div><ul class="galist" id="gaPages"></ul><p class="note afx">Vistas. Sin %: solo se guardan las 50 páginas más vistas de cada día.</p></div>
+  </div>
+  </div>
+</section>
 
 <section class="card hi rise" style="--i:4">
   <div class="top"><span class="lab">Afiliados · Solo tiendas con acuerdo cerrado</span></div>
@@ -183,8 +210,8 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="/dashboard/panel.js?v=11"></script>
+<script src="/dashboard/panel.js?v=12"></script>
 <script src="/dashboard/lock.js?v=3"></script>
-<script src="/dashboard/auth.js?v=9"></script>
+<script src="/dashboard/auth.js?v=10"></script>
 </body>
 </html>
