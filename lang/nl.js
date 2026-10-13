@@ -98,6 +98,8 @@ KF_TRANSLATIONS.nl = {
   "nl_nospam": "Geen spam. Altijd uitschrijven mogelijk.",
   "nl_subscribe": "Aanmelden",
   "footer_teams": "Teams",
+  "crumb_home": "Home",
+  "kfh_league_teams": "{league}-teams op Kit Finder",
   "footer_browse_by": "Bladeren op",
   "footer_clubs": "Clubs",
   "footer_national": "Nationale teams",

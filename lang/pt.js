@@ -98,6 +98,8 @@ KF_TRANSLATIONS.pt = {
   "nl_nospam": "Sem spam. Cancela quando quiseres.",
   "nl_subscribe": "Subscrever",
   "footer_teams": "Equipas",
+  "crumb_home": "Início",
+  "kfh_league_teams": "Equipas da {league} no Kit Finder",
   "footer_browse_by": "Explorar por",
   "footer_clubs": "Clubes",
   "footer_national": "Seleções",

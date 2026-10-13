@@ -58,7 +58,7 @@
   .kf-facts{background:#fff;border-radius:12px;padding:1.2rem 1.5rem;margin:1rem 0;border:1px solid #e2e6ea;}
 </style>
   <script src="/analytics.js?v=1" defer></script>
-  <script src="/i18n.js?v=13" defer></script>
+  <script src="/i18n.js?v=15" defer></script>
   <script src="/currency.js?v=1" defer></script>
 <style id="kf-data-css">
   .kf-data{background:#fff;border:1px solid #e2e6ea;border-radius:12px;padding:1.2rem 1.4rem;margin:2rem 0;}
@@ -115,6 +115,19 @@
   ]
 }
 </script>
+<style id="kf-crumbs-css">
+  .kf-crumbs{font-size:13px;color:#9aa3ad;margin:-1rem 0 1.4rem;line-height:1.6;}
+  .kf-crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 0;}
+  .kf-crumbs li{display:inline-flex;align-items:center;}
+  .kf-crumbs li+li::before{content:"\203A";margin:0 8px;color:#c4cad1;}
+  .kf-crumbs a{color:#5a6472;text-decoration:none;border-bottom:1px solid #e2e6ea;}
+  .kf-crumbs a:hover{color:#1FAF6D;border-color:#1FAF6D;}
+  .kf-crumbs [aria-current]{color:#1e2530;font-weight:600;}
+  .kf-league-teams{margin:2rem 0 0;}
+  .kf-league-teams ul{list-style:none;margin:.6rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
+  .kf-league-teams a{display:inline-block;padding:6px 12px;border:1px solid #e2e6ea;border-radius:20px;font-size:14px;color:#1e2530;text-decoration:none;background:#fff;}
+  .kf-league-teams a:hover{border-color:#1FAF6D;color:#1FAF6D;}
+</style>
 </head>
 <body style="background:#f4f5f7;font-family:'Outfit',sans-serif;">
 <div class="kf-lp">
@@ -122,6 +135,9 @@
     <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
     <span>KIT FINDER</span>
   </a>
+  <!-- kf-crumbs:start -->
+  <nav class="kf-crumbs" aria-label="Breadcrumb"><ol><li><a href="/" data-i18n="crumb_home">Home</a></li><li><a href="/leagues" data-i18n="footer_leagues">Leagues</a></li><li><span aria-current="page">Premier League</span></li></ol></nav>
+  <!-- kf-crumbs:end -->
   <h1 data-i18n="kfs_15dc1297">Vintage & Retro Premier League Football Shirts</h1>
   <p data-i18n="kfs_11c95965">The Premier League era began in 1992 and immediately produced some of the most collectible football shirts ever made. Bold sponsor logos, experimental designs and cult away kits have made 1990s Premier League shirts a global phenomenon among collectors. Kit Finder searches 250+ specialist stores to find every authentic Premier League jersey.</p>
   <a class="kf-lp-cta" href="/?q=Premier League">
@@ -214,6 +230,9 @@
   <p class="kf-data-note" data-i18n="kfd_note" data-i18n-vars="date=11%20October%202026;dnum=11%2F10%2F2026">Data from Kit Finder's index on 11 October 2026. Prices are converted to euros at current exchange rates; each store sells in its own currency.</p>
 </section>
 <!-- kf-data:end -->
+  <!-- kf-league-teams:start -->
+  <section class="kf-league-teams"><h2 data-i18n="kfh_league_teams" data-i18n-vars="league=Premier%20League">Premier League teams on Kit Finder</h2><ul><li><a href="/clubs/manchester-united">Manchester United</a></li><li><a href="/clubs/liverpool">Liverpool</a></li><li><a href="/clubs/arsenal">Arsenal</a></li><li><a href="/clubs/chelsea">Chelsea</a></li><li><a href="/clubs/manchester-city">Manchester City</a></li><li><a href="/clubs/tottenham">Tottenham</a></li><li><a href="/teams/newcastle-united">Newcastle United</a></li><li><a href="/teams/everton">Everton</a></li><li><a href="/teams/leeds-united">Leeds United</a></li><li><a href="/teams/aston-villa">Aston Villa</a></li><li><a href="/teams/west-ham-united">West Ham United</a></li><li><a href="/teams/wolverhampton-wanderers">Wolverhampton Wanderers</a></li><li><a href="/teams/leicester-city">Leicester City</a></li><li><a href="/teams/burnley">Burnley</a></li><li><a href="/teams/sunderland">Sunderland</a></li><li><a href="/teams/southampton">Southampton</a></li><li><a href="/teams/nottingham-forest">Nottingham Forest</a></li><li><a href="/teams/sheffield-united">Sheffield United</a></li><li><a href="/teams/cardiff-city">Cardiff City</a></li><li><a href="/teams/swansea-city">Swansea City</a></li><li><a href="/teams/west-bromwich-albion">West Bromwich Albion</a></li><li><a href="/teams/ipswich-town">Ipswich Town</a></li><li><a href="/teams/stoke-city">Stoke City</a></li><li><a href="/teams/norwich-city">Norwich City</a></li><li><a href="/teams/blackburn-rovers">Blackburn Rovers</a></li><li><a href="/teams/birmingham-city">Birmingham City</a></li><li><a href="/teams/portsmouth">Portsmouth</a></li><li><a href="/teams/derby-county">Derby County</a></li><li><a href="/teams/watford">Watford</a></li><li><a href="/teams/brighton-and-hove-albion">Brighton and Hove Albion</a></li><li><a href="/teams/sheffield-wednesday">Sheffield Wednesday</a></li><li><a href="/teams/fulham">Fulham</a></li><li><a href="/teams/coventry-city">Coventry City</a></li><li><a href="/teams/queens-park-rangers">Queens Park Rangers</a></li><li><a href="/teams/crystal-palace">Crystal Palace</a></li><li><a href="/teams/bournemouth">Bournemouth</a></li><li><a href="/teams/reading">Reading</a></li><li><a href="/teams/middlesbrough">Middlesbrough</a></li><li><a href="/teams/charlton-athletic">Charlton Athletic</a></li><li><a href="/teams/hull-city">Hull City</a></li><li><a href="/teams/luton-town">Luton Town</a></li></ul></section>
+  <!-- kf-league-teams:end -->
   <div class="kf-related">
     <h3 data-i18n="kfd_related" data-i18n-vars="date=11%20October%202026;dnum=11%2F10%2F2026">Related</h3>
     <a href="/clubs/manchester-united" class="kf-related-link" data-i18n="teams_link" data-i18n-vars="team=Manchester%20United">Manchester United shirts</a>

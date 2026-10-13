@@ -58,7 +58,7 @@
   .kf-facts{background:#fff;border-radius:12px;padding:1.2rem 1.5rem;margin:1rem 0;border:1px solid #e2e6ea;}
 </style>
   <script src="/analytics.js?v=1" defer></script>
-  <script src="/i18n.js?v=13" defer></script>
+  <script src="/i18n.js?v=15" defer></script>
   <script src="/currency.js?v=1" defer></script>
 <style id="kf-data-css">
   .kf-data{background:#fff;border:1px solid #e2e6ea;border-radius:12px;padding:1.2rem 1.4rem;margin:2rem 0;}
@@ -115,6 +115,19 @@
   ]
 }
 </script>
+<style id="kf-crumbs-css">
+  .kf-crumbs{font-size:13px;color:#9aa3ad;margin:-1rem 0 1.4rem;line-height:1.6;}
+  .kf-crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 0;}
+  .kf-crumbs li{display:inline-flex;align-items:center;}
+  .kf-crumbs li+li::before{content:"\203A";margin:0 8px;color:#c4cad1;}
+  .kf-crumbs a{color:#5a6472;text-decoration:none;border-bottom:1px solid #e2e6ea;}
+  .kf-crumbs a:hover{color:#1FAF6D;border-color:#1FAF6D;}
+  .kf-crumbs [aria-current]{color:#1e2530;font-weight:600;}
+  .kf-league-teams{margin:2rem 0 0;}
+  .kf-league-teams ul{list-style:none;margin:.6rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
+  .kf-league-teams a{display:inline-block;padding:6px 12px;border:1px solid #e2e6ea;border-radius:20px;font-size:14px;color:#1e2530;text-decoration:none;background:#fff;}
+  .kf-league-teams a:hover{border-color:#1FAF6D;color:#1FAF6D;}
+</style>
 </head>
 <body style="background:#f4f5f7;font-family:'Outfit',sans-serif;">
 <div class="kf-lp">
@@ -122,6 +135,9 @@
     <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
     <span>KIT FINDER</span>
   </a>
+  <!-- kf-crumbs:start -->
+  <nav class="kf-crumbs" aria-label="Breadcrumb"><ol><li><a href="/" data-i18n="crumb_home">Home</a></li><li><a href="/leagues" data-i18n="footer_leagues">Leagues</a></li><li><span aria-current="page">Bundesliga</span></li></ol></nav>
+  <!-- kf-crumbs:end -->
   <h1 data-i18n="kfs_60319ec4">Vintage & Retro Bundesliga Football Shirts</h1>
   <p data-i18n="kfs_e3cf019f">The Bundesliga and Adidas — an iconic partnership that has produced some of football's most recognisable shirts. From Bayern Munich's European Cup winning kits of the 1970s to Borussia Dortmund's Champions League glory, Kit Finder searches 250+ specialist stores to find every authentic Bundesliga jersey.</p>
   <a class="kf-lp-cta" href="/?q=Bundesliga">
@@ -211,6 +227,9 @@
   <p class="kf-data-note" data-i18n="kfd_note" data-i18n-vars="date=11%20October%202026;dnum=11%2F10%2F2026">Data from Kit Finder's index on 11 October 2026. Prices are converted to euros at current exchange rates; each store sells in its own currency.</p>
 </section>
 <!-- kf-data:end -->
+  <!-- kf-league-teams:start -->
+  <section class="kf-league-teams"><h2 data-i18n="kfh_league_teams" data-i18n-vars="league=Bundesliga">Bundesliga teams on Kit Finder</h2><ul><li><a href="/clubs/bayern-munich">Bayern Munich</a></li><li><a href="/clubs/borussia-dortmund">Borussia Dortmund</a></li><li><a href="/teams/borussia-monchengladbach">Borussia Monchengladbach</a></li><li><a href="/teams/schalke-04">Schalke 04</a></li><li><a href="/teams/werder-bremen">Werder Bremen</a></li><li><a href="/teams/vfb-stuttgart">VfB Stuttgart</a></li><li><a href="/teams/fc-koln">FC Koln</a></li><li><a href="/teams/wolfsburg">Wolfsburg</a></li><li><a href="/teams/eintracht-frankfurt">Eintracht Frankfurt</a></li><li><a href="/teams/bayer-leverkusen">Bayer Leverkusen</a></li><li><a href="/teams/rb-leipzig">RB Leipzig</a></li><li><a href="/teams/hannover-96">Hannover 96</a></li><li><a href="/teams/st-pauli">St. Pauli</a></li><li><a href="/teams/hertha-berlin">Hertha Berlin</a></li></ul></section>
+  <!-- kf-league-teams:end -->
   <div class="kf-related">
     <h3 data-i18n="kfd_related" data-i18n-vars="date=11%20October%202026;dnum=11%2F10%2F2026">Related</h3>
     <a href="/clubs/bayern-munich" class="kf-related-link" data-i18n="teams_link" data-i18n-vars="team=Bayern%20Munich">Bayern Munich shirts</a>

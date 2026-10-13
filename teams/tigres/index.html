@@ -30,24 +30,9 @@
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Kit Finder",
-        "item": "https://wearekitfinder.com"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Teams",
-        "item": "https://wearekitfinder.com/teams"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "Tigres",
-        "item": "https://wearekitfinder.com/teams/tigres"
-      }
+      {"@type":"ListItem","position":1,"name":"Kit Finder","item":"https://wearekitfinder.com"},
+      {"@type":"ListItem","position":2,"name":"Teams","item":"https://wearekitfinder.com/teams"},
+      {"@type":"ListItem","position":3,"name":"Tigres","item":"https://wearekitfinder.com/teams/tigres"}
     ]
   }
 }
@@ -81,7 +66,7 @@
 
 </style>
   <script src="/analytics.js?v=2" defer></script>
-  <script src="/i18n.js?v=6" defer></script>
+  <script src="/i18n.js?v=15" defer></script>
   <script src="/currency.js?v=1" defer></script>
 <style id="kf-data-css">
   .kf-data{background:#fff;border:1px solid #e2e6ea;border-radius:12px;padding:1.2rem 1.4rem;margin:2rem 0;}
@@ -138,12 +123,28 @@
   ]
 }
 </script>
+<style id="kf-crumbs-css">
+  .kf-crumbs{font-size:13px;color:#9aa3ad;margin:-1rem 0 1.4rem;line-height:1.6;}
+  .kf-crumbs ol{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 0;}
+  .kf-crumbs li{display:inline-flex;align-items:center;}
+  .kf-crumbs li+li::before{content:"\203A";margin:0 8px;color:#c4cad1;}
+  .kf-crumbs a{color:#5a6472;text-decoration:none;border-bottom:1px solid #e2e6ea;}
+  .kf-crumbs a:hover{color:#1FAF6D;border-color:#1FAF6D;}
+  .kf-crumbs [aria-current]{color:#1e2530;font-weight:600;}
+  .kf-league-teams{margin:2rem 0 0;}
+  .kf-league-teams ul{list-style:none;margin:.6rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
+  .kf-league-teams a{display:inline-block;padding:6px 12px;border:1px solid #e2e6ea;border-radius:20px;font-size:14px;color:#1e2530;text-decoration:none;background:#fff;}
+  .kf-league-teams a:hover{border-color:#1FAF6D;color:#1FAF6D;}
+</style>
 </head>
 <body style="background:#f4f5f7;font-family:'Outfit',sans-serif;">
 <div class="kf-lp">
   <a class="kf-lp-logo" href="/">
     <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
   </a>
+  <!-- kf-crumbs:start -->
+  <nav class="kf-crumbs" aria-label="Breadcrumb"><ol><li><a href="/" data-i18n="crumb_home">Home</a></li><li><a href="/teams" data-i18n="footer_teams">Teams</a></li><li><span aria-current="page">Tigres</span></li></ol></nav>
+  <!-- kf-crumbs:end -->
   <a class="kf-back-link" href="/teams" data-i18n="teams_back">&larr; Back to all teams</a>
   <h1 data-i18n="teams_h1" data-i18n-vars="team=Tigres">Tigres Vintage Shirts</h1>
   <p class="kf-lp-sub" data-i18n="teams_sub" data-i18n-vars="n=147">147 available right now, compared across 250+ specialist stores.</p>
