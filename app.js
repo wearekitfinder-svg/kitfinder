@@ -500,7 +500,7 @@ navPickCountry=function(country,e){_origNavPickCountry.apply(this,[country,e]);
 };
 var _origShowInfo=showInfo;
 showInfo=function(section,e){_origShowInfo.apply(this,[section,e]);_hideHomepageOnlySections();
-  var titles={why:'Why Kit Finder? — Kit Finder',about:'About Us — Kit Finder',privacy:'Privacy Policy — Kit Finder',terms:'Terms of Use — Kit Finder',affiliate:'Affiliate Disclosure — Kit Finder'};
+  var titles={why:'Why Kit Finder? — Kit Finder',about:'About Us — Kit Finder',privacy:'Privacy Policy — Kit Finder',terms:'Terms of Use — Kit Finder',affiliate:'Affiliate Disclosure — Kit Finder',contact:'Contact — Kit Finder'};
   _setUrl('/'+section,titles[section]||'Kit Finder');
 };
 var _origTriggerCountrySearch=triggerCountrySearch;
@@ -555,6 +555,8 @@ triggerCountrySearch=function(country){_origTriggerCountrySearch.apply(this,[cou
     setTimeout(function(){showInfo('terms',{preventDefault:function(){}});},120);
   } else if(path==='/affiliate'||path==='/affiliate/'){
     setTimeout(function(){showInfo('affiliate',{preventDefault:function(){}});},120);
+  } else if(path==='/contact'||path==='/contact/'){
+    setTimeout(function(){showInfo('contact',{preventDefault:function(){}});},120);
   }
 
   // Botón "atrás"
