@@ -685,22 +685,25 @@ function scDisplaySizes(p) {
   return out;
 }
 
-// Anonymous GA4 event per search: only the filters picked (no ids, no
-// cookies of our own). window.kfTrack (analytics.js) drops it unless the
-// visitor accepted cookies. "any" instead of an empty value so GA4 reports
-// show unused filters too, not "(not set)".
 // Free text from the team box, made safe for analytics: lowercase, max 40
 // characters, and dropped ("filtered") if it could be personal data — an
-// email (anything with "@") or a run of 5+ digits (phone, order number...).
+// email (anything with "@"), a run of 5+ digits (order number...), or a
+// phone written with separators: 7+ digits in a row once spaces, dashes
+// and dots are ignored ("612 345 678", "612-345-678").
 // Checked on the full text, before cutting, so nothing slips past the cut.
 // Tested in tests/shirt-checker-as-text.test.js.
 function scCleanTypedText(text) {
   const t = String(text || '').trim().replace(/\s+/g, ' ').toLowerCase();
   if (!t) return 'none';
   if (t.indexOf('@') >= 0 || /\d{5,}/.test(t)) return 'filtered';
+  if (/\d{7,}/.test(t.replace(/[\s.-]/g, ''))) return 'filtered';
   return t.slice(0, 40).trim();
 }
 
+// Anonymous GA4 event per search: only the filters picked (no ids, no
+// cookies of our own). window.kfTrack (analytics.js) drops it unless the
+// visitor accepted cookies. "any" instead of an empty value so GA4 reports
+// show unused filters too, not "(not set)".
 function trackAdvancedSearch(source, total) {
   if (!window.kfTrack) return;
   const f = getFilters();
