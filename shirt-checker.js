@@ -170,7 +170,7 @@ function _initTeamFromUrl() {
   var team = ALL_TEAMS.find(function (t) { return t.id === teamId; });
   if (!team) return;
   selectTeam(team);
-  runSearch();
+  runSearch('team_page');
 }
 
 function matchesTeam(team, q) {
@@ -685,7 +685,42 @@ function scDisplaySizes(p) {
   return out;
 }
 
-function runSearch() {
+// Anonymous GA4 event per search: only the filters picked (no ids, no
+// cookies of our own). window.kfTrack (analytics.js) drops it unless the
+// visitor accepted cookies. "any" instead of an empty value so GA4 reports
+// show unused filters too, not "(not set)".
+// Free text from the team box, made safe for analytics: lowercase, max 40
+// characters, and dropped ("filtered") if it could be personal data — an
+// email (anything with "@") or a run of 5+ digits (phone, order number...).
+// Checked on the full text, before cutting, so nothing slips past the cut.
+// Tested in tests/shirt-checker-as-text.test.js.
+function scCleanTypedText(text) {
+  const t = String(text || '').trim().replace(/\s+/g, ' ').toLowerCase();
+  if (!t) return 'none';
+  if (t.indexOf('@') >= 0 || /\d{5,}/.test(t)) return 'filtered';
+  return t.slice(0, 40).trim();
+}
+
+function trackAdvancedSearch(source, total) {
+  if (!window.kfTrack) return;
+  const f = getFilters();
+  const typed = document.getElementById('teamSearchInput').value.trim();
+  window.kfTrack('advanced_search', {
+    as_team: selectedTeam ? selectedTeam.name : 'any',
+    as_player: selectedPlayer || 'any',
+    // Text typed but not picked from the dropdown — shows teams we're missing.
+    as_text: (!selectedTeam && !selectedPlayer) ? scCleanTypedText(typed) : 'none',
+    as_size: f.size || 'any',
+    as_decade: f.season ? (Math.floor(Number(f.season) / 10) * 10) + 's' : 'any',
+    as_season: f.season ? f.season + '/' + (Number(f.season) + 1) : 'any',
+    as_version: f.version || 'any',
+    as_sleeve: f.sleeve || 'any',
+    as_results: total,
+    as_source: source || 'form',
+  });
+}
+
+function runSearch(source) {
   const box = document.getElementById('resultsBox');
   const avgBox = document.getElementById('avgBox');
   avgBox.style.display = 'none';
@@ -695,6 +730,7 @@ function runSearch() {
   fetch(SHIRT_CHECK_API + '?' + buildShirtCheckParams('list').toString())
     .then(function (r) { if (!r.ok) throw new Error('bad status'); return r.json(); })
     .then(function (data) {
+      trackAdvancedSearch(source, data.total || 0);
       renderResults(data);
     })
     .catch(function () {
