@@ -689,6 +689,18 @@ function scDisplaySizes(p) {
 // cookies of our own). window.kfTrack (analytics.js) drops it unless the
 // visitor accepted cookies. "any" instead of an empty value so GA4 reports
 // show unused filters too, not "(not set)".
+// Free text from the team box, made safe for analytics: lowercase, max 40
+// characters, and dropped ("filtered") if it could be personal data — an
+// email (anything with "@") or a run of 5+ digits (phone, order number...).
+// Checked on the full text, before cutting, so nothing slips past the cut.
+// Tested in tests/shirt-checker-as-text.test.js.
+function scCleanTypedText(text) {
+  const t = String(text || '').trim().replace(/\s+/g, ' ').toLowerCase();
+  if (!t) return 'none';
+  if (t.indexOf('@') >= 0 || /\d{5,}/.test(t)) return 'filtered';
+  return t.slice(0, 40).trim();
+}
+
 function trackAdvancedSearch(source, total) {
   if (!window.kfTrack) return;
   const f = getFilters();
@@ -697,7 +709,7 @@ function trackAdvancedSearch(source, total) {
     as_team: selectedTeam ? selectedTeam.name : 'any',
     as_player: selectedPlayer || 'any',
     // Text typed but not picked from the dropdown — shows teams we're missing.
-    as_text: (!selectedTeam && !selectedPlayer && typed) ? typed.slice(0, 60) : 'none',
+    as_text: (!selectedTeam && !selectedPlayer) ? scCleanTypedText(typed) : 'none',
     as_size: f.size || 'any',
     as_decade: f.season ? (Math.floor(Number(f.season) / 10) * 10) + 's' : 'any',
     as_season: f.season ? f.season + '/' + (Number(f.season) + 1) : 'any',
