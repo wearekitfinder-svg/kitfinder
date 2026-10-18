@@ -40,6 +40,17 @@ test('5+ digits in a row are not sent', () => {
   assert.strictEqual(scCleanTypedText('a very long team name that goes on and on 98765'), 'filtered');
 });
 
+test('phones with spaces, dashes or dots are not sent', () => {
+  assert.strictEqual(scCleanTypedText('612 345 678'), 'filtered');
+  assert.strictEqual(scCleanTypedText('612-345-678'), 'filtered');
+  assert.strictEqual(scCleanTypedText('612.345.678'), 'filtered');
+  assert.strictEqual(scCleanTypedText('call me 91 234 56 78'), 'filtered');
+});
+
+test('6 digits with separators are kept (below the phone rule)', () => {
+  assert.strictEqual(scCleanTypedText('12 34 56'), '12 34 56');
+});
+
 test('short numbers (years, 4 digits) are kept', () => {
   assert.strictEqual(scCleanTypedText('Schalke 04'), 'schalke 04');
   assert.strictEqual(scCleanTypedText('Brazil 1970'), 'brazil 1970');
