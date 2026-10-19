@@ -143,15 +143,7 @@ function loadData() {
     if (stats) window.kfRenderCatalog(stats);
   });
   window.kfTasksLoad();
-  // eBay Partner Network (kitfinder-search/src/ebay_affiliate.ts). Una sola
-  // petición por carga del panel; el Worker ya la guarda 1 hora.
-  fetchAdmin('/admin/affiliates/ebay')
-    .then(function (d) { window.kfRenderEbay(d, null); })
-    .catch(function (e) {
-      console.warn('[panel] /admin/affiliates/ebay:', e.message);
-      window.kfRenderEbay(null, e.status || 0, e.upstreamStatus);
-    });
-  window.kfLoadDaily();
+  window.kfAfStart();
   window.kfGaStart();
   // Tarjeta Usuarios: todos los días con datos (ga4_daily empieza el
   // 2026-08-05; la ruta admite como mucho 400 días por petición) para las
@@ -167,27 +159,23 @@ function loadData() {
     });
 }
 
-// Afiliados día a día (tabla affiliate_daily del Worker) y clics de Kit Finder
-// por tienda y día (store_clicks_daily). La comisión acumulada se pide siempre
-// desde AFFILIATE_FROM hasta hoy (no sigue el selector); el periodo elegido lo
-// pide panel.js (kfAfLoad) con daily() y storeClicks(), solo con ese rango.
-// Si una ruta falla, esa parte dice «sin datos» y el resto sigue.
-var AFFILIATE_FROM = '2026-06-01';
-window.KF_AFFILIATE_FROM = AFFILIATE_FROM;
+// Afiliados día a día (tabla affiliate_daily del Worker), clics de Kit Finder
+// por tienda y día (store_clicks_daily) y tipos de cambio del BCE por día
+// (fx_daily). panel.js (kfAfLoad) los pide solo con el rango del periodo
+// elegido. Si una ruta falla, esa parte dice «sin datos» y el resto sigue.
+// Las entradas a mano (source='manual') se crean, editan y borran por fechas;
+// key = {day, store, program} de la fila (day = su último día).
 function ymd(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
-window.kfLoadDaily = function () {
-  fetchAdmin('/admin/affiliates/daily?from=' + AFFILIATE_FROM + '&to=' + ymd(new Date()))
-    .then(function (d) { window.kfRenderTotal(d); })
-    .catch(function (e) {
-      console.warn('[panel] /admin/affiliates/daily (acumulada):', e.message);
-      window.kfRenderTotal(null);
-    });
-  window.kfAfStart();
-};
+function manualKey(k) {
+  return '?day=' + encodeURIComponent(k.day) + '&store=' + encodeURIComponent(k.store) + '&program=' + encodeURIComponent(k.program);
+}
 window.kfAffiliates = {
   manual: function (row) { return fetchAdmin('/admin/affiliates/manual', 'POST', row); },
+  updateManual: function (key, row) { return fetchAdmin('/admin/affiliates/manual' + manualKey(key), 'PUT', row); },
+  deleteManual: function (key) { return fetchAdmin('/admin/affiliates/manual' + manualKey(key), 'DELETE'); },
   daily: function (from, to) { return fetchAdmin('/admin/affiliates/daily?from=' + from + '&to=' + to); },
-  storeClicks: function (from, to) { return fetchAdmin('/admin/store-clicks/daily?from=' + from + '&to=' + to); }
+  storeClicks: function (from, to) { return fetchAdmin('/admin/store-clicks/daily?from=' + from + '&to=' + to); },
+  fx: function (from, to) { return fetchAdmin('/admin/fx/daily?from=' + from + '&to=' + to); }
 };
 // Tráfico web de GA4 (kitfinder-search/src/ga4_daily.ts), con el mismo
 // periodo que afiliados; panel.js (kfGaLoad) pide solo el rango elegido.
