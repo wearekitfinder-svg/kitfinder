@@ -13,6 +13,8 @@ duplicar nada (lo llama refresh_seo_content.py despues de gen_category_content.p
   2. El BreadcrumbList del JSON-LD (dentro de "breadcrumb") con esa misma ruta.
   3. En cada pagina de liga, la lista completa de sus equipos con pagina propia,
      de mas a menos camisetas: <!-- kf-league-teams:start --> ... :end -->
+  4. En el indice /teams, una fila "Browse by" con cada pagina de liga y las
+     selecciones: <!-- kf-hub-leagues:start --> ... :end -->
 
 No toca titulos ni meta descripciones. Todas las URLs son las canonicas (sin
 barra final), que responden 200 sin redireccion. Las ligas sin pagina propia
@@ -56,6 +58,12 @@ CSS = """<style id="kf-crumbs-css">
   .kf-league-teams ul{list-style:none;margin:.6rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
   .kf-league-teams a{display:inline-block;padding:6px 12px;border:1px solid #e2e6ea;border-radius:20px;font-size:14px;color:#1e2530;text-decoration:none;background:#fff;}
   .kf-league-teams a:hover{border-color:#1FAF6D;color:#1FAF6D;}
+</style>"""
+HUB_LEAGUES_CSS = """<style id="kf-hub-leagues-css">
+  .kf-hub-leagues ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
+  .kf-hub-leagues a{display:inline-block;padding:6px 12px;border:1px solid #e2e6ea;border-radius:20px;font-size:14px;color:#1e2530;text-decoration:none;background:#fff;}
+  .kf-hub-leagues a:hover{border-color:#1FAF6D;color:#1FAF6D;}
+  .kf-hub-leagues{margin:1rem 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:13px;color:#5a6472;}
 </style>"""
 
 
@@ -128,6 +136,14 @@ def league_teams_html(league, teams):
             f'{esc(league)} teams on Kit Finder</h2><ul>{items}</ul></section>\n  <!-- kf-league-teams:end -->')
 
 
+def hub_leagues_html():
+    """Indice /teams: enlaces directos a cada pagina de liga y a selecciones."""
+    items = "".join(f'<li><a href="/{p}">{esc(nm)}</a></li>' for p, nm in G.LEAGUES.items())
+    items += f'<li><a href="{HUB["national"][1]}" data-i18n="{HUB["national"][2]}">{HUB["national"][0]}</a></li>'
+    return ('<!-- kf-hub-leagues:start -->\n  <nav class="kf-hub-leagues" aria-label="Leagues">'
+            f'<span data-i18n="footer_browse_by">Browse by</span><ul>{items}</ul></nav>\n  <!-- kf-hub-leagues:end -->')
+
+
 def put_block(t, start, end, block, anchor_re):
     """Reemplaza el bloque entre marcadores o lo inserta despues de anchor_re."""
     if start in t:
@@ -190,6 +206,26 @@ def main():
         parent = crumbs[1][0]
         extra = f", {len(teams)} equipos enlazados" if kind == "league" else ""
         print(f"  OK {page}: {parent} > {shown}{extra}")
+
+    # Indice /teams: fila "Browse by" con las ligas, bajo la frase de totales
+    path = os.path.join(REPO, "teams", "index.html")
+    t = open(path, encoding="utf-8", newline="").read()
+    nl = "\r\n" if "\r\n" in t else "\n"
+    t = orig = t.replace("\r\n", "\n")
+    t2 = put_block(t, "<!-- kf-hub-leagues:start -->", "<!-- kf-hub-leagues:end -->", hub_leagues_html(),
+                   r'<p class="kf-hub-intro".*?</p>')
+    if t2 is None:
+        print("  AVISO teams (indice): sin frase kf-hub-intro donde poner las ligas")
+    else:
+        t = t2
+        if 'id="kf-hub-leagues-css"' in t:
+            t = re.sub(r'<style id="kf-hub-leagues-css">.*?</style>', lambda m: HUB_LEAGUES_CSS, t, flags=re.S)
+        else:
+            t = t.replace("</head>", HUB_LEAGUES_CSS + "\n</head>", 1)
+        if t != orig:
+            open(path, "w", encoding="utf-8", newline="").write(t.replace("\n", nl))
+            changed += 1
+        print(f"  OK teams (indice): {len(G.LEAGUES)} ligas enlazadas")
     print(f"\n{changed} paginas actualizadas.")
 
 
