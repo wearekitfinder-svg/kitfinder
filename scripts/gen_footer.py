@@ -22,7 +22,7 @@ import os
 import re
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FOOTER_CSS_V = "2"
+FOOTER_CSS_V = "3"
 FOOTER_JS_V = "1"
 ANALYTICS_V = "3"
 I18N_V = "16"

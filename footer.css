@@ -14,9 +14,9 @@
 :root .kf-foot-social a{flex:none;display:inline-flex;width:42px;height:42px;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.18);border-radius:50%}
 :root .kf-foot-social a:hover,:root .kf-foot-social a:focus-visible{border-color:#1FAF6D}
 :root .kf-foot-social svg{display:block}
-:root .kf-foot-nl{background:#fff;border:1px solid #e2e6ea;border-radius:14px;padding:16px;color:#1e2530}
-:root .kf-foot-nl .kf-foot-nl-t{display:block;font-size:13px;color:#1e2530;font-weight:600;margin:0 0 10px}
-:root .kf-foot-nl .kf-foot-nl-t a{color:#1e2530;text-decoration:none}
+:root .kf-foot-nl{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px}
+:root .kf-foot-nl .kf-foot-nl-t{display:block;font-size:13px;color:#fff;font-weight:600;margin:0 0 10px}
+:root .kf-foot-nl .kf-foot-nl-t a{color:#fff;text-decoration:none}
 :root .kf-foot-nl form{display:flex;gap:8px;margin:0}
 :root .kf-foot-nl input{flex:1;min-width:0;background:#fff;border:1px solid #c9cfd6;border-radius:10px;padding:11px 12px;color:#1e2530;font:inherit;font-size:14px;margin:0}
 :root .kf-foot-nl input::placeholder{color:#8a939e}
@@ -24,11 +24,10 @@
 :root .kf-foot-nl button{flex:none;background:#1FAF6D;color:#fff;border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
 :root .kf-foot-nl button:hover{background:#178a55}
 :root .kf-foot-nl button:disabled{opacity:.6;cursor:progress}
-:root .kf-foot-nl p{margin:10px 0 0;font-size:12px;line-height:1.5;color:#5a6472}
-:root .kf-foot-nl p a{color:#1e2530;text-decoration:underline}
-:root .kf-foot-nl p a:hover{color:#178a55}
-:root .kf-foot-nl .kf-foot-msg{color:#1e2530}
-:root .kf-foot-nl .kf-foot-msg.err{color:#c62828}
+:root .kf-foot-nl p{margin:10px 0 0;font-size:12px;line-height:1.5;color:rgba(255,255,255,.55)}
+:root .kf-foot-nl p a{text-decoration:underline}
+:root .kf-foot-nl .kf-foot-msg{color:#fff}
+:root .kf-foot-nl .kf-foot-msg.err{color:#ff8a8a}
 :root .kf-foot-linkbtn{background:none;border:0;padding:0;margin:0;font:inherit;color:rgba(255,255,255,.72);cursor:pointer;text-align:left;transition:color .18s}
 :root .kf-foot-linkbtn:hover,:root .kf-foot-linkbtn:focus-visible{color:#1FAF6D}
 :root .kf-foot-bar{border-top:1px solid rgba(255,255,255,.1)}
