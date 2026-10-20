@@ -1,0 +1,38 @@
+/* Kit Finder — pie de pagina comun a toda la web (scripts/gen_footer.py lo
+   inserta en cada pagina). Selectores con :root delante para ganar a las
+   reglas genericas footer{...} y .landing-footer footer{...} de styles.css
+   sin tocarlas. Siempre oscuro, en paginas claras y oscuras. */
+:root .kf-foot{display:block;background:#1e2530;color:rgba(255,255,255,.72);font-family:'Outfit',system-ui,sans-serif;font-size:15px;line-height:1.5;text-align:left;padding:0;margin:0;border-top:3px solid #1FAF6D}
+:root .kf-foot a{color:rgba(255,255,255,.72);text-decoration:none;transition:color .18s}
+:root .kf-foot a:hover,:root .kf-foot a:focus-visible{color:#1FAF6D}
+:root .kf-foot-in{max-width:1200px;margin:0 auto;padding:56px 24px 40px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+:root .kf-foot-in>div{min-width:0}
+:root .kf-foot h3{margin:0 0 18px;font-family:inherit;font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff}
+:root .kf-foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;font-size:15px}
+:root .kf-foot li{margin:0;padding:0}
+:root .kf-foot-social{display:flex;flex-wrap:nowrap;gap:12px;margin:0 0 22px}
+:root .kf-foot-social a{flex:none;display:inline-flex;width:42px;height:42px;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.18);border-radius:50%}
+:root .kf-foot-social a:hover,:root .kf-foot-social a:focus-visible{border-color:#1FAF6D}
+:root .kf-foot-social svg{display:block}
+:root .kf-foot-nl{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:16px}
+:root .kf-foot-nl .kf-foot-nl-t{display:block;font-size:13px;color:#fff;font-weight:600;margin:0 0 10px}
+:root .kf-foot-nl .kf-foot-nl-t a{color:#fff;text-decoration:none}
+:root .kf-foot-nl form{display:flex;gap:8px;margin:0}
+:root .kf-foot-nl input{flex:1;min-width:0;background:#11161e;border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:11px 12px;color:#fff;font:inherit;font-size:14px;margin:0}
+:root .kf-foot-nl input::placeholder{color:rgba(255,255,255,.45)}
+:root .kf-foot-nl input:focus{outline:none;border-color:#1FAF6D}
+:root .kf-foot-nl button{flex:none;background:#1FAF6D;color:#fff;border:0;border-radius:10px;padding:11px 16px;font:inherit;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+:root .kf-foot-nl button:hover{background:#178a55}
+:root .kf-foot-nl button:disabled{opacity:.6;cursor:progress}
+:root .kf-foot-nl p{margin:10px 0 0;font-size:12px;line-height:1.5;color:rgba(255,255,255,.55)}
+:root .kf-foot-nl p a{text-decoration:underline}
+:root .kf-foot-nl .kf-foot-msg{color:#fff}
+:root .kf-foot-nl .kf-foot-msg.err{color:#ff8a8a}
+:root .kf-foot-linkbtn{background:none;border:0;padding:0;margin:0;font:inherit;color:rgba(255,255,255,.72);cursor:pointer;text-align:left;transition:color .18s}
+:root .kf-foot-linkbtn:hover,:root .kf-foot-linkbtn:focus-visible{color:#1FAF6D}
+:root .kf-foot-bar{border-top:1px solid rgba(255,255,255,.1)}
+:root .kf-foot-bar p{max-width:1200px;margin:0 auto;padding:20px 24px 26px;font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.5);text-align:center}
+:root .kf-foot-bar a{text-decoration:underline}
+@media(max-width:900px){:root .kf-foot-in{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){:root .kf-foot-in{grid-template-columns:1fr;gap:34px;padding:44px 20px 32px}}
+:root .kf-foot [hidden]{display:none}

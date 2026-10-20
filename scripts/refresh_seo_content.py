@@ -11,13 +11,14 @@ Hace, en orden (y se para si algo falla):
   2. gen_category_content.py reescribe el bloque de datos, titulos, descripciones,
                              FAQ y "Related" de las 196 paginas
   3. check_similarity.py     comprueba la regla del 60 %
-  4. gen_sitemap.py          actualiza sitemap.xml (<lastmod> = fecha real de cambio)
+  4. gen_footer.py           pone el pie comun (por si se regeneraron paginas)
+  5. gen_sitemap.py          actualiza sitemap.xml (<lastmod> = fecha real de cambio)
 Despues: revisar `git diff --stat`, commit, pull request y fusion segun CLAUDE.md.
 """
 import os, subprocess, sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STEPS = [["scripts/page_stats.py"], ["scripts/gen_category_content.py"], ["scripts/gen_hierarchy.py"],
+STEPS = [["scripts/page_stats.py"], ["scripts/gen_category_content.py"], ["scripts/gen_hierarchy.py"], ["scripts/gen_footer.py"],
          ["scripts/check_similarity.py"], ["gen_sitemap.py"]]
 
 for step in STEPS:
