@@ -1,5 +1,13 @@
 // Kit Finder — interfaz en Nederlands (se carga solo cuando se elige este idioma)
 KF_TRANSLATIONS.nl = {
+  "footer_follow": "Volg ons",
+  "footer_explore": "Ontdekken",
+  "footer_help": "Hulp",
+  "footer_legal": "Juridisch",
+  "footer_cookie_settings": "Cookie-instellingen",
+  "footer_nl_ph": "Je e-mailadres",
+  "footer_nl_accept": "Door je in te schrijven ga je akkoord met ons",
+  "footer_nl_privacy": "privacybeleid",
   "kfd_h_a": "{team}-shirts op Kit Finder: de cijfers",
   "kfd_h_b": "{team}-shirts die nu op voorraad zijn",
   "kfd_h_c": "Wat er vandaag van {team} beschikbaar is",

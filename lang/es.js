@@ -1,5 +1,13 @@
 // Kit Finder — interfaz en español (se carga solo cuando se elige este idioma)
 KF_TRANSLATIONS.es = {
+  "footer_follow": "Síguenos",
+  "footer_explore": "Explorar",
+  "footer_help": "Ayuda",
+  "footer_legal": "Legal",
+  "footer_cookie_settings": "Configuración de cookies",
+  "footer_nl_ph": "Tu email",
+  "footer_nl_accept": "Al suscribirte aceptas nuestra",
+  "footer_nl_privacy": "política de privacidad",
   "kfd_h_a": "Camisetas de {team} en Kit Finder: las cifras",
   "kfd_h_b": "Camisetas de {team} disponibles ahora",
   "kfd_h_c": "Qué hay disponible de {team} hoy",

@@ -26,11 +26,41 @@
   };
 
   function setConsent(v) {
-    try { localStorage.setItem(CONSENT_KEY, v); } catch (e) {}
+    var before = null;
+    try { before = localStorage.getItem(CONSENT_KEY); localStorage.setItem(CONSENT_KEY, v); } catch (e) {}
     var b = document.getElementById('kfCookieBanner');
     if (b) b.style.display = 'none';
     if (v === 'granted') loadGA();
+    // Quien había aceptado y ahora rechaza (desde «Cookie settings»): se
+    // borran las cookies de Google Analytics y se recarga, porque GA ya
+    // estaba cargado en esta página y no se puede descargar.
+    if (v === 'denied' && (before === 'granted' || gaLoaded)) {
+      clearGaCookies();
+      location.reload();
+    }
   }
+
+  function clearGaCookies() {
+    var host = location.hostname, parts = host.split('.');
+    var domains = ['', host, '.' + host];
+    if (parts.length > 2) domains.push('.' + parts.slice(-2).join('.'));
+    document.cookie.split(';').forEach(function (c) {
+      var name = c.split('=')[0].trim();
+      if (!/^_ga(_|$)|^_gid$|^_gat/.test(name)) return;
+      domains.forEach(function (d) {
+        document.cookie = name + '=; Max-Age=0; path=/' + (d ? '; domain=' + d : '');
+      });
+    });
+  }
+
+  // Enlace «Cookie settings» del pie: vuelve a abrir el banner para cambiar
+  // la elección (aceptar o rechazar). Funciona en todas las páginas.
+  window.kfCookieSettings = function (e) {
+    if (e && e.preventDefault) e.preventDefault();
+    var b = document.getElementById('kfCookieBanner');
+    if (b) b.style.display = 'flex';
+    else showBanner();
+  };
 
   // Texto traducido si i18n.js está cargado (data-i18n lo vuelve a traducir cuando llega el idioma)
   function t(key, fallback) { return (typeof kfT === 'function') ? kfT(key, fallback) : fallback; }
@@ -59,17 +89,13 @@
     document.getElementById('kfCookieReject').addEventListener('click', function () { setConsent('denied'); });
   }
 
-  // Aviso de afiliados en todas las páginas. Va aquí porque analytics.js es
-  // el único script que cargan todas (también si se rechazan las cookies:
-  // solo Google Analytics depende del consentimiento). Las 2 copias del
-  // footer de index.html ya lo dicen en su frase final (footer_copy), así
-  // que ahí no se añade nada. En los footers del blog va dentro; en las
-  // páginas sin footer (/clubs, /teams, /shirt-checker...) como franja al
-  // final. Se traduce con i18n.js (data-i18n) donde esa página lo carga.
-  // Arreglo provisional: lo definitivo es un footer real en el HTML (y en
-  // gen_teams.py de kitfinder-automation).
+  // Red de seguridad del aviso de afiliados: todas las páginas llevan ya el
+  // pie común (footer.css / scripts/gen_footer.py), cuya barra final incluye
+  // el aviso, así que esto solo actúa en una página que se haya quedado sin
+  // pie (p. ej. /teams regenerado con gen_teams.py sin volver a pasar
+  // gen_footer.py): entonces añade una franja al final con el aviso.
   function addAffiliateNotice() {
-    if (document.querySelector('.kf-aff-notice, [data-i18n="footer_copy"]')) return;
+    if (document.querySelector('.kf-foot, .kf-aff-notice, [data-i18n="footer_copy"]')) return;
     var p = document.createElement('p');
     p.className = 'kf-aff-notice';
     p.innerHTML = '<span data-i18n="footer_aff_notice">Kit Finder may earn a commission if you buy through our links. This doesn’t change the price you pay.</span> '
