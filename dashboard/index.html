@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/dashboard/panel.css?v=13"/>
+<link rel="stylesheet" href="/dashboard/panel.css?v=14"/>
 </head>
 <body>
 
@@ -81,9 +81,10 @@
 <section class="card rise" style="--i:2" id="gaCard">
   <div class="top"><span class="lab" id="gaSub">Tráfico web (GA4)</span><a class="go" href="https://analytics.google.com/analytics/web/?authuser=4#/a391893487p540384905/reports/intelligenthome" target="_blank" rel="noopener">Abrir Analytics →</a></div>
   <div class="afp">
-    <div class="seg" id="gaSeg" role="group" aria-label="Periodo (el mismo que afiliados)"><span class="pill" id="gaPill"></span><button type="button" data-m="month" class="on">Mes</button><button type="button" data-m="ytd">Lo que va de año</button><button type="button" data-m="year">Año natural</button></div>
+    <div class="seg" id="gaSeg" role="group" aria-label="Periodo (el mismo que afiliados)"><span class="pill" id="gaPill"></span><button type="button" data-m="month" class="on">Mes</button><button type="button" data-m="ytd">Lo que va de año</button><button type="button" data-m="year">Año natural</button><button type="button" data-m="range">Fechas</button></div>
     <select class="afsel" id="gaMonthSel" aria-label="Mes"></select>
     <select class="afsel" id="gaYearSel" aria-label="Año" hidden></select>
+    <span class="afrange" id="gaRange" hidden><input type="date" class="afsel" id="gaFrom" aria-label="Desde"><span class="note">a</span><input type="date" class="afsel" id="gaTo" aria-label="Hasta"></span>
     <span class="note afload" id="gaLoading" hidden>Cargando…</span>
   </div>
   <p class="note afx" id="gaNote" hidden></p>
@@ -128,23 +129,17 @@
 
 <section class="card hi rise" style="--i:4">
   <div class="top"><span class="lab">Afiliados · Solo tiendas con acuerdo cerrado</span></div>
-  <div class="kk c4 aftot">
-    <div class="afth"><span class="l">Comisión total acumulada</span><span class="chip eb" title="Esta cifra no cambia con el selector de periodo">no depende del periodo</span></div>
-    <div class="num empty" id="afCommTotal">—</div>
-    <span class="l afsplit" id="afCommTotalSplit" hidden></span>
-    <span class="l afsplit">Desde el 1 jun 2026 hasta hoy · pendiente + aprobada, por moneda y sin convertir</span>
-  </div>
   <div class="afp">
-    <div class="seg" id="afSeg" role="group" aria-label="Periodo de afiliados"><span class="pill" id="afPill"></span><button type="button" data-m="month" class="on">Mes</button><button type="button" data-m="ytd">Lo que va de año</button><button type="button" data-m="year">Año natural</button></div>
+    <div class="seg" id="afSeg" role="group" aria-label="Periodo de afiliados"><span class="pill" id="afPill"></span><button type="button" data-m="month" class="on">Mes</button><button type="button" data-m="ytd">Lo que va de año</button><button type="button" data-m="year">Año natural</button><button type="button" data-m="range">Fechas</button></div>
     <select class="afsel" id="afMonthSel" aria-label="Mes"></select>
     <select class="afsel" id="afYearSel" aria-label="Año" hidden></select>
+    <span class="afrange" id="afRange" hidden><input type="date" class="afsel" id="afFrom" aria-label="Desde"><span class="note">a</span><input type="date" class="afsel" id="afTo" aria-label="Hasta"></span>
     <span class="note afload" id="afLoading" hidden>Cargando…</span>
   </div>
   <p class="note afx" id="afPeriodNote" hidden></p>
   <div id="afBody">
-  <div class="akp ak5">
+  <div class="akp">
     <div class="kk c1"><div class="num empty" id="afPClicks">—</div><span class="l">Clics Kit Finder (GA4) · todas las tiendas</span></div>
-    <div class="kk c3"><div class="num empty" id="afPProg">—</div><span class="l">Clics del programa</span><span class="l afsplit" id="afPProgNote" hidden></span></div>
     <div class="kk c2"><div class="num empty" id="afPOrders">—</div><span class="l">Pedidos</span></div>
     <div class="kk c1"><div class="num empty" id="afPSales">—</div><span class="l">Ventas (importe vendido)</span></div>
     <div class="kk c2"><div class="num empty" id="afPComm">—</div><span class="l">Comisión del periodo</span><span class="l afsplit" id="afPCommSplit" hidden></span></div>
@@ -155,21 +150,21 @@
 
   <div class="sub" id="afStoreSub">Por tienda</div>
   <div class="tw"><table>
-    <thead><tr><th>Tienda</th><th>Clics Kit Finder (GA4)</th><th>Clics del programa</th><th>Pedidos</th><th>Ventas</th><th>Comisión (pend. + aprob.)</th></tr></thead>
+    <thead><tr><th>Tienda</th><th>Clics Kit Finder (GA4)</th><th>Pedidos</th><th>Ventas</th><th>Comisión (pend. + aprob.)</th></tr></thead>
     <tbody id="afStoreBody">
-      <tr data-store="eBay" data-af="ebay"><td><a class="pl" href="https://partner.ebay.com/secure/mediapartner/home/pview.ihtml" target="_blank" rel="noopener">eBay ↗</a><span class="note afcell" id="ebayApi" hidden></span></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
-      <tr class="afd" hidden><td colspan="6" id="ebayDetail"></td></tr>
-      <tr data-store="CF Collectives" data-af="cfc"><td><a class="pl" href="https://www.classicfootballcollectibles.com" target="_blank" rel="noopener">CF Collectives ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
-      <tr data-store="Kit Plug" data-af="kitplug"><td><a class="pl" href="https://kitplug.goaffpro.com/" target="_blank" rel="noopener">Kit Plug ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
-      <tr data-store="Classic Football Shirts" data-af="cfs"><td><a class="pl" href="https://classicfootballshirts.tapfiliate.com/p/new/dashboard/" target="_blank" rel="noopener">Classic Football Shirts ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
-      <tr data-store="The Soccer Archive" data-af="tsa"><td><a class="pl" href="https://af.uppromote.com/soccer-archive-dev/dashboard" target="_blank" rel="noopener">The Soccer Archive ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
-      <tr class="tot"><td>Total</td><td id="afTotGa4">—</td><td class="m afa">—</td><td class="m afa">—</td><td class="m afa">—</td><td class="m afa">—</td></tr>
+      <tr data-store="eBay" data-af="ebay"><td><a class="pl" href="https://partner.ebay.com/secure/mediapartner/home/pview.ihtml" target="_blank" rel="noopener">eBay ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr data-store="CF Collectives" data-af="cfc"><td><a class="pl" href="https://www.classicfootballcollectibles.com" target="_blank" rel="noopener">CF Collectives ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr data-store="Kit Plug" data-af="kitplug"><td><a class="pl" href="https://kitplug.goaffpro.com/" target="_blank" rel="noopener">Kit Plug ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr data-store="Classic Football Shirts" data-af="cfs"><td><a class="pl" href="https://classicfootballshirts.tapfiliate.com/p/new/dashboard/" target="_blank" rel="noopener">Classic Football Shirts ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr data-store="The Soccer Archive" data-af="tsa"><td><a class="pl" href="https://af.uppromote.com/soccer-archive-dev/dashboard" target="_blank" rel="noopener">The Soccer Archive ↗</a></td><td class="afg e">—</td><td class="m afa e">—</td><td class="m afa e">—</td><td class="m afa e">—</td></tr>
+      <tr class="tot"><td>Total</td><td id="afTotGa4">—</td><td class="m afa">—</td><td class="m afa">—</td><td class="m afa">—</td></tr>
     </tbody>
   </table></div>
+  <p class="note afx" id="afFxNote" hidden></p>
   </div>
 
   <details class="afm" id="afManual">
-    <summary>Añadir mes a mano</summary>
+    <summary>Datos a mano (por fechas)</summary>
     <form id="afManualForm" class="afm-grid" novalidate>
       <label>Tienda<input name="store" list="afStores" required maxlength="80"></label>
       <label>Programa<select name="program" required>
@@ -180,7 +175,8 @@
         <option value="opencart">OpenCart</option>
         <option value="webgains">Webgains</option>
       </select></label>
-      <label>Mes<input name="month" type="month" required></label>
+      <label>Desde<input name="day_from" type="date" required></label>
+      <label>Hasta<input name="day_to" type="date" required></label>
       <label>Pedidos<input name="orders" type="number" min="0" step="1" required value="0"></label>
       <label>Ventas (importe vendido)<input name="sales_amount" type="number" min="0" step="0.01" required value="0"></label>
       <label>Comisión pendiente<input name="commission_pending" type="number" min="0" step="0.01" required value="0"></label>
@@ -188,9 +184,11 @@
       <label>Comisión revertida<input name="commission_reversed" type="number" min="0" step="0.01" required value="0"></label>
       <label>Moneda<input name="currency" required maxlength="3" value="EUR"></label>
       <label class="afm-wide">Nota<input name="note" maxlength="200"></label>
-      <p class="afm-wide note">eBay no se añade a mano: entra solo cada día desde su API.</p>
-      <div class="afm-wide afm-actions"><button type="submit" class="go">Guardar mes</button><span class="note" id="afManualMsg"></span></div>
+      <p class="afm-wide note">Las dos fechas deben ser del mismo mes. Todo el importe cuenta en el último día («Hasta»). eBay no se añade a mano: entra solo cada día desde su API.</p>
+      <div class="afm-wide afm-actions"><button type="submit" class="go">Guardar</button><button type="button" class="go" id="afManualCancel" hidden>Cancelar edición</button><span class="note" id="afManualMsg"></span></div>
     </form>
+    <div class="sub afm-sub" id="afManualSub">Entradas a mano en el periodo</div>
+    <ul class="afm-list" id="afManualList"><li class="note">—</li></ul>
     <datalist id="afStores"><option value="CF Collectives"><option value="Kit Plug"><option value="Classic Football Shirts"><option value="The Soccer Archive"></datalist>
   </details>
 </section>
@@ -214,8 +212,9 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="/dashboard/panel.js?v=14"></script>
+<script src="/dashboard/fx.js?v=1"></script>
+<script src="/dashboard/panel.js?v=15"></script>
 <script src="/dashboard/lock.js?v=3"></script>
-<script src="/dashboard/auth.js?v=12"></script>
+<script src="/dashboard/auth.js?v=13"></script>
 </body>
 </html>

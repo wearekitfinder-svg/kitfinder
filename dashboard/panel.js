@@ -334,75 +334,36 @@ function renderAffiliates(r){
   if(!AF.clicksOk)paintGa4();
 }
 
-/* ---------- eBay Partner Network (de /admin/affiliates/ebay) ----------
-   Importes en céntimos por moneda: se pasan a euros solo al pintar; otra
-   moneda distinta de EUR se enseña tal cual, sin convertir. Ventas = acciones
-   no revertidas (pendientes + aprobadas); la comisión revertida va aparte y
-   no se suma. Esta fuente no sigue el selector de periodo (es «últimos 30
-   días» y «mes en curso» de la API de eBay), así que va en una línea pequeña
-   bajo el nombre de eBay y no en las columnas del periodo. */
-function esc(x){return String(x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function centsTxt(m){
-  m=m||{};
-  var cur=Object.keys(m).filter(function(c){return m[c]}).sort(function(a,b){return a==='EUR'?-1:b==='EUR'?1:a<b?-1:1});
-  if(!cur.length)return money(0);
-  return cur.map(function(c){var v=m[c]/100;return c==='EUR'?money(v):v.toFixed(2).replace('.',',')+' '+esc(c)}).join(' + ');
-}
-function sumCents(a,b){var o={};[a||{},b||{}].forEach(function(m){Object.keys(m).forEach(function(c){o[c]=(o[c]||0)+m[c]})});return o}
-function salesOf(b){var s=(b&&b.actions_by_state)||{};return (s.pending||0)+(s.approved||0)}
-function ebayNotice(html){
-  var box=document.getElementById('ebayDetail');
-  box.innerHTML=html;box.parentNode.hidden=!html;
-}
 function plural(n,one,many){return fmt(n)+' '+(n===1?one:many)}
-/* En un 502, upstreamStatus es el código que devolvió eBay (0 = no se pudo
-   conectar). Si no llegó en el cuerpo, se deja el mensaje genérico. */
-window.kfRenderEbay=function(d,errStatus,upstreamStatus){
-  var api=document.getElementById('ebayApi');
-  if(!d||!d.last30||!d.month){
-    var why='';
-    if(errStatus===502){
-      if(typeof upstreamStatus==='number'&&isFinite(upstreamStatus)){
-        why=upstreamStatus===0?' (no se pudo conectar con eBay)':' (eBay respondió con el código '+Math.trunc(upstreamStatus)+')';
-      }else why=' (eBay no responde)';
-    }
-    api.hidden=true;
-    ebayNotice('<span class="note">Sin datos de la API de eBay ahora'+why+'.</span>');
-    return;
-  }
-  var L=d.last30,M=d.month,cL=L.commission_cents||{},cM=M.commission_cents||{};
-  var s30=salesOf(L);
-  api.textContent='API eBay: '+plural(s30,'venta','ventas')+' en 30 días · '+centsTxt(sumCents(cM.pending,cM.approved))+' comisión este mes';
-  api.title='Últimos 30 días: '+plural(s30,'venta','ventas')+' · '+centsTxt(L.sale_cents)+' vendido\n'+
-    'Comisión: '+centsTxt(cL.pending)+' pendiente, '+centsTxt(cL.approved)+' aprobada\n'+
-    'Revertida (no se suma): '+centsTxt(cL.reversed)+'\n'+
-    'Mes en curso: '+plural(salesOf(M),'venta','ventas')+' · '+centsTxt(cM.pending)+' pendiente, '+centsTxt(cM.approved)+' aprobada\n'+
-    '(no sigue el selector de periodo)';
-  api.hidden=false;
-  var flags='';
-  if(d.stale)flags+='<span class="chip gd" title="eBay no respondió; se muestra el último dato guardado">dato antiguo</span>';
-  if(d.truncated||d.ignored>0)flags+='<span class="chip eb" title="Faltan páginas o hay acciones que no se pudieron leer">puede estar incompleto</span>';
-  ebayNotice(flags);
-};
 
 /* ---------- affiliate_daily + store_clicks_daily, por periodo ----------
-   Importes en unidades de cada moneda; aquí se suman en céntimos y se pintan
-   por moneda, sin convertir divisas. Comisión = pendiente + aprobada (la
-   revertida no se suma). program_clicks NULL = el programa no da ese dato: no
-   se pinta ni se suma como 0. Las filas cuya nota dice «pico atípico»
-   (posible tráfico no humano) cuentan en los clics del programa con una marca,
-   pero no entran en el gráfico ni en ninguna tasa. */
-var CUR_SYM={EUR:'€ ',GBP:'£ '};
+   Todo en euros: cada importe se pasa a céntimos de euro con el tipo del BCE
+   de SU día (fx.js, ruta /admin/fx/daily) y solo entonces se suma, así que
+   cada celda lleva un único importe. Una cifra que incluye algo convertido
+   lleva «*»; el tipo usado va en el title y en la nota bajo la tabla.
+   Comisión = pendiente + aprobada (la revertida no se suma). Las filas cuya
+   nota dice «pico atípico» (posible tráfico no humano) no entran en el
+   gráfico. */
+var CUR_SYM={EUR:'€ ',GBP:'£ ',USD:'$ '};
 var MESL=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 var AF_FIRST_MONTH='2026-06',GA4_FROM='2026-08-05',AF_KEY='kf_panel_af_period';
 function c2(v){var n=Number(v);return isFinite(n)?Math.round(n*100):0}
 function curAmt(cents,cur){var v=fmt(Math.trunc(cents/100))+','+('0'+Math.abs(cents%100)).slice(-2);return CUR_SYM[cur]?CUR_SYM[cur]+v:v+' '+cur}
-function curOrder(a,b){return a==='EUR'?-1:b==='EUR'?1:a==='GBP'?-1:b==='GBP'?1:a<b?-1:1}
-/* m = {moneda: céntimos}; cada moneda por separado («€ 5,00 + £ 94,27»). */
-function multiAmt(m,curs){
-  curs=(curs||Object.keys(m||{})).slice().sort(curOrder);
-  if(!curs.length)return '—';
-  return curs.map(function(c){return curAmt((m&&m[c])||0,c)}).join(' + ');
+/* conv = {clave: {cur, rate, day, fallback}}: los tipos usados en una cifra. */
+function hasConv(conv){return !!conv&&Object.keys(conv).length>0}
+function eurTxt(cents,conv){return curAmt(cents,'EUR')+(cents&&hasConv(conv)?'*':'')}
+function rateTxt(v){return v.toFixed(4).replace('.',',')}
+function convNote(conv){
+  var by={};
+  Object.keys(conv||{}).forEach(function(k){var c=conv[k];(by[c.cur]=by[c.cur]||[]).push(c)});
+  return Object.keys(by).sort().map(function(cur){
+    var l=by[cur],rates=l.map(function(c){return c.rate}),lo=Math.min.apply(null,rates),hi=Math.max.apply(null,rates);
+    var sym=(CUR_SYM[cur]||cur+' ').trim(),days=l.filter(function(c){return c.day}).map(function(c){return c.day}).sort();
+    var t='convertido de '+cur+' al tipo 1 '+sym+' = '+(lo===hi?rateTxt(lo):rateTxt(lo)+'–'+rateTxt(hi))+' €';
+    if(days.length)t+=' (BCE, '+(days[0]===days[days.length-1]?dayTxt(days[0]):dayTxt(days[0])+' – '+dayTxt(days[days.length-1]))+')';
+    if(l.some(function(c){return c.fallback}))t+=(days.length?'; en parte':'')+' con el tipo fijo de reserva (no había tipo del BCE)';
+    return t;
+  }).join('; ');
 }
 function isAtypical(r){
   return String(r&&r.note||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().indexOf('pico atipico')!==-1;
@@ -419,26 +380,44 @@ function monthOptions(){
   return out; // el más reciente primero
 }
 function yearOptions(){var out=[],y=+todayYmd().slice(0,4);for(var a=y;a>=+AF_FIRST_MONTH.slice(0,4);a--)out.push(a);return out}
-var AFP={mode:'month',month:todayYmd().slice(0,7),year:+todayYmd().slice(0,4)};
+/* mode 'range' = «Fechas»: de from a to, ambos incluidos (como mucho
+   MAX_RANGE_DAYS, el límite de las rutas del Worker). */
+var MAX_RANGE_DAYS=400;
+function shiftDay(s,n){var t=new Date(utcDay(s)+n*864e5);return t.getUTCFullYear()+'-'+pad2(t.getUTCMonth()+1)+'-'+pad2(t.getUTCDate())}
+function realDay(s){return /^\d{4}-\d{2}-\d{2}$/.test(s||'')&&!isNaN(utcDay(s))&&shiftDay(s,0)===s}
+function rangeError(from,to){
+  if(!realDay(from)||!realDay(to))return 'Elige las dos fechas.';
+  if(from>to)return 'La fecha de inicio es posterior a la de fin.';
+  if((utcDay(to)-utcDay(from))/864e5+1>MAX_RANGE_DAYS)return 'Como mucho '+MAX_RANGE_DAYS+' días.';
+  return '';
+}
+var AFP={mode:'month',month:todayYmd().slice(0,7),year:+todayYmd().slice(0,4),from:todayYmd().slice(0,8)+'01',to:todayYmd()};
 (function(){
   var s=null;
   try{s=JSON.parse(localStorage.getItem(AF_KEY)||'null')}catch(e){s=null}
   if(!s||typeof s!=='object')return;
-  if(['month','ytd','year'].indexOf(s.mode)!==-1)AFP.mode=s.mode;
+  if(['month','ytd','year','range'].indexOf(s.mode)!==-1)AFP.mode=s.mode;
   if(monthOptions().indexOf(s.month)!==-1)AFP.month=s.month;
   if(yearOptions().indexOf(+s.year)!==-1)AFP.year=+s.year;
+  if(!rangeError(s.from,s.to)){AFP.from=s.from;AFP.to=s.to}
 })();
+function curPeriod(){return {mode:AFP.mode,month:AFP.month,year:AFP.year,from:AFP.from,to:AFP.to}}
 function savePeriod(){try{localStorage.setItem(AF_KEY,JSON.stringify(AFP))}catch(e){}}
 function periodRange(p){
   var t=todayYmd();
   if(p.mode==='ytd')return {from:t.slice(0,4)+'-01-01',to:t};
   if(p.mode==='year')return {from:p.year+'-01-01',to:p.year+'-12-31'};
+  if(p.mode==='range')return {from:p.from,to:p.to};
   var y=+p.month.slice(0,4),m=+p.month.slice(5,7),last=new Date(Date.UTC(y,m,0)).getUTCDate();
   return {from:p.month+'-01',to:p.month+'-'+pad2(last)};
 }
 function periodLabel(p){
   if(p.mode==='ytd'){var t=todayYmd();return 'lo que va de '+t.slice(0,4)+' (1 ene – '+dayTxt(t)+')'}
   if(p.mode==='year')return 'año '+p.year;
+  if(p.mode==='range'){
+    if(p.from===p.to)return dayTxt(p.from)+' '+p.from.slice(0,4);
+    return dayTxt(p.from)+(p.from.slice(0,4)!==p.to.slice(0,4)?' '+p.from.slice(0,4):'')+' – '+dayTxt(p.to)+' '+p.to.slice(0,4);
+  }
   return MESL[+p.month.slice(5,7)-1]+' '+p.month.slice(0,4);
 }
 
@@ -457,7 +436,8 @@ function periodChanged(){
 }
 function bindPeriod(prefix){
   var seg=document.getElementById(prefix+'Seg');if(!seg)return;
-  var ui={seg:seg,pill:document.getElementById(prefix+'Pill'),ms:document.getElementById(prefix+'MonthSel'),ys:document.getElementById(prefix+'YearSel')};
+  var ui={seg:seg,pill:document.getElementById(prefix+'Pill'),ms:document.getElementById(prefix+'MonthSel'),ys:document.getElementById(prefix+'YearSel'),
+    rg:document.getElementById(prefix+'Range'),f:document.getElementById(prefix+'From'),t:document.getElementById(prefix+'To')};
   fillSelect(ui.ms,monthOptions(),function(k){var s=MESL[+k.slice(5,7)-1]+' '+k.slice(0,4);return s.charAt(0).toUpperCase()+s.slice(1)},AFP.month);
   fillSelect(ui.ys,yearOptions(),String,AFP.year);
   ui.pill.style.left='4px';
@@ -466,6 +446,14 @@ function bindPeriod(prefix){
   })});
   ui.ms.addEventListener('change',function(){AFP.month=ui.ms.value;periodChanged()});
   ui.ys.addEventListener('change',function(){AFP.year=+ui.ys.value;periodChanged()});
+  // Fechas: solo se recarga cuando las dos son válidas; si no, se marca el campo.
+  function onRange(){
+    var err=rangeError(ui.f.value,ui.t.value);
+    [ui.f,ui.t].forEach(function(i){i.classList.toggle('bad',!!err);i.title=err});
+    if(err||(ui.f.value===AFP.from&&ui.t.value===AFP.to))return;
+    AFP.from=ui.f.value;AFP.to=ui.t.value;periodChanged();
+  }
+  ui.f.addEventListener('change',onRange);ui.t.addEventListener('change',onRange);
   PERIOD_UI.push(ui);
 }
 function movePills(){
@@ -476,6 +464,8 @@ function syncSelector(){
     ui.seg.querySelectorAll('button').forEach(function(b){var on=b.dataset.m===AFP.mode;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
     ui.ms.value=AFP.month;ui.ys.value=String(AFP.year);
     ui.ms.hidden=AFP.mode!=='month';ui.ys.hidden=AFP.mode!=='year';
+    ui.rg.hidden=AFP.mode!=='range';ui.f.value=AFP.from;ui.t.value=AFP.to;
+    [ui.f,ui.t].forEach(function(i){i.classList.remove('bad');i.title=''});
   });
   movePills();
 }
@@ -489,14 +479,18 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(movePills);
 var AF={seq:0,ready:false,clicksOk:false,byStore:null};
 window.kfAfLoad=function(){
   if(!window.kfAffiliates||!AF.ready)return;
-  var seq=++AF.seq,p={mode:AFP.mode,month:AFP.month,year:AFP.year},r=periodRange(p);
+  var seq=++AF.seq,p=curPeriod(),r=periodRange(p);
   setAfLoading(true);
   var ok=function(d){return {d:d}},ko=function(e){console.warn('[panel] afiliados:',e.message);return {err:e.status||0}};
   var pd=window.kfAffiliates.daily(r.from,r.to).then(ok,ko);
   var pc=r.to<GA4_FROM?Promise.resolve({before:true}):window.kfAffiliates.storeClicks(r.from,r.to).then(ok,ko);
-  Promise.all([pd,pc]).then(function(res){
+  // tipos del BCE desde 14 días antes: si el periodo empieza en fin de semana
+  // o festivo, vale el último tipo publicado antes
+  var pf=window.kfAffiliates.fx(shiftDay(r.from,-14),r.to).then(ok,ko);
+  Promise.all([pd,pc,pf]).then(function(res){
     if(seq!==AF.seq)return;
     setAfLoading(false);
+    FXI=window.kfFx.index(res[2].d&&res[2].d.rows);AF.fxErr=res[2].err;
     renderPeriod(p,r,res[0],res[1]);
   });
 };
@@ -533,48 +527,44 @@ function paintGa4(){
   });
   var tc=document.getElementById('afTotGa4');cellSet(tc,known?fmt(tot):'—','',known&&!AF.clicksOk?'Últimos 30 días':'',!known);
 }
-/* Agrupa filas de affiliate_daily por tienda. */
+/* Agrupa filas de affiliate_daily por tienda, con los importes ya en
+   céntimos de euro. Una moneda sin tipo posible va a «missing» y no se suma. */
+var FXI={};
 function groupRows(rows){
   var g={};
   rows.forEach(function(r){
     var x=g[r.store];
-    if(!x)x=g[r.store]={store:r.store,progs:{},curs:{},clicks:0,clickDays:0,nullDays:0,atyp:0,orders:0,ordersKnown:0,amtKnown:0,sales:{},pend:{},appr:{}};
-    var c=r.currency;x.curs[c]=1;x.progs[r.program]=1;
-    if(r.program_clicks===null||r.program_clicks===undefined)x.nullDays++;
-    else{x.clicks+=Number(r.program_clicks)||0;x.clickDays++;if(isAtypical(r))x.atyp+=Number(r.program_clicks)||0}
+    if(!x)x=g[r.store]=emptyAgg();
     if(r.orders!==null&&r.orders!==undefined){x.orders+=Number(r.orders)||0;x.ordersKnown++}
     if(r.sales_amount!=null||r.commission_pending!=null||r.commission_approved!=null)x.amtKnown++;
-    x.sales[c]=(x.sales[c]||0)+c2(r.sales_amount);
-    x.pend[c]=(x.pend[c]||0)+c2(r.commission_pending);
-    x.appr[c]=(x.appr[c]||0)+c2(r.commission_approved);
+    [['sales','sales_amount'],['pend','commission_pending'],['appr','commission_approved']].forEach(function(f){
+      var e=window.kfFx.toEurCents(r[f[1]],r.currency,r.day,FXI);
+      if(e.cents===null){x.missing[r.currency]=1;return}
+      x[f[0]]+=e.cents;
+      if(e.conv)x.conv[e.conv.cur+'|'+e.conv.rate+'|'+e.conv.day+'|'+e.conv.fallback]=e.conv;
+    });
   });
   return g;
 }
 function addTo(t,x){
   if(!x)return;
-  t.n++;t.clicks+=x.clicks;t.clickDays+=x.clickDays;t.atyp+=x.atyp;t.orders+=x.orders;t.ordersKnown+=x.ordersKnown;t.amtKnown+=x.amtKnown;
-  Object.keys(x.curs).forEach(function(c){t.curs[c]=1;t.sales[c]=(t.sales[c]||0)+(x.sales[c]||0);t.pend[c]=(t.pend[c]||0)+(x.pend[c]||0);t.appr[c]=(t.appr[c]||0)+(x.appr[c]||0)});
+  t.n++;t.orders+=x.orders;t.ordersKnown+=x.ordersKnown;t.amtKnown+=x.amtKnown;
+  t.sales+=x.sales;t.pend+=x.pend;t.appr+=x.appr;
+  Object.keys(x.conv).forEach(function(k){t.conv[k]=x.conv[k]});
+  Object.keys(x.missing).forEach(function(k){t.missing[k]=1});
 }
-function emptyAgg(){return {n:0,clicks:0,clickDays:0,atyp:0,orders:0,ordersKnown:0,amtKnown:0,curs:{},sales:{},pend:{},appr:{}}}
-/* Pinta las 4 columnas de afiliado de una fila (o del total). x = null: sin filas. */
+function emptyAgg(){return {n:0,orders:0,ordersKnown:0,amtKnown:0,sales:0,pend:0,appr:0,conv:{},missing:{}}}
+/* Pinta las 3 columnas de afiliado de una fila (o del total). x = null: sin filas. */
 function paintAff(cells,x,why){
   var none=why||'Sin filas de afiliado en este periodo';
   if(!x){cells.forEach(function(td){td.innerHTML='';cellSet(td,'—','',none,true)});return}
-  var curs=Object.keys(x.curs);
-  // clics del programa
-  if(!x.clickDays)cellSet(cells[0],'sin dato','','El programa no da clics para estas fechas',true);
-  else{
-    var t=[];if(x.nullDays)t.push(plural(x.nullDays,'día','días')+' sin dato (no cuentan como 0)');
-    if(x.atyp)t.push(fmt(x.atyp)+' clics del pico atípico (posible tráfico no humano)');
-    cellSet(cells[0],fmt(x.clicks),x.atyp?'incl. '+fmt(x.atyp)+' de pico atípico':(x.nullDays?plural(x.nullDays,'día','días')+' sin dato':''),t.join('\n'));
-  }
-  cellSet(cells[1],x.ordersKnown?fmt(x.orders):'—','',x.ordersKnown?'':'Sin dato de pedidos',!x.ordersKnown);
+  cellSet(cells[0],x.ordersKnown?fmt(x.orders):'—','',x.ordersKnown?'':'Sin dato de pedidos',!x.ordersKnown);
   if(x.amtKnown){
-    var tot={};curs.forEach(function(c){tot[c]=(x.pend[c]||0)+(x.appr[c]||0)});
-    cellSet(cells[2],multiAmt(x.sales,curs),'','Importe vendido');
-    var split='pendiente '+multiAmt(x.pend,curs)+' / aprobada '+multiAmt(x.appr,curs);
-    cellSet(cells[3],multiAmt(tot,curs),split,split+'\n(la revertida no se suma)');
-  }else{cellSet(cells[2],'—','','Sin importes',true);cellSet(cells[3],'—','','Sin importes',true)}
+    var fx=hasConv(x.conv)?'\n* '+convNote(x.conv):'';
+    var split='pendiente '+eurTxt(x.pend,x.conv)+' / aprobada '+eurTxt(x.appr,x.conv);
+    cellSet(cells[1],eurTxt(x.sales,x.conv),'','Importe vendido'+fx);
+    cellSet(cells[2],eurTxt(x.pend+x.appr,x.conv),split,split+'\n(la revertida no se suma)'+fx);
+  }else{cellSet(cells[1],'—','','Sin importes',true);cellSet(cells[2],'—','','Sin importes',true)}
 }
 function affCells(tr){return Array.prototype.slice.call(tr.querySelectorAll('td.afa'))}
 /* Una tienda con filas en affiliate_daily que no está en la lista fija
@@ -583,7 +573,7 @@ function extraRow(name){
   var tr=document.createElement('tr');tr.dataset.store=name;tr.className='afextra';
   var a=document.createElement('td');a.textContent=name;tr.appendChild(a);
   var g=document.createElement('td');g.className='afg';tr.appendChild(g);
-  for(var i=0;i<4;i++){var c=document.createElement('td');c.className='m afa';tr.appendChild(c)}
+  for(var i=0;i<3;i++){var c=document.createElement('td');c.className='m afa';tr.appendChild(c)}
   var tot=document.getElementById('afStoreBody').querySelector('tr.tot');tot.parentNode.insertBefore(tr,tot);
   return tr;
 }
@@ -593,7 +583,8 @@ function setNum(id,txt,empty,multi){var n=document.getElementById(id);n.textCont
 function setSmall(id,txt){var n=document.getElementById(id);n.textContent=txt||'';n.hidden=!txt}
 function afBuckets(p,r){
   var DAY=864e5,from=utcDay(r.from),to=utcDay(r.to),ga=utcDay(GA4_FROM),list=[],first;
-  if(p.mode==='month'){
+  // por día en Mes y en Fechas de hasta 62 días; si no, por semana
+  if(p.mode==='month'||(p.mode==='range'&&(to-from)/DAY<62)){
     first=from;
     for(var t=from;t<=to;t+=DAY){var d=new Date(t);list.push({start:t,label:String(d.getUTCDate()),long:d.getUTCDate()+' '+MES[d.getUTCMonth()]+' '+d.getUTCFullYear(),clicks:null,orders:null,beforeGa4:t<ga})}
     return {list:list,first:first,size:DAY};
@@ -622,16 +613,21 @@ function renderPeriod(p,r,daily,clicks){
   else setNum('afPClicks','—',true);
   var g=rows?groupRows(rows):{},all=emptyAgg();
   Object.keys(g).forEach(function(k){addTo(all,g[k])});
-  if(all.clickDays){setNum('afPProg',fmt(all.clicks));setSmall('afPProgNote',all.atyp?'incl. '+fmt(all.atyp)+' de pico atípico':'')}
-  else{setNum('afPProg',rows&&all.n?'sin dato':'—',true);setSmall('afPProgNote','')}
   setNum('afPOrders',all.ordersKnown?fmt(all.orders):'—',!all.ordersKnown);
-  var curs=Object.keys(all.curs);
+  var fxt=hasConv(all.conv)?'* '+convNote(all.conv):'';
   if(all.amtKnown){
-    var tot={};curs.forEach(function(c){tot[c]=(all.pend[c]||0)+(all.appr[c]||0)});
-    setNum('afPSales',multiAmt(all.sales,curs),false,curs.length>1);
-    setNum('afPComm',multiAmt(tot,curs),false,curs.length>1);
-    setSmall('afPCommSplit','pendiente '+multiAmt(all.pend,curs)+' / aprobada '+multiAmt(all.appr,curs));
+    setNum('afPSales',eurTxt(all.sales,all.conv));
+    setNum('afPComm',eurTxt(all.pend+all.appr,all.conv));
+    setSmall('afPCommSplit','pendiente '+eurTxt(all.pend,all.conv)+' / aprobada '+eurTxt(all.appr,all.conv));
   }else{setNum('afPSales','—',true);setNum('afPComm','—',true);setSmall('afPCommSplit','')}
+  ['afPSales','afPComm'].forEach(function(id){document.getElementById(id).title=fxt});
+  // nota del asterisco: qué se ha convertido y con qué tipo
+  var fxn=[];
+  if(fxt)fxn.push('* C'+fxt.slice(3)+'.');
+  if(AF.fxErr!==undefined&&fxt)fxn.push('No se pudieron cargar los tipos del BCE'+(AF.fxErr?' (error '+AF.fxErr+')':'')+'.');
+  var miss=Object.keys(all.missing);
+  if(miss.length)fxn.push('Sin tipo de cambio para '+miss.join(', ')+': esos importes no están sumados.');
+  setSmall('afFxNote',fxn.join(' '));
   // tabla por tienda
   document.querySelectorAll('#afStoreBody tr.afextra').forEach(function(tr){tr.parentNode.removeChild(tr)});
   Object.keys(g).forEach(function(s){if(!document.querySelector('#afStoreBody tr[data-store="'+s.replace(/["\\]/g,'')+'"]'))extraRow(s)});
@@ -652,6 +648,7 @@ function renderPeriod(p,r,daily,clicks){
   });
   drawAfChart({buckets:B.list,clicksErr:clicks.err!==undefined,message:noData?'Sin datos en '+label:(!rows&&!crows?'Sin datos (no se pudieron cargar)':null)});
   renderAtypicalNote(rows||[]);
+  if(window.kfRenderManual)window.kfRenderManual(rows,label,!rows);
 }
 /* Nota bajo el gráfico: qué días se han dejado fuera y por qué. */
 function renderAtypicalNote(rows){
@@ -665,17 +662,6 @@ function renderAtypicalNote(rows){
   box.hidden=false;
 }
 
-/* ----- comisión total acumulada: desde el 1 jun 2026 hasta hoy, siempre
-   (no sigue el selector). Pendiente + aprobada, por moneda. ----- */
-window.kfRenderTotal=function(d){
-  var n=document.getElementById('afCommTotal'),split=document.getElementById('afCommTotalSplit');
-  var by=d&&d.totals&&d.totals.by_currency;
-  if(!by||!Object.keys(by).length){n.textContent='—';n.classList.add('empty');split.hidden=true;return}
-  var pend={},appr={},tot={},curs=Object.keys(by);
-  curs.forEach(function(c){var p=c2(by[c].commission_pending),a=c2(by[c].commission_approved);pend[c]=p;appr[c]=a;tot[c]=p+a});
-  n.textContent=multiAmt(tot,curs);n.classList.remove('empty');n.classList.toggle('multi',curs.length>1);
-  split.textContent='pendiente '+multiAmt(pend,curs)+' / aprobada '+multiAmt(appr,curs);split.hidden=false;
-};
 /* auth.js llama a esto al entrar: a partir de aquí el selector ya pide datos. */
 window.kfAfStart=function(){AF.ready=true;window.kfAfLoad()};
 
@@ -771,7 +757,7 @@ function gaRender(p,r,d){
 }
 window.kfGaLoad=function(){
   if(!window.kfGa4||!GA.ready)return;
-  var seq=++GA.seq,p={mode:AFP.mode,month:AFP.month,year:AFP.year},r=periodRange(p);
+  var seq=++GA.seq,p=curPeriod(),r=periodRange(p);
   var body=document.getElementById('gaBody');body.classList.add('loading');document.getElementById('gaLoading').hidden=false;
   window.kfGa4.daily(r.from,r.to)
     .then(function(d){if(seq!==GA.seq)return;gaRender(p,r,d||{})},
@@ -791,45 +777,95 @@ window.kfGaLoad=function(){
 window.kfGaStart=function(){GA.ready=true;window.kfGaLoad()};
 gaChartMsg('Cargando…');
 
-/* ---------- añadir mes a mano (POST /admin/affiliates/manual) ----------
-   Pedidos = orders; ventas (importe vendido) = sales_amount. El programa sale
-   de una lista sin 'epn': eBay entra solo desde su API y el Worker lo rechaza. */
+/* ---------- datos a mano por fechas (/admin/affiliates/manual) ----------
+   Una entrada cubre de «Desde» a «Hasta» (mismo mes) y todo su importe cuenta
+   en el último día: la fila se guarda con day = Hasta y day_from = Desde.
+   Crear = POST, editar = PUT y borrar = DELETE, las dos últimas con la clave
+   {day, store, program} de la fila. Pedidos = orders; ventas (importe
+   vendido) = sales_amount. El programa sale de una lista sin 'epn': eBay
+   entra solo desde su API y el Worker lo rechaza. La lista de abajo enseña
+   las entradas a mano del periodo elegido tal como se introdujeron (en su
+   moneda), porque es lo que se edita. */
+var MANUAL={rows:[],edit:null};
+function manualFrom(r){return realDay(r.day_from)?r.day_from:r.day}
+function manualSpan(r){var f=manualFrom(r);return f===r.day?dayTxt(r.day)+' '+r.day.slice(0,4):dayTxt(f)+' – '+dayTxt(r.day)+' '+r.day.slice(0,4)}
 (function(){
   var form=document.getElementById('afManualForm'),msg=document.getElementById('afManualMsg');
   if(!form)return;
+  var list=document.getElementById('afManualList'),cancel=document.getElementById('afManualCancel'),btn=form.querySelector('button[type=submit]');
   var PROGRAMS=['tapfiliate','goaffpro','uppromote','opencart','webgains'];
+  var AMOUNTS=['sales_amount','commission_pending','commission_approved','commission_reversed'];
   function say(t,err){msg.textContent=t;msg.classList.toggle('err',!!err)}
-  var ERR={401:'Tu sesión ha caducado; vuelve a entrar.',403:'Esta cuenta no tiene permiso para guardar.',404:'El Worker no tiene esta ruta; no se ha guardado nada.',409:'Ya hay una fila automática (de la API) para esa tienda, programa y mes; no se ha cambiado nada.'};
+  var ERR={401:'Tu sesión ha caducado; vuelve a entrar.',403:'Esta cuenta no tiene permiso para guardar.',
+    404:'No existe esa entrada a mano (o el Worker aún no tiene esta ruta); no se ha cambiado nada.',
+    409:'Choca con otra entrada a mano de la misma tienda y programa en esas fechas, o con una fila automática (de la API); no se ha cambiado nada.'};
+  function fail(e,what){
+    console.warn('[panel] /admin/affiliates/manual:',e.message);
+    if(e.status===400)return say('El servidor no lo ha aceptado'+(e.serverMessage?': '+e.serverMessage:'')+'. No se ha '+what+' nada.',true);
+    say(ERR[e.status]||('No se pudo completar'+(e.status?' (error '+e.status+')':'')+'. Inténtalo de nuevo.'),true);
+  }
   function twoDec(v){return Math.abs(v*100-Math.round(v*100))<1e-6}
+  function setEdit(r){
+    MANUAL.edit=r?{day:r.day,store:r.store,program:r.program}:null;
+    btn.textContent=r?'Guardar cambios':'Guardar';cancel.hidden=!r;
+    if(!r){form.reset();return}
+    var f=form.elements;
+    f.store.value=r.store;f.program.value=r.program;f.day_from.value=manualFrom(r);f.day_to.value=r.day;
+    f.orders.value=r.orders==null?0:r.orders;
+    AMOUNTS.forEach(function(k){f[k].value=r[k]==null?0:r[k]});
+    f.currency.value=r.currency;f.note.value=r.note||'';
+    document.getElementById('afManual').open=true;form.scrollIntoView({block:'nearest',behavior:'smooth'});
+    say('Editando la entrada de '+r.store+' ('+manualSpan(r)+').');
+  }
+  cancel.addEventListener('click',function(){setEdit(null);say('')});
+  function reload(t){say(t+' Actualizando datos…');setEdit(null);window.kfAfLoad()}
   form.addEventListener('submit',function(e){
     e.preventDefault();
     var f=form.elements,num=function(k){var v=String(f[k].value).trim().replace(',','.');return v===''?NaN:Number(v)};
-    var row={month:f.month.value,store:f.store.value.trim(),program:f.program.value,
+    var row={day_from:f.day_from.value,day_to:f.day_to.value,store:f.store.value.trim(),program:f.program.value,
       orders:num('orders'),sales_amount:num('sales_amount'),commission_pending:num('commission_pending'),
       commission_approved:num('commission_approved'),commission_reversed:num('commission_reversed'),
       currency:f.currency.value.trim().toUpperCase(),note:f.note.value.trim()};
-    if(!/^\d{4}-\d{2}$/.test(row.month)||!row.store)return say('Falta la tienda o el mes.',true);
+    if(!row.store)return say('Falta la tienda.',true);
+    if(!realDay(row.day_from)||!realDay(row.day_to))return say('Elige las dos fechas (Desde y Hasta).',true);
+    if(row.day_from>row.day_to)return say('«Desde» es posterior a «Hasta».',true);
+    if(row.day_from.slice(0,7)!==row.day_to.slice(0,7))return say('Las dos fechas deben ser del mismo mes.',true);
     if(PROGRAMS.indexOf(row.program)===-1)return say('Elige un programa de la lista (eBay entra solo, no se añade a mano).',true);
     if(!/^[A-Z]{3}$/.test(row.currency))return say('La moneda debe tener 3 letras (p. ej. EUR o GBP).',true);
     if(!isFinite(row.orders)||row.orders<0||row.orders%1)return say('Pedidos debe ser un número entero, 0 o más.',true);
-    var amounts=['sales_amount','commission_pending','commission_approved','commission_reversed'];
-    if(amounts.some(function(k){return !isFinite(row[k])||row[k]<0||!twoDec(row[k])}))return say('Revisa los importes: no pueden estar vacíos ni ser negativos, y llevan como mucho 2 decimales.',true);
-    var cur=row.currency;
-    var ok=window.confirm('¿Guardar este mes?\n\n'+row.store+' · '+row.program+' · '+row.month+'\n'+
+    if(AMOUNTS.some(function(k){return !isFinite(row[k])||row[k]<0||!twoDec(row[k])}))return say('Revisa los importes: no pueden estar vacíos ni ser negativos, y llevan como mucho 2 decimales.',true);
+    var cur=row.currency,key=MANUAL.edit,span=manualSpan({day_from:row.day_from,day:row.day_to});
+    var ok=window.confirm((key?'¿Guardar los cambios?':'¿Guardar esta entrada?')+'\n\n'+row.store+' · '+row.program+' · '+span+' (cuenta el '+dayTxt(row.day_to)+')\n'+
       'Pedidos: '+row.orders+' · Ventas (importe vendido): '+curAmt(c2(row.sales_amount),cur)+'\n'+
       'Comisión pendiente '+curAmt(c2(row.commission_pending),cur)+' / aprobada '+curAmt(c2(row.commission_approved),cur)+' / revertida '+curAmt(c2(row.commission_reversed),cur)+
       (row.note?'\nNota: '+row.note:''));
     if(!ok)return say('No se ha enviado nada.');
-    var btn=form.querySelector('button[type=submit]');btn.disabled=true;say('Guardando…');
-    window.kfAffiliates.manual(row)
-      .then(function(){say('Guardado. Actualizando datos…');window.kfLoadDaily()})
-      .catch(function(e){
-        console.warn('[panel] /admin/affiliates/manual:',e.message);
-        if(e.status===400)return say('El servidor no lo ha aceptado'+(e.serverMessage?': '+e.serverMessage:'')+'. No se ha guardado nada.',true);
-        say(ERR[e.status]||('No se pudo guardar'+(e.status?' (error '+e.status+')':'')+'. Inténtalo de nuevo.'),true);
-      })
+    btn.disabled=true;say('Guardando…');
+    (key?window.kfAffiliates.updateManual(key,row):window.kfAffiliates.manual(row))
+      .then(function(){reload(key?'Cambios guardados.':'Guardado.')},function(e){fail(e,'guardado')})
       .then(function(){btn.disabled=false});
   });
+  function del(r){
+    if(!window.confirm('¿Borrar esta entrada a mano?\n\n'+r.store+' · '+r.program+' · '+manualSpan(r)+'\nNo se puede deshacer.'))return;
+    say('Borrando…');
+    window.kfAffiliates.deleteManual({day:r.day,store:r.store,program:r.program})
+      .then(function(){reload('Borrada.')},function(e){fail(e,'borrado')});
+  }
+  window.kfRenderManual=function(rows,label,failed){
+    document.getElementById('afManualSub').textContent='Entradas a mano · '+label;
+    list.innerHTML='';
+    var m=(rows||[]).filter(function(r){return r.source==='manual'});
+    MANUAL.rows=m;
+    if(!m.length){var li=document.createElement('li');li.className='note';li.textContent=failed?'No se pudieron cargar.':'Ninguna en este periodo.';list.appendChild(li);return}
+    m.forEach(function(r){
+      var li=document.createElement('li'),t=document.createElement('span'),cur=r.currency;
+      t.textContent=r.store+' · '+r.program+' · '+manualSpan(r)+' · '+plural(Number(r.orders)||0,'pedido','pedidos')+
+        ' · ventas '+curAmt(c2(r.sales_amount),cur)+' · comisión '+curAmt(c2(r.commission_pending)+c2(r.commission_approved),cur)+(r.note?' · '+r.note:'');
+      var ed=document.createElement('button');ed.type='button';ed.className='go';ed.textContent='Editar';ed.addEventListener('click',function(){setEdit(r)});
+      var dl=document.createElement('button');dl.type='button';dl.className='go del';dl.textContent='Borrar';dl.addEventListener('click',function(){del(r)});
+      li.appendChild(t);li.appendChild(ed);li.appendChild(dl);list.appendChild(li);
+    });
+  };
 })();
 
 /* ---------- catálogo (de /admin/catalog-stats) ----------
