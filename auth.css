@@ -332,7 +332,8 @@
 }
 .kf-globe-row:hover { background: #f7f8fa; }
 .kf-globe-row-label { font-weight: 700; }
-.kf-globe-val { margin-left: auto; font-size: 13px; color: #6b7480; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
+.kf-globe-val { margin-left: auto; font-size: 13px; color: #6b7480; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px; }
+.kf-cur-short { display: none; }
 .kf-globe-chev { flex-shrink: 0; transition: transform .15s; color: #6b7480; }
 .kf-globe-row.open .kf-globe-chev { transform: rotate(180deg); }
 .kf-globe-row.open { color: #1FAF6D; background: #f1faf5; }
@@ -357,4 +358,6 @@
 @media (max-width: 600px) {
   .kf-globe-panel { position: fixed; top: 64px; right: 12px; left: 12px; width: auto; max-width: none; }
   .kf-globe-list { max-height: 50vh; }
+  .kf-cur-full { display: none; }
+  .kf-cur-short { display: inline; }
 }

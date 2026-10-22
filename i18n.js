@@ -33,7 +33,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       'res_back_to_top': 'Back to top',
       'globe_lang': 'Language',
       'globe_currency': 'Currency',
-      'search_currency': 'Search currency…',
+      'search_currency': 'Search country or currency…',
       "auth_forgot": "Forgot password?",
       "res_filters": "Filters",
       "as_hero_sub": "Filter shirts by team, size, season and version — see live stock counts and average prices",
@@ -204,7 +204,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "js_remove_favourite": "Remove from favourites",
       "js_no_saved_shirts": "No saved shirts yet.",
       "js_tap_heart": "Tap the heart on any shirt to save it here.",
-      "js_search_currency": "Search currency…",
+      "js_search_currency": "Search country or currency…",
       "js_menu": "Menu",
       "js_valid_email": "Please enter a valid email.",
       "js_subscribing": "Subscribing…",
@@ -678,12 +678,18 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   window.kfSetLanguage = function(code) { _kfApplyLanguage(code); };
 
   // ── Divisa ───────────────────────────────────────────────────────────────────
-  function _kfCurrencyList() {
+  // Lista de países (no de monedas): cada país con su moneda, por orden alfabético.
+  function _kfCountryList() {
     if (typeof COUNTRIES === 'undefined') return [];
-    var seen = {}, out = [];
-    COUNTRIES.forEach(function(c) { if (!seen[c.currency]) { seen[c.currency] = 1; out.push(c); } });
-    return out.sort(function(a, b) { return a.currency.localeCompare(b.currency); });
+    return COUNTRIES.slice().sort(function(a, b) { return a.name.localeCompare(b.name); });
   }
+  // "EUR €"; si el símbolo es el propio código (DZD), solo "DZD"
+  function _kfCurShort(c) { return c.currency + (c.symbol && c.symbol !== c.currency ? ' ' + c.symbol : ''); }
+  // "Spain (EUR €)"
+  function _kfCountryLabel(c) { return c.name + ' (' + _kfCurShort(c) + ')'; }
+  // Antes se elegía moneda y se guardaba un país cualquiera con ella (EUR → Austria). Solo
+  // nombramos el país si lo eligió la persona con el selector nuevo (marca aparte, kf_country igual).
+  function _kfCountryPicked() { try { return localStorage.getItem('kf_country_picked') === '1'; } catch (e) { return false; } }
   function _kfCurrencyName(code) {
     var lang = localStorage.getItem('kf_lang') || 'en';
     try {
@@ -697,6 +703,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
     if (typeof currentCountry === 'undefined' || !c) return;
     currentCountry = c;
     localStorage.setItem('kf_country', JSON.stringify(c));
+    try { localStorage.setItem('kf_country_picked', '1'); } catch (e) {}
     ['countryFlag', 'countryFlag2'].forEach(function(id) { var el = document.getElementById(id); if (el) el.textContent = c.currency; });
     if (typeof updatePriceSymbols === 'function') updatePriceSymbols();
     if (typeof applyFilters === 'function') applyFilters();
@@ -725,10 +732,10 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
         '<div class="kf-globe-body" data-sec="lang"><div class="kf-globe-list" data-sec="lang"></div></div>' +
         '<button class="kf-globe-row" data-sec="cur" type="button" aria-expanded="false">' +
           '<span class="kf-globe-row-label" data-i18n="globe_currency">Currency</span>' +
-          '<span class="kf-globe-val" data-sec="cur">EUR (€)</span>' + _CHEV +
+          '<span class="kf-globe-val" data-sec="cur"><span class="kf-cur-full">EUR €</span><span class="kf-cur-short">EUR €</span></span>' + _CHEV +
         '</button>' +
         '<div class="kf-globe-body" data-sec="cur">' +
-          '<input class="kf-globe-search" type="text" placeholder="Search currency…" data-i18n-attr="placeholder:search_currency" autocomplete="off"/>' +
+          '<input class="kf-globe-search" type="text" placeholder="Search country or currency…" data-i18n-attr="placeholder:search_currency" autocomplete="off"/>' +
           '<div class="kf-globe-list" data-sec="cur"></div>' +
         '</div>' +
       '</div>';
@@ -744,8 +751,13 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
     var code = localStorage.getItem('kf_lang') || 'en';
     var lang = KF_LANGUAGES.find(function(l) { return l.code === code; }) || KF_LANGUAGES[0];
     var cur = (typeof currentCountry !== 'undefined' && currentCountry) ? currentCountry : { currency: 'EUR', symbol: '€' };
+    var curShort = _kfCurShort(cur), curFull = (_kfCountryPicked() && cur.name) ? _kfCountryLabel(cur) : curShort;
     document.querySelectorAll('.kf-globe-val[data-sec="lang"]').forEach(function(el) { el.textContent = lang.label; });
-    document.querySelectorAll('.kf-globe-val[data-sec="cur"]').forEach(function(el) { el.textContent = cur.currency + ' (' + cur.symbol + ')'; });
+    document.querySelectorAll('.kf-globe-val[data-sec="cur"]').forEach(function(el) {
+      var full = _q(el, '.kf-cur-full'), short = _q(el, '.kf-cur-short');
+      if (full) full.textContent = curFull; if (short) short.textContent = curShort;
+      el.title = curFull;
+    });
     if (_kfGlobeOpen && _kfGlobeSection === 'lang') _kfGlobeBuildLang(_kfGlobeOpen);
     if (_kfGlobeOpen && _kfGlobeSection === 'cur') _kfGlobeBuildCur(_kfGlobeOpen, (_q(_kfGlobeOpen, '.kf-globe-search') || {}).value || '');
   }
@@ -770,24 +782,28 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
 
   function _kfGlobeBuildCur(root, filter) {
     var list = _q(root, '.kf-globe-list[data-sec="cur"]'); if (!list) return;
-    var cur = (typeof currentCountry !== 'undefined' && currentCountry) ? currentCountry.currency : 'EUR';
-    var f = (filter || '').toLowerCase();
+    var cc = (typeof currentCountry !== 'undefined' && currentCountry) ? currentCountry : null;
+    // Con una elección antigua no sabemos el país real: no marcamos ninguno
+    var activeName = (cc && _kfCountryPicked()) ? cc.name : null;
+    var f = (filter || '').toLowerCase().trim();
+    var N = (typeof _CURRENCY_NAMES !== 'undefined') ? _CURRENCY_NAMES : {};
     list.innerHTML = '';
-    var items = _kfCurrencyList().filter(function(c) {
-      return !f || (c.currency + ' ' + _kfCurrencyName(c.currency)).toLowerCase().indexOf(f) !== -1;
+    // Busca por país, código (EUR) y nombre de la moneda (Euro, también en el idioma elegido)
+    var items = _kfCountryList().filter(function(c) {
+      return !f || [c.name, c.currency, N[c.currency] || '', _kfCurrencyName(c.currency)].join(' ').toLowerCase().indexOf(f) !== -1;
     });
     if (!items.length) {
       var empty = document.createElement('div'); empty.className = 'kf-globe-empty'; empty.textContent = '—'; list.appendChild(empty);
     }
     items.forEach(function(c) {
+      var isActive = c.name === activeName && c.currency === cc.currency;
       var o = document.createElement('button');
       o.type = 'button';
-      o.className = 'kf-globe-opt' + (c.currency === cur ? ' active' : '');
+      o.className = 'kf-globe-opt' + (isActive ? ' active' : '');
       var name = document.createElement('span');
-      name.textContent = c.currency + ' — ' + _kfCurrencyName(c.currency);
-      var sym = document.createElement('span'); sym.className = 'kf-globe-sym';
-      if (c.currency === cur) sym.innerHTML = _CHECK; else sym.textContent = c.symbol;
-      o.appendChild(name); o.appendChild(sym);
+      name.textContent = _kfCountryLabel(c);
+      o.appendChild(name);
+      if (isActive) { var sym = document.createElement('span'); sym.className = 'kf-globe-sym'; sym.innerHTML = _CHECK; o.appendChild(sym); }
       o.onclick = function() { _kfGlobeClose(); window.kfSelectCurrency(c); };
       list.appendChild(o);
     });
