@@ -123,6 +123,7 @@ a.stats:hover .big{border-color:var(--line-2)}
 .ic img{width:50px;height:50px;object-fit:contain;border-radius:13px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45));transition:transform .25s var(--ease)}
 .app:hover .ic img{transform:scale(1.07)}
 .ic img.lt{background:#fff;border-radius:50%;padding:0}
+.ic img.wb{background:#fff;border-radius:13px;padding:7px}
 .ic img.kfi{background:#fff;padding:5px 7px;width:auto;max-width:50px}
 .bd{position:absolute;top:-8px;right:-12px;min-width:24px;height:24px;padding:0 7px;display:grid;place-items:center;border-radius:99px;font:700 12.5px var(--disp);font-style:normal;color:#fff;background:linear-gradient(160deg,#ff8f7d,#f0412f);box-shadow:0 0 0 3px var(--card),0 6px 14px -2px rgba(255,80,60,.65);font-variant-numeric:tabular-nums}
 .an{font-size:12px;color:var(--mut);font-weight:500;transition:color .2s}
@@ -188,7 +189,7 @@ tr.tot td.gold{color:var(--gold)}
 .toast button:hover{background:rgba(46,229,157,.25)}
 #lock{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;background:radial-gradient(700px 420px at 50% 28%,rgba(46,229,157,.14),transparent 65%),radial-gradient(600px 400px at 90% 100%,rgba(54,211,230,.08),transparent 60%),var(--bg);padding:20px}
 .lk-logo{background:#fff;border-radius:14px;padding:8px 12px;line-height:0;box-shadow:0 12px 30px -10px rgba(0,0,0,.8),0 0 0 1px rgba(46,229,157,.2)}.lk-logo img{height:52px;width:auto;display:block}
-.lk-clock{text-align:center}.lk-time{font:800 clamp(64px,16vw,112px)/1 var(--disp);letter-spacing:-.04em;background:linear-gradient(180deg,#fff,#a7efd0);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.lk-clock{text-align:center}.lk-time{display:inline-block;box-sizing:content-box;font:800 clamp(80px,24vw,168px)/1.18 var(--disp);letter-spacing:-.02em;padding:.06em .14em .1em;background:linear-gradient(180deg,#fff,#a7efd0);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:visible}
 .lk-date{margin-top:8px;color:#c4d8cd;font-size:17px;text-shadow:0 2px 12px rgba(0,0,0,.8)}.lk-date::first-letter{text-transform:uppercase}
 .lk-pins{display:flex;gap:16px}.lk-pins i{width:16px;height:16px;border-radius:50%;border:2px solid rgba(236,244,239,.35);transition:background .12s,border-color .12s,box-shadow .12s,transform .12s}
 .lk-pins i.f{background:var(--g);border-color:var(--g);box-shadow:0 0 14px rgba(46,229,157,.7);transform:scale(1.1)}
