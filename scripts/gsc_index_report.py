@@ -17,6 +17,7 @@ import os
 import re
 import sys
 import time
+from pathlib import Path
 
 import requests
 from google.auth.transport.requests import AuthorizedSession
@@ -49,6 +50,11 @@ def page_type(url):
 
 
 def sitemap_urls():
+    # Primero el sitemap.xml del repo (Cloudflare bloquea la descarga desde los
+    # runners de GitHub); la descarga por URL es el plan B.
+    local = Path(__file__).resolve().parent.parent / "sitemap.xml"
+    if local.is_file():
+        return re.findall(r"<loc>([^<]+)</loc>", local.read_text(encoding="utf-8"))
     r = requests.get(SITEMAP_URL, timeout=20)
     r.raise_for_status()
     return re.findall(r"<loc>([^<]+)</loc>", r.text)
