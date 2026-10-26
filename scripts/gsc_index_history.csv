@@ -1,7 +1,7 @@
 date,type,total,indexed,not_indexed,main_reason
-2026-10-26,equipos,159,55,104,URL is unknown to Google
+2026-10-26,equipos,159,55,104,Discovered - currently not indexed
 2026-10-26,clubes,25,25,0,
 2026-10-26,selecciones,8,8,0,
 2026-10-26,ligas,4,4,0,
 2026-10-26,hubs indice,4,4,0,
-2026-10-26,otras,6,3,3,Crawled - currently not indexed
+2026-10-26,otras,6,3,3,Discovered - currently not indexed
