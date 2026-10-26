@@ -28,8 +28,6 @@ jobs:
   report:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    env:
-      GSC_KEY_FILE: ${{ runner.temp }}/gsc-key.json
     steps:
       - name: Descargar el codigo
         uses: actions/checkout@v4
@@ -45,6 +43,7 @@ jobs:
       - name: Escribir la clave en un archivo temporal
         env:
           GSC_KEY_JSON: ${{ secrets.GSC_KEY_JSON }}
+          GSC_KEY_FILE: ${{ runner.temp }}/gsc-key.json
         run: |
           if [ -z "$GSC_KEY_JSON" ]; then
             echo "::error::Falta el secret GSC_KEY_JSON (Settings > Secrets and variables > Actions)."
@@ -54,6 +53,8 @@ jobs:
           printf '%s' "$GSC_KEY_JSON" > "$GSC_KEY_FILE"
 
       - name: Ejecutar el informe
+        env:
+          GSC_KEY_FILE: ${{ runner.temp }}/gsc-key.json
         run: python scripts/gsc_index_report.py --only-if-changed --summary-file "$RUNNER_TEMP/summary.md"
 
       - name: Abrir o actualizar el PR si cambio algo
@@ -82,6 +83,8 @@ jobs:
 
       - name: Borrar la clave temporal
         if: always()
+        env:
+          GSC_KEY_FILE: ${{ runner.temp }}/gsc-key.json
         run: rm -f "$GSC_KEY_FILE"
 
       - name: Explicar el fallo
