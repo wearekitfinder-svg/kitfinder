@@ -123,22 +123,45 @@ def history_rows(rows, today):
     return out
 
 
-def summary(rows, previous):
-    if not previous:
-        return "Primera ejecución: sin datos anteriores con los que comparar."
+def state_changes(rows, previous):
+    """Cambios de estado de indexacion, URLs nuevas y URLs que ya no estan en el sitemap.
+    La fecha de comprobacion y la de rastreo NO cuentan como cambio."""
     prev = {r["url"]: r for r in previous}
-    lines = []
-    for r in rows:
-        p = prev.get(r["url"])
-        if p is None:
-            lines.append(f"  nueva en el sitemap: {r['url']} ({r['coverage_state']})")
-        elif (p["indexed"] == "True") != r["indexed"]:
-            lines.append(f"  {'+ ahora indexada' if r['indexed'] else '- ya no indexada'}: {r['url']} ({r['coverage_state']})")
-        elif p["coverage_state"] != r["coverage_state"]:
-            lines.append(f"  ~ {r['url']}: {p['coverage_state']} -> {r['coverage_state']}")
-    if not lines:
-        return "Sin cambios respecto a la ejecución anterior."
-    return "Cambios respecto a la ejecución anterior:\n" + "\n".join(lines)
+    now = {r["url"]: r for r in rows}
+    changed = [(u, prev[u]["coverage_state"] or "sin dato", r["coverage_state"] or "sin dato")
+               for u, r in now.items()
+               if u in prev and (prev[u]["coverage_state"] != r["coverage_state"]
+                                 or (prev[u]["indexed"] == "True") != r["indexed"])]
+    added = [(u, r["coverage_state"] or "sin dato") for u, r in now.items() if u not in prev]
+    removed = [(u, prev[u]["coverage_state"] or "sin dato") for u in prev if u not in now]
+    return changed, added, removed
+
+
+def summary(rows, previous, today):
+    """Resumen en Markdown (sirve para la consola y para el cuerpo del PR)."""
+    out = [f"## Informe de indexación {today}", ""]
+    if not previous:
+        out.append("Primera ejecución: sin datos anteriores con los que comparar.")
+    else:
+        changed, added, removed = state_changes(rows, previous)
+        if not (changed or added or removed):
+            out.append("Sin cambios de estado respecto a la ejecución anterior.")
+        if changed:
+            out += [f"### URLs que cambiaron de estado ({len(changed)})", ""]
+            out += [f"- {u}: de «{a}» a «{b}»" for u, a, b in changed] + [""]
+        if added:
+            out += [f"### URLs nuevas en el sitemap ({len(added)})", ""]
+            out += [f"- {u} ({st})" for u, st in added] + [""]
+        if removed:
+            out += [f"### URLs que ya no están en el sitemap ({len(removed)})", ""]
+            out += [f"- {u} (estaba: {st})" for u, st in removed] + [""]
+    out += ["", "### Totales por tipo", "", "| Tipo | Total | Indexadas | Sin indexar | Causa principal |",
+            "|---|---|---|---|---|"]
+    out += [f"| {h['type']} | {h['total']} | {h['indexed']} | {h['not_indexed']} | {h['main_reason']} |"
+            for h in history_rows(rows, today)]
+    others = [r["url"] for r in rows if r["other_canonical"]]
+    out += ["", f"URLs donde Google eligió otro canonical: {len(others)}"] + [f"- {u}" for u in others]
+    return "\n".join(out) + "\n"
 
 
 def main():
@@ -148,6 +171,9 @@ def main():
     ap.add_argument("--site", help="propiedad exacta; por defecto la que devuelva sites.list")
     ap.add_argument("--probe", action="store_true", help="inspecciona 3 URLs y no escribe nada")
     ap.add_argument("--limit", type=int, default=DAILY_LIMIT)
+    ap.add_argument("--summary-file", help="escribe aqui el resumen en Markdown (cuerpo del PR)")
+    ap.add_argument("--only-if-changed", action="store_true",
+                    help="si ningun estado cambio ni hay URLs nuevas/retiradas, no escribe nada")
     args = ap.parse_args()
     if not args.key or not os.path.isfile(args.key):
         sys.exit("Falta la clave: usa --key RUTA o la variable GSC_KEY_FILE.")
@@ -175,18 +201,17 @@ def main():
         return
     today = datetime.date.today().isoformat()
     previous = read_csv(SNAPSHOT_CSV)
+    text = summary(rows, previous, today)
+    print("\n" + text)
+    if args.only_if_changed and previous and not any(state_changes(rows, previous)):
+        print("Sin cambios de estado: no se escribe ningún archivo.")
+        return
     write_csv(SNAPSHOT_CSV, SNAPSHOT_FIELDS, rows)
     hist = [h for h in read_csv(HISTORY_CSV) if h["date"] != today]
     write_csv(HISTORY_CSV, HISTORY_FIELDS, hist + history_rows(rows, today))
-
-    print(f"\n{'tipo':<14}{'total':>6}{'indexadas':>11}{'sin indexar':>13}  causa principal")
-    for h in history_rows(rows, today):
-        print(f"{h['type']:<14}{h['total']:>6}{h['indexed']:>11}{h['not_indexed']:>13}  {h['main_reason']}")
-    print("\n" + summary(rows, previous))
-    others = [r["url"] for r in rows if r["other_canonical"]]
-    print(f"\nURLs donde Google eligió otro canonical: {len(others)}")
-    for u in others:
-        print("  " + u)
+    if args.summary_file:
+        with open(args.summary_file, "w", encoding="utf-8") as f:
+            f.write(text)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,90 @@
+# .github/workflows/gsc-index-report.yml
+# Informe semanal de indexacion (API URL Inspection de Search Console).
+# Inspecciona las URLs del sitemap y, SOLO si cambio el estado de alguna URL
+# (o entro/salio una URL del sitemap), abre un PR con los dos CSV actualizados
+# y el resumen de cambios en la descripcion. Si solo cambia la fecha, no hace nada.
+# Necesita el secret GSC_KEY_JSON (contenido completo del .json de la cuenta de
+# servicio). Va en el REPOSITORIO PUBLICO: el secret nunca se imprime ni se sube.
+# Requiere: Settings > Actions > General > "Allow GitHub Actions to create and
+# approve pull requests".
+
+name: Informe de indexacion (semanal)
+
+on:
+  schedule:
+    # 06:00 UTC del lunes (despues del sitemap de las 05:00)
+    - cron: '0 6 * * 1'
+  workflow_dispatch:        # tambien a mano
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: gsc-index-report
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GSC_KEY_FILE: ${{ runner.temp }}/gsc-key.json
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: pip install --quiet requests google-auth
+
+      - name: Escribir la clave en un archivo temporal
+        env:
+          GSC_KEY_JSON: ${{ secrets.GSC_KEY_JSON }}
+        run: |
+          if [ -z "$GSC_KEY_JSON" ]; then
+            echo "::error::Falta el secret GSC_KEY_JSON (Settings > Secrets and variables > Actions)."
+            exit 1
+          fi
+          umask 077
+          printf '%s' "$GSC_KEY_JSON" > "$GSC_KEY_FILE"
+
+      - name: Ejecutar el informe
+        run: python scripts/gsc_index_report.py --only-if-changed --summary-file "$RUNNER_TEMP/summary.md"
+
+      - name: Abrir o actualizar el PR si cambio algo
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -z "$(git status --porcelain -- scripts/gsc_index_status.csv scripts/gsc_index_history.csv)" ]; then
+            echo "Sin cambios de estado: no se abre PR."
+            exit 0
+          fi
+          BRANCH="gsc-report/weekly"
+          git config user.name  "github-actions"
+          git config user.email "github-actions@github.com"
+          git checkout -b "$BRANCH"
+          git add scripts/gsc_index_status.csv scripts/gsc_index_history.csv
+          git commit -m "Informe de indexacion $(date -u +%F) (automatico)"
+          git push --force origin "$BRANCH"
+          if gh pr view "$BRANCH" --json state --jq '.state' 2>/dev/null | grep -q OPEN; then
+            gh pr edit "$BRANCH" --body-file "$RUNNER_TEMP/summary.md"
+            echo "PR existente actualizado."
+          else
+            gh pr create --base main --head "$BRANCH" \
+              --title "Informe de indexación $(date -u +%F)" \
+              --body-file "$RUNNER_TEMP/summary.md"
+          fi
+
+      - name: Borrar la clave temporal
+        if: always()
+        run: rm -f "$GSC_KEY_FILE"
+
+      - name: Explicar el fallo
+        if: failure()
+        run: |
+          echo "::error::El informe de indexacion fallo. Causas habituales: (1) falta o esta mal pegado el secret GSC_KEY_JSON; (2) la cuenta de servicio ya no tiene permiso en Search Console; (3) cuota diaria de la API agotada (429); (4) 'Allow GitHub Actions to create and approve pull requests' sin activar. Mira el paso que fallo, mas arriba en este log."
