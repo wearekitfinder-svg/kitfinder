@@ -608,6 +608,16 @@ def count(S, t):
     return sum(S[t]["prices"].values()) if t in S else 0
 
 
+# Zonas para "Related" (pais de la tabla teams de D1 -> zona), solo para
+# completar cuando la liga y el pais del equipo dan pocos enlaces.
+REGION = {"Inglaterra": "uk", "Escocia": "uk", "Gales": "uk", "Irlanda del Norte": "uk",
+          "Brasil": "sudamerica", "Argentina": "sudamerica", "Uruguay": "sudamerica",
+          "Colombia": "sudamerica", "Chile": "sudamerica", "Ecuador": "sudamerica",
+          "Estados Unidos": "norteamerica", "México": "norteamerica", "Canadá": "norteamerica",
+          "Países Bajos": "benelux", "Bélgica": "benelux",
+          "España": "iberia", "Portugal": "iberia"}
+
+
 def related_links(page, pages, url_of, league_of, country_of, tipo_of, S):
     shown, d1s, kind = pages[page]
     me = d1s[0] if d1s else None
@@ -639,10 +649,15 @@ def related_links(page, pages, url_of, league_of, country_of, tipo_of, S):
             lp = next((p for p, n in LEAGUES.items() if n == lg), None)
             if lp:
                 pick.append(("/" + lp, lg))
-        if len(pick) < 6:   # sin liga/pais conocido: clubes con un numero parecido de camisetas
+        # pocos de su liga/pais: clubes de la misma zona (Boca -> River, Penarol,
+        # Flamengo...) antes que equipos sin relacion
+        rg = REGION.get(ct)
+        if rg and len(pick) < 6:
+            add([t for t in url_of if REGION.get(country_of.get(t)) == rg and not is_nat(t)], 6)
+        if len(pick) < 4:   # aun asi muy pocos: clubes con un numero parecido de camisetas
             n0 = count(S, me)
             for t in sorted((t for t in url_of if not is_nat(t)), key=lambda t: (abs(count(S, t) - n0), t)):
-                if url_of[t][0] != "/" + page and url_of[t] not in pick and len(pick) < 6:
+                if url_of[t][0] != "/" + page and url_of[t] not in pick and len(pick) < 4:
                     pick.append(url_of[t])
     return [(nm, u) for u, nm in pick][:8]
 

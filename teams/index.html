@@ -71,6 +71,12 @@
   .kf-team-name{display:flex;flex-direction:column;gap:1px;}
   .kf-team-meta{font-size:12px;color:#9aa3ad;font-weight:500;}
 </style>
+<style id="kf-hub-leagues-css">
+  .kf-hub-leagues ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
+  .kf-hub-leagues a{display:inline-block;padding:6px 12px;border:1px solid #e2e6ea;border-radius:20px;font-size:14px;color:#1e2530;text-decoration:none;background:#fff;}
+  .kf-hub-leagues a:hover{border-color:#1FAF6D;color:#1FAF6D;}
+  .kf-hub-leagues{margin:1rem 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;font-size:13px;color:#5a6472;}
+</style>
 <link rel="stylesheet" href="/footer.css?v=3" id="kf-footer-css">
 <script src="/footer.js?v=1" defer id="kf-footer-js"></script>
 </head>
@@ -81,6 +87,9 @@
   </a>
   <h1 data-i18n="teams_hub_title">Football Shirts by Team</h1>
   <p class="kf-hub-intro" data-i18n="kfd_hub_intro" data-i18n-vars="n=209%2C586;s=251;k=192;median=%E2%82%AC70;date=11%20October%202026;dnum=11%2F10%2F2026">Kit Finder lists 209,586 football shirts from 251 stores across these 192 clubs and national teams. The middle price is €70. Each row shows the shirts in stock, the number of stores and the typical (median) price.</p>
+  <!-- kf-hub-leagues:start -->
+  <nav class="kf-hub-leagues" aria-label="Leagues"><span data-i18n="footer_browse_by">Browse by</span><ul><li><a href="/leagues/premier-league">Premier League</a></li><li><a href="/leagues/la-liga">La Liga</a></li><li><a href="/leagues/serie-a">Serie A</a></li><li><a href="/leagues/bundesliga">Bundesliga</a></li><li><a href="/national" data-i18n="footer_national">National teams</a></li></ul></nav>
+  <!-- kf-hub-leagues:end -->
   <div class="kf-team-list">
     <a href="/teams/aberdeen" class="kf-team-row"><span class="kf-team-name">Aberdeen<small class="kf-team-meta" data-i18n="kfd_row" data-i18n-vars="s=60;p=%E2%82%AC52;date=11%20October%202026;dnum=11%2F10%2F2026">60 stores · typical €52</small></span><span class="kf-team-count">315</span></a>
     <a href="/clubs/ac-milan" class="kf-team-row"><span class="kf-team-name">AC Milan<small class="kf-team-meta" data-i18n="kfd_row" data-i18n-vars="s=194;p=%E2%82%AC109;date=11%20October%202026;dnum=11%2F10%2F2026">194 stores · typical €109</small></span><span class="kf-team-count">3,725</span></a>
