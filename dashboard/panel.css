@@ -313,3 +313,11 @@ td.afmsg{text-align:left;white-space:normal}
 .go.utraffic{align-self:flex-start;background:none;border:1px solid var(--line-2);cursor:pointer;margin-top:-6px}
 .go.utraffic:hover{border-color:rgba(46,229,157,.5)}
 .go.utraffic{white-space:normal;text-align:left;max-width:100%}
+/* botón Oficina (tarjeta Catálogo) */
+.office{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:14px;border:1px solid rgba(46,229,157,.32);background:linear-gradient(150deg,rgba(46,229,157,.2),rgba(54,211,230,.06) 60%,rgba(255,255,255,0));box-shadow:var(--glow-g);color:var(--fg);transition:all .2s var(--ease);-webkit-tap-highlight-color:transparent}
+.office:hover{border-color:rgba(46,229,157,.55);transform:translateY(-2px);box-shadow:0 14px 34px -18px rgba(46,229,157,.6)}
+.office:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+.office .ot{display:flex;flex-direction:column;gap:3px;min-width:0}
+.office b{font:700 17px var(--disp);letter-spacing:.01em}
+.office small{font-size:12.5px;color:var(--mut)}
+.office .oa{font-size:18px;font-weight:700;color:var(--g);flex:none}
