@@ -33,14 +33,16 @@ test('empty or invalid URLs pass through', () => {
   assert.strictEqual(affiliateUrl('not a url'), 'not a url');
 });
 
-test('default order: partner stores (Football Finery, Classic) first and alternating, then the rest mixed by store', () => {
+test('default order: partner stores (Football Finery, Classic, Kit Plug, The Soccer Archive, any eBay seller) first and alternating, then the rest mixed by store', () => {
   const k = src.indexOf('const PARTNER_STORES=');
   assert.ok(k >= 0, 'PARTNER_STORES not found');
   const e = src.indexOf('function applyFilters', k);
   const interleave = new Function(src.slice(k, e) + '; return interleaveByStore;')();
-  const mk = (store, n) => ({ store, n });
+  const mk = (store, n, url) => ({ store, n, url: url || 'https://www.example.com/p/' + n });
   const cfs = n => mk('Classic Football Shirts', n), ff = n => mk('Football Finery', n);
-  const out = interleave([cfs(1), cfs(2), cfs(3), mk('Store A', 1), ff(1), mk('Store B', 1), ff(2), mk('Store A', 2)]);
-  assert.deepStrictEqual(out.map(x => x.store + x.n),
-    ['Classic Football Shirts1', 'Football Finery1', 'Classic Football Shirts2', 'Football Finery2', 'Classic Football Shirts3', 'Store A1', 'Store B1', 'Store A2']);
+  const eb = (seller, n) => mk(seller, n, 'https://www.ebay.co.uk/itm/' + n);
+  const out = interleave([cfs(1), cfs(2), cfs(3), mk('Store A', 1), ff(1), mk('Store B', 1), eb('Seller X', 1), eb('Seller Y', 2), mk('Kit Plug', 1), mk('The Soccer Archive', 1), mk('Store A', 2)]);
+  assert.deepStrictEqual(out.map(x => x.store + x.n), [
+    'Classic Football Shirts1', 'Football Finery1', 'Seller X1', 'Kit Plug1', 'The Soccer Archive1',
+    'Classic Football Shirts2', 'Seller Y2', 'Classic Football Shirts3', 'Store A1', 'Store B1', 'Store A2']);
 });
