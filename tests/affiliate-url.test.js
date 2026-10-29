@@ -46,3 +46,8 @@ test('default order: partner stores (Football Finery, Classic, Kit Plug, The Soc
     'Classic Football Shirts1', 'Football Finery1', 'Seller X1', 'Kit Plug1', 'The Soccer Archive1',
     'Classic Football Shirts2', 'Seller Y2', 'Classic Football Shirts3', 'Store A1', 'Store B1', 'Store A2']);
 });
+
+test('the partner order runs for the default sort ("relevant"), not only for an empty sort value', () => {
+  assert.ok(src.includes('if(!u||"relevant"===u){v=interleaveByStore(v);}'));
+  assert.ok(/<option value="relevant"/.test(fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8')));
+});
