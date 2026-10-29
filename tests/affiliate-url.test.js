@@ -33,12 +33,14 @@ test('empty or invalid URLs pass through', () => {
   assert.strictEqual(affiliateUrl('not a url'), 'not a url');
 });
 
-test('default order: partner stores (Football Finery) go first, then the rest mixed by store, Classic last', () => {
+test('default order: partner stores (Football Finery, Classic) first and alternating, then the rest mixed by store', () => {
   const k = src.indexOf('const PARTNER_STORES=');
   assert.ok(k >= 0, 'PARTNER_STORES not found');
   const e = src.indexOf('function applyFilters', k);
   const interleave = new Function(src.slice(k, e) + '; return interleaveByStore;')();
   const mk = (store, n) => ({ store, n });
-  const out = interleave([mk('Classic Football Shirts', 1), mk('Store A', 1), mk('Football Finery', 1), mk('Store B', 1), mk('Football Finery', 2), mk('Store A', 2)]);
-  assert.deepStrictEqual(out.map(x => x.store + x.n), ['Football Finery1', 'Football Finery2', 'Store A1', 'Store B1', 'Store A2', 'Classic Football Shirts1']);
+  const cfs = n => mk('Classic Football Shirts', n), ff = n => mk('Football Finery', n);
+  const out = interleave([cfs(1), cfs(2), cfs(3), mk('Store A', 1), ff(1), mk('Store B', 1), ff(2), mk('Store A', 2)]);
+  assert.deepStrictEqual(out.map(x => x.store + x.n),
+    ['Classic Football Shirts1', 'Football Finery1', 'Classic Football Shirts2', 'Football Finery2', 'Classic Football Shirts3', 'Store A1', 'Store B1', 'Store A2']);
 });
