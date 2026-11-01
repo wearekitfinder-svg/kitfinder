@@ -338,15 +338,21 @@ td.afmsg{text-align:left;white-space:normal}
 .apps::-webkit-scrollbar-thumb{background:rgba(46,229,157,.35);border-radius:99px}
 .apps::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:99px}
 
-/* Todoist: una fila de tarjetas con barra de desplazamiento horizontal abajo */
-.tasks{flex-direction:row;align-items:stretch;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:4px 2px 14px;scrollbar-width:thin;scrollbar-color:rgba(46,229,157,.45) rgba(255,255,255,.05)}
-.tasks::-webkit-scrollbar{height:10px}
-.tasks::-webkit-scrollbar-thumb{background:rgba(46,229,157,.4);border-radius:99px}
-.tasks::-webkit-scrollbar-thumb:hover{background:rgba(46,229,157,.6)}
-.tasks::-webkit-scrollbar-track{background:rgba(255,255,255,.05);border-radius:99px}
-.tasks li{flex:0 0 min(300px,82vw);flex-wrap:wrap;align-items:flex-start;align-content:flex-start;scroll-snap-align:start}
-.tasks li:hover{transform:translateY(-3px)}
-.tasks li .tx{flex:1 1 0;min-width:0;overflow-wrap:anywhere}
-.tasks li .tgs{flex-basis:100%;justify-content:flex-start;padding-left:35px}
-.tasks li.empty{flex:1 0 100%;align-items:center}
-.tasks li.urg::after,.tasks li.prog::after{top:10px;bottom:10px}
+/* Todoist como tablero (columnas = secciones de Todoist), con barra horizontal abajo */
+.board{display:flex;align-items:flex-start;gap:14px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:2px 2px 14px;scrollbar-width:thin;scrollbar-color:rgba(46,229,157,.45) rgba(255,255,255,.05)}
+.board::-webkit-scrollbar{height:10px}
+.board::-webkit-scrollbar-thumb{background:rgba(46,229,157,.4);border-radius:99px}
+.board::-webkit-scrollbar-thumb:hover{background:rgba(46,229,157,.6)}
+.board::-webkit-scrollbar-track{background:rgba(255,255,255,.05);border-radius:99px}
+.boardmsg{margin:0;padding:6px 4px;color:var(--dim);font-size:14px;display:flex;align-items:center;gap:12px}
+.bcol{flex:0 0 min(max(250px,calc((100% - 42px) / 4)),84vw);display:flex;flex-direction:column;gap:12px;min-width:0;scroll-snap-align:start}
+.bh{display:flex;align-items:baseline;gap:8px;padding:0 4px}
+.bh b{font:700 15px/1.2 var(--disp);letter-spacing:-.005em}
+.bh .bn{color:var(--dim);font-size:13px;font-variant-numeric:tabular-nums}
+.bcol .tasks{max-height:460px;overflow-y:auto;overscroll-behavior:contain;padding:4px 4px 4px 2px;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+.bcol .tasks li{flex-wrap:wrap;align-items:flex-start;align-content:flex-start}
+.bcol .tasks li:hover{transform:translateY(-2px)}
+.bcol .tasks li .tx{flex:1 1 0;min-width:0;overflow-wrap:anywhere}
+.bcol .tasks li .tgs{flex-basis:100%;justify-content:flex-start;padding-left:35px}
+.tg.ov{background:rgba(255,106,88,.16);color:var(--coral)}
+.bempty{margin:0;padding:12px 14px;color:var(--dim);font-size:13.5px;border:1px dashed var(--line);border-radius:14px}

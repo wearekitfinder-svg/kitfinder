@@ -909,13 +909,14 @@ function taskRow(cls,text){
 }
 function tasksMessage(text,withRetry){
   taskList.innerHTML='';
-  var li=taskRow('empty',text);
+  var p=document.createElement('p');p.className='boardmsg';
+  var t=document.createElement('span');t.textContent=text;p.appendChild(t);
   if(withRetry){
     var b=document.createElement('button');b.type='button';b.className='go retry';b.textContent='Reintentar';
     b.addEventListener('click',function(){tasksMessage('Cargando…');window.kfTasksLoad()});
-    li.appendChild(b);
+    p.appendChild(b);
   }
-  taskList.appendChild(li);
+  taskList.appendChild(p);
 }
 function dueKey(d){return d?d.slice(0,10):'9999-99-99'}
 function dueTxt(d){
@@ -925,26 +926,52 @@ function dueTxt(d){
 }
 function tag(text,cls){var e=document.createElement('em');e.className='tg'+(cls?' '+cls:'');e.textContent=text;return e}
 
+/* Columnas del tablero = secciones de Todoist (mismo orden que en Todoist).
+   Lo que esté en «Sin sección», «Hecho recientemente» o «Errores automáticos»
+   no se muestra aquí. */
+var BOARD=[
+  {id:'6hFCJrPRCm426R65',name:'Urgente',cls:'urg'},
+  {id:'6hFCJrJpfXHpg7j5',name:'En curso',cls:'prog'},
+  {id:'6hFCJrQ7P8458R2X',name:'Pendiente',cls:''},
+  {id:'6hXhwCqhGH288fRX',name:'añadir o quitar tienda (web o ebay)',cls:''}
+];
+function todayKey(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+function emptyCol(){var p=document.createElement('p');p.className='bempty';p.textContent='Sin tareas';return p}
+function syncCol(col){
+  if(!col)return;
+  var n=col.querySelectorAll('li[data-id]').length,em=col.querySelector('.bempty');
+  col.querySelector('.bn').textContent=n;
+  if(!n&&!em)col.appendChild(emptyCol());
+  else if(n&&em)em.parentNode.removeChild(em);
+}
 function renderTasks(tasks){
-  tasks=tasks.slice().sort(function(a,b){
-    if(!!a.in_progress!==!!b.in_progress)return a.in_progress?-1:1;
-    var da=dueKey(a.due),db=dueKey(b.due);return da<db?-1:da>db?1:0;
-  });
+  var today=todayKey();
   taskList.innerHTML='';
-  if(!tasks.length){tasksMessage('Sin tareas pendientes');return}
-  tasks.forEach(function(t){
-    var li=document.createElement('li');li.className=t.in_progress?'prog':'';li.dataset.id=t.id;
-    var b=document.createElement('button');b.type='button';b.className='chk';
-    b.setAttribute('aria-label','Cerrar tarea: '+t.content);
-    b.disabled=!!pendingClose[t.id];
-    b.addEventListener('click',function(){closeTask(t)});
-    var tx=document.createElement('span');tx.className='tx';tx.textContent=t.content;
-    var tg=document.createElement('span');tg.className='tgs';
-    if(t.in_progress)tg.appendChild(tag('En curso','c'));
-    if(t.due)tg.appendChild(tag(dueTxt(t.due)));
-    (t.labels||[]).forEach(function(l){tg.appendChild(tag(l))});
-    li.appendChild(b);li.appendChild(tx);if(tg.children.length)li.appendChild(tg);
-    taskList.appendChild(li);
+  BOARD.forEach(function(c){
+    var mine=tasks.filter(function(t){return t.section_id===c.id}).sort(function(a,b){
+      var da=dueKey(a.due),db=dueKey(b.due);return da<db?-1:da>db?1:0;
+    });
+    var col=document.createElement('section');col.className='bcol';
+    var h=document.createElement('header');h.className='bh';
+    var nm=document.createElement('b');nm.textContent=c.name;
+    var cnt=document.createElement('span');cnt.className='bn';cnt.textContent=mine.length;
+    h.appendChild(nm);h.appendChild(cnt);col.appendChild(h);
+    var ul=document.createElement('ul');ul.className='tasks';
+    mine.forEach(function(t){
+      var li=document.createElement('li');li.className=c.cls;li.dataset.id=t.id;
+      var b=document.createElement('button');b.type='button';b.className='chk';
+      b.setAttribute('aria-label','Cerrar tarea: '+t.content);
+      b.disabled=!!pendingClose[t.id];
+      b.addEventListener('click',function(){closeTask(t)});
+      var tx=document.createElement('span');tx.className='tx';tx.textContent=t.content;
+      var tg=document.createElement('span');tg.className='tgs';
+      if(t.due)tg.appendChild(tag(dueTxt(t.due),dueKey(t.due)<today?'ov':''));
+      (t.labels||[]).forEach(function(l){tg.appendChild(tag(l))});
+      li.appendChild(b);li.appendChild(tx);if(tg.children.length)li.appendChild(tg);
+      ul.appendChild(li);
+    });
+    if(mine.length)col.appendChild(ul);else{col.appendChild(ul);col.appendChild(emptyCol());ul.hidden=true}
+    taskList.appendChild(col);
   });
 }
 
@@ -983,7 +1010,8 @@ function closeTask(t){
       var li=rowOf(t.id);
       delete pendingClose[t.id];
       if(li)li.classList.add('done');
-      setTimeout(function(){if(li&&li.parentNode)li.parentNode.removeChild(li);if(!taskList.children.length)tasksMessage('Sin tareas pendientes')},350);
+      var col=li&&li.closest?li.closest('.bcol'):null;
+      setTimeout(function(){if(li&&li.parentNode)li.parentNode.removeChild(li);syncCol(col)},350);
       showToast('Cerrada: '+t.content,t);
     })
     .catch(function(e){
