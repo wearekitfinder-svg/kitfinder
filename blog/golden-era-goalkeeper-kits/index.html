@@ -11,8 +11,9 @@
   <meta property="og:description" content="Swirls, a cartoon truck and neon: how 90s goalkeepers turned their shirts into the loudest thing on the pitch."/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://wearekitfinder.com/blog/golden-era-goalkeeper-kits"/>
+  <meta property="og:image" content="https://wearekitfinder.com/blog/golden-era-goalkeeper-kits/cover.jpg"/>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Article","headline":"The Golden Era of Goalkeeper Kits: 90s Shirts That Went Wild","author":{"@type":"Organization","name":"Kit Finder"},"publisher":{"@type":"Organization","name":"Kit Finder","url":"https://wearekitfinder.com"},"datePublished":"2026-11-01","mainEntityOfPage":"https://wearekitfinder.com/blog/golden-era-goalkeeper-kits"}
+  {"@context":"https://schema.org","@type":"Article","headline":"The Golden Era of Goalkeeper Kits: 90s Shirts That Went Wild","image":"https://wearekitfinder.com/blog/golden-era-goalkeeper-kits/cover.jpg","author":{"@type":"Organization","name":"Kit Finder"},"publisher":{"@type":"Organization","name":"Kit Finder","url":"https://wearekitfinder.com"},"datePublished":"2026-11-01","mainEntityOfPage":"https://wearekitfinder.com/blog/golden-era-goalkeeper-kits"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -84,6 +85,8 @@
     .lightbox-close{position:absolute;top:20px;right:28px;background:none;border:none;color:#fff;font-size:36px;cursor:pointer;opacity:0.7;line-height:1;}
     .lightbox-close:hover{opacity:1;}
 
+    .kit-image-wrap img{object-fit:contain;max-height:none;}
+
     /* PULL QUOTE */
     .pull-quote{margin:48px 0;padding:28px 32px;background:var(--dark-2);border-radius:var(--radius);border:1px solid var(--border);position:relative;overflow:hidden;}
     .pull-quote::before{content:'"';position:absolute;top:-10px;left:20px;font-family:'Bebas Neue',sans-serif;font-size:120px;color:var(--green);opacity:0.12;line-height:1;pointer-events:none;}
@@ -152,6 +155,11 @@
 </head>
 <body>
 
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+
 <nav class="site-nav">
   <a class="nav-logo" href="/">
     <img src="/images/logo_kitfinder.png" alt="Kit Finder"/>
@@ -165,6 +173,10 @@
   </a>
 </div>
 
+<div class="article-hero-img-wrap">
+  <img src="/blog/golden-era-goalkeeper-kits/cover.jpg" alt="Three 90s goalkeeper shirts: adidas swirls, Boca Juniors cartoon truck and a neon Aca Sport shirt"/>
+</div>
+
 <header class="article-hero">
   <div class="article-tag">La Grada · History</div>
   <h1>The <em>Golden Era</em> of Goalkeeper Kits:<br>90s Shirts That Went Wild</h1>
@@ -173,15 +185,19 @@
     <span class="meta-dot"></span>
     <span class="meta-item">November 2026</span>
     <span class="meta-dot"></span>
-    <span class="meta-item">5 min read</span>
+    <span class="meta-item">6 min read</span>
   </div>
 </header>
 
 <main class="article-wrap">
   <article class="article-body">
 
-    <p>Look at a modern goalkeeper kit: black, grey, a dark blue if the club is feeling brave. Clean, sensible, and — in our opinion — a bit boring.</p>
+    <p>Look at a recent goalkeeper kit: plain colours, the same cut, the same template. Clean, sensible, and — in our opinion — a bit boring.</p>
 
+    <div class="kit-image-wrap" onclick="openLightbox(this)">
+        <img src="/blog/golden-era-goalkeeper-kits/today-keeper-kits.webp" alt="Recent goalkeeper shirts of AC Milan, Atlético Madrid, West Ham, Sevilla, Arsenal and Real Madrid" loading="lazy"/>
+        <div class="kit-caption">Recent goalkeeper shirts. Top row: AC Milan, Atlético Madrid, West Ham. Bottom row: Sevilla, Arsenal, Real Madrid.</div>
+      </div>
     <p>It wasn't always like this. In the 1990s, goalkeepers wore some of the loudest shirts the game has ever seen: swirls, cartoons, neon. Shirts so bold that today they're some of the most sought-after pieces in vintage kit collecting. But to understand why they feel so wild, you have to start with how little freedom keepers once had.</p>
 
     <div class="section-divider"></div>
@@ -195,6 +211,11 @@
       <p>Green was the favourite, mostly because very few teams wore green as their first-choice colour — so the keeper stood out from his team-mates. Another detail that sounds strange today: until the mid-1990s, goalkeepers usually wore the same shorts and socks as the rest of their team.</p>
 
       <p>Then the rulebook loosened, the kit makers got creative, and the keepers got louder.</p>
+
+      <div class="kit-image-wrap" onclick="openLightbox(this)">
+        <img src="/blog/golden-era-goalkeeper-kits/nineties-keeper-kits.webp" alt="Goalkeeper shirts from the 1990s: Roma, Juventus, Tottenham, Manchester United and Palmeiras" loading="lazy"/>
+        <div class="kit-caption">The 1990s, top row: Roma, Juventus, Tottenham. Bottom row: Manchester United, Palmeiras. Look at the sponsors too — Sony MiniDisc, Sharp Viewcam, Hewlett Packard, Parmalat.</div>
+      </div>
     </div>
 
     <div class="section-divider"></div>
@@ -202,6 +223,11 @@
     <div class="brand-section">
       <div class="brand-number">01 / 03</div>
       <h2>Bodo Illgner × <em>Germany, Italia 90</em></h2>
+
+      <div class="kit-image-wrap" onclick="openLightbox(this)">
+        <img src="/blog/golden-era-goalkeeper-kits/adidas-swirl.webp" alt="adidas goalkeeper shirt with pink and yellow swirls on black" loading="lazy"/>
+        <div class="kit-caption">adidas goalkeeper shirt, early 1990s: swirls in black, pink and yellow.</div>
+      </div>
 
       <p>Germany won the 1990 World Cup, and their goalkeeper <strong>Bodo Illgner</strong> did it in a swirling, striped adidas shirt that looked like nothing else at the tournament. He wore it in <strong>at least three colourways</strong>, including a blue version against Colombia.</p>
 
@@ -213,6 +239,11 @@
     <div class="brand-section">
       <div class="brand-number">02 / 03</div>
       <h2>Carlos Navarro Montoya × <em>Boca Juniors, 1995-96</em></h2>
+
+      <div class="kit-image-wrap" onclick="openLightbox(this)">
+        <img src="/blog/golden-era-goalkeeper-kits/boca-truck.webp" alt="Yellow Boca Juniors goalkeeper shirt with a cartoon truck on the chest" loading="lazy"/>
+        <div class="kit-caption">Boca Juniors goalkeeper shirt, 1995-96: the cartoon truck.</div>
+      </div>
 
       <p>If Illgner's shirt was bold, <strong>Montoya's</strong> was a cartoon. The Boca Juniors keeper wore a baggy <strong>yellow shirt with a cartoon truck across the chest</strong>, with Montoya himself drawn behind the wheel. Blue and pink splashes, white stars, psychedelic sleeves, shorts and socks — the whole kit went all in. Boca also had a white version for colour clashes.</p>
 
@@ -229,6 +260,11 @@
       <div class="brand-number">03 / 03</div>
       <h2>Jorge Campos × <em>Mexico, Pumas &amp; ACA Sport</em></h2>
 
+      <div class="kit-image-wrap" onclick="openLightbox(this)">
+        <img src="/blog/golden-era-goalkeeper-kits/aca-sport-surfer.webp" alt="Neon red and green Aca Sport Acapulco Surfer goalkeeper shirt" loading="lazy"/>
+        <div class="kit-caption">Aca Sport "Acapulco Surfer" goalkeeper shirt: the neon style Campos made famous.</div>
+      </div>
+
       <p>No keeper is more linked to loud shirts than <strong>Jorge Campos</strong>. The Mexican goalkeeper designed <strong>most of his own kits</strong> and even ran his own brand, <strong>ACA Sport</strong> — named after his hometown, Acapulco. Umbro and Nike partnered with him, putting their labels on his designs.</p>
 
       <p>The result: neon colours and dazzling geometric patterns, including a fluorescent, psychedelic kit at the <strong>1994 World Cup</strong>. The press often called it flashy. Campos has said the colours came from growing up in Acapulco as a surfer — he liked expressing himself, and it wasn't about putting strikers off.</p>
@@ -244,6 +280,8 @@
 
     <p>Loud or quiet, the point is the same. For the first time, goalkeepers had real choice, and the shirts they chose tell a story that outfield kits rarely do.</p>
 
+    <p>Want to go hunting? Goalkeeper shirts turn up in the stores Kit Finder searches every day, from <a href="/clubs/boca-juniors">Boca Juniors</a> and <a href="/clubs/juventus">Juventus</a> to <a href="/clubs/manchester-united">Manchester United</a> and <a href="/clubs/tottenham">Tottenham</a>. Try searching "goalkeeper" with a 1990s filter.</p>
+
     <div class="search-cta">
       <h3>Find 90s Goalkeeper Shirts on Kit Finder</h3>
       <p>Search across 250+ specialist vintage and retro football shirt stores — all in one place.</p>
@@ -255,6 +293,7 @@
 
     <h3 style="font-size:14px;color:var(--text-muted);margin:48px 0 8px;font-weight:600;">Sources</h3>
     <p style="font-size:13px;color:var(--text-muted);line-height:1.7;">
+      <a href="https://global.espn.com/football/story/_/id/44510563/how-mexico-goalkeeper-jorge-campos-iconic-kits-were-made" target="_blank" rel="noopener">ESPN — How Jorge Campos' iconic kits were made</a> ·
       <a href="https://www.footballshirtculture.com/history/getting-shirty-goalkeeper-shirt-history.html" target="_blank" rel="noopener">Football Shirt Culture — Getting Shirty</a> ·
       <a href="https://goalkeepersaredifferent.com/keepers/getting-shirty.html" target="_blank" rel="noopener">Goalkeepers Are Different — Getting Shirty</a> ·
       <a href="https://www.planetfootball.com/nostalgia/10-iconic-goalkeeper-jerseys-time-good-bad-ugly" target="_blank" rel="noopener">Planet Football — Iconic goalkeeper jerseys</a> ·
@@ -294,6 +333,21 @@
   <div class="kf-foot-bar"><p data-i18n="footer_copy">© 2026 Kit Finder. Kit Finder may earn a commission if you buy through our links. This doesn’t change the price you pay. All trademarks belong to their respective owners.</p></div>
 </footer>
 <!-- kf-footer:end -->
+
+<script>
+function openLightbox(wrap){
+  var img=wrap.querySelector('img');
+  document.getElementById('lightbox-img').src=img.src;
+  document.getElementById('lightbox-img').alt=img.alt;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();});
+</script>
 
 </body>
 </html>
