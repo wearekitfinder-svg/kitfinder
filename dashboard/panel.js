@@ -1020,3 +1020,6 @@ window.kfRender=function(rolling,monthly){
   renderAffiliates(DATA.last30);
 };
 })();
+
+/* Redes (Notificaciones): siempre 2 filas; nº de columnas = apps / 2 (2 apps -> 1, 4 -> 2, 10 -> 5) */
+(function(){var a=document.querySelector('.apps');if(a)a.style.setProperty('--cols',Math.max(1,Math.ceil(a.children.length/2)))})();

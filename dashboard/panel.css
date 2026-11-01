@@ -329,3 +329,24 @@ td.afmsg{text-align:left;white-space:normal}
 .office .cup .st:nth-of-type(2){animation-delay:.35s!important}.office .cup .st:nth-of-type(3){animation-delay:.7s!important}
 @keyframes steam{0%{opacity:0;transform:translateY(5px) scaleY(.7)}30%{opacity:.95}100%{opacity:0;transform:translateY(-9px) scaleY(1.15)}}
 @keyframes cup-sip{0%,55%,100%{transform:rotate(0)}70%,85%{transform:rotate(-9deg) translateY(-1px)}}
+
+/* ---------- nuevo orden (1 nov): redes en horizontal + Todoist en horizontal ---------- */
+/* Redes: siempre 2 filas; las columnas salen solas (2 apps=1 col, 4=2, 6=3, 8=4, 10=5).
+   En pantallas estrechas cada app mantiene un ancho mínimo y la rejilla se desliza. */
+.apps{grid-template-columns:repeat(var(--cols,5),minmax(88px,1fr));grid-template-rows:none;grid-auto-flow:row;overflow-x:auto;overscroll-behavior-x:contain;margin:-10px -14px;padding:10px 14px 12px;scrollbar-width:thin;scrollbar-color:rgba(46,229,157,.4) transparent}
+.apps::-webkit-scrollbar{height:8px}
+.apps::-webkit-scrollbar-thumb{background:rgba(46,229,157,.35);border-radius:99px}
+.apps::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:99px}
+
+/* Todoist: una fila de tarjetas con barra de desplazamiento horizontal abajo */
+.tasks{flex-direction:row;align-items:stretch;gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:4px 2px 14px;scrollbar-width:thin;scrollbar-color:rgba(46,229,157,.45) rgba(255,255,255,.05)}
+.tasks::-webkit-scrollbar{height:10px}
+.tasks::-webkit-scrollbar-thumb{background:rgba(46,229,157,.4);border-radius:99px}
+.tasks::-webkit-scrollbar-thumb:hover{background:rgba(46,229,157,.6)}
+.tasks::-webkit-scrollbar-track{background:rgba(255,255,255,.05);border-radius:99px}
+.tasks li{flex:0 0 min(300px,82vw);flex-wrap:wrap;align-items:flex-start;align-content:flex-start;scroll-snap-align:start}
+.tasks li:hover{transform:translateY(-3px)}
+.tasks li .tx{flex:1 1 0;min-width:0;overflow-wrap:anywhere}
+.tasks li .tgs{flex-basis:100%;justify-content:flex-start;padding-left:35px}
+.tasks li.empty{flex:1 0 100%;align-items:center}
+.tasks li.urg::after,.tasks li.prog::after{top:10px;bottom:10px}
