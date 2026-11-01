@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/dashboard/panel.css?v=18"/>
+<link rel="stylesheet" href="/dashboard/panel.css?v=19"/>
 </head>
 <body>
 
@@ -99,9 +99,7 @@
 
 <section class="card rise" style="--i:3" id="tasksCard">
     <div class="top"><span class="lab">Tareas · Todoist</span><a class="go" href="https://app.todoist.com/app/project/kit-finder-6hF7mJRxVQ7MCvrX" target="_blank" rel="noopener">Abrir Todoist →</a></div>
-    <ul class="tasks" id="taskList" aria-live="polite">
-      <li class="empty"><span class="chk" aria-hidden="true"></span><span class="tx">Cargando…</span></li>
-    </ul>
+    <div class="board" id="taskList" aria-live="polite"><p class="boardmsg">Cargando…</p></div>
   </section>
 
 <section class="card rise" style="--i:4" id="gaCard">
@@ -216,7 +214,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="/dashboard/fx.js?v=1"></script>
-<script src="/dashboard/panel.js?v=16"></script>
+<script src="/dashboard/panel.js?v=17"></script>
 <script src="/dashboard/lock.js?v=3"></script>
 <script src="/dashboard/auth.js?v=13"></script>
 </body>
