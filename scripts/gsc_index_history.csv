@@ -5,3 +5,9 @@ date,type,total,indexed,not_indexed,main_reason
 2026-10-26,ligas,4,4,0,
 2026-10-26,hubs indice,4,4,0,
 2026-10-26,otras,6,3,3,Crawled - currently not indexed
+2026-11-02,equipos,159,106,53,Discovered - currently not indexed
+2026-11-02,clubes,25,23,2,Crawled - currently not indexed
+2026-11-02,selecciones,8,8,0,
+2026-11-02,ligas,4,4,0,
+2026-11-02,hubs indice,4,4,0,
+2026-11-02,otras,7,3,4,URL is unknown to Google
