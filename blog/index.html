@@ -86,6 +86,14 @@
     .site-footer p { font-size: 13px; color: var(--text-muted); }
     .site-footer a { color: var(--green); text-decoration: none; }
     @media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr; } }
+    /* v2 (nov 2026): la foto llega hasta arriba y el logo va encima */
+    .site-nav{position:absolute;top:0;left:0;right:0;background:transparent;backdrop-filter:none;border-bottom:none;height:auto;padding:22px 2rem 0;}
+    .nav-logo img{height:60px;filter:drop-shadow(0 2px 12px rgba(0,0,0,.55));}
+    .blog-hero{min-height:480px;}
+    .blog-hero-overlay{background:linear-gradient(to bottom,rgba(10,14,23,.55) 0%,rgba(10,14,23,.1) 30%,rgba(10,14,23,.85) 100%);}
+    .blog-hero-content{padding:120px 1.5rem 48px;}
+    .card-img-placeholder .big-lupa{height:72px;width:auto;opacity:.55;}
+    @media (max-width:640px){.site-nav{padding:16px 1.1rem 0;}.nav-logo img{height:46px;}.blog-hero{min-height:400px;}.blog-hero-content{padding:100px 1.2rem 36px;}}
   </style>
   <script src="/analytics.js?v=3" defer></script>
   <script src="/i18n.js?v=16" defer></script>
@@ -137,7 +145,7 @@
 
     <div class="blog-card" style="opacity:0.45; pointer-events:none; cursor:default;">
       <div class="card-img-placeholder">
-        <span class="big-icon">⚽</span>
+        <img class="big-lupa" src="/images/lupa-white.png" alt=""/>
         <span>Coming soon</span>
       </div>
       <div class="card-body">
