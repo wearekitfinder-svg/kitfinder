@@ -108,6 +108,7 @@ KF_TRANSLATIONS.nl = {
   "footer_teams": "Teams",
   "crumb_home": "Home",
   "kfh_league_teams": "{league}-teams op Kit Finder",
+  "kfh_more_teams": "Meer teams",
   "footer_browse_by": "Bladeren op",
   "footer_clubs": "Clubs",
   "footer_national": "Nationale teams",

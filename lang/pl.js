@@ -108,6 +108,7 @@ KF_TRANSLATIONS.pl = {
   "footer_teams": "Drużyny",
   "crumb_home": "Strona główna",
   "kfh_league_teams": "Drużyny {league} w Kit Finder",
+  "kfh_more_teams": "Więcej drużyn",
   "footer_browse_by": "Przeglądaj według",
   "footer_clubs": "Kluby",
   "footer_national": "Reprezentacje",
