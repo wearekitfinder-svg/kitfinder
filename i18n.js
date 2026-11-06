@@ -57,6 +57,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "footer_nl_privacy": "Privacy policy",
       "crumb_home": "Home",
       "kfh_league_teams": "{league} teams on Kit Finder",
+      "kfh_more_teams": "More teams",
       "kfd_h_a": "{team} shirts on Kit Finder: the numbers",
       "kfd_h_b": "{team} shirts in stock right now",
       "kfd_h_c": "What's available for {team} today",
@@ -534,7 +535,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '16';
+  var KF_LANG_VER = '17';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }

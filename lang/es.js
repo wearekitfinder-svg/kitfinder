@@ -108,6 +108,7 @@ KF_TRANSLATIONS.es = {
   "footer_teams": "Equipos",
   "crumb_home": "Inicio",
   "kfh_league_teams": "Equipos de {league} en Kit Finder",
+  "kfh_more_teams": "Más equipos",
   "footer_browse_by": "Explorar por",
   "footer_clubs": "Clubes",
   "footer_national": "Selecciones",

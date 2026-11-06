@@ -1,0 +1,25 @@
+# Kit Finder
+
+> Kit Finder (wearekitfinder.com) is a free search engine for vintage, retro and classic football shirts. It brings together listings from hundreds of independent specialist shops in one place, so collectors can find a shirt by team, season, kit version (home, away, third, goalkeeper) and size, compare prices and go straight to the shop that sells it. Kit Finder does not sell shirts itself.
+
+Useful facts:
+- Prices shown are the asking prices of each shop's listing, converted to the visitor's currency; condition and size change the price.
+- Listings come from independent shops; Kit Finder does not authenticate shirts.
+- Available in English, Spanish, French, German, Italian, Dutch, Polish and Portuguese.
+
+## Main pages
+- [Search](https://wearekitfinder.com/): search every listed shop at once by team, season, version and size
+- [Why Kit Finder](https://wearekitfinder.com/why): what Kit Finder is and how it works
+- [Advanced search](https://wearekitfinder.com/shirt-checker): see how many shirts are listed for any team, size and season, and their average price
+- [Long sleeve kits](https://wearekitfinder.com/long-sleeve-kits): long-sleeve vintage football shirts
+
+## Browse by team
+- [Leagues](https://wearekitfinder.com/leagues): Premier League, La Liga, Serie A and Bundesliga shirt pages
+- [Clubs](https://wearekitfinder.com/clubs): major clubs, with price ranges, seasons and shops for each
+- [National teams](https://wearekitfinder.com/national): national team shirts
+- [All teams A-Z](https://wearekitfinder.com/teams): every team with its own page
+
+## La Grada (blog)
+- [La Grada](https://wearekitfinder.com/blog): stories and history behind football shirts
+- [The Golden Era of Goalkeeper Kits](https://wearekitfinder.com/blog/golden-era-goalkeeper-kits): 90s goalkeeper shirts that went wild
+- [When Fashion Met Football](https://wearekitfinder.com/blog/when-fashion-met-football): non-sportswear brands that made iconic kits
