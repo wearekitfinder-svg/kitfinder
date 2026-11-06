@@ -145,6 +145,44 @@
     .back-to-blog:hover{color:var(--green);}
     .back-to-blog .back-label{display:inline;}
     @media(max-width:600px){.back-to-blog .back-label{display:none;}}
+    /* ===== Cabecera v2 (nov 2026): portada a pantalla completa ===== */
+    .kf-progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--green),#7CF0B8);z-index:300;box-shadow:0 0 12px rgba(31,175,109,.6);}
+    .kf-ahero{position:relative;min-height:max(560px,min(88vh,880px));display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;isolation:isolate;}
+    .kf-ahero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;z-index:-2;transform-origin:60% 40%;animation:kfKen 16s ease-out both;}
+    @keyframes kfKen{from{transform:scale(1.12)}to{transform:scale(1)}}
+    .kf-ahero-shade{position:absolute;inset:0;z-index:-1;background:
+      linear-gradient(to bottom,rgba(10,14,23,.70) 0%,rgba(10,14,23,.05) 26%,rgba(10,14,23,.10) 48%,rgba(10,14,23,.86) 78%,var(--dark) 100%),
+      linear-gradient(to right,rgba(10,14,23,.88) 0%,rgba(10,14,23,.68) 45%,rgba(10,14,23,0) 76%),
+      radial-gradient(120% 90% at 50% 40%,transparent 55%,rgba(10,14,23,.55) 100%);}
+    .kf-ahero-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 2rem 0;}
+    .kf-ahero-logo img{height:64px;width:auto;display:block;filter:drop-shadow(0 2px 14px rgba(0,0,0,.6));}
+    .kf-ahero-back{display:inline-flex;align-items:center;gap:8px;padding:9px 16px 9px 12px;border-radius:999px;background:rgba(10,14,23,.45);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);color:#fff;text-decoration:none;font-size:14px;font-weight:600;letter-spacing:.3px;transition:border-color .2s,background .2s;}
+    .kf-ahero-back:hover{border-color:var(--green);background:rgba(31,175,109,.18);}
+    .kf-ahero .article-hero{max-width:1100px;width:100%;margin:0 auto;padding:0 2rem 26px;animation:kfRise .9s .15s cubic-bezier(.2,.7,.2,1) both;}
+    @keyframes kfRise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+    .kf-ahero .article-tag{position:relative;background:rgba(10,14,23,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(31,175,109,.55);color:#7CF0B8;padding:6px 14px 6px 22px;margin-bottom:18px;}
+    .kf-ahero .article-tag::before{content:'';position:absolute;left:9px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(31,175,109,.25);animation:kfPulse 2.2s ease-in-out infinite;}
+    @keyframes kfPulse{50%{box-shadow:0 0 0 7px rgba(31,175,109,0)}}
+    .kf-ahero .article-hero h1{font-size:clamp(2.8rem,7.2vw,6rem);line-height:.95;letter-spacing:1.5px;max-width:14ch;text-shadow:0 6px 40px rgba(0,0,0,.7);margin-bottom:22px;}
+    .kf-ahero .article-hero h1 em{text-shadow:0 2px 0 rgba(0,0,0,.35),0 4px 26px rgba(0,0,0,.95);}
+    .kf-ahero .article-meta{margin-bottom:0;gap:14px;}
+    .kf-ahero .meta-item{color:rgba(232,234,240,.85);font-weight:500;}
+    .kf-ahero .meta-dot{background:var(--green);}
+    .kf-ahero-scroll{display:flex;justify-content:center;padding-bottom:22px;}
+    .kf-ahero-scroll span{display:block;width:1px;height:44px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.7));position:relative;overflow:hidden;}
+    .kf-ahero-scroll span::after{content:'';position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--green);animation:kfDrop 1.8s ease-in-out infinite;}
+    @keyframes kfDrop{to{top:100%}}
+    .kf-ahero + .article-wrap,.kf-ahero ~ main .article-wrap{padding-top:28px;}
+    @media (max-width:640px){
+      .kf-ahero{min-height:max(500px,82vh);}
+      .kf-ahero-top{padding:16px 1.1rem 0;}
+      .kf-ahero-logo img{height:48px;}
+      .kf-ahero-back{padding:7px 12px 7px 10px;font-size:13px;}
+      .kf-ahero .article-hero{padding:0 1.2rem 18px;}
+      .kf-ahero .article-hero h1{max-width:none;}
+      .kf-ahero-shade::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(10,14,23,.55) 55%,rgba(10,14,23,.75) 100%);}
+    }
+    @media (prefers-reduced-motion:reduce){.kf-ahero-img,.kf-ahero .article-hero,.kf-ahero .article-tag::before,.kf-ahero-scroll span::after{animation:none;}}
   </style>
   <script src="/analytics.js?v=3" defer></script>
   <script src="/i18n.js?v=16" defer></script>
@@ -160,38 +198,29 @@
   <img id="lightbox-img" src="" alt=""/>
 </div>
 
-<!-- NAV: solo logo, centrado y grande -->
-<nav class="site-nav">
-  <a class="nav-logo" href="/">
-    <img src="/images/logo_kitfinder.png" alt="Kit Finder"/>
-  </a>
-</nav>
-
-<!-- VOLVER A LA GRADA -->
-<div class="back-bar">
-  <a class="back-to-blog" href="/blog">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-    <span class="back-label">La Grada</span>
-  </a>
-</div>
-
-<!-- COVER IMAGE -->
-<div class="article-hero-img-wrap">
-  <img src="/blog/when-fashion-met-football/cover.jpg" alt="Adidas trainers on a football terrace"/>
-</div>
-
-<!-- HERO TEXT -->
-<header class="article-hero">
-  <div class="article-tag">La Grada · History</div>
-  <h1>When <em>Fashion</em> Met Football:<br>5 Brands That Had No Business Making Kits</h1>
-  <div class="article-meta">
-    <span class="meta-item">Kit Finder</span>
-    <span class="meta-dot"></span>
-    <span class="meta-item">April 2026</span>
-    <span class="meta-dot"></span>
-    <span class="meta-item">8 min read</span>
+<div class="kf-progress" aria-hidden="true"></div>
+<section class="kf-ahero">
+  <img class="kf-ahero-img" fetchpriority="high" src="/blog/when-fashion-met-football/cover.jpg" alt="Adidas trainers on a football terrace"/>
+  <div class="kf-ahero-shade"></div>
+  <div class="kf-ahero-top">
+    <a class="kf-ahero-logo" href="/"><img src="/images/logo_kitfinder.png" alt="Kit Finder"/></a>
+    <a class="kf-ahero-back" href="/blog"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>La Grada</a>
   </div>
-</header>
+  <div>
+  <header class="article-hero">
+    <div class="article-tag">La Grada · History</div>
+    <h1>When <em>Fashion</em> Met Football: 5 Brands That Had No Business Making Kits</h1>
+    <div class="article-meta">
+      <span class="meta-item">Kit Finder</span>
+      <span class="meta-dot"></span>
+      <span class="meta-item">April 2026</span>
+      <span class="meta-dot"></span>
+      <span class="meta-item">8 min read</span>
+    </div>
+  </header>
+    <div class="kf-ahero-scroll" aria-hidden="true"><span></span></div>
+  </div>
+</section>
 
 <!-- BODY -->
 <main class="article-wrap">
@@ -384,5 +413,8 @@ function closeLightbox(){
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbox();});
 </script>
 
+<script>
+(function(){var b=document.querySelector('.kf-progress');if(!b)return;function u(){var h=document.documentElement,m=h.scrollHeight-h.clientHeight;b.style.width=(m>0?Math.min(100,h.scrollTop/m*100):0)+'%';}addEventListener('scroll',u,{passive:true});addEventListener('resize',u);u();})();
+</script>
 </body>
 </html>
