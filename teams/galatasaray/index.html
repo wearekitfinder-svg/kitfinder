@@ -138,12 +138,29 @@
 </style>
 <link rel="stylesheet" href="/footer.css?v=3" id="kf-footer-css">
 <script src="/footer.js?v=1" defer id="kf-footer-js"></script>
+<style id="kf-hub-bg-css">
+  body.kf-hub-dark{background:#0a0f1e !important;}
+  .kf-hub-bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(to bottom,rgba(10,15,30,.55),rgba(10,15,30,.45)),url(/images/loading-collage.jpg) center top/cover no-repeat;background-color:#0a0f1e;}
+  body.kf-hub-dark .kf-lp-logo img{filter:drop-shadow(0 2px 10px rgba(0,0,0,.4));}
+  .kf-hub-panel{background:rgba(244,245,247,.97);border-radius:20px;padding:1.8rem 1.6rem 1.6rem;box-shadow:0 20px 50px rgba(0,0,0,.35);}
+  .kf-hub-panel > h1{margin-top:0;}
+  .kf-hub-panel .kf-related{margin-top:1.8rem;}
+  @media (max-width:640px){.kf-hub-panel{padding:1.3rem 1rem 1.2rem;border-radius:16px;}}
+  body.kf-hub-dark .kf-lp-logo img{height:64px;}
+  @media (min-width:641px){
+    body.kf-hub-dark .kf-lp-logo{position:absolute;top:22px;left:32px;margin:0;}
+    body.kf-hub-dark .kf-lp{padding-top:150px;}
+    body.kf-hub-dark .kf-lp-logo img{height:100px;}
+  }
+</style>
 </head>
-<body style="background:#f4f5f7;font-family:'Outfit',sans-serif;">
+<body class="kf-hub-dark" style="background:#0a0f1e;font-family:'Outfit',sans-serif;">
+<div class="kf-hub-bg"></div>
 <div class="kf-lp">
   <a class="kf-lp-logo" href="/">
     <img src="/images/logo_kitfinder.png" alt="Kit Finder — Football Shirt Search Engine"/>
   </a>
+<div class="kf-hub-panel">
   <!-- kf-crumbs:start -->
   <nav class="kf-crumbs" aria-label="Breadcrumb"><ol><li><a href="/" data-i18n="crumb_home">Home</a></li><li><a href="/teams" data-i18n="footer_teams">Teams</a></li><li><span aria-current="page">Galatasaray</span></li></ol></nav>
   <!-- kf-crumbs:end -->
@@ -537,6 +554,7 @@
     <a href="/teams/fc-utrecht" class="kf-related-link" data-i18n="teams_link" data-i18n-vars="team=FC%20Utrecht">FC Utrecht shirts</a>
   </div>
 <!-- kf-more-teams:end -->
+</div><!-- /kf-hub-panel -->
 </div>
 <!-- kf-footer:start -->
 <footer class="kf-foot">
