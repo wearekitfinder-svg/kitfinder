@@ -88,6 +88,7 @@ KF_TRANSLATIONS.de = {
   "kfd_row": "{s} Shops · typisch {p}",
   "kfd_row1": "1 Shop · typisch {p}",
   "search_placeholder": "Fußballtrikots suchen (Team, Spieler, Marke…)",
+  "search_placeholder_short": "Team, Spieler, Marke…",
   "globe_title": "Sprache & Währung",
   "res_back_to_top": "Nach oben",
   "globe_lang": "Sprache",

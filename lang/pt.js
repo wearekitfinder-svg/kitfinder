@@ -88,6 +88,7 @@ KF_TRANSLATIONS.pt = {
   "kfd_row": "{s} lojas · típico {p}",
   "kfd_row1": "1 loja · típico {p}",
   "search_placeholder": "Pesquisar camisolas (equipa, jogador, marca…)",
+  "search_placeholder_short": "Equipa, jogador, marca…",
   "globe_title": "Idioma e moeda",
   "res_back_to_top": "Voltar ao topo",
   "globe_lang": "Idioma",

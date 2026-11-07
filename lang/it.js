@@ -88,6 +88,7 @@ KF_TRANSLATIONS.it = {
   "kfd_row": "{s} negozi · tipico {p}",
   "kfd_row1": "1 negozio · tipico {p}",
   "search_placeholder": "Cerca maglie (squadra, giocatore, marca…)",
+  "search_placeholder_short": "Squadra, giocatore, marca…",
   "globe_title": "Lingua e valuta",
   "res_back_to_top": "Torna su",
   "globe_lang": "Lingua",
