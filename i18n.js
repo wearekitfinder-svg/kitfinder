@@ -29,6 +29,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
     en: {
       // Search
       'search_placeholder': 'Search football shirts (team, player, brand…)',
+      'search_placeholder_short': 'Team, player, brand…',
       'globe_title': 'Language & currency',
       'res_back_to_top': 'Back to top',
       'globe_lang': 'Language',
@@ -535,7 +536,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '17';
+  var KF_LANG_VER = '18';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }

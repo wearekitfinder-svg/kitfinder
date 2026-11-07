@@ -88,6 +88,7 @@ KF_TRANSLATIONS.nl = {
   "kfd_row": "{s} winkels · typisch {p}",
   "kfd_row1": "1 winkel · typisch {p}",
   "search_placeholder": "Zoek voetbalshirts (team, speler, merk…)",
+  "search_placeholder_short": "Team, speler, merk…",
   "globe_title": "Taal & valuta",
   "res_back_to_top": "Terug naar boven",
   "globe_lang": "Taal",

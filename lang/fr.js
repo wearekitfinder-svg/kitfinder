@@ -88,6 +88,7 @@ KF_TRANSLATIONS.fr = {
   "kfd_row": "{s} boutiques · typique {p}",
   "kfd_row1": "1 boutique · typique {p}",
   "search_placeholder": "Rechercher des maillots (équipe, joueur, marque…)",
+  "search_placeholder_short": "Équipe, joueur, marque…",
   "globe_title": "Langue et devise",
   "res_back_to_top": "Retour en haut",
   "globe_lang": "Langue",

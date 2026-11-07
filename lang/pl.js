@@ -88,6 +88,7 @@ KF_TRANSLATIONS.pl = {
   "kfd_row": "{s} sklepów · typowo {p}",
   "kfd_row1": "1 sklep · typowo {p}",
   "search_placeholder": "Szukaj koszulek piłkarskich (drużyna, zawodnik, marka…)",
+  "search_placeholder_short": "Drużyna, zawodnik, marka…",
   "globe_title": "Język i waluta",
   "res_back_to_top": "Do góry",
   "globe_lang": "Język",
