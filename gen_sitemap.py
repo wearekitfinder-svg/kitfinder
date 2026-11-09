@@ -34,17 +34,33 @@ def descubrir_carpetas(repo="."):
             rutas.add("/" + rel.replace(os.sep, "/"))
     return rutas
 
+# Archivos que forman cada ruta SPA: el index.html comun + su Function propia
+# (que es la que pone el <head> y el texto de esa ruta).
+SPA_FILES = {
+    "/": ["index.html"],
+    "/long-sleeve-kits": ["index.html", "functions/long-sleeve-kits.js"],
+    "/why": ["index.html", "functions/why.js"],
+}
+
+def asegurar_historial():
+    """En GitHub Actions el checkout es superficial (1 commit): ahi
+    `git log -- <ruta>` da la misma fecha para TODOS los archivos. Si el repo
+    es superficial, se descarga el historial completo antes de calcular fechas."""
+    r = subprocess.run(["git", "rev-parse", "--is-shallow-repository"], capture_output=True, text=True)
+    if r.stdout.strip() == "true":
+        subprocess.run(["git", "fetch", "--unshallow", "--quiet"], check=False)
+
 def lastmod(ruta):
-    """Fecha real del ultimo cambio de la pagina: la de hoy si tiene cambios
-    sin commitear, si no la del ultimo commit que la toco (git). Las rutas SPA
-    usan index.html. Asi <lastmod> solo cambia cuando la pagina cambia."""
-    f = "index.html" if ruta in SPA_ROUTES else ruta.lstrip("/") + "/index.html"
-    git = lambda *a: subprocess.run(["git", *a, "--", f], capture_output=True, text=True).stdout.strip()
-    if git("status", "--porcelain"):
-        return HOY
-    return git("log", "-1", "--format=%cs") or HOY
+    """Fecha real del ultimo commit que toco el archivo de la pagina
+    (git log -1 --format=%cs -- <ruta>). Las rutas SPA miran index.html y su
+    Function. Solo si el archivo aun no tiene ningun commit se usa la de hoy."""
+    files = SPA_FILES.get(ruta) or [ruta.lstrip("/") + "/index.html"]
+    out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", *files],
+                         capture_output=True, text=True).stdout.strip()
+    return out or HOY
 
 def main():
+    asegurar_historial()
     rutas = (set(SPA_ROUTES) | descubrir_carpetas(".")) - EXCLUDE
     # Nada bajo /dashboard (panel interno, noindex) entra en el sitemap.
     rutas = {r for r in rutas if not any(r.startswith(e + "/") for e in EXCLUDE)}
