@@ -487,6 +487,26 @@ def new_title(old, kind, team, n):
     return new if count in new else f"{team} Football Shirts — {count} Vintage & Retro Kits | Kit Finder"
 
 
+# Paginas con titulo/descripcion "Retro & Vintage ... for sale" (seo/indexacion-nov,
+# 2026-11). El refresco mensual mantiene este formato en ellas y solo actualiza cifras.
+RETRO_TITLE_PAGES = {
+    "teams/cd-tenerife", "teams/cardiff-city", "clubs/bayern-munich", "national/ghana",
+    "clubs/real-madrid", "teams/feyenoord", "teams/palermo", "teams/bari", "teams/aberdeen",
+}
+
+
+def retro_title(team, n):
+    """"Feyenoord Retro & Vintage Shirts — 680+ for sale | Kit Finder" (sin cifra si n < 10)."""
+    count = f"{rounded(n)} for sale" if n >= 10 else "for sale"
+    return f"{team} Retro & Vintage Shirts — {count} | Kit Finder"
+
+
+def retro_desc(team, n, n_stores, first_store=""):
+    stores = f"{rounded(n_stores)} stores" if n_stores > 1 else (first_store or "1 store")
+    return (f"Browse {rounded(n)} retro and vintage {team} football shirts for sale from {stores}. "
+            f"Compare prices, seasons and kit types on Kit Finder.")
+
+
 def new_desc(rng, team, d, kind):
     """Sin precios ni fechas (cambian cada mes); cifras redondeadas."""
     if not d["n"]:
@@ -535,7 +555,11 @@ def apply(page, team, d, kind, links, members=None):
         t = t.replace("</head>", CSS + "\n</head>", 1)
     if d["n"]:
         old_title = re.search(r"<title>([^<]*)</title>", t).group(1)
-        t = set_head(t, new_title(old_title, kind, team, d["n"]), new_desc(rng, team, d, kind))
+        if page in RETRO_TITLE_PAGES:
+            t = set_head(t, retro_title(team, d["n"]),
+                         retro_desc(team, d["n"], d["n_stores"], d["stores"][0][0] if d["stores"] else ""))
+        else:
+            t = set_head(t, new_title(old_title, kind, team, d["n"]), new_desc(rng, team, d, kind))
         if kind == "team":   # subtitulo "1,325 available right now" (texto y data-i18n-vars)
             t = re.sub(r'(<p class="kf-lp-sub"[^>]*data-i18n-vars="n=)[\d,]+(">)[\d,]+ available',
                        lambda m: f"{m.group(1)}{num(d['n'])}{m.group(2)}{num(d['n'])} available", t, count=1)
