@@ -68,3 +68,26 @@ test('same Football Finery result as affiliateUrl() in app.js', () => {
 test('the "View in store" button uses scStoreUrl()', () => {
   assert.ok(/href="' \+ escHtml\(scStoreUrl\(p\.url\)\)/.test(sc), 'View in store href does not go through scStoreUrl');
 });
+
+// Holy Grails cards on the home page (inline script in index.html) must use the
+// same affiliate rule: Football Finery gets ref=kitfinder, never duplicated.
+const idx = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const hm = idx.match(/function _hgUrl\(u\)\{[\s\S]*?\n  \}\n/);
+assert.ok(hm, '_hgUrl not found in index.html');
+const hgUrlWith = new Function('affiliateUrl', hm[0] + '\nreturn _hgUrl;');   // trusted: our own file
+const hgUrlNoApp = new Function(hm[0] + '\nreturn _hgUrl;')();                // app.js not loaded yet
+
+test('Holy Grails: Football Finery link gets ref=kitfinder, with or without app.js', () => {
+  const ff = 'https://www.footballfinery.co.uk/products/1990-91-juventus-away-football-shirt-l-kappa-ff204364';
+  for (const f of [hgUrlWith(affiliateUrl), hgUrlNoApp]) {
+    assert.strictEqual(f(ff), ff + '?ref=kitfinder');
+    assert.deepStrictEqual(refs(f(ff + '?ref=kitfinder')), ['kitfinder']);
+    assert.strictEqual(f('https://www.vintagefootballshirts.com/products/x'), 'https://www.vintagefootballshirts.com/products/x');
+  }
+});
+
+test('Holy Grails cards build their href through _hgUrl()', () => {
+  assert.ok(idx.includes('a.href=_hgUrl(item.url);'));
+  assert.ok(idx.includes('card.href=_hgUrl(item.url);'));
+  assert.ok(!/\.href=item\.url;/.test(idx), 'a Holy Grails card still uses the raw URL');
+});
