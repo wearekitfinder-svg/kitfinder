@@ -123,12 +123,14 @@
     if (c === 'granted') loadGA();
     else if (c !== 'denied') showBanner();
 
-    // Medir clics en "View in store"
+    // Medir clics en "View in store" y en las tarjetas Holy Grails de la portada
+    // (a.hg-card, tienda en data-hg-store). Los clics desde Favoritos los manda
+    // app.js, porque abren con window.open y no son enlaces.
     document.addEventListener('click', function (e) {
-      var a = e.target.closest ? e.target.closest('a.card-btn') : null;
+      var a = e.target.closest ? e.target.closest('a.card-btn, a.hg-card') : null;
       if (a) {
         window.kfTrack('store_click', {
-          store: a.getAttribute('data-store') || '',
+          store: a.getAttribute('data-store') || a.getAttribute('data-hg-store') || '',
           link_url: a.href || ''
         });
       }

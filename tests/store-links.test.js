@@ -91,3 +91,12 @@ test('Holy Grails cards build their href through _hgUrl()', () => {
   assert.ok(idx.includes('card.href=_hgUrl(item.url);'));
   assert.ok(!/\.href=item\.url;/.test(idx), 'a Holy Grails card still uses the raw URL');
 });
+
+// store_click must also count Holy Grails cards and Favourites (both send
+// visitors to stores but are not a.card-btn links).
+test('store_click is sent for Holy Grails cards and Favourites', () => {
+  const an = fs.readFileSync(path.join(__dirname, '..', 'analytics.js'), 'utf8');
+  assert.ok(an.includes("closest('a.card-btn, a.hg-card')"));
+  assert.ok(an.includes("a.getAttribute('data-hg-store')"));
+  assert.ok(app.includes('window.kfTrack("store_click",{store:e.store||"",link_url:affiliateUrl(e.url)}),window.open(affiliateUrl(e.url),"_blank")'));
+});
