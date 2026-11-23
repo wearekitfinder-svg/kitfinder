@@ -1308,10 +1308,19 @@
 
   var _hgUsed={};  // por tienda: ids ya mostrados/descartados
 
+  // Enlace de salida de una tarjeta Holy Grails: mismas reglas de afiliado que las
+  // tarjetas de busqueda (affiliateUrl de app.js). Si app.js aun no ha cargado, al
+  // menos Football Finery lleva ref=kitfinder (sin duplicarlo).
+  function _hgUrl(u){
+    if(typeof affiliateUrl==='function')return affiliateUrl(u);
+    try{var x=new URL(u);if(/(^|\.)footballfinery\.(com|co\.uk)$/.test(x.hostname)){x.searchParams.set('ref','kitfinder');return x.toString();}}catch(e){}
+    return u;
+  }
+
   function _makeHgCard(item){
     var a=document.createElement('a');
     a.className='hg-card';
-    a.href=item.url;
+    a.href=_hgUrl(item.url);
     a.target='_blank';
     a.rel='noopener noreferrer';
     a.setAttribute('data-hg',item.hg_id);
@@ -1336,7 +1345,7 @@
 
   function _fillHgCard(card,item){
     // reutiliza la tarjeta existente con otra camiseta del pool
-    card.href=item.url;
+    card.href=_hgUrl(item.url);
     card.setAttribute('data-hg',item.hg_id);
     card.setAttribute('data-hg-price',item.price);
     card.setAttribute('data-hg-currency',item.currency);
