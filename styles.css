@@ -636,6 +636,6 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
 .kf-noresults-sub{font-size:14px;color:var(--gray-600)}
 @media(max-width:640px){
   .kf-noresults{min-height:0;padding:1.25rem .5rem 1.75rem}
-  .kf-noresults-img{max-width:62%;max-height:50vh}
+  .kf-noresults-img{max-width:46%;max-height:38vh}
   .kf-noresults-title{font-size:1.15rem}
 }
