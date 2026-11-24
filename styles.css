@@ -613,10 +613,11 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
 
 /* ── Página 2 (#results): fondo collage fijo como Advanced Search + una sola tarjeta ── */
 .results-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(to bottom,rgba(10,15,30,.55),rgba(10,15,30,.45)),url(/images/loading-collage.jpg) center top/cover no-repeat;background-color:#0a0f1e}
-.results-card{flex:1 0 auto;width:calc(100% - 3rem);max-width:1200px;margin:1.5rem auto 2.5rem;background:var(--gray-50);border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.35);display:flex;flex-direction:column}
+.results-card{flex:1 0 auto;width:calc(100% - 2rem);max-width:1440px;margin:1.25rem auto 2.5rem;background:var(--gray-50);border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.35);display:flex;flex-direction:column}
 .results-card .results-search-bar{border-radius:20px 20px 0 0}
 .results-card .wc-results-hero{border-radius:20px 20px 0 0;overflow:hidden}
 .results-card .results-main{max-width:none!important}
+.results-card .results-search-bar{max-width:none}
 /* el input no encoge solo: sin esto el botón verde se sale de la tarjeta en móvil */
 .results-card .results-search-box{min-width:0}
 .results-card .results-search-input{min-width:0;width:100%}
