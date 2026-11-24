@@ -188,7 +188,8 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "js_view_in_store": "View in store",
       "js_no_image": "No image",
       "js_save_to_favourites": "Save to favourites",
-      "js_no_shirts_found": "No shirts found",
+      "js_no_shirts_found": "No results found",
+      "js_no_results_alt": "Football player in a blue number 10 shirt, head down after a missed penalty",
       "js_try_adjusting": "Try adjusting your filters or search term",
       "js_searching_specialist": "Searching specialist stores…",
       "js_continent_europe": "Europe",
@@ -537,7 +538,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '19';
+  var KF_LANG_VER = '20';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
