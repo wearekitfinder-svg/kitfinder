@@ -51,3 +51,19 @@ test('the partner order runs for the default sort ("relevant"), not only for an 
   assert.ok(src.includes('if(!u||"relevant"===u){v=interleaveByStore(v);}'));
   assert.ok(/<option value="relevant"/.test(fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8')));
 });
+
+test('Those Days: links get ref=kitfinder once, other params kept', () => {
+  const o = new URL(affiliateUrl('https://thosedays.com/listing/x-td-1?ref=kitfinder&a=1'));
+  assert.deepStrictEqual(o.searchParams.getAll('ref'), ['kitfinder']);
+  assert.strictEqual(o.searchParams.get('a'), '1');
+  assert.strictEqual(affiliateUrl('https://thosedays.com/listing/x-td-1'), 'https://thosedays.com/listing/x-td-1?ref=kitfinder');
+});
+
+test('Those Days is a partner store: it joins the partner rotation at the top', () => {
+  const k = src.indexOf('const PARTNER_STORES=');
+  const e = src.indexOf('function applyFilters', k);
+  const interleave = new Function(src.slice(k, e) + '; return interleaveByStore;')();
+  const mk = (store, n) => ({ store, n, url: 'https://www.example.com/p/' + n });
+  const out = interleave([mk('Store A', 1), mk('Those Days', 1), mk('Classic Football Shirts', 1), mk('Those Days', 2), mk('Store B', 1)]);
+  assert.deepStrictEqual(out.map(x => x.store + x.n), ['Those Days1', 'Classic Football Shirts1', 'Those Days2', 'Store A1', 'Store B1']);
+});
