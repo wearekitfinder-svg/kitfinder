@@ -1258,7 +1258,7 @@
   <p class="info-aff-notice" style="max-width:750px;width:100%;margin:1rem auto 4.5rem;padding:10px 14px;border-radius:10px;background:rgba(13,17,23,.78);color:rgba(255,255,255,.75);text-align:center;font-size:12px;line-height:1.5;"><span data-i18n="footer_aff_notice">Kit Finder may earn a commission if you buy through our links. This doesn’t change the price you pay.</span> <a href="/affiliate" onclick="showInfo('affiliate',event)" data-i18n="footer_affiliate" style="color:#fff;text-decoration:underline;white-space:nowrap;">Affiliate disclosure</a></p>
 </div>
 
-<script src="app.js?v=229" defer></script>
+<script src="app.js?v=230" defer></script>
 
 <!-- ── La Grada Newsletter Pop-up ───────────────────────────── -->
 <!-- Overlay (fondo oscuro) -->
@@ -1310,10 +1310,10 @@
 
   // Enlace de salida de una tarjeta Holy Grails: mismas reglas de afiliado que las
   // tarjetas de busqueda (affiliateUrl de app.js). Si app.js aun no ha cargado, al
-  // menos Football Finery lleva ref=kitfinder (sin duplicarlo).
+  // menos Football Finery y Those Days llevan ref=kitfinder (sin duplicarlo).
   function _hgUrl(u){
     if(typeof affiliateUrl==='function')return affiliateUrl(u);
-    try{var x=new URL(u);if(/(^|\.)footballfinery\.(com|co\.uk)$/.test(x.hostname)){x.searchParams.set('ref','kitfinder');return x.toString();}}catch(e){}
+    try{var x=new URL(u);if(/(^|\.)(footballfinery\.(com|co\.uk)|thosedays\.com)$/.test(x.hostname)){x.searchParams.set('ref','kitfinder');return x.toString();}}catch(e){}
     return u;
   }
 

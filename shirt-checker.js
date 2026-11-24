@@ -672,7 +672,7 @@ function scExtractSizeFromText(a,e){const n=a||"",r=e||"",t=[/\b(youth|junior|ki
 
 // "View in store" link. Football Finery only pays commission when the link
 // carries ?ref=kitfinder. This page does not load app.js, so this repeats the
-// Football Finery rule of affiliateUrl() in app.js exactly (same domains, same
+// Football Finery / Those Days rules of affiliateUrl() in app.js exactly (same domains, same
 // searchParams.set: adds ?ref= or &ref=, never twice). Every other store is
 // returned untouched. Tested in tests/store-links.test.js, which also checks
 // that it gives the same result as affiliateUrl() for Football Finery.
@@ -680,7 +680,8 @@ function scStoreUrl(url) {
   if (!url) return url;
   try {
     var u = new URL(url);
-    if (/(^|\.)footballfinery\.(com|co\.uk)$/.test(u.hostname)) {
+    // Football Finery (5 %, 01/11/2026) and Those Days (4 EUR per sale, 24/11/2026): ?ref=kitfinder.
+    if (/(^|\.)(footballfinery\.(com|co\.uk)|thosedays\.com)$/.test(u.hostname)) {
       u.searchParams.set('ref', 'kitfinder');
       return u.toString();
     }

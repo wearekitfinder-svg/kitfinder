@@ -100,3 +100,17 @@ test('store_click is sent for Holy Grails cards and Favourites', () => {
   assert.ok(an.includes("a.getAttribute('data-hg-store')"));
   assert.ok(app.includes('window.kfTrack("store_click",{store:e.store||"",link_url:affiliateUrl(e.url)}),window.open(affiliateUrl(e.url),"_blank")'));
 });
+
+// Those Days (thosedays.com, 4 EUR per completed sale since 24/11/2026): same
+// ?ref=kitfinder rule as Football Finery, on every page that links to them.
+test('Those Days: ref=kitfinder on Advanced Search, search cards and Holy Grails, never duplicated', () => {
+  const td = 'https://thosedays.com/listing/paris-saint-germain-14-15-away-10-ibrahimovic-td-11923';
+  for (const f of [scStoreUrl, affiliateUrl, hgUrlWith(affiliateUrl), hgUrlNoApp]) {
+    assert.strictEqual(f(td), td + '?ref=kitfinder');
+    assert.strictEqual(f('https://www.thosedays.com/listing/x?utm=1'), 'https://www.thosedays.com/listing/x?utm=1&ref=kitfinder');
+    assert.deepStrictEqual(refs(f(td + '?ref=kitfinder')), ['kitfinder']);
+    assert.deepStrictEqual(refs(f(f(td))), ['kitfinder']);
+    assert.strictEqual(f('https://notthosedays.com/listing/x'), 'https://notthosedays.com/listing/x');
+    assert.strictEqual(f('https://thosedays.com.evil.com/x'), 'https://thosedays.com.evil.com/x');
+  }
+});
