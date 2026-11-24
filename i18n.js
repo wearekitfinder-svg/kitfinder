@@ -479,6 +479,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
       "footer_terms": "Terms of use",
       "footer_affiliate": "Affiliate disclosure",
       "footer_contact": "Contact",
+      "footer_partner_td": "Partner: Those Days",
       "contact_title": "Contact",
       "contact_intro": "Questions, ideas or something that isn’t working? Write to us — we read every message.",
       "contact_email_label": "Our email:",
@@ -536,7 +537,7 @@ function _kfLegalKey(key) { return !KF_TRANSLATE_LEGAL && /^(cookie_|(why|about|
   var KF_INFO_PAGES = {};
 
   // ── Carga perezosa: cada idioma vive en lang/<codigo>.js ─────────────────────
-  var KF_LANG_VER = '18';
+  var KF_LANG_VER = '19';
   var _kfLangLoading = {};
   function kfLoadLanguage(code, cb) {
     if (code === 'en' || KF_TRANSLATIONS[code]) { if (cb) cb(); return; }
