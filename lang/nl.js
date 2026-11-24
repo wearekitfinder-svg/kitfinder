@@ -280,6 +280,7 @@ KF_TRANSLATIONS.nl = {
   "footer_terms": "Voorwaarden",
   "footer_affiliate": "Affiliate",
   "footer_contact": "Contact",
+  "footer_partner_td": "Partner: Those Days",
   "contact_title": "Contact",
   "contact_intro": "Vragen, ideeën of werkt er iets niet? Schrijf ons – we lezen elk bericht.",
   "contact_email_label": "Ons e-mailadres:",

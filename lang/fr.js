@@ -280,6 +280,7 @@ KF_TRANSLATIONS.fr = {
   "footer_terms": "Conditions d'utilisation",
   "footer_affiliate": "Affiliation",
   "footer_contact": "Contact",
+  "footer_partner_td": "Partenaire : Those Days",
   "contact_title": "Contact",
   "contact_intro": "Une question, une idée ou quelque chose qui ne fonctionne pas ? Écrivez-nous : nous lisons tous les messages.",
   "contact_email_label": "Notre e-mail :",

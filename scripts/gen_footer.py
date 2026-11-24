@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Pie de pagina comun en todas las paginas publicas de la web.
 
-Pone el mismo pie (4 columnas: Follow us + newsletter, Explore, Help, Legal, y
+Pone el mismo pie (4 columnas: Follow us + newsletter, Explore, Help (con el enlace de partner a Those Days), Legal, y
 una barra con el copyright y el aviso de afiliados) en:
   index.html (sus 2 pies: portada y resultados), blog/, teams/, clubs/,
   national/, leagues/ y shirt-checker/.
@@ -25,7 +25,7 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FOOTER_CSS_V = "3"
 FOOTER_JS_V = "1"
 ANALYTICS_V = "3"
-I18N_V = "16"
+I18N_V = "18"
 DIRS = ["blog", "teams", "clubs", "national", "leagues", "shirt-checker"]
 
 ICONS = {
@@ -53,6 +53,16 @@ def link(href, key, text, info=None):
     (showInfo, dentro de la misma pagina); en el resto, su URL."""
     onclick = f' onclick="showInfo(\'{info}\',event)"' if info else ""
     return f'<li><a href="{href}"{onclick} data-i18n="{key}">{text}</a></li>'
+
+
+# Enlace de partner (acuerdo con Those Days del 24/11/2026: ellos ponen "Featured on Kit Finder" en su pie
+# y nosotros enlazamos su tienda). Es un enlace de partner con comision -> rel="sponsored" (pauta de Google).
+PARTNER_URL = "https://thosedays.com/?ref=kitfinder"
+
+
+def partner_link():
+    return (f'<li><a href="{PARTNER_URL}" target="_blank" rel="sponsored noopener noreferrer" '
+            'data-i18n="footer_partner_td">Partner: Those Days</a></li>')
 
 
 def footer_html(home):
@@ -85,7 +95,7 @@ def footer_html(home):
         '    <div>',
         '      <h3 data-i18n="footer_help">Help</h3>',
         '      <ul>' + link("/about", "footer_about", "About", info("about")) + link("/why", "menu_why_kf", "Why Kit Finder?")
-        + link("/contact", "footer_contact", "Contact", info("contact")) + '</ul>',
+        + link("/contact", "footer_contact", "Contact", info("contact")) + partner_link() + '</ul>',
         '    </div>',
         '    <div>',
         '      <h3 data-i18n="footer_legal">Legal</h3>',
@@ -127,10 +137,12 @@ def process(path, home):
     else:
         print(f"  SKIP {path}: sin </body>")
         return False
-    # head: footer.css + footer.js una sola vez
-    t = re.sub(r'<link rel="stylesheet" href="/footer\.css[^"]*" id="kf-footer-css">\n?', "", t)
-    t = re.sub(r'<script src="/footer\.js[^"]*" defer id="kf-footer-js"></script>\n?', "", t)
-    t = t.replace("</head>", HEAD + "\n</head>", 1)
+    # head: footer.css + footer.js una sola vez. Si ya estan tal cual se dejan donde estan: moverlos al final
+    # del <head> cambiaria el orden de la cascada respecto a los <style> propios de cada pagina.
+    if HEAD not in t:
+        t = re.sub(r'<link rel="stylesheet" href="/footer\.css[^"]*" id="kf-footer-css">\n?', "", t)
+        t = re.sub(r'<script src="/footer\.js[^"]*" defer id="kf-footer-js"></script>\n?', "", t)
+        t = t.replace("</head>", HEAD + "\n</head>", 1)
     # versiones de los scripts compartidos (cambian con este pie)
     t = re.sub(r'/analytics\.js(\?v=\d+)?"', f'/analytics.js?v={ANALYTICS_V}"', t)
     t = re.sub(r'/i18n\.js(\?v=\d+)?"', f'/i18n.js?v={I18N_V}"', t)
