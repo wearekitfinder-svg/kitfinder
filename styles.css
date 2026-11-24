@@ -617,7 +617,11 @@ body.kf-drawer-open,html.kf-drawer-open{overflow:hidden!important;height:100%!im
 .results-card .results-search-bar{border-radius:20px 20px 0 0}
 .results-card .wc-results-hero{border-radius:20px 20px 0 0;overflow:hidden}
 .results-card .results-main{max-width:none!important}
+/* el input no encoge solo: sin esto el botón verde se sale de la tarjeta en móvil */
+.results-card .results-search-box{min-width:0}
+.results-card .results-search-input{min-width:0;width:100%}
 @media(max-width:640px){
   .results-card{width:calc(100% - 1.25rem);margin:.75rem auto 1.5rem;border-radius:16px}
   .results-card .results-search-bar,.results-card .wc-results-hero{border-radius:16px 16px 0 0}
+  .results-card .results-search-bar{padding:12px 1rem;gap:.75rem}
 }
