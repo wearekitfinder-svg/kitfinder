@@ -793,7 +793,7 @@ function manualSpan(r){var f=manualFrom(r);return f===r.day?dayTxt(r.day)+' '+r.
   var form=document.getElementById('afManualForm'),msg=document.getElementById('afManualMsg');
   if(!form)return;
   var list=document.getElementById('afManualList'),cancel=document.getElementById('afManualCancel'),btn=form.querySelector('button[type=submit]');
-  var PROGRAMS=['tapfiliate','goaffpro','uppromote','opencart','webgains'];
+  var PROGRAMS=['tapfiliate','goaffpro','uppromote','opencart','webgains','direct'];
   var AMOUNTS=['sales_amount','commission_pending','commission_approved','commission_reversed'];
   function say(t,err){msg.textContent=t;msg.classList.toggle('err',!!err)}
   var ERR={401:'Tu sesión ha caducado; vuelve a entrar.',403:'Esta cuenta no tiene permiso para guardar.',
