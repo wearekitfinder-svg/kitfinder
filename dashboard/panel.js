@@ -313,10 +313,11 @@ drawAfChart(null);
    clics de los últimos 30 días del informe de GA4 (como antes), avisándolo. */
 var AF_MATCH={
   ebay:['ebay'],
-  cfc:['cfcollectives','classicfootballcollectibles'],
   kitplug:['kitplug'],
   cfs:['classicfootballshirts'],
-  tsa:['soccerarchive']
+  tsa:['soccerarchive'],
+  ffinery:['footballfinery'],
+  thosedays:['thosedays']
 };
 var SNAP=null; // clics de 30 días por tienda (snapshot rolling30d), por clave de AF_MATCH
 function norm(s){return String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'')}
