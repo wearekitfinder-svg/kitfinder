@@ -16,6 +16,18 @@
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag('js', new Date());
     window.gtag('config', GA_ID);
+    loadMetricool();
+  }
+
+  // Metricool web tracker (mismo consentimiento que GA4)
+  function loadMetricool() {
+    var m = document.createElement('script');
+    m.async = true;
+    m.src = 'https://tracker.metricool.com/resources/be.js';
+    m.onload = function () {
+      try { window.beTracker.t({ hash: 'a0004ab96c91f3c8565f4a1d92a7d7eb' }); } catch (e) {}
+    };
+    document.head.appendChild(m);
   }
 
   // Función global para registrar eventos (solo si hay consentimiento)
